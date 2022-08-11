@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_passive_sonar.algorithms</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_passive_sonar.algorithms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">mil_passive_sonar</span> <span class="kn">import</span> <span class="n">util</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">v_sound</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">dist_h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dist_h4</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The traditional passive sonar algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (np.ndarray): The samples relevant to the system.</span>
+<span class="sd">        sample_rate (int): The rate at which samples are recorded, in the number</span>
+<span class="sd">            of samples per second.</span>
+<span class="sd">        v_sound (int): The velocity of sound in the environment, in ``m/s``. In fresh water,</span>
+<span class="sd">            this should be ~1497 m/s.</span>
+<span class="sd">        dist_h (float): ???</span>
+<span class="sd">        dist_h4 (float): ???</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Perform algorithm</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">cla</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">,</span> <span class="n">samples</span><span class="p">))</span>
+
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">zero_mean</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+    <span class="n">freq</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">samples_fft</span> <span class="o">=</span> <span class="n">compute_freq</span><span class="p">(</span>
+        <span class="n">samples</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5e3</span><span class="p">,</span> <span class="mf">40e3</span><span class="p">]),</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">fft_sharpness</span> <span class="o">=</span> <span class="n">amplitude</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">samples_fft</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">,</span> <span class="n">samples_fft</span><span class="p">))</span>
+    <span class="n">upsamples</span><span class="p">,</span> <span class="n">upsample_rate</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="mf">3e6</span><span class="p">)</span>
+    <span class="n">deltas</span><span class="p">,</span> <span class="n">delta_errors</span><span class="p">,</span> <span class="n">template_pos</span><span class="p">,</span> <span class="n">template_width</span> <span class="o">=</span> <span class="n">compute_deltas</span><span class="p">(</span>
+        <span class="n">upsamples</span><span class="p">,</span> <span class="n">upsample_rate</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">dist_h</span><span class="p">,</span> <span class="n">dist_h4</span><span class="p">)</span> <span class="o">/</span> <span class="n">v_sound</span><span class="p">,</span> <span class="mf">20e-2</span> <span class="o">/</span> <span class="n">v_sound</span>
+    <span class="p">)</span>
+    <span class="n">delta_errors</span> <span class="o">=</span> <span class="n">delta_errors</span> <span class="o">/</span> <span class="n">amplitude</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">deltas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">compute_pos_4hyd</span><span class="p">(</span><span class="n">deltas</span><span class="p">,</span> <span class="n">upsample_rate</span><span class="p">,</span> <span class="n">v_sound</span><span class="p">,</span> <span class="n">dist_h</span><span class="p">,</span> <span class="n">dist_h4</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Check for errors</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">amplitude</span> <span class="o">&lt;</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Low amplitude at maximum frequency&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">template_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Failed to find template&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">delta_errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;High template match error (</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">delta_errors</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+        <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span>
+        <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude</span><span class="p">,</span>
+        <span class="n">fft_sharpness</span><span class="o">=</span><span class="n">fft_sharpness</span><span class="p">,</span>
+        <span class="n">samples_fft</span><span class="o">=</span><span class="n">samples_fft</span><span class="p">,</span>
+        <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span>
+        <span class="n">deltas</span><span class="o">=</span><span class="n">deltas</span><span class="p">,</span>
+        <span class="n">delta_errors</span><span class="o">=</span><span class="n">delta_errors</span><span class="p">,</span>
+        <span class="n">upsamples</span><span class="o">=</span><span class="n">upsamples</span><span class="p">,</span>
+        <span class="n">upsample_rate</span><span class="o">=</span><span class="n">upsample_rate</span><span class="p">,</span>
+        <span class="n">template_pos</span><span class="o">=</span><span class="n">template_pos</span><span class="p">,</span>
+        <span class="n">template_width</span><span class="o">=</span><span class="n">template_width</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="zero_mean"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.zero_mean">[docs]</a><span class="k">def</span> <span class="nf">zero_mean</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zero means data by assuming that the first 32 samples are zeros.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">samples</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">samples</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">32</span><span class="p">],</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rescapes samples so each individual channel lies between -1 and 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">samples</span> <span class="o">/</span> <span class="n">numpy</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">samples</span><span class="p">),</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="compute_freq"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.compute_freq">[docs]</a><span class="k">def</span> <span class="nf">compute_freq</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">freq_range</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether samples are likely a solid ping and returns the frequency.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">samples_window</span> <span class="o">=</span> <span class="n">samples</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># Compute fft, find peaks in desired range</span>
+    <span class="n">fft_length</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">samples_fft</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">samples_window</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[</span>
+        <span class="p">:,</span> <span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">fft_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">bin_range</span> <span class="o">=</span> <span class="n">freq_to_bin</span><span class="p">(</span><span class="n">freq_range</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+        <span class="n">samples_fft</span><span class="p">[:,</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Sort peaks, take mean of the middle</span>
+    <span class="n">middle_peaks</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">peaks</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">peak</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">middle_peaks</span><span class="p">)</span>
+
+    <span class="n">freq</span> <span class="o">=</span> <span class="n">bin_to_freq</span><span class="p">(</span><span class="n">peak</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">)</span>
+
+    <span class="n">amplitude</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">samples_fft</span><span class="p">[:,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">peak</span><span class="p">))]))</span>
+    <span class="k">return</span> <span class="n">freq</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">samples_fft</span></div>
+
+
+<div class="viewcode-block" id="bin_to_freq"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.bin_to_freq">[docs]</a><span class="k">def</span> <span class="nf">bin_to_freq</span><span class="p">(</span><span class="nb">bin</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a bin to a frequency bin.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bin (int): The bin number.</span>
+<span class="sd">        sample_rate (int): The rate of samples. The number of samples per second.</span>
+<span class="sd">        fft_length (int): The length of the transform; the number of bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sample_rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">fft_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="nb">bin</span></div>
+
+
+<div class="viewcode-block" id="freq_to_bin"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.freq_to_bin">[docs]</a><span class="k">def</span> <span class="nf">freq_to_bin</span><span class="p">(</span><span class="n">freq</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a frequency pattern to the number of bins in the transform.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        freq (int): ???</span>
+<span class="sd">        sample_rate (int): The rate of samples. The number of samples per second.</span>
+<span class="sd">        fft_length (int): The length of the transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">freq</span> <span class="o">*</span> <span class="p">((</span><span class="n">fft_length</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">sample_rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="preprocess"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.preprocess">[docs]</a><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">desired_sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Upsamples data to have approx. desired_sample_rate.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (np.ndarray): The relevant samples to preprocess.</span>
+<span class="sd">        sample_rate (int): The rate to record samples at. Equal to the number of</span>
+<span class="sd">            samples per second.</span>
+<span class="sd">        desired_sample_rate (int): The desired sample rate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">bandpass</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+    <span class="c1"># Upsample each channel</span>
+    <span class="n">upfact</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">desired_sample_rate</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">))</span>
+    <span class="n">upsamples</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">upfact</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">upsamples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">upfact</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">upsamples</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">upfact</span></div>
+
+
+<div class="viewcode-block" id="bandpass"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.bandpass">[docs]</a><span class="k">def</span> <span class="nf">bandpass</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies a 20-30khz bandpass FIR filter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (np.ndarray): The list of samples.</span>
+<span class="sd">        sample_rate (int): The rate of sampling. The number of samples per second.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 25-40KHz is the range of the pinger for the roboboat competition</span>
+    <span class="n">fir</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">firwin</span><span class="p">(</span>
+        <span class="mi">128</span><span class="p">,</span>
+        <span class="p">[</span><span class="mf">19e3</span> <span class="o">/</span> <span class="p">(</span><span class="n">sample_rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="mf">41e3</span> <span class="o">/</span> <span class="p">(</span><span class="n">sample_rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)],</span>
+        <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hann&quot;</span><span class="p">,</span>
+        <span class="n">pass_zero</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">(</span><span class="n">fir</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="compute_deltas"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.compute_deltas">[docs]</a><span class="k">def</span> <span class="nf">compute_deltas</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">max_delay</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">template_duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">plot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes N-1 position deltas for N channels, by making a template</span>
+<span class="sd">    for the first channel and matching to all subsequent channels.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (np.ndarray): The samples relevant to the system.</span>
+<span class="sd">        sample_rate (int): The rate at which samples are recorded, in the number</span>
+<span class="sd">            of samples per second.</span>
+<span class="sd">        max_delay (float): ???</span>
+<span class="sd">        template_duration (float): ???</span>
+<span class="sd">        plot (bool): Whether to plot and show the data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">template_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">template_duration</span> <span class="o">*</span> <span class="n">sample_rate</span><span class="p">))</span>
+    <span class="n">template</span><span class="p">,</span> <span class="n">template_pos</span> <span class="o">=</span> <span class="n">make_template</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">template_width</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">template_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">template_width</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">template_pos</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">max_delay</span> <span class="o">*</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">))</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">template_pos</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">max_delay</span> <span class="o">*</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="mf">1.25</span><span class="p">))</span>
+
+    <span class="n">deltas</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">deltas</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">match_template</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">template_width</span>
+        <span class="n">pos</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">deltas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">-</span> <span class="n">template_pos</span>
+            <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">template_pos</span><span class="p">,</span> <span class="n">template_width</span></div>
+
+
+<div class="viewcode-block" id="make_template"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.make_template">[docs]</a><span class="k">def</span> <span class="nf">make_template</span><span class="p">(</span><span class="n">channel</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a template of the specified width, with its 25% position being at</span>
+<span class="sd">    where the lower-level driver triggered.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (np.ndarray): ???</span>
+<span class="sd">        width (int): ???</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.35</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.35</span> <span class="o">+</span> <span class="mf">0.25</span><span class="p">)</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">channel</span><span class="p">[</span><span class="n">pos</span> <span class="p">:</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">width</span><span class="p">],</span> <span class="n">pos</span></div>
+
+
+<div class="viewcode-block" id="match_template"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.match_template">[docs]</a><span class="k">def</span> <span class="nf">match_template</span><span class="p">(</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stop</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Matches template to channel, returning the point where the start</span>
+<span class="sd">    of the template should be placed.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (np.ndarray): ???</span>
+<span class="sd">        start (int): The start of the template in the channel</span>
+<span class="sd">        stop (int): The end of the template in the channel</span>
+<span class="sd">        template (np.ndarray): The template to match the channel to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">start</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">stop</span> <span class="o">&lt;=</span> <span class="n">channel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">calculate_error</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">min_pt</span> <span class="o">=</span> <span class="n">find_minimum</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">min_pt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">start</span> <span class="o">+</span> <span class="n">min_pt</span><span class="p">,</span> <span class="n">err</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">min_pt</span><span class="p">))]</span></div>
+
+
+<div class="viewcode-block" id="calculate_error"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.calculate_error">[docs]</a><span class="k">def</span> <span class="nf">calculate_error</span><span class="p">(</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">stop</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Slides the template along channel from start to stop, giving the</span>
+<span class="sd">    error of the template and channel at each location.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        channel (np.ndarray): ???</span>
+<span class="sd">        start (int): The start of the template in the channel</span>
+<span class="sd">        stop (int): The end of the template in the channel</span>
+<span class="sd">        template (np.ndarray): The template to match the channel to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+        <span class="c1"># used to use mean absolute difference; now using (negative) pearson</span>
+        <span class="c1"># correlation coefficient to be invariant to scale/shift</span>
+        <span class="c1"># res[i - start] = numpy.mean(numpy.abs(channel[i:i + width] - template))</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">channel</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">width</span><span class="p">],</span> <span class="n">template</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="find_minimum"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.find_minimum">[docs]</a><span class="k">def</span> <span class="nf">find_minimum</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the sub-sample position of the minimum in a continuous signal,</span>
+<span class="sd">    by first finding the lowest absolute value, then doing quadratic interpolation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (np.ndarray): The relevant signal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pos</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;warning: pos on border; search region not large enough?&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">yl</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">yr</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">pos</span> <span class="o">+=</span> <span class="p">(</span><span class="n">yr</span> <span class="o">-</span> <span class="n">yl</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">yc</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">yl</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">yr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pos</span></div>
+
+
+<div class="viewcode-block" id="compute_pos_4hyd"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.algorithms.compute_pos_4hyd">[docs]</a><span class="k">def</span> <span class="nf">compute_pos_4hyd</span><span class="p">(</span>
+    <span class="n">deltas</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">v_sound</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dist_h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">dist_h4</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solves the 4 hydrophone case (3 deltas) for heading, declination,</span>
+<span class="sd">    and sph_dist using a bunch of trig. Future work would be to phrase</span>
+<span class="sd">    this as a NLLSQ problem or something, and adapt it to more</span>
+<span class="sd">    hydrophones.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        samples (np.ndarray): The samples relevant to the system.</span>
+<span class="sd">        sample_rate (int): The rate at which samples are recorded, in the number</span>
+<span class="sd">            of samples per second.</span>
+<span class="sd">        v_sound (int): The velocity of sound in the environment, in ``m/s``. In fresh water,</span>
+<span class="sd">            this should be ~1497 m/s.</span>
+<span class="sd">        dist_h (float): ???</span>
+<span class="sd">        dist_h4 (float): ???</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">deltas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">v_sound</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">v_sound</span>
+    <span class="n">y3</span> <span class="o">=</span> <span class="n">deltas</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">v_sound</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">y1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dist_h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">y1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y2</span><span class="p">))</span>
+    <span class="n">cos_alpha1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">y1</span> <span class="o">+</span> <span class="n">y1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dist_h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">dist_h</span><span class="p">)</span>
+    <span class="n">cos_alpha2</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">y2</span> <span class="o">+</span> <span class="n">y2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dist_h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">dist_h</span><span class="p">)</span>
+    <span class="n">cos_alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">cos_alpha1</span> <span class="o">+</span> <span class="n">cos_alpha2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">cos_beta</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">y3</span> <span class="o">+</span> <span class="n">y3</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">dist_h4</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist</span> <span class="o">*</span> <span class="n">dist_h4</span><span class="p">)</span>
+
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="n">cos_alpha</span> <span class="o">*</span> <span class="n">dist</span>
+    <span class="n">dist_y</span> <span class="o">=</span> <span class="n">cos_beta</span> <span class="o">*</span> <span class="n">dist</span>
+    <span class="k">if</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">dist_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dist_y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">dist_z</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dist_z</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dist</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">dist_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dist_y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dist_x</span><span class="p">,</span> <span class="n">dist_y</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">])</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">300e3</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">make_ping</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.234</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="p">{</span><span class="s2">&quot;freq&quot;</span><span class="p">:</span> <span class="mf">23e3</span><span class="p">,</span> <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">sample_rate</span><span class="p">}</span>
+        <span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="mi">1497</span><span class="p">,</span> <span class="mf">2.286000e-02</span><span class="p">,</span> <span class="mf">2.286000e-02</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERRORS&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;errors&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;freq&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">],</span> <span class="s2">&quot;amplitude&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;amplitude&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sharpness&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;fft_sharpness&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;deltas&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;deltas&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;delta errors&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;delta_errors&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;amplitude&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pos (hyd coordinates)&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Raw ping&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">fft_length</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;samples_fft&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">bin_to_freq</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fft_length</span> <span class="o">//</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">fft_length</span><span class="p">),</span>
+        <span class="n">r</span><span class="p">[</span><span class="s2">&quot;samples_fft&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;FFT&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;upsamples&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Upsampled ping&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;upsample_rate&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]))</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;upsamples&quot;</span><span class="p">][</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_width&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="n">plot_start</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">period</span>
+        <span class="n">plot_stop</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_width&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">period</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Template&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;deltas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">plot_start</span><span class="p">,</span> <span class="n">plot_stop</span><span class="p">),</span>
+                <span class="n">r</span><span class="p">[</span><span class="s2">&quot;upsamples&quot;</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">plot_start</span><span class="p">:</span><span class="n">plot_stop</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_pos&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">&quot;deltas&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="s2">&quot;template_width&quot;</span><span class="p">]),</span> <span class="n">template</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Channel </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>

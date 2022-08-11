@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Simulating SubjuGator</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Enabling SubjuGator" href="enabling.html" />
+        <link rel="prev" title="Software Design" href="design.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SubjuGator</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lessons22.html">Lessons from 2022</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html">Software Design</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simulating</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#launch-gazebo-server">Launch Gazebo Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-gazebo-client">Run Gazebo Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-rviz">Run RVIZ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear-the-kill">Clear the Kill</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#give-a-move-command">Give a move command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-the-current-odometry">See the current odometry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="enabling.html">Enabling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cameras.html">Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electrical.html">Electrical Design</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="simulating-subjugator">
+<h1>Simulating SubjuGator<a class="headerlink" href="#simulating-subjugator" title="Permalink to this heading">¶</a></h1>
+<section id="launch-gazebo-server">
+<h2>Launch Gazebo Server<a class="headerlink" href="#launch-gazebo-server" title="Permalink to this heading">¶</a></h2>
+<p>In one panel, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch sub8_launch gazebo.launch
+</pre></div>
+</div>
+<p>This will launch the server side of the gazebo simulator. The gazebo server (a.k.a. <code class="docutils literal notranslate"><span class="pre">gzserver</span></code>)
+is the half of the simulator that will do all the heavy lifting in terms of simulating physics,
+running stock / custom plugins (of which we have many), and tying into ROS.</p>
+</section>
+<section id="run-gazebo-client">
+<h2>Run Gazebo Client<a class="headerlink" href="#run-gazebo-client" title="Permalink to this heading">¶</a></h2>
+<p>Gazebo also has GUI visualization component named Gazebo Client (a.k.a <code class="docutils literal notranslate"><span class="pre">gzclient</span></code>).
+This half of the simulator really only does image rendering of the simulated environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Simulated cameras are rendered in <cite>gzserver</cite>.</p>
+</div>
+<p>We have a custom <a class="reference external" href="https://alvinalexander.com/blog/post/linux-unix/create-aliases">alias</a> setup
+to run the gazebogui with special parameters:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gazebogui
+</pre></div>
+</div>
+<p>This will show you ground truth of the simulated environment. However, when debuggin robot behavior, it is usually more usful to have an idea of exactly what the robot knows, which is why there is also Rviz.</p>
+</section>
+<section id="run-rviz">
+<h2>Run RVIZ<a class="headerlink" href="#run-rviz" title="Permalink to this heading">¶</a></h2>
+<p>You can visualize what the robot knows by running the sub visualization alias in
+a new terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ subviz
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">subviz</span></code> is an <a class="reference external" href="https://alvinalexander.com/blog/post/linux-unix/create-aliases">alias</a>
+which launches <a class="reference external" href="http://wiki.ros.org/rviz">RVIZ</a> with a configuration
+for SubjuGator. Generally speaking, this will show what information is available
+to the robot.</p>
+</section>
+<section id="clear-the-kill">
+<h2>Clear the Kill<a class="headerlink" href="#clear-the-kill" title="Permalink to this heading">¶</a></h2>
+<p>Whenever SubjuGator is initialized, it is a state called “kill” for
+safety. While in the kill state, the sub will not actuate in any way so
+it is safe for people the physically handle it. The sub must be put into
+a state of “unkill” to actually do anything. To unkill the sub, go to a
+new panel and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ amonitor <span class="nb">kill</span>
+</pre></div>
+</div>
+<p>and then hold <code class="docutils literal notranslate"><span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">C</span></code> until the terminal turns green.</p>
+<p>To initiate a software kill, press the space bar into the same terminal where
+you unkilled.</p>
+</section>
+<section id="give-a-move-command">
+<h2>Give a move command<a class="headerlink" href="#give-a-move-command" title="Permalink to this heading">¶</a></h2>
+<p>Give SubjuGator a move command with <code class="docutils literal notranslate"><span class="pre">submove</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ submove forward 5m
+</pre></div>
+</div>
+<p>The sub should move forward by 5 meters.</p>
+</section>
+<section id="see-the-current-odometry">
+<h2>See the current odometry<a class="headerlink" href="#see-the-current-odometry" title="Permalink to this heading">¶</a></h2>
+<p>Try streaming the content of a rostopic in a new panel by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rostopic <span class="nb">echo</span> /odom
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
