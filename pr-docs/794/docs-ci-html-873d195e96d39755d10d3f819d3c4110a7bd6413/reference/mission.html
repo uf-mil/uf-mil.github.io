@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_missions_core - Mission System</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Subjugator Software Reference" href="../subjugator/reference.html" />
+        <link rel="prev" title="sabertooth2x12 - Sabertooth 2x12" href="sabertooth.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="txros.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basemission">BaseMission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chainwithtimeout">ChainWithTimeout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missionclient">MissionClient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#makewait">MakeWait</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="mil-missions-core-mission-system">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System<a class="headerlink" href="#mil-missions-core-mission-system" title="Permalink to this heading">¶</a></h1>
+<section id="basemission">
+<h2>BaseMission<a class="headerlink" href="#basemission" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_missions_core.BaseMission"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.BaseMission.decode_parameters">BaseMission.decode_parameters</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.BaseMission.get_mission">BaseMission.get_mission</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.BaseMission.has_mission">BaseMission.has_mission</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.BaseMission.init">BaseMission.init</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.BaseMission.name">BaseMission.name</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.BaseMission.cleanup">cleanup</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.BaseMission.run">run</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.BaseMission.run_submission">run_submission</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.BaseMission.send_feedback">send_feedback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.BaseMission.send_feedback_child">send_feedback_child</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">BaseMission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base for all missions used in mil_missions. Lots of this class
+is just documentation for the various functions that real missions
+can overload. Individual ROS robotics platforms should extend this
+base class to provide interfaces to the particular systems on the robot.</p>
+<p>Called when a new instance of a mission is created. Missions
+should be sure to call base mission __init__.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleMission</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyMissionClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="o">...</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.cleanup">
+<span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.cleanup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will be called if a mission is cancelled, preempted, or if it raises an
+exception. Called after the run defer is cancelled, but before any other
+mission is run. It should therefore finish very quickly, and only do
+things like set default parameters for future missions, turn off
+perception, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.decode_parameters">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.decode_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.decode_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process parameters string from new mission goal or submission. Should return the
+processes parameters which will be passed to the run function. By default
+returns the json decoded object in the string or, if this fails, just
+the original string.</p>
+<p>If this function throws an exception (such as a ParametersException), the
+mission will be aborted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.get_mission">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.get_mission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.get_mission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mission with the specified name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.has_mission">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.has_mission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.has_mission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the mission runner has a mission with specified name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.init">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called for each when the server starts up and after the base mission is
+initialized. Intended for missions to setup subscribers, state variables,
+etc. that will be shared between individual instances of a mission.</p>
+<p>For example, a mission which moves to the current position of a vision
+target might subscribe to the perception node’s topic in init() so that
+when the mission is run it already has the latest position.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.name">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override for real missions to return a string for how the mission
+with be referenced in the GUI/CLI. For example, a mission implemented
+in class <code class="docutils literal notranslate"><span class="pre">MyCoolMission</span></code> might implement.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCoolMission</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;My cool mission&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the mission. By default, simply returns the class’
+<code class="docutils literal notranslate"><span class="pre">__name__</span></code> method.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual body of the mission. Should attempt to execute whatever is expected
+of the mission, using the interfaces set up in init() or the base mission to
+command actuator movements, read perception output, etc. Should use self.send_feedback
+to update clients about what the mission is doing at the moment.</p>
+<p>If something goes wrong, raise an exception describing what went wrong
+and the mission will be aborted and cleanup is called.</p>
+<p>If it executes successfully, return with <code class="docutils literal notranslate"><span class="pre">defer.returnValue(message)</span></code> to
+send a final result to the connected clients. Missions can also spawn
+other missions in the run function using <a class="reference internal" href="#mil_missions_core.BaseMission.run_submission" title="mil_missions_core.BaseMission.run_submission"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_submission()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> – Arguments to modify the behavior of the mission. By default
+will be a json decoded object from the string passed in the goal,
+but can be changed by overriding decode_parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.run_submission">
+<span class="sig-name descname"><span class="pre">run_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.run_submission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.run_submission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs another mission available to the mission server, returning the deferred object for the
+missions execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the submission to spawn as a string. If this
+mission is unknown, raise an exception.</p></li>
+<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Parameters to pass to the run function of the submission. Note,
+this function does not call decode_parameters, so parent
+missions need to do this or otherwise ensure the parameters are in
+the format expected by the child. Defaults to an empty string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><strong>Exception</strong></a> – The submission name is unrecognized - therefore, no submission
+    can be run.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The deferred object, representing the execution of the mission.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>defer.Deferred</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.send_feedback">
+<span class="sig-name descname"><span class="pre">send_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.send_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.send_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a string as feedback to any clients monitoring this mission. If the
+mission is a child mission, it will call the send_feedback_child of its
+parent, allowing missions to choose how to use the feedback from its children.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.BaseMission.send_feedback_child">
+<span class="sig-name descname"><span class="pre">send_feedback_child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mil_missions_core.BaseMission" title="mil_missions_core.base_mission.BaseMission"><span class="pre">BaseMission</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/base_mission.html#BaseMission.send_feedback_child"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.BaseMission.send_feedback_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by child missions when sending feedback. By default sends this feedback prefixed
+with the name of the child mission.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="chainwithtimeout">
+<h2>ChainWithTimeout<a class="headerlink" href="#chainwithtimeout" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mil_missions_core.MakeChainWithTimeout">
+<span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">MakeChainWithTimeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.10)"><span class="pre">Type</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/chain_with_timeout.html#MakeChainWithTimeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MakeChainWithTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a <code class="docutils literal notranslate"><span class="pre">ChainWithTimeout</span></code> mission with the BaseMission specified. Used by
+individual robotics platforms to reuse this example mission.</p>
+<p>For documentation on the <code class="docutils literal notranslate"><span class="pre">ChainWithTimeout</span></code> class, you will need to view
+the source code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base</strong> (<em>Type</em>) – A base class to use when constructing the <code class="docutils literal notranslate"><span class="pre">ChainWithTimeout</span></code> class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ChainWithTimeout</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_missions_core.MissionException"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.MissionException.message">message</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.MissionException.parameters">parameters</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.MissionException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">MissionException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/exceptions.html#MissionException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MissionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>An exception representing a general error which occurred during the execution
+of a mission.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.MissionException.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#mil_missions_core.MissionException.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message explaining what failed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.MissionException.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#mil_missions_core.MissionException.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>???</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[Any, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="mil_missions_core.TimeoutException"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.TimeoutException.timeout">timeout</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.TimeoutException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">TimeoutException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/exceptions.html#TimeoutException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.TimeoutException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an exception from a mission or submission not finishing within
+the requested time.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Prints an explanatory error message using the provided timeout.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.TimeoutException.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#mil_missions_core.TimeoutException.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of seconds in which the mission/submission
+should have finished in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="mil_missions_core.ParametersException"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.ParametersException.msg">msg</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.ParametersException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">ParametersException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/exceptions.html#ParametersException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.ParametersException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an exception from a mission or submission where the mission’s parameters
+had an error or inconsistency.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Prints an explanatory error message using the provided message explaining
+what error occurred.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.ParametersException.msg">
+<span class="sig-name descname"><span class="pre">msg</span></span><a class="headerlink" href="#mil_missions_core.ParametersException.msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>A message explaining what error was found in the parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="mil_missions_core.SubmissionException"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.SubmissionException.exception">exception</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_missions_core.SubmissionException.mission">mission</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.SubmissionException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">SubmissionException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mission</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><span class="pre">Exception</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/exceptions.html#SubmissionException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.SubmissionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an exception encountered while running a submission.</p>
+<p>Keeps the name of the submission which failed, so the user knowns where
+the failure occurred.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Prints an explanatory error message using the provided mission name
+and exception that occurred.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.SubmissionException.mission">
+<span class="sig-name descname"><span class="pre">mission</span></span><a class="headerlink" href="#mil_missions_core.SubmissionException.mission" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the failed mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_missions_core.SubmissionException.exception">
+<span class="sig-name descname"><span class="pre">exception</span></span><a class="headerlink" href="#mil_missions_core.SubmissionException.exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>The exception experienced by the mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)">Exception</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="missionclient">
+<h2>MissionClient<a class="headerlink" href="#missionclient" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_missions_core.MissionClient"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_missions_core.MissionClient.available_missions">MissionClient.available_missions</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.MissionClient.cancel_mission">cancel_mission</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_missions_core.MissionClient.run_mission">run_mission</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_missions_core.MissionClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">MissionClient</span></span><a class="reference internal" href="../_modules/mil_missions_core/mission_client.html#MissionClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MissionClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends SimpleActionClient to do bootstrap of making a mission
+client for you.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.MissionClient.available_missions">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_missions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_missions_core/mission_client.html#MissionClient.available_missions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MissionClient.available_missions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of available missions or None if parameter is not set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The list of available missions. This is typed as Any
+currently because it is not yet known what type is returned by the parameter
+request.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.MissionClient.cancel_mission">
+<span class="sig-name descname"><span class="pre">cancel_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/mission_client.html#MissionClient.cancel_mission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MissionClient.cancel_mission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a goal to cancel the current mission.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_missions_core.MissionClient.run_mission">
+<span class="sig-name descname"><span class="pre">run_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mission</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">done_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Feedback</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/mission_client.html#MissionClient.run_mission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MissionClient.run_mission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a goal to start a new mission with the specified parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mission</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the mission to start.</p></li>
+<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The parameters to send to the mission. Defaults to an
+empty string.</p></li>
+<li><p><strong>done_cb</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>Any</em><em>]</em><em>, </em><em>None</em><em>]</em><em>]</em>) – The callback function to send to the action
+client to execute when the goal is done. The callable should take two
+parameters: an integer (specifically, an enumerated integer value from
+<code class="xref py py-class docutils literal notranslate"><span class="pre">actionlib_msgs.msg._GoalStatus.GoalStatus</span></code>) and the result.</p></li>
+<li><p><strong>active_cb</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>None</em><em>]</em><em>]</em>) – The callback function that gets called
+on transitions to an active state.</p></li>
+<li><p><strong>feedback_cb</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>None</em><em>]</em><em>]</em>) – Callback that is executed when feedback
+for the goal is received. The callback should take one parameter: the
+feedback received.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="makewait">
+<h2>MakeWait<a class="headerlink" href="#makewait" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mil_missions_core.MakeWait">
+<span class="sig-prename descclassname"><span class="pre">mil_missions_core.</span></span><span class="sig-name descname"><span class="pre">MakeWait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Type" title="(in Python v3.10)"><span class="pre">Type</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_missions_core/wait.html#MakeWait"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_missions_core.MakeWait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Wait mission with the specified base mission. Used by
+robotics platforms to reuse this mission with a different base mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>base</strong> (<em>Type</em>) – The base class to construct the Wait mission from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed waiting mission.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Wait</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>

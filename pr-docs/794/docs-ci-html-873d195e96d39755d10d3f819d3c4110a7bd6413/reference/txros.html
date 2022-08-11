@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>txros - Independent extensions for ROS</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="rviz" href="rviz.html" />
+        <link rel="prev" title="Message Handlers" href="msghandlers.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#goal">Goal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#goalmanager">GoalManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simpleactionserver">SimpleActionServer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actionclient">ActionClient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nodehandle">NodeHandle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#publisher">Publisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proxy">Proxy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#serviceclient">ServiceClient</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscriber">Subscriber</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transform">Transform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformbroadcaster">TransformBroadcaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transformlistener">TransformListener</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#event">Event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variable">Variable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="txros-independent-extensions-for-ros">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS<a class="headerlink" href="#txros-independent-extensions-for-ros" title="Permalink to this heading">¶</a></h1>
+<section id="goal">
+<h2>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Goal"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Goal.goal">goal</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Goal.status">status</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Goal.status_text">status_text</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Goal.status_msg">status_msg</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Goal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal_msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GoalStatus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.10)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">5</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">7</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">9</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/action.html#Goal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Goal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implementation of a goal object in the txros adaptation of the Simple Action
+Server.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></span></dt>
+<dd><p>Determines equality between two goals by comparing their ids. If
+either side is not a <a class="reference internal" href="messages.html#actionlib_msgs.msg.GoalStatus" title="actionlib_msgs.msg.GoalStatus"><code class="xref py py-class docutils literal notranslate"><span class="pre">actionlib_msgs.msg.GoalStatus</span></code></a>, then
+the result is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>goal</strong> (<a class="reference internal" href="messages.html#actionlib_msgs.msg.GoalStatus" title="actionlib_msgs.msg.GoalStatus"><em>GoalStatus</em></a>) – The original goal message which constructs this class</p></li>
+<li><p><strong>status</strong> (<em>uint8</em>) – An enum representing the status of</p></li>
+<li><p><strong>status_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) – A string representing the status of the goal</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Goal.goal">
+<span class="sig-name descname"><span class="pre">goal</span></span><a class="headerlink" href="#txros.Goal.goal" title="Permalink to this definition">¶</a></dt>
+<dd><p>The goal message associated with the goal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GoalStatus</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Goal.status">
+<span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#txros.Goal.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the goal which indicates how far along the goal is to completion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Goal.status_text">
+<span class="sig-name descname"><span class="pre">status_text</span></span><a class="headerlink" href="#txros.Goal.status_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string version of the goal’s status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Goal.status_msg">
+<span class="sig-name descname"><span class="pre">status_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GoalStatus</span></span></span><a class="reference internal" href="../_modules/txros/action.html#Goal.status_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Goal.status_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a GoalStatus message from the Goal class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The constructed message.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="messages.html#actionlib_msgs.msg.GoalStatus" title="actionlib_msgs.msg.GoalStatus">GoalStatus</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="goalmanager">
+<h2>GoalManager<a class="headerlink" href="#goalmanager" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.GoalManager"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.GoalManager.cancel">cancel</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.GoalManager.forget">forget</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.GoalManager.get_feedback">get_feedback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.GoalManager.get_result">get_result</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.GoalManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">GoalManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.ActionClient" title="txros.action.ActionClient"><span class="pre">ActionClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.Goal" title="txros.action.Goal"><span class="pre">Goal</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/action.html#GoalManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages the interactions between a specific goal and an action client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action_client</strong> (<a class="reference internal" href="#txros.ActionClient" title="txros.ActionClient"><em>ActionClient</em></a>) – The txROS action client to use to manage
+the goal.</p></li>
+<li><p><strong>goal</strong> (<a class="reference internal" href="#txros.Goal" title="txros.Goal"><em>Goal</em></a>) – The txROS goal to manage.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.GoalManager.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#GoalManager.cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publishes a message to the action client requesting the goal to be cancelled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.GoalManager.forget">
+<span class="sig-name descname"><span class="pre">forget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#GoalManager.forget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager.forget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Leaves the manager running, but requests for the action client to stop
+work on the specific goal.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.GoalManager.get_feedback">
+<span class="sig-name descname"><span class="pre">get_feedback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/txros/action.html#GoalManager.get_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager.get_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the feedback from all feedback Deferred objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.GoalManager.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#GoalManager.get_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the result of the goal from the manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>???</p>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="simpleactionserver">
+<h2>SimpleActionServer<a class="headerlink" href="#simpleactionserver" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.SimpleActionServer"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.is_active">is_active</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.is_cancel_requested">is_cancel_requested</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.is_new_goal_available">is_new_goal_available</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.is_preempt_requested">is_preempt_requested</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.publish_feedback">publish_feedback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.set_aborted">set_aborted</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.set_preempted">set_preempted</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.set_succeeded">set_succeeded</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.start">start</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.SimpleActionServer.stop">stop</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.SimpleActionServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">SimpleActionServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActionMessage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">goal_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preempt_cb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simplified implementation of an action server. At a given time, can only at most
+have a current goal and a next goal. If new goals arrive with one already queued
+to be next, the goal with the greater timestamp will bump to other.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Construct a SimpleActionServer with a node handle, topic namespace, and type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serv</span> <span class="o">=</span> <span class="n">SimpleActionServer</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="s1">&#39;/test_action&#39;</span><span class="p">,</span> <span class="n">turtle_actionlib</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">ShapeAction</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The server must be started before any goals can be accepted</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serv</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># To accept a goal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_new_goal_available</span><span class="p">():</span>  <span class="c1"># Loop until there is a new goal</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">goal</span> <span class="o">=</span> <span class="n">serv</span><span class="o">.</span><span class="n">accept_new_goal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># To publish feedback</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serv</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">ShapeFeedback</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># To accept a preempt (a new goal attempted to replace the current one)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_preempt_requested</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">goal</span> <span class="o">=</span> <span class="n">serv</span><span class="o">.</span><span class="n">accept_new_goal</span><span class="p">()</span>  <span class="c1"># Automatically cancels old goal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># To finish a goal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serv</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Wahoo!&#39;</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">ShapeResult</span><span class="p">(</span><span class="n">apothem</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serv</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Something went wrong!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.is_active"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether there is an active goal running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.is_cancel_requested">
+<span class="sig-name descname"><span class="pre">is_cancel_requested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.is_cancel_requested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_cancel_requested" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether a goal is currently active and a cancel has been requested.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.is_new_goal_available">
+<span class="sig-name descname"><span class="pre">is_new_goal_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.is_new_goal_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_new_goal_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the next goal of the server is defined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the next goal is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.is_preempt_requested">
+<span class="sig-name descname"><span class="pre">is_preempt_requested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.is_preempt_requested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_preempt_requested" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the goal has been requested to be cancelled, and there is both
+a goal currently running and a goal scheduled to be run shortly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.publish_feedback">
+<span class="sig-name descname"><span class="pre">publish_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Message</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.publish_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.publish_feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publishes a feedback message onto the feedback topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feedback</strong> (<em>Optional</em><em>[</em><em>genpy.Message</em><em>]</em>) – The optional feedback message to add
+to the sent message.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.set_aborted">
+<span class="sig-name descname"><span class="pre">set_aborted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Message</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.set_aborted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.set_aborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of the current goal to aborted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> (<em>Optional</em><em>[</em><em>genpy.Message</em><em>]</em>) – The message to attach in the result.</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text to set in the result. Defaults to an empty string.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.set_preempted">
+<span class="sig-name descname"><span class="pre">set_preempted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Message</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.set_preempted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.set_preempted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of the current goal to preempted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> (<em>Optional</em><em>[</em><em>genpy.Message</em><em>]</em>) – The message to attach in the result.</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text to set in the result. Defaults to an empty string.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.set_succeeded">
+<span class="sig-name descname"><span class="pre">set_succeeded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Message</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.set_succeeded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.set_succeeded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of the current goal to be succeeded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> (<em>Optional</em><em>[</em><em>genpy.Message</em><em>]</em>) – The message to attach in the result.</p></li>
+<li><p><strong>text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The text to set in the result. Defaults to an empty string.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the status loop for the server.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.SimpleActionServer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#SimpleActionServer.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops the status loop for the server, and clears all running goals and all
+goals scheduled to be run.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="actionclient">
+<h2>ActionClient<a class="headerlink" href="#actionclient" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.ActionClient"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.ActionClient.cancel_all_goals">cancel_all_goals</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.ActionClient.cancel_goals_at_and_before_time">cancel_goals_at_and_before_time</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.ActionClient.send_goal">send_goal</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.ActionClient.wait_for_server">wait_for_server</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.ActionClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ActionClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ActionMessage</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/action.html#ActionClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.cancel_all_goals">
+<span class="sig-name descname"><span class="pre">cancel_all_goals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#ActionClient.cancel_all_goals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.cancel_all_goals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message to the mission cancellation topic requesting all goals to
+be cancelled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.cancel_goals_at_and_before_time">
+<span class="sig-name descname"><span class="pre">cancel_goals_at_and_before_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Time</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#ActionClient.cancel_goals_at_and_before_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.cancel_goals_at_and_before_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel all goals scheduled at and before a specific time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> – The time to reference when selecting which goals to cancel.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.send_goal">
+<span class="sig-name descname"><span class="pre">send_goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.Goal" title="txros.action.Goal"><span class="pre">Goal</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.GoalManager" title="txros.action.GoalManager"><span class="pre">GoalManager</span></a></span></span><a class="reference internal" href="../_modules/txros/action.html#ActionClient.send_goal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.send_goal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a goal to a goal manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The manager of the goal.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.GoalManager" title="txros.GoalManager">GoalManager</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.wait_for_server">
+<span class="sig-name descname"><span class="pre">wait_for_server</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/action.html#ActionClient.wait_for_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.wait_for_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for a server connection. When at least one connection is received,
+the function terminates.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="nodehandle">
+<h2>NodeHandle<a class="headerlink" href="#nodehandle" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.NodeHandle"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#txros.NodeHandle.from_argv">NodeHandle.from_argv</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#txros.NodeHandle.from_argv_with_remaining">NodeHandle.from_argv_with_remaining</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.advertise">advertise</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.advertise_service">advertise_service</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.delete_param">delete_param</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.get_name">get_name</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.get_param">get_param</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.get_param_names">get_param_names</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.get_service_client">get_service_client</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.get_time">get_time</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.has_param">has_param</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.is_running">is_running</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.is_shutdown">is_shutdown</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.resolve_name">resolve_name</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.resolve_name_without_remapping">resolve_name_without_remapping</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.search_param">search_param</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.set_param">set_param</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.shutdown">shutdown</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.sleep">sleep</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.sleep_until">sleep_until</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.NodeHandle.subscribe">subscribe</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.NodeHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">NodeHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remappings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.advertise">
+<span class="sig-name descname"><span class="pre">advertise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.Publisher" title="txros.publisher.Publisher"><span class="pre">Publisher</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.advertise"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.advertise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a publisher using this node handle. The arguments and keyword
+arguments passed to this method are passed into the constructor of the publisher;
+check there for information on what arguments should be passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The given publisher.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.Publisher" title="txros.Publisher">txros.Publisher</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.advertise_service">
+<span class="sig-name descname"><span class="pre">advertise_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.Service" title="txros.service.Service"><span class="pre">Service</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.advertise_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.advertise_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a service using this node handle. The arguments and keyword
+arguments passed to this method are passed into the constructor of the service;
+check there for information on what arguments can be passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The given service.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.Service" title="txros.Service">txros.Service</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.delete_param">
+<span class="sig-name descname"><span class="pre">delete_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.delete_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.delete_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the specified parameter from the parameter server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The parameter to delete from the parameter server.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of the delete operation. According to ROS documentation,
+this value can be ignored.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.from_argv">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_argv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.from_argv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.from_argv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a handle using the asynchronous generator format. All <a href="#id1"><span class="problematic" id="id2">*</span></a>args
+and <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs are passed to <a class="reference internal" href="#txros.NodeHandle.from_argv_with_remaining" title="txros.NodeHandle.from_argv_with_remaining"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_argv_with_remaining()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.from_argv_with_remaining">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_argv_with_remaining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">argv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anonymous</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.from_argv_with_remaining"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.from_argv_with_remaining" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a handle from an argument vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>default_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The default name of the node.</p></li>
+<li><p><strong>argv</strong> – The argument vector to use.</p></li>
+<li><p><strong>anonymous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to make the node anonymous. Appends a random
+number to the end of the node name.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The name of the node handle.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.get_param">
+<span class="sig-name descname"><span class="pre">get_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.get_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.get_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a parameter value from the ROS parameter server. If the key requested
+is a namespace, then a dictionary representing all keys below the given
+namespace is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the parameter to retrieve from the server.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.get_param_names">
+<span class="sig-name descname"><span class="pre">get_param_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.get_param_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.get_param_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the names of all parameters in the ROS parameter server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The names of all parameters in the server.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.get_service_client">
+<span class="sig-name descname"><span class="pre">get_service_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.ServiceClient" title="txros.serviceclient.ServiceClient"><span class="pre">ServiceClient</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.get_service_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.get_service_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a service client using this node handle. The arguments and keyword
+arguments passed to this method are passed into the constructor of the client;
+check there for information on what arguments can be passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The given service client.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.ServiceClient" title="txros.ServiceClient">txros.ServiceClient</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.get_time">
+<span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Time</span></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.get_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.get_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the time used by the node handle. If simulated time is requested
+to be used, then the current simulated time is returned. Otherwise, the current
+real time is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current time used by the node handle.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>genpy.Time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.has_param">
+<span class="sig-name descname"><span class="pre">has_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.has_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.has_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the ROS parameter server has a parameter with the specified
+name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the parameter to check the status of.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the parameter server has the specified key.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.is_running">
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.is_running"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the node handle is running.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.is_shutdown">
+<span class="sig-name descname"><span class="pre">is_shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.is_shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.is_shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Whether the node handle is not running.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.resolve_name">
+<span class="sig-name descname"><span class="pre">resolve_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.resolve_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.resolve_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves the name of the node handle and updates the name attribute with this
+resolved name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.resolve_name_without_remapping">
+<span class="sig-name descname"><span class="pre">resolve_name_without_remapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.resolve_name_without_remapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.resolve_name_without_remapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves the true name of a given node path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The path to resolve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resolved path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.search_param">
+<span class="sig-name descname"><span class="pre">search_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.search_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.search_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches for a parameter on the ROS parameter server, and returns the first
+key found that matches the search term.</p>
+<p>For more information on how searching is done to find a matching key, view
+the <a class="reference external" href="http://wiki.ros.org/ROS/Parameter%20Server%20API">ROS wiki documentation on this method</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The search key to use to find parameters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the first key found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.set_param">
+<span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.set_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.set_param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a parameter and value in the ROS parameter server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The parameter to set in the parameter server.</p></li>
+<li><p><strong>value</strong> (<em>Any</em>) – The value to set for the given parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of setting the parameter. According to the ROS documentation,
+this value can be ignored.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before the twisted reactor is shutdown. Calls the shutdown thread
+if one is specified - otherwise, the normal shutdown for the node is called.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.sleep">
+<span class="sig-name descname"><span class="pre">sleep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Duration</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.sleep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sleeps for a specified duration of time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>duration</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>genpy.Duration</em><em>]</em>) – The amount of time to sleep
+for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.sleep_until">
+<span class="sig-name descname"><span class="pre">sleep_until</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Time</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.sleep_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.sleep_until" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sleeps for a specified amount of time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>genpy.Time</em><em>]</em>) – The amount of time to sleep until.
+If a float or integer is used, then the generated time is constructed
+through the <code class="docutils literal notranslate"><span class="pre">from_sec</span></code> method of <code class="docutils literal notranslate"><span class="pre">genpy.Time</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.NodeHandle.subscribe">
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.Subscriber" title="txros.subscriber.Subscriber"><span class="pre">Subscriber</span></a></span></span><a class="reference internal" href="../_modules/txros/nodehandle.html#NodeHandle.subscribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.subscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a subscriber using this node handle. The arguments and keyword
+arguments passed to this method are passed into the constructor of the subscriber;
+check there for information on what arguments can be passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The given subscriber.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.Subscriber" title="txros.Subscriber">txros.Subscriber</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="publisher">
+<h2>Publisher<a class="headerlink" href="#publisher" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Publisher"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Publisher.get_connections">get_connections</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Publisher.publish">publish</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Publisher.shutdown">shutdown</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Publisher">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Publisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">genpy.Message</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latching</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/publisher.html#Publisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Publisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Publisher in the txROS suite. Managed through a node handle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle to associate with this publisher.
+Used to communicate with the ROS master server.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the publisher topic.</p></li>
+<li><p><strong>message_type</strong> (<em>Type</em><em>[</em><em>genpy.Message</em><em>]</em>) – The message type that will be published
+on the topic.</p></li>
+<li><p><strong>latching</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Enables latching on the publisher. This ensures that all
+new connections are immediately sent the most recently sent message
+when they connect to the publisher.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Publisher.get_connections">
+<span class="sig-name descname"><span class="pre">get_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/publisher.html#Publisher.get_connections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Publisher.get_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets connections to the publisher.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Publisher.publish">
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Message</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/publisher.html#Publisher.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Publisher.publish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publishes a message onto the topic. The message is serialized and sent to
+all connections connected to the publisher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>genpy.Message</em>) – The ROS message to send to all connected clients.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Publisher.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/publisher.html#Publisher.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Publisher.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts the publisher down. All operations scheduled by the publisher are cancelled.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Error"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Error.code">code</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Error.message">message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Error">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/rosxmlrpc.html#Error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an error that occurred in the XMLRPC communication.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty-prints the error status code and message.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Pretty-prints the error status code and message. Equivalent to
+<code class="docutils literal notranslate"><span class="pre">str(x)</span></code>.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Error.code">
+<span class="sig-name descname"><span class="pre">code</span></span><a class="headerlink" href="#txros.Error.code" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status code returned by the ROS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Error.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#txros.Error.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status message returned by the ROS server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="txros.ServiceError"></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.ServiceError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ServiceError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/serviceclient.html#ServiceError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ServiceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an error with a service client in txROS.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty-prints <code class="docutils literal notranslate"><span class="pre">ServiceError</span></code> name with the given error message.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Pretty-prints <code class="docutils literal notranslate"><span class="pre">ServiceError</span></code> name with the given error message.
+Equivalent to <code class="docutils literal notranslate"><span class="pre">str(x)</span></code>.</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="txros.TooPastError"></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.TooPastError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">TooPastError</span></span><a class="reference internal" href="../_modules/txros/txros_tf.html#TooPastError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TooPastError" title="Permalink to this definition">¶</a></dt>
+<dd><p>User asked for a transform that will never known because it’s from before
+the start of the history buffer.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="proxy">
+<h2>Proxy<a class="headerlink" href="#proxy" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Proxy"></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Proxy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proxy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Proxy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/rosxmlrpc.html#Proxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>The txROS proxy to the ROS master server.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x.attr</span></span></dt>
+<dd><p>Calls the master server with the attribute name representing the name
+of the method to call. The value is returned in a Deferred object.
+If the status code is not 1, then <a class="reference internal" href="#txros.Error" title="txros.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Error</span></code></a> is raised.</p>
+</dd></dl>
+
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>proxy</strong> (<em>xmlrpc.Proxy</em>) – The proxy representing an XMLRPC connection to the ROS
+master server.</p></li>
+<li><p><strong>caller_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The ID of the caller in the proxy.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="serviceclient">
+<h2>ServiceClient<a class="headerlink" href="#serviceclient" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.ServiceClient"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.ServiceClient.wait_for_service">wait_for_service</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.ServiceClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ServiceClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ServiceType</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/serviceclient.html#ServiceClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ServiceClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>A client connected to a service in txROS.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x(request_class)</span></span></dt>
+<dd><p>Makes a request to the service using an instance of the <code class="docutils literal notranslate"><span class="pre">request_class</span></code>
+request type. This operation returns a Deferred containing the result
+sent by the topic through the master server. Any errors will raise an
+instance of <a class="reference internal" href="#txros.ServiceError" title="txros.ServiceError"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.ServiceError</span></code></a>.</p>
+</dd></dl>
+
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle serving as the client to the service.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the service to connect to.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ServiceClient.wait_for_service">
+<span class="sig-name descname"><span class="pre">wait_for_service</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/serviceclient.html#ServiceClient.wait_for_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ServiceClient.wait_for_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for the service to appear. Checks to see if the service has appeared
+10 times per second.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="service">
+<h2>Service<a class="headerlink" href="#service" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Service"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Service.shutdown">shutdown</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Service">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">service_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ServiceType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">genpy.Message</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">defer.Deferred</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/service.html#Service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Service" title="Permalink to this definition">¶</a></dt>
+<dd><p>A service in the txROS suite. Handles incoming requests through a user-supplied
+callback function, which is expected to return a response message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle to use in conjunction with
+the service.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name to use for the service.</p></li>
+<li><p><strong>service_type</strong> (<em>ServiceType</em>) – A ROS service class to use with the service.
+The callback method used by the class will receive the request
+class associated with the service, and is expected to return the
+response class associated with this class.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>genpy.Message</em><em>]</em><em>, </em><em>defer.Deferred</em><em>]</em>) – The callback
+to process all incoming service requests. The callback should return
+the service response class through a Deferred object.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Service.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/service.html#Service.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Service.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts the service down. Cancels all operations currently scheduled to be
+completed by the service.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="subscriber">
+<h2>Subscriber<a class="headerlink" href="#subscriber" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Subscriber"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.get_connections">get_connections</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.get_last_message">get_last_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.get_last_message_time">get_last_message_time</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.get_next_message">get_next_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.shutdown">shutdown</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Subscriber">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Subscriber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">node_handle:</span> <span class="pre">NodeHandle,</span> <span class="pre">name:</span> <span class="pre">str,</span> <span class="pre">message_type:</span> <span class="pre">Type[genpy.Message],</span> <span class="pre">callback:</span> <span class="pre">Callable[[genpy.Message],</span> <span class="pre">None]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">Subscriber.&lt;lambda&gt;&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subscriber in the txROS suite.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle used to communicate with the
+ROS master server.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the topic to subscribe to.</p></li>
+<li><p><strong>message_type</strong> (<em>Type</em><em>[</em><em>genpy.Message</em><em>]</em>) – The message class shared by the topic.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>genpy.Message</em><em>]</em><em>, </em><em>None</em><em>]</em>) – The callback to use with
+the subscriber. The callback should receive an instance of the message
+shared by the topic and return None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.get_connections">
+<span class="sig-name descname"><span class="pre">get_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber.get_connections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">callerid</span></code> of each connected client. If a connection does
+not provide an ID, then the value may be None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of the relevant callerids.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.get_last_message">
+<span class="sig-name descname"><span class="pre">get_last_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Message</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber.get_last_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_last_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the last received message. This may be <code class="docutils literal notranslate"><span class="pre">None</span></code> if no message has been
+received.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The last sent message, or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[genpy.Message]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.get_last_message_time">
+<span class="sig-name descname"><span class="pre">get_last_message_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Time</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber.get_last_message_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_last_message_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the time associated with the last received message. May be <code class="docutils literal notranslate"><span class="pre">None</span></code> if
+no message has been received yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The time of the last received message, or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[genpy.Time]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.get_next_message">
+<span class="sig-name descname"><span class="pre">get_next_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber.get_next_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_next_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deferred which will contain the next message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Deferred object containing the next message.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Deferred</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/subscriber.html#Subscriber.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts the subscriber down. All operations scheduled by the subscriber
+are immediately cancelled.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="transform">
+<h2>Transform<a class="headerlink" href="#transform" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Transform"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#txros.Transform.from_Pose_message">Transform.from_Pose_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#txros.Transform.from_Transform_message">Transform.from_Transform_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#txros.Transform.identity">Transform.identity</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Transform.inverse">inverse</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Transform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a tf transform in the txROS suite.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></span></dt>
+<dd><p>Adds the components of each transform together.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span></span></dt>
+<dd><p>Subtracts the components between each transform.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">x</span> <span class="pre">*</span> <span class="pre">y</span></span></dt>
+<dd><p>Multiplies the components of each transform together.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Prints the constructor of the class in a string-formatted fashion.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Prints the constructor of the class in a string-formatted fashion.
+Equivalent to <code class="docutils literal notranslate"><span class="pre">str(x)</span></code>.</p>
+</dd></dl>
+
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Transform.from_Pose_message">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_Pose_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#Transform.from_Pose_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform.from_Pose_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a transform from a <a class="reference internal" href="messages.html#geometry_msgs.msg.Pose" title="geometry_msgs.msg.Pose"><code class="xref py py-class docutils literal notranslate"><span class="pre">geometry_msgs.msg.Pose</span></code></a> message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Transform.from_Transform_message">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_Transform_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#Transform.from_Transform_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform.from_Transform_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a transform from a <a class="reference internal" href="messages.html#geometry_msgs.msg.Transform" title="geometry_msgs.msg.Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">geometry_msgs.msg.Transform</span></code></a> message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Transform.identity">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#Transform.identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform.identity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and identity transform. The x, y, and z coordinates are all set to zero.
+The quaternion is set to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1]</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Transform.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.Transform" title="txros.txros_tf.Transform"><span class="pre">Transform</span></a></span></span><a class="reference internal" href="../_modules/txros/txros_tf.html#Transform.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform.inverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs an inverse transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The inverse transform.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.Transform" title="txros.Transform">Transform</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="transformbroadcaster">
+<h2>TransformBroadcaster<a class="headerlink" href="#transformbroadcaster" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.TransformBroadcaster"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.TransformBroadcaster.send_transform">send_transform</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.TransformBroadcaster">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">TransformBroadcaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#TransformBroadcaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TransformBroadcaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broadasts transforms onto a topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle used to communicate with the
+ROS master server.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.TransformBroadcaster.send_transform">
+<span class="sig-name descname"><span class="pre">send_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TransformStamped</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#TransformBroadcaster.send_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TransformBroadcaster.send_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a stamped Transform message onto the publisher.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transform</strong> (<a class="reference internal" href="messages.html#geometry_msgs.msg.TransformStamped" title="geometry_msgs.msg.TransformStamped"><em>TransformStamped</em></a>) – The transform to publish onto the topic.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The transform class was not of the TransformStamped class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="transformlistener">
+<h2>TransformListener<a class="headerlink" href="#transformlistener" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.TransformListener"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.TransformListener.shutdown">shutdown</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.TransformListener">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">TransformListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">history_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">genpy.Duration</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">genpy.Duration[10000000000]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/txros_tf.html#TransformListener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TransformListener" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="txros.TransformListener.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/txros_tf.html#TransformListener.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TransformListener.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts the transform listener down.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="event">
+<h2>Event<a class="headerlink" href="#event" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Event"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Event.id_generator">id_generator</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#txros.Event.observers">observers</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Event.unwatch">unwatch</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Event.watch">watch</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Event">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><a class="reference internal" href="../_modules/txros/variable.html#Event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents an event in the txROS suite. Commonly used for monitoring changes
+in the value of specific objects.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Event.observers">
+<span class="sig-name descname"><span class="pre">observers</span></span><a class="headerlink" href="#txros.Event.observers" title="Permalink to this definition">¶</a></dt>
+<dd><p>The totality of observers
+attached to the given event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>, Callable[[Any], None]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="txros.Event.id_generator">
+<span class="sig-name descname"><span class="pre">id_generator</span></span><a class="headerlink" href="#txros.Event.id_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A count generator responsible for generating
+unique new IDs for each observer added.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>itertools.count[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Event.unwatch">
+<span class="sig-name descname"><span class="pre">unwatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/txros/variable.html#Event.unwatch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Event.unwatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes the observer with the given ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The ID of the observer to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Event.watch">
+<span class="sig-name descname"><span class="pre">watch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/txros/variable.html#Event.watch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Event.watch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an observer with the given callable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>function</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>None</em><em>]</em>) – The function observer to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="variable">
+<h2>Variable<a class="headerlink" href="#variable" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="txros.Variable"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Variable.get_not_none">get_not_none</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Variable.get_when_satisfies">get_when_satisfies</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.Variable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/txros/variable.html#Variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="txros.Variable.get_not_none">
+<span class="sig-name descname"><span class="pre">get_not_none</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/txros/variable.html#Variable.get_not_none"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Variable.get_not_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the variable when it is not None through a Deferred.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The defer object containing the return value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>defer.Deferred</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Variable.get_when_satisfies">
+<span class="sig-name descname"><span class="pre">get_when_satisfies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/txros/variable.html#Variable.get_when_satisfies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Variable.get_when_satisfies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of the variable when the value passed into a callable
+returns true.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a><em>]</em>) – The check function.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The defer object containing the return value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>defer.Deferred</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
