@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_missions_core.chain_with_timeout</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_missions_core.chain_with_timeout</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">twisted.python</span> <span class="kn">import</span> <span class="n">failure</span>
+<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">util</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">ParametersException</span><span class="p">,</span> <span class="n">SubmissionException</span><span class="p">,</span> <span class="n">TimeoutException</span>
+
+
+<div class="viewcode-block" id="MakeChainWithTimeout"><a class="viewcode-back" href="../../reference/mission.html#mil_missions_core.MakeChainWithTimeout">[docs]</a><span class="k">def</span> <span class="nf">MakeChainWithTimeout</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">Type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a ``ChainWithTimeout`` mission with the BaseMission specified. Used by</span>
+<span class="sd">    individual robotics platforms to reuse this example mission.</span>
+
+<span class="sd">    For documentation on the ``ChainWithTimeout`` class, you will need to view</span>
+<span class="sd">    the source code.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        base (Type): A base class to use when constructing the ``ChainWithTimeout`` class.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ChainWithTimeout: The constructed class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">ChainWithTimeout</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Example of a mission which runs an arbitrary number of other missions in a linear order. This</span>
+<span class="sd">        is the mission used by the rqt plugin under the &quot;Chained Missions&quot; section.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+        <span class="k">def</span> <span class="nf">run_submission_with_timeout</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">mission</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs a child mission, throwing an exception if more time than specified in timeout</span>
+<span class="sd">            passes before the mission finishes executing.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                mission (str): The name of the mission to run.</span>
+<span class="sd">                timeout (float): The amount of time to wait before throwing a</span>
+<span class="sd">                    :class:`mil_missions_core.TimeoutException`.</span>
+<span class="sd">                parameters (str): The parameters to send to the mission.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                TimeoutException: The timeout expired and the mission did not complete.</span>
+<span class="sd">                Exception: The name of the mission provided was not found.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                ???</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">submission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_submission</span><span class="p">(</span><span class="n">mission</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timeout</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Timeout of zero means no timeout</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">submission</span>
+                <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="n">timeout_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">defer</span><span class="o">.</span><span class="n">DeferredList</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">submission</span><span class="p">,</span> <span class="n">timeout_df</span><span class="p">],</span> <span class="n">fireOnOneCallback</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fireOnOneErrback</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">timeout_df</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">submission</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">TimeoutException</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+
+        <span class="nd">@classmethod</span>
+        <span class="k">def</span> <span class="nf">decode_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Goes through list of missions to chain and fills in missing attributes,</span>
+<span class="sd">            like timeout with defaults. If something is invalid, raise an exception.</span>
+
+<span class="sd">            The parameters are primarily parsed using :meth:`json.loads`.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                parameters (str): The parameters to decode.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                ParametersException: An issue was found with the parameters. The</span>
+<span class="sd">                    :attr:`~mil_missions_core.ParametersException.msg` explains what</span>
+<span class="sd">                    issue was found.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                Dict[Any, Any]: The parsed parameters.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ParametersException</span><span class="p">(</span><span class="s2">&quot;must be a dictionary&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;missions&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ParametersException</span><span class="p">(</span><span class="s1">&#39;must have &quot;missions&quot; list&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;missions&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ParametersException</span><span class="p">(</span><span class="s1">&#39;&quot;missions&quot; attribute must be a list&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">mission</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;missions&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s2">&quot;mission&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;invalid parameters, missing attribute &quot;mission&quot;&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">has_mission</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">]):</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s1">&#39;mission &quot;</span><span class="si">{}</span><span class="s1">&quot; not available&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">])</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_mission</span><span class="p">(</span>
+                        <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">]</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">decode_parameters</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">])</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ParametersException</span><span class="p">(</span>
+                        <span class="s2">&quot;Invalid parameters for </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;timeout&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">if</span> <span class="s2">&quot;required&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;required&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="n">parameters</span>
+
+        <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+        <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">]):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Runs a list of child missions specified in the parameters with optional timeouts.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                parameters (Dict[str, List]): A dictionary containing at least a</span>
+<span class="sd">                    ``&quot;missions&quot;`` key which is equal to a list of mission objects that</span>
+<span class="sd">                    can be ran.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">mission</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;missions&quot;</span><span class="p">]:</span>  <span class="c1"># Run each child mission linearly</span>
+
+                <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">final</span><span class="p">):</span>
+                    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                    Called when a submission finishes. If it succeeded, print the result in feedback.</span>
+<span class="sd">                    If it failed or timedout, print the failure and stop the whole chain if that</span>
+<span class="sd">                    mission is required.</span>
+<span class="sd">                    &quot;&quot;&quot;</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final</span><span class="p">,</span> <span class="n">failure</span><span class="o">.</span><span class="n">Failure</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> FAILED: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="k">if</span> <span class="n">mission</span><span class="p">[</span>
+                            <span class="s2">&quot;required&quot;</span>
+                        <span class="p">]:</span>  <span class="c1"># Fail whole chain if a required mission times out or fails</span>
+                            <span class="k">raise</span> <span class="n">SubmissionException</span><span class="p">(</span>
+                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+                            <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> SUCCEEDED: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO FAIL BRO&quot;</span><span class="p">)</span>
+
+                <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_submission_with_timeout</span><span class="p">(</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">],</span> <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">addBoth</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span><span class="s2">&quot;Done with all&quot;</span><span class="p">)</span>
+            <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="s2">&quot;All missions complete or skipped.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ChainWithTimeout</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
