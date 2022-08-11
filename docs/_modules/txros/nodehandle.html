@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>txros.nodehandle</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for txros.nodehandle</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="kn">import</span> <span class="n">server</span><span class="p">,</span> <span class="n">xmlrpc</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">interfaces</span>
+<span class="kn">from</span> <span class="nn">twisted.internet.tcp</span> <span class="kn">import</span> <span class="n">Port</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">genpy</span>
+<span class="kn">from</span> <span class="nn">roscpp.srv</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GetLoggers</span><span class="p">,</span>
+    <span class="n">GetLoggersResponse</span><span class="p">,</span>
+    <span class="n">SetLoggerLevel</span><span class="p">,</span>
+    <span class="n">SetLoggerLevelResponse</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">rosgraph_msgs.msg</span> <span class="kn">import</span> <span class="n">Clock</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.tcpros</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">util</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">publisher</span><span class="p">,</span> <span class="n">rosxmlrpc</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">serviceclient</span><span class="p">,</span> <span class="n">subscriber</span>
+
+
+<span class="k">class</span> <span class="nc">_XMLRPCSlave</span><span class="p">(</span><span class="n">xmlrpc</span><span class="o">.</span><span class="n">XMLRPC</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="n">xmlrpc</span><span class="o">.</span><span class="n">XMLRPC</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;xmlrpc_&quot;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="s2">&quot;not implemented&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getBusStats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="p">[[],</span> <span class="p">[],</span> <span class="p">[]]</span>  <span class="c1"># XXX</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getBusInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="c1"># list of (connectionId, destinationId, direction, transport, topic, connected)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="p">[]</span>  <span class="c1"># XXX</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getMasterUri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">_master_uri</span>
+
+    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">xmlrpc_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shutdown requested. Reason:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="c1"># XXX should somehow tell/wait for user code to cleanly exit here, e.g. by .cancel()ing main coroutine</span>
+        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+        <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+        <span class="k">def</span> <span class="nf">_kill_soon</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">_kill_soon</span><span class="p">()</span>
+        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getPid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getSubscriptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="p">[]</span>  <span class="c1"># XXX</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_getPublications</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="p">[]</span>  <span class="c1"># XXX</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_paramUpdate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">parameter_key</span><span class="p">,</span> <span class="n">parameter_value</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+        <span class="k">del</span> <span class="n">parameter_key</span><span class="p">,</span> <span class="n">parameter_value</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="kc">False</span>  <span class="c1"># XXX</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_publisherUpdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">publishers</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">_xmlrpc_handlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="n">topic</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="p">)(</span><span class="n">publishers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">xmlrpc_requestTopic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">protocols</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">_xmlrpc_handlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="p">(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="n">topic</span><span class="p">),</span>
+            <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Not a publisher of [</span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="n">topic</span><span class="p">,</span> <span class="p">[]),</span>
+        <span class="p">)(</span><span class="n">protocols</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NodeHandle"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle">[docs]</a><span class="k">class</span> <span class="nc">NodeHandle</span><span class="p">:</span>
+
+    <span class="n">_master_uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_ns</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_addr</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_shutdown_callbacks</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span>
+    <span class="n">_xmlrpc_server</span><span class="p">:</span> <span class="n">Port</span>
+    <span class="n">_tcpros_server_uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_is_running</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">_master_proxy</span><span class="p">:</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">Proxy</span>
+    <span class="n">_xmlrpc_server_uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">_tcpros_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">Protocol</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span>
+    <span class="n">_xmlrpc_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span>
+    <span class="n">_tcpros_server</span><span class="p">:</span> <span class="n">interfaces</span><span class="o">.</span><span class="n">IListeningPort</span>
+    <span class="n">_use_sim_time</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">_clock_sub</span><span class="p">:</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span>
+    <span class="n">_remappings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+    <span class="n">_sim_time</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span>
+
+<div class="viewcode-block" id="NodeHandle.from_argv_with_remaining"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.from_argv_with_remaining">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">from_argv_with_remaining</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">default_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">argv</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a handle from an argument vector.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            default_name (str): The default name of the node.</span>
+<span class="sd">            argv (???): The argument vector to use.</span>
+<span class="sd">            anonymous (bool): Whether to make the node anonymous. Appends a random</span>
+<span class="sd">                number to the end of the node name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">argv</span><span class="p">:</span>
+            <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">remappings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="s2">&quot;:=&quot;</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                <span class="n">before</span><span class="p">,</span> <span class="n">after</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:=&quot;</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">before</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">remappings</span>
+                <span class="n">remappings</span><span class="p">[</span><span class="n">before</span><span class="p">]</span> <span class="o">=</span> <span class="n">after</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">default_name</span>
+        <span class="k">if</span> <span class="n">anonymous</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">%016x</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">64</span><span class="p">),)</span>
+        <span class="k">if</span> <span class="s2">&quot;__name&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__name&quot;</span><span class="p">]</span>
+
+        <span class="n">addr</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>  <span class="c1"># could be a bit smarter</span>
+        <span class="k">if</span> <span class="s2">&quot;ROS_IP&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_IP&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;ROS_HOSTNAME&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_HOSTNAME&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;__ip&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__ip&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;__hostname&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+            <span class="n">addr</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__hostname&quot;</span><span class="p">]</span>
+
+        <span class="n">master_uri</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;ROS_MASTER_URI&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">master_uri</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;__master&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+            <span class="n">master_uri</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__master&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">master_uri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;either ROS_MASTER_URI variable or __master argument has to be provided&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">ns</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;ROS_NAMESPACE&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">ns</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_NAMESPACE&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;__ns&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+            <span class="n">ns</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__ns&quot;</span><span class="p">]</span>
+
+        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="k">yield</span> <span class="bp">cls</span><span class="p">(</span>
+                        <span class="n">ns</span><span class="o">=</span><span class="n">ns</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                        <span class="n">addr</span><span class="o">=</span><span class="n">addr</span><span class="p">,</span>
+                        <span class="n">master_uri</span><span class="o">=</span><span class="n">master_uri</span><span class="p">,</span>
+                        <span class="n">remappings</span><span class="o">=</span><span class="n">remappings</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">res</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.from_argv"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.from_argv">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">from_argv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a handle using the asynchronous generator format. All *args</span>
+<span class="sd">        and **kwargs are passed to :meth:`.from_argv_with_remaining`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">((</span><span class="k">yield</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_argv_with_remaining</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span></div>
+
+    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ns</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">master_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">remappings</span><span class="p">):</span>
+        <span class="c1"># constraints: anything blocking here should print something if it&#39;s</span>
+        <span class="c1"># taking a long time in order to avoid confusion</span>
+
+        <span class="bp">self</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ns</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;/&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">ns</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ns</span> <span class="o">=</span> <span class="n">ns</span>  <span class="c1"># valid values: &#39;&#39;, &#39;/a&#39;, &#39;/a/b&#39;</span>
+
+        <span class="k">assert</span> <span class="s2">&quot;/&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ns</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">addSystemEventTrigger</span><span class="p">(</span><span class="s2">&quot;before&quot;</span><span class="p">,</span> <span class="s2">&quot;shutdown&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span> <span class="o">=</span> <span class="n">addr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_master_uri</span> <span class="o">=</span> <span class="n">master_uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_remappings</span> <span class="o">=</span> <span class="n">remappings</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">Proxy</span><span class="p">(</span>
+            <span class="n">xmlrpc</span><span class="o">.</span><span class="n">Proxy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_master_uri</span><span class="o">.</span><span class="n">encode</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_handlers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_server</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">Site</span><span class="p">(</span><span class="n">_XMLRPCSlave</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_server</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_server_uri</span> <span class="o">=</span> <span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%i</span><span class="s2">/&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_server</span><span class="o">.</span><span class="n">getHost</span><span class="p">()</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_handlers</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+        <span class="k">def</span> <span class="nf">_handle_tcpros_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">:</span> <span class="n">Protocol</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">((</span><span class="k">yield</span> <span class="n">conn</span><span class="o">.</span><span class="n">receiveString</span><span class="p">()))</span>
+
+                <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="n">header</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">conn</span><span class="p">:</span> <span class="n">Protocol</span><span class="p">):</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">sendString</span><span class="p">(</span>
+                        <span class="n">tcpros</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s2">&quot;unhandled connection&quot;</span><span class="p">))</span>
+                    <span class="p">)</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="s2">&quot;service&quot;</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_handlers</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="s2">&quot;service&quot;</span><span class="p">]),</span> <span class="n">default</span><span class="p">)(</span>
+                        <span class="n">header</span><span class="p">,</span> <span class="n">conn</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="s2">&quot;topic&quot;</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_handlers</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">]),</span> <span class="n">default</span><span class="p">)(</span>
+                        <span class="n">header</span><span class="p">,</span> <span class="n">conn</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">sendString</span><span class="p">(</span>
+                        <span class="n">tcpros</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span>
+                            <span class="nb">dict</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s2">&quot;no topic or service name detected&quot;</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+                <span class="k">raise</span>
+
+        <span class="k">def</span> <span class="nf">_make_tcpros_protocol</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">Protocol</span><span class="p">()</span>
+            <span class="n">_handle_tcpros_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">conn</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span> <span class="o">=</span> <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">AutoServerFactory</span><span class="p">(</span><span class="n">_make_tcpros_protocol</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server_uri</span> <span class="o">=</span> <span class="s2">&quot;rosrpc://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">getHost</span><span class="p">()</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">getHost</span><span class="p">()</span><span class="o">.</span><span class="n">port</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">other_node_uri</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">lookupNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+                <span class="k">break</span>  <span class="c1"># assume that error means unknown node</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># pause so we don&#39;t retry immediately</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">Proxy</span><span class="p">(</span>
+                    <span class="n">xmlrpc</span><span class="o">.</span><span class="n">Proxy</span><span class="p">(</span><span class="n">other_node_uri</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+                <span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span>
+                        <span class="n">other_node_proxy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="s2">&quot;new node registered with same name&quot;</span><span class="p">),</span>
+                        <span class="mi">3</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="n">error</span><span class="o">.</span><span class="n">ConnectionRefusedError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                <span class="k">break</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/use_sim_time&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>  <span class="c1"># assume that error means not found</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="nf">got_clock</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="n">Clock</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sim_time</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">clock</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clock_sub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;/clock&quot;</span><span class="p">,</span> <span class="n">Clock</span><span class="p">,</span> <span class="n">got_clock</span><span class="p">)</span>
+            <span class="c1"># make sure self._sim_time gets set before we continue</span>
+            <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_time_notice</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_clock_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">(),</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;getting simulated time from /clock&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resolve_name</span><span class="p">(</span><span class="s2">&quot;~&quot;</span> <span class="o">+</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">advertise_service</span><span class="p">(</span>
+            <span class="s2">&quot;~get_loggers&quot;</span><span class="p">,</span> <span class="n">GetLoggers</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">GetLoggersResponse</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">advertise_service</span><span class="p">(</span>
+            <span class="s2">&quot;~set_logger_level&quot;</span><span class="p">,</span> <span class="n">SetLoggerLevel</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetLoggerLevelResponse</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NodeHandle.shutdown"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called before the twisted reactor is shutdown. Calls the shutdown thread</span>
+<span class="sd">        if one is specified - otherwise, the normal shutdown for the node is called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_shutdown_thread&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_real_shutdown</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">branch_deferred</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_thread</span><span class="p">)</span></div>
+
+    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">_real_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># Ensure that we are called directly from reactor rather than from a callback</span>
+        <span class="c1"># This avoids strange case where a cancellableInlineCallbacks is cancelled while it&#39;s running</span>
+        <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span><span class="p">,</span> <span class="n">old</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_callbacks</span>
+            <span class="n">old_dfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">()</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">old</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">old_dfs</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">df</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+
+<div class="viewcode-block" id="NodeHandle.get_name"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the node handle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
+
+<div class="viewcode-block" id="NodeHandle.get_time"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.get_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the time used by the node handle. If simulated time is requested</span>
+<span class="sd">        to be used, then the current simulated time is returned. Otherwise, the current</span>
+<span class="sd">        real time is returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            genpy.Time: The current time used by the node handle.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim_time</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="NodeHandle.sleep_until"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.sleep_until">[docs]</a>    <span class="nd">@util</span><span class="o">.</span><span class="n">cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">sleep_until</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sleeps for a specified amount of time.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            time (Union[float, int, genpy.Time]): The amount of time to sleep until.</span>
+<span class="sd">                If a float or integer is used, then the generated time is constructed</span>
+<span class="sd">                through the ``from_sec`` method of ``genpy.Time``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">from_sec</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;expected float or genpy.Time&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sim_time</span> <span class="o">&lt;</span> <span class="n">time</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clock_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">current_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">current_time</span> <span class="o">&gt;=</span> <span class="n">time</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="k">yield</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">((</span><span class="n">time</span> <span class="o">-</span> <span class="n">current_time</span><span class="p">)</span><span class="o">.</span><span class="n">to_sec</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="NodeHandle.sleep"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.sleep">[docs]</a>    <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sleeps for a specified duration of time.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            duration (Union[float, int, genpy.Duration]): The amount of time to sleep</span>
+<span class="sd">                for.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_sec</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;expected float or genpy.Duration&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sleep_until</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.resolve_name_without_remapping"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.resolve_name_without_remapping">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_name_without_remapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resolves the true name of a given node path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The path to resolve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The resolved path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">name</span>
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ns</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="NodeHandle.resolve_name"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.resolve_name">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resolves the name of the node handle and updates the name attribute with this</span>
+<span class="sd">        resolved name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_name_without_remapping</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">before_unresolved</span><span class="p">,</span> <span class="n">after_unresolved</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remappings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_name_without_remapping</span><span class="p">(</span><span class="n">before_unresolved</span><span class="p">)</span>
+            <span class="n">after</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_name_without_remapping</span><span class="p">(</span><span class="n">after_unresolved</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="n">before</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">after</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">before</span><span class="p">)</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">name</span></div>
+
+<div class="viewcode-block" id="NodeHandle.is_running"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the node handle is running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
+
+<div class="viewcode-block" id="NodeHandle.is_shutdown"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.is_shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">is_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the node handle is not running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
+
+<div class="viewcode-block" id="NodeHandle.advertise_service"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.advertise_service">[docs]</a>    <span class="k">def</span> <span class="nf">advertise_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a service using this node handle. The arguments and keyword</span>
+<span class="sd">        arguments passed to this method are passed into the constructor of the service;</span>
+<span class="sd">        check there for information on what arguments can be passed in.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            txros.Service: The given service.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.get_service_client"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.get_service_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_service_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">serviceclient</span><span class="o">.</span><span class="n">ServiceClient</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a service client using this node handle. The arguments and keyword</span>
+<span class="sd">        arguments passed to this method are passed into the constructor of the client;</span>
+<span class="sd">        check there for information on what arguments can be passed in.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            txros.ServiceClient: The given service client.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">serviceclient</span><span class="o">.</span><span class="n">ServiceClient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.subscribe"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.subscribe">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a subscriber using this node handle. The arguments and keyword</span>
+<span class="sd">        arguments passed to this method are passed into the constructor of the subscriber;</span>
+<span class="sd">        check there for information on what arguments can be passed in.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            txros.Subscriber: The given subscriber.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.advertise"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.advertise">[docs]</a>    <span class="k">def</span> <span class="nf">advertise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">publisher</span><span class="o">.</span><span class="n">Publisher</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a publisher using this node handle. The arguments and keyword</span>
+<span class="sd">        arguments passed to this method are passed into the constructor of the publisher;</span>
+<span class="sd">        check there for information on what arguments should be passed in.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            txros.Publisher: The given publisher.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">publisher</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.get_param"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.get_param">[docs]</a>    <span class="k">def</span> <span class="nf">get_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a parameter value from the ROS parameter server. If the key requested</span>
+<span class="sd">        is a namespace, then a dictionary representing all keys below the given</span>
+<span class="sd">        namespace is returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The name of the parameter to retrieve from the server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.has_param"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.has_param">[docs]</a>    <span class="k">def</span> <span class="nf">has_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the ROS parameter server has a parameter with the specified</span>
+<span class="sd">        name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The name of the parameter to check the status of.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the parameter server has the specified key.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">hasParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.delete_param"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.delete_param">[docs]</a>    <span class="k">def</span> <span class="nf">delete_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes the specified parameter from the parameter server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The parameter to delete from the parameter server.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The result of the delete operation. According to ROS documentation,</span>
+<span class="sd">            this value can be ignored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">deleteParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.set_param"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.set_param">[docs]</a>    <span class="k">def</span> <span class="nf">set_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a parameter and value in the ROS parameter server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The parameter to set in the parameter server.</span>
+<span class="sd">            value (Any): The value to set for the given parameter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The result of setting the parameter. According to the ROS documentation,</span>
+<span class="sd">            this value can be ignored.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">setParam</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.search_param"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.search_param">[docs]</a>    <span class="k">def</span> <span class="nf">search_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Searches for a parameter on the ROS parameter server, and returns the first</span>
+<span class="sd">        key found that matches the search term.</span>
+
+<span class="sd">        For more information on how searching is done to find a matching key, view</span>
+<span class="sd">        the `ROS wiki documentation on this method &lt;http://wiki.ros.org/ROS/Parameter%20Server%20API&gt;`_.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): The search key to use to find parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the first key found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">searchParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeHandle.get_param_names"><a class="viewcode-back" href="../../reference/txros.html#txros.NodeHandle.get_param_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_param_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the names of all parameters in the ROS parameter server.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[str]: The names of all parameters in the server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">getParamNames</span><span class="p">()</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
