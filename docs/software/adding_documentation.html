@@ -118,8 +118,7 @@ what you’ve built!</p>
 from our source code. Make sure you have completed the getting started process
 to ensure you have all the needed dependencies.</p>
 <p>Remember to make your changes on an accessible branch:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout noetic-migration
-$ git checkout -b noetic-&lt;your branch name here&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout -b &lt;your branch name here&gt;
 </pre></div>
 </div>
 <p>Feel free to be flexible with this; you may not need to make a new branch if you
@@ -136,13 +135,10 @@ setup working that allows you to contribute to the docs and preview your changes
 </pre></div>
 </div>
 </li>
-<li><p>Switch to the <code class="docutils literal notranslate"><span class="pre">noetic-migration</span></code> branch, and make your own branch off of this.
-This branch only will be used by you (and any collaborators working with you),
-so feel free to play around with things.</p>
+<li><p>Make your own branch off of <code class="docutils literal notranslate"><span class="pre">master</span></code>. This branch only will be used by you
+(and any collaborators working with you), so feel free to play around with things.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> mil
-$ git checkout noetic-migration
-$ git submodule update --init --recursive
-$ git checkout -b noetic-&lt;your branch name here&gt;
+$ git checkout -b &lt;your branch name here&gt;
 </pre></div>
 </div>
 </li>
