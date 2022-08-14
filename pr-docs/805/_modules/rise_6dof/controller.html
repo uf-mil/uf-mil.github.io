@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>rise_6dof.controller</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for rise_6dof.controller</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">mil_msgs.msg</span> <span class="kn">import</span> <span class="n">PoseTwist</span>
+<span class="kn">from</span> <span class="nn">mil_ros_tools.geometry_helpers</span> <span class="kn">import</span> <span class="n">quat_to_rotvec</span>
+<span class="kn">from</span> <span class="nn">tf</span> <span class="kn">import</span> <span class="n">transformations</span>
+
+<span class="n">numpy</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../subjugator/reference.html#rise_6dof.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Input poses must all be in world frame/velocities must all be in body frame</span>
+<span class="sd">    (follows convention from Odometry message). The output wrench should be in the</span>
+<span class="sd">    body frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            config (Dict[str, Union[np.ndarray, bool]]): The configuration to use</span>
+<span class="sd">                with the controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Controller.reset"><a class="viewcode-back" href="../../subjugator/reference.html#rise_6dof.Controller.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the controller with zero values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Controller.update"><a class="viewcode-back" href="../../subjugator/reference.html#rise_6dof.Controller.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">desired</span><span class="p">:</span> <span class="n">PoseTwist</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">PoseTwist</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+        <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the controllers with a few values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dt (float): ???</span>
+<span class="sd">            desired (PoseTwist): ???</span>
+<span class="sd">            current (PoseTwist): ???</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">130</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">),</span> <span class="p">(</span><span class="n">p_dot</span><span class="p">,</span> <span class="n">o_dot</span><span class="p">)</span> <span class="o">=</span> <span class="n">current</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="n">desired_p</span><span class="p">,</span> <span class="n">desired_o</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">desired_p_dot</span><span class="p">,</span> <span class="n">desired_o_dot</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">desired_p_dotdot</span><span class="p">,</span> <span class="n">desired_o_dotdot</span><span class="p">),</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="n">desired</span>
+        <span class="n">world_from_body</span> <span class="o">=</span> <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_matrix</span><span class="p">(</span><span class="n">o</span><span class="p">)[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">x_dot</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p_dot</span><span class="p">),</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">o_dot</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># world_from_desiredbody = transformations.quaternion_matrix(desired_o)[:3, :3]</span>
+        <span class="n">desired_x_dot</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_p_dot</span><span class="p">),</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_o_dot</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">desired_x_dotdot</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_p_dotdot</span><span class="p">),</span>
+                <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_o_dotdot</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:20s}</span><span class="s2"> </span><span class="si">{:30}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Desired Velocity:&quot;</span><span class="p">,</span> <span class="n">desired_x_dot</span><span class="p">))</span>
+
+        <span class="n">error_position_world</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">desired_p</span> <span class="o">-</span> <span class="n">p</span><span class="p">,</span>
+                <span class="n">quat_to_rotvec</span><span class="p">(</span>
+                    <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
+                        <span class="n">desired_o</span><span class="p">,</span>
+                        <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_inverse</span><span class="p">(</span><span class="n">o</span><span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;two_d_mode&quot;</span><span class="p">]:</span>
+            <span class="n">error_position_world</span> <span class="o">=</span> <span class="n">error_position_world</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">world_from_body2</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">world_from_body2</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">world_from_body2</span><span class="p">[</span><span class="mi">3</span><span class="p">:,</span> <span class="mi">3</span><span class="p">:]</span> <span class="o">=</span> <span class="n">world_from_body</span>
+
+        <span class="c1"># Permitting lambda assignment b/c legacy</span>
+        <span class="n">body_gain</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">world_from_body2</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">world_from_body2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+        <span class="n">error_velocity_world</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">desired_x_dot</span>
+            <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">error_position_world</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">-</span> <span class="n">x_dot</span>
+
+        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:20s}</span><span class="s2"> </span><span class="si">{:30}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Error velocity:&quot;</span><span class="p">,</span> <span class="n">error_velocity_world</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;two_d_mode&quot;</span><span class="p">]:</span>
+            <span class="n">error_velocity_world</span> <span class="o">=</span> <span class="n">error_velocity_world</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">pd_output</span> <span class="o">=</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ks&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:20s}</span><span class="s2"> </span><span class="si">{:30}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;pd_output:&quot;</span><span class="p">,</span> <span class="n">pd_output</span><span class="p">))</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">pd_output</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;use_rise&quot;</span><span class="p">]:</span>
+            <span class="n">rise_term_int</span> <span class="o">=</span> <span class="n">body_gain</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ks&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">])</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">)</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">])</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="n">rise_term_int</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span> <span class="o">=</span> <span class="n">rise_term_int</span>
+
+            <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># zero rise term so it doesn&#39;t wind up over time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;accel_feedforward&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">desired_x_dotdot</span>
+        <span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;vel_feedforward&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">desired_x_dot</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Permitting lambda assignment b/c legacy</span>
+        <span class="n">wrench_from_vec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">output</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span>
+            <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]),</span>
+        <span class="p">)</span>  <span class="c1"># noqa</span>
+        <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:6}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;PD:&quot;</span><span class="p">,</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">pd_output</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:6}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;PID(R):&quot;</span><span class="p">,</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">output</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">pd_output</span><span class="p">),</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
