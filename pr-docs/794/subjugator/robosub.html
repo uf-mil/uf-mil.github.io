@@ -5,7 +5,7 @@
         <!-- HTML meta -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-        <title>Enabling SubjuGator</title>
+        <title>RoboSub competition</title>
         <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
         <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
         <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -26,8 +26,8 @@
         <link rel="shortcut icon" href="../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../genindex.html" />
         <link rel="search" title="Search" href="../search.html" />
-        <link rel="next" title="SubjuGator Cameras" href="cameras.html" />
-        <link rel="prev" title="Simulating SubjuGator" href="simulating.html" />
+        <link rel="next" title="Lessons from RoboSub 2022" href="lessons22.html" />
+        <link rel="prev" title="Electrical Design" href="electrical.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -60,19 +60,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">SubjuGator</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#subjugator-8">SubjuGator 8</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="design.html">Software Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="simulating.html">Simulating</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Enabling</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#power">Power</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ssh">SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#subjugator-8">SubjuGator 8</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#robosub">RoboSub</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RoboSub</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lessons-learned">Lessons Learned</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="cameras.html">Cameras</a></li>
-<li class="toctree-l3"><a class="reference internal" href="electrical.html">Electrical Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lessons22.html">Lessons from 2022</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lessons19.html">Lessons from 2019</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#robosub">RoboSub</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
@@ -94,42 +92,22 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <section id="enabling-subjugator">
-<h1>Enabling SubjuGator<a class="headerlink" href="#enabling-subjugator" title="Permalink to this heading">¶</a></h1>
-<p>Eventually, after working in simulations and theory for some amount of time,
-you’re going to want to go out to a real body of water to test the submarine!
-That’s perfect, this guide will help to walk you through some of the background
-info needed to get moving.</p>
-<section id="power">
-<h2>Power<a class="headerlink" href="#power" title="Permalink to this heading">¶</a></h2>
-<p>SubjuGator 8 can be powered through two methods, AC power, and batteries. You’re
-going to want to use one over the other depending on where you’re testing the
-robot. If you’re testing out of the water, you’re going to want to use AC power,
-as this will give you a nice, smooth uninterrupted power supply. If you’re testing
-in the water, then AC power is no longer an option unless you want to break the
-power supply. Therefore, you’ll need to use batteries.</p>
-<p>The AC power looks like a gray metal box, with a fan at two ends. It plugs into
-a wall. You should then be able to use the power supply with the sub through a
-connecting cable.</p>
-<p>Otherwise, you can use two 24V LiPo batteries in the sub’s battery compartment.
-These batteries only last for a while, so use them sparingly, and don’t try to
-use them excessively. Misusing batteries will typically result in a fire or puffy
-batteries.</p>
-<p>The submarine automatically boots up whenever power is connected. There’s no
-on button!</p>
+  <section id="robosub-competition">
+<h1>RoboSub competition<a class="headerlink" href="#robosub-competition" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>The fundamental goal of the RoboSub competition is for an Autonomous Underwater Vehicle
+(AUV) to demonstrate its autonomy by completing underwater tasks, with a new theme each year.
+The theme does not usually impact what the tasks themselves. There are usually tasks that
+involve passing through a gate, recognizing images and shooting torpedoes at targets,
+recognizing downfacing objects and dropping a marker, listening and localizing sound pingers
+and navigate towards them, and surface in a specified area.</p>
 </section>
-<section id="ssh">
-<h2>SSH<a class="headerlink" href="#ssh" title="Permalink to this heading">¶</a></h2>
-<p>Now that the sub is on, you may to want to see what it’s doing. That’s where
-the magical SSH comes in! You can run programs on the sub’s computer, which is
-helpful when you want to record bag files, run programs, see diagnostics, or
-do anything else!</p>
-<p>To be able to <code class="docutils literal notranslate"><span class="pre">ssh</span></code> into SubjuGator, you’re going to need to be on the same
-network as the sub. Frequently, the <a class="reference internal" href="../infrastructure/network_box.html"><span class="doc std std-doc">MIL Network Box</span></a>
-is used to achieve this. You should connect an ethernet cable to the sub over
-tether, and then insert this cable into the box. Then, you can insert your own
-Ethernet cables and be connected to the sub. For more information on the box,
-see its documentation page.</p>
+<section id="lessons-learned">
+<h2>Lessons Learned<a class="headerlink" href="#lessons-learned" title="Permalink to this heading">¶</a></h2>
+<p>If you’re working on the sub and/or you are planning on going to competition it is
+<strong>strongly recommended to read the <a class="reference internal" href="lessons19.html"><span class="doc std std-doc">lessons learned in 2019</span></a>
+and the <a class="reference internal" href="lessons22.html"><span class="doc std std-doc">lessons learned in 2022</span></a></strong>.</p>
 </section>
 </section>
 
