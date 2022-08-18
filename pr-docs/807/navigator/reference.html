@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Navigator Software Reference</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Design" href="../design/design.html" />
+        <link rel="prev" title="Subjugator Software Reference" href="../subjugator/reference.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Navigator Software Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messagedetectdeliver">MessageDetectDeliver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#messageextranceexitgate">MessageExtranceExitGate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#messageidentifysymbolsdock">MessageIdentifySymbolsDock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scanthecodemission">ScanTheCodeMission</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ausvi-communication">AUSVI Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#robotxentranceexitgatemessage">RobotXEntranceExitGateMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxdetectdelivermessage">RobotXDetectDeliverMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxheartbeatmessage">RobotXHeartbeatMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxidentifysymbolsdockmessage">RobotXIdentifySymbolsDockMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxscancodemessage">RobotXScanCodeMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxstartservices">RobotXStartServices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotxclient">RobotXClient</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="navigator-software-reference">
+<h1>Navigator Software Reference<a class="headerlink" href="#navigator-software-reference" title="Permalink to this heading">¶</a></h1>
+<p>Below is the software reference for Navigator-specific systems.</p>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this heading">¶</a></h2>
+<section id="messagedetectdeliver">
+<h3>MessageDetectDeliver<a class="headerlink" href="#messagedetectdeliver" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageDetectDeliverRequest"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest.shape">shape</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest.shape_color">shape_color</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageDetectDeliverRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageDetectDeliverRequest</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageDetectDeliverRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>The request class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageDetectDeliver</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageDetectDeliverRequest.shape_color">
+<span class="sig-name descname"><span class="pre">shape_color</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageDetectDeliverRequest.shape_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the requested shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageDetectDeliverRequest.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageDetectDeliverRequest.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of requested shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageDetectDeliverResponse"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverResponse.message">message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageDetectDeliverResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageDetectDeliverResponse</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageDetectDeliverResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The response class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageDetectDeliver</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageDetectDeliverResponse.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageDetectDeliverResponse.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A message in response to the process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="messageextranceexitgate">
+<h3>MessageExtranceExitGate<a class="headerlink" href="#messageextranceexitgate" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageExtranceExitGateRequest"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.Extrance_gate">Extrance_gate</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.exit_gate">exit_gate</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.light_buoy_active">light_buoy_active</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.light_pattern">light_pattern</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageExtranceExitGateRequest</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>The request class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageExtranceExitGate</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateRequest.Extrance_gate">
+<span class="sig-name descname"><span class="pre">Extrance_gate</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.Extrance_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Extrance gate relevant to the task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateRequest.exit_gate">
+<span class="sig-name descname"><span class="pre">exit_gate</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.exit_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The exit gate relevant to the task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateRequest.light_buoy_active">
+<span class="sig-name descname"><span class="pre">light_buoy_active</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.light_buoy_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the task’s light buoy is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateRequest.light_pattern">
+<span class="sig-name descname"><span class="pre">light_pattern</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateRequest.light_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>The light pattern shown by the buoy. An empty string if the buoy is not active.
+In the pattern, <code class="docutils literal notranslate"><span class="pre">R</span></code> represents red, <code class="docutils literal notranslate"><span class="pre">B</span></code> represents blue, and <code class="docutils literal notranslate"><span class="pre">G</span></code> represents
+green.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageExtranceExitGateResponse"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateResponse.message">message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageExtranceExitGateResponse</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The response class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageExtranceExitGate</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageExtranceExitGateResponse.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageExtranceExitGateResponse.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A message in response to the process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="messageidentifysymbolsdock">
+<h3>MessageIdentifySymbolsDock<a class="headerlink" href="#messageidentifysymbolsdock" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageIdentifySymbolsDockRequest"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape">shape</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape_color">shape_color</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageIdentifySymbolsDockRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageIdentifySymbolsDockRequest</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>The request class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageIdentifySymbolsDock</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape_color">
+<span class="sig-name descname"><span class="pre">shape_color</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The color of the shape that was identified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the shape that was identifed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.MessageIdentifySymbolsDockResponse"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.MessageIdentifySymbolsDockResponse.message">message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageIdentifySymbolsDockResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">MessageIdentifySymbolsDockResponse</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageIdentifySymbolsDockResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The response class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/MessageIdentifySymbolsDock</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.MessageIdentifySymbolsDockResponse.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#navigator_msgs.srv.MessageIdentifySymbolsDockResponse.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A message in response to the process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="scanthecodemission">
+<h3>ScanTheCodeMission<a class="headerlink" href="#scanthecodemission" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.ScanTheCodeMissionRequest"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.ScanTheCodeMissionRequest.object">object</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">ScanTheCodeMissionRequest</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>The request class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/ScanTheCodeMission</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionRequest.object">
+<span class="sig-name descname"><span class="pre">object</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionRequest.object" title="Permalink to this definition">¶</a></dt>
+<dd><p>The perception object to look for.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../reference/messages.html#navigator_msgs.msg.PerceptionObject" title="navigator_msgs.msg.PerceptionObject">PerceptionObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="navigator_msgs.srv.ScanTheCodeMissionResponse"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.colors">colors</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.found">found</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.observing">observing</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_msgs.srv.</span></span><span class="sig-name descname"><span class="pre">ScanTheCodeMissionResponse</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The response class for the <code class="docutils literal notranslate"><span class="pre">navigator_msgs/ScanTheCodeMission</span></code> service.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionResponse.observing">
+<span class="sig-name descname"><span class="pre">observing</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.observing" title="Permalink to this definition">¶</a></dt>
+<dd><p>???</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionResponse.found">
+<span class="sig-name descname"><span class="pre">found</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.found" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the buoy was found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_msgs.srv.ScanTheCodeMissionResponse.colors">
+<span class="sig-name descname"><span class="pre">colors</span></span><a class="headerlink" href="#navigator_msgs.srv.ScanTheCodeMissionResponse.colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>The colors shown by the buoy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="ausvi-communication">
+<h2>AUSVI Communication<a class="headerlink" href="#ausvi-communication" title="Permalink to this heading">¶</a></h2>
+<p>Below outline classes that are used to allow NaviGator to communicate with AUSVI-specific
+platforms.</p>
+<section id="robotxentranceexitgatemessage">
+<h3>RobotXEntranceExitGateMessage<a class="headerlink" href="#robotxentranceexitgatemessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.RobotXEntranceExitGateMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.message_id">message_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.from_string">from_string</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.to_string">to_string</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXEntranceExitGateMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.</span></span><span class="sig-name descname"><span class="pre">RobotXEntranceExitGateMessage</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXEntranceExitGateMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles formation of entrance and exit gates message.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following code pertains to the <strong>2018 edition</strong> of the AUSVI RobotX
+competition, held in Hawaii. Updates to the specifications may have changed
+since this competition, and therefore, the code may not accurately represent
+the specifications MIL must produce for the competition.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXEntranceExitGateMessage.message_id">
+<span class="sig-name descname"><span class="pre">message_id</span></span><a class="headerlink" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.message_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the message to signal that it is related to the
+entrance and exit gates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXEntranceExitGateMessage.from_string">
+<span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXEntranceExitGateMessage.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a list of data values and a checksum list from a provided message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter splitting up the data values.</p></li>
+<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The message to get the data values from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple representing two values. The first
+is the list of data values encoded in the message. The second value
+is the checksum list encoded in the message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXEntranceExitGateMessage.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hst_date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageExtranceExitGateRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXEntranceExitGateMessage.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXEntranceExitGateMessage.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a message using the provided parameters. This message is formatted
+according to 2018 AUSVI specifications.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter to use in between data values.</p></li>
+<li><p><strong>team_id</strong> (<em>Any</em>) – A value (??) that can be converted to a string to represent
+the MIL team ID.</p></li>
+<li><p><strong>hst_date_time</strong> (<em>Any</em>) – A value (??) used to represent the current date + time
+in HST.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest" title="navigator_msgs.srv.MessageDetectDeliverRequest"><em>MessageDetectDeliverRequest</em></a>) – The data about the entrance/exit
+gate mission.</p></li>
+<li><p><strong>use_test_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use test data in the message. If <code class="docutils literal notranslate"><span class="pre">True</span></code>,
+then most of the other parameters are ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The encoded message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxdetectdelivermessage">
+<h3>RobotXDetectDeliverMessage<a class="headerlink" href="#robotxdetectdelivermessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.RobotXDetectDeliverMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.message_id">message_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.from_string">from_string</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.to_string">to_string</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXDetectDeliverMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.</span></span><span class="sig-name descname"><span class="pre">RobotXDetectDeliverMessage</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXDetectDeliverMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXDetectDeliverMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles formation of a Detect and Deliver Message to send to AUSVI.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following code pertains to the <strong>2018 edition</strong> of the AUSVI RobotX
+competition, held in Hawaii. Updates to the specifications may have changed
+since this competition, and therefore, the code may not accurately represent
+the specifications MIL must produce for the competition.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXDetectDeliverMessage.message_id">
+<span class="sig-name descname"><span class="pre">message_id</span></span><a class="headerlink" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.message_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the message indicating that is a Detect and Deliver
+Message. Equal to <code class="docutils literal notranslate"><span class="pre">RXDEL</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXDetectDeliverMessage.from_string">
+<span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXDetectDeliverMessage.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the list of data values and checksums found in one instance of
+a constructed message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter separating the distinct data values.</p></li>
+<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The source message to retrieve the values from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the list of data values
+and the list of checksums.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXDetectDeliverMessage.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hst_date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageDetectDeliverRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MessageDetectDeliverResponse</span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXDetectDeliverMessage.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXDetectDeliverMessage.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a status message given the provided information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter separating individual data values.</p></li>
+<li><p><strong>team_id</strong> (<em>Any</em>) – The team ID used by MIL in competition.</p></li>
+<li><p><strong>hst_date_time</strong> (<em>Any</em>) – A representation of a particular date/time in HST.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest" title="navigator_msgs.srv.MessageDetectDeliverRequest"><em>MessageDetectDeliverRequest</em></a>) – The data request associated with the mission.</p></li>
+<li><p><strong>use_test_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use test data to construct the message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed message response.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverResponse" title="navigator_msgs.srv.MessageDetectDeliverResponse">MessageDetectDeliverResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxheartbeatmessage">
+<h3>RobotXHeartbeatMessage<a class="headerlink" href="#robotxheartbeatmessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.RobotXHeartbeatMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.RobotXHeartbeatMessage.message_id">message_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXHeartbeatMessage.from_string">from_string</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXHeartbeatMessage.to_string">to_string</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXHeartbeatMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.</span></span><span class="sig-name descname"><span class="pre">RobotXHeartbeatMessage</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXHeartbeatMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXHeartbeatMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles formation of the heartbeat message.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following code pertains to the <strong>2018 edition</strong> of the AUSVI RobotX
+competition, held in Hawaii. Updates to the specifications may have changed
+since this competition, and therefore, the code may not accurately represent
+the specifications MIL must produce for the competition.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXHeartbeatMessage.message_id">
+<span class="sig-name descname"><span class="pre">message_id</span></span><a class="headerlink" href="#navigator_robotx_comms.RobotXHeartbeatMessage.message_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID identifying the message as a MIL heartbeat message.
+For the 2018 season, this was <code class="docutils literal notranslate"><span class="pre">RXHRB</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXHeartbeatMessage.from_string">
+<span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXHeartbeatMessage.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXHeartbeatMessage.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>From a message represeting a message as a string, return the data and checksum
+lists encoded in the string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter separating the values in the data list. Frequently
+is a comma.</p></li>
+<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The message represented as a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple, where the first element is a list
+of data values, and the second element is the checksum info.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXHeartbeatMessage.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hst_date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">gps_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">odom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Odometry</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auv_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXHeartbeatMessage.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXHeartbeatMessage.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the necessary information to encode in the message, a message (as a string)
+is created. This message is ready to be sent back through the RobotX communications
+protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter to use when separating the data.</p></li>
+<li><p><strong>team_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The team ID used by MIL when sending messages.</p></li>
+<li><p><strong>hst_date_time</strong> (<em>Any</em>) – Presumably (??) a datetime object representing the
+current time in HST.</p></li>
+<li><p><strong>gps_array</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em>) – A specific message type containing at least a point. (??)</p></li>
+<li><p><strong>odom</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../reference/messages.html#nav_msgs.msg.Odometry" title="nav_msgs.msg.Odometry"><em>Odometry</em></a><em>]</em>) – An optional odometry message to encode in the message.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then empty strings are used in the message instead of the
+current position.</p></li>
+<li><p><strong>auv_status</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – The status of the AUV in the water. If <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+then zero is used in the message.</p></li>
+<li><p><strong>system_mode</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>]</em>) – The current mode of the AUV. If <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+then zero is used in the message.</p></li>
+<li><p><strong>use_test_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use a sample message. If so, most of the
+other parameters are ignored, as they are not needed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxidentifysymbolsdockmessage">
+<h3>RobotXIdentifySymbolsDockMessage<a class="headerlink" href="#robotxidentifysymbolsdockmessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.RobotXIdentifySymbolsDockMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.message_id">message_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.from_string">from_string</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.to_string">to_string</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXIdentifySymbolsDockMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.</span></span><span class="sig-name descname"><span class="pre">RobotXIdentifySymbolsDockMessage</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXIdentifySymbolsDockMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles formation of identify symbols and dock message</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following code pertains to the <strong>2018 edition</strong> of the AUSVI RobotX
+competition, held in Hawaii. Updates to the specifications may have changed
+since this competition, and therefore, the code may not accurately represent
+the specifications MIL must produce for the competition.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.message_id">
+<span class="sig-name descname"><span class="pre">message_id</span></span><a class="headerlink" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.message_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID of the message indicating that the message is a
+Symbols and Dock message. Equal to <code class="docutils literal notranslate"><span class="pre">RXDOK</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.from_string">
+<span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXIdentifySymbolsDockMessage.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the data and checksum list from a message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter used to separate distinct datapoints.</p></li>
+<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The source message, as a string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the list of data values
+encoded in the message, along with the list of checksums in the message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hst_date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageDetectDeliverRequest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXIdentifySymbolsDockMessage.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXIdentifySymbolsDockMessage.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a status message with the provided information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter used to separate distinct data values that
+need to be sent.</p></li>
+<li><p><strong>team_id</strong> (<em>Any</em>) – The team ID used by MIL at the competition.</p></li>
+<li><p><strong>hst_date_time</strong> (<em>Any</em>) – A value (??) used to represent the date/time combination
+in HST.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest" title="navigator_msgs.srv.MessageDetectDeliverRequest"><em>MessageDetectDeliverRequest</em></a>) – The message request holding data
+about the mission.</p></li>
+<li><p><strong>use_test_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use test data when constructing the message.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxscancodemessage">
+<h3>RobotXScanCodeMessage<a class="headerlink" href="#robotxscancodemessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.RobotXScanCodeMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.RobotXScanCodeMessage.message_id">message_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXScanCodeMessage.from_string">from_string</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.RobotXScanCodeMessage.to_string">to_string</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXScanCodeMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.</span></span><span class="sig-name descname"><span class="pre">RobotXScanCodeMessage</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXScanCodeMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXScanCodeMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles formation and sending of scan the code message.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following code pertains to the <strong>2018 edition</strong> of the AUSVI RobotX
+competition, held in Hawaii. Updates to the specifications may have changed
+since this competition, and therefore, the code may not accurately represent
+the specifications MIL must produce for the competition.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXScanCodeMessage.message_id">
+<span class="sig-name descname"><span class="pre">message_id</span></span><a class="headerlink" href="#navigator_robotx_comms.RobotXScanCodeMessage.message_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID identifying the message as a Scan the Code message type.
+Equal to <code class="docutils literal notranslate"><span class="pre">RXCOD</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXScanCodeMessage.from_string">
+<span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXScanCodeMessage.from_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXScanCodeMessage.from_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the information encoded in a message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The delimiter separating values in the data list encoded
+in the message.</p></li>
+<li><p><strong>string</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The message string to use to get data from.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The tuple containing a list of data values
+as the first value, and a list of checksums as the second value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.RobotXScanCodeMessage.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hst_date_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/navigator_robotx_comms.html#RobotXScanCodeMessage.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.RobotXScanCodeMessage.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a Scan the Code status message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>delim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The string delimiter used to separate distinct data
+points in the message.</p></li>
+<li><p><strong>team_id</strong> (<em>Any</em>) – The team ID used by MIL in the competition.</p></li>
+<li><p><strong>hst_date_time</strong> (<em>Any</em>) – The datetime to send in HST.</p></li>
+<li><p><strong>color_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The color pattern to send in the message.</p></li>
+<li><p><strong>use_test_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use test data when sending the message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The constructed message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxstartservices">
+<h3>RobotXStartServices<a class="headerlink" href="#robotxstartservices" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.robotx_client">robotx_client</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode">system_mode</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench">wrench</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.auv_status_callback">auv_status_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.get_hst_date_time">get_hst_date_time</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_coord_callback">gps_coord_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_odom_callback">gps_odom_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_detect_deliver_message">handle_detect_deliver_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_entrance_exit_gate_message">handle_entrance_exit_gate_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_heartbeat_message">handle_heartbeat_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_identify_symbols_dock_message">handle_identify_symbols_dock_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message">handle_scan_code_message</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.kill_callback">kill_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.scan_the_code_callback">scan_the_code_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode_callback">system_mode_callback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.update_system_mode">update_system_mode</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench_callback">wrench_callback</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.nodes.robotx_comms_client.</span></span><span class="sig-name descname"><span class="pre">RobotXStartServices</span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes services and subscribes to necessary publishers in order to facilitate
+the transmission of messages between the robot client and the Technical Director
+server.</p>
+<p>This class is part of a node that should be launched when communication is necessary
+with official AUSVI software.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.robotx_client">
+<span class="sig-name descname"><span class="pre">robotx_client</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.robotx_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client used to connect with the Technical
+Director server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient">RobotXClient</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode">
+<span class="sig-name descname"><span class="pre">system_mode</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mode of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench">
+<span class="sig-name descname"><span class="pre">wrench</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current wrench mode of the system. For example, <code class="docutils literal notranslate"><span class="pre">autonomous</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.auv_status_callback">
+<span class="sig-name descname"><span class="pre">auv_status_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auv_status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.auv_status_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.auv_status_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the most recent AUV status experienced by the boat.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.get_hst_date_time">
+<span class="sig-name descname"><span class="pre">get_hst_date_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.get_hst_date_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.get_hst_date_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the current time in HST in the format of <code class="docutils literal notranslate"><span class="pre">%d%m%y{self.delim}%H%M%S</span></code>.
+This is the format specified by AUSVI to use in messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The constructed string representing the date and time.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_coord_callback">
+<span class="sig-name descname"><span class="pre">gps_coord_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lla</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PointStamped</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.gps_coord_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_coord_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the <code class="xref py py-attr docutils literal notranslate"><span class="pre">gps_array</span></code> attribute with the most recent <code class="xref py py-class docutils literal notranslate"><span class="pre">PointStamped</span></code>
+message received.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_odom_callback">
+<span class="sig-name descname"><span class="pre">gps_odom_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">odom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Odometry</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.gps_odom_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_odom_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the most recent <code class="xref py py-class docutils literal notranslate"><span class="pre">Odometry</span></code> message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_detect_deliver_message">
+<span class="sig-name descname"><span class="pre">handle_detect_deliver_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageDetectDeliverRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MessageDetectDeliverResponse</span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.handle_detect_deliver_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_detect_deliver_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles requests to make messages to use in the Detect and Deliver
+mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverRequest" title="navigator_msgs.srv.MessageDetectDeliverRequest"><em>MessageDetectDeliverRequest</em></a>) – The request to the service.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the service. The response
+contains the message needed to send to AUSVI.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#navigator_msgs.srv.MessageDetectDeliverResponse" title="navigator_msgs.srv.MessageDetectDeliverResponse">MessageDetectDeliverResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_entrance_exit_gate_message">
+<span class="sig-name descname"><span class="pre">handle_entrance_exit_gate_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageExtranceExitGateRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MessageExtranceExitGateResponse</span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.handle_entrance_exit_gate_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_entrance_exit_gate_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles requests to make messages to use in the Entrance and Exit Gate
+mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateRequest" title="navigator_msgs.srv.MessageExtranceExitGateRequest"><em>MessageExtranceExitGateRequest</em></a>) – The request to the service.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the service. The response
+contains the message needed to send to AUSVI.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#navigator_msgs.srv.MessageExtranceExitGateResponse" title="navigator_msgs.srv.MessageExtranceExitGateResponse">MessageExtranceExitGateResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_heartbeat_message">
+<span class="sig-name descname"><span class="pre">handle_heartbeat_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.handle_heartbeat_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_heartbeat_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a heartbeat message according to a timer and sends the formatted
+message to the AUSVI Technical Director station.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_identify_symbols_dock_message">
+<span class="sig-name descname"><span class="pre">handle_identify_symbols_dock_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MessageIdentifySymbolsDockRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MessageIdentifySymbolsDockResponse</span></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.handle_identify_symbols_dock_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_identify_symbols_dock_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles requests to make messages to use in the Identify Symbols and Dock
+mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="#navigator_msgs.srv.MessageIdentifySymbolsDockRequest" title="navigator_msgs.srv.MessageIdentifySymbolsDockRequest"><em>MessageIdentifySymbolsDockRequest</em></a>) – The request to the service.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the service. The response
+contains the message needed to send to AUSVI.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#navigator_msgs.srv.MessageIdentifySymbolsDockResponse" title="navigator_msgs.srv.MessageIdentifySymbolsDockResponse">MessageIdentifySymbolsDockResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message">
+<span class="sig-name descname"><span class="pre">handle_scan_code_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.handle_scan_code_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the color pattern reported over the topic dedicated to the Scan the Code
+mission.</p>
+<p>The color is encoded into a message and sent to the AUSVI Technical Director
+server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>color_pattern</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The color pattern reported by the handled message
+in the Scan the Code topic.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.kill_callback">
+<span class="sig-name descname"><span class="pre">kill_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Alarm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.kill_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.kill_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the <a class="reference internal" href="../reference/rc.html#remote_control_lib.RemoteControl.kill" title="remote_control_lib.RemoteControl.kill"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kill</span></code></a> attribute depending on whether the most recent
+alarm received by the boat was raised or not.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.scan_the_code_callback">
+<span class="sig-name descname"><span class="pre">scan_the_code_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan_the_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ScanTheCode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.scan_the_code_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.scan_the_code_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the ScanTheCode message requests by calling <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_scan_code_message()</span></code></a>
+with the color pattern specified in the message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scan_the_code</strong> (<a class="reference internal" href="../reference/messages.html#navigator_msgs.msg.ScanTheCode" title="navigator_msgs.msg.ScanTheCode"><em>ScanTheCode</em></a>) – The message to format and send to the Technical
+Director server.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode_callback">
+<span class="sig-name descname"><span class="pre">system_mode_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.system_mode_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the class’ <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">system_mode</span></code></a> attribute when given the most recent
+system mode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.update_system_mode">
+<span class="sig-name descname"><span class="pre">update_system_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.update_system_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.update_system_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">system_mode</span></code></a> according to whether the kill is <code class="docutils literal notranslate"><span class="pre">True</span></code> and the mode
+of the boat.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench_callback">
+<span class="sig-name descname"><span class="pre">wrench_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrench</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">String</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXStartServices.wrench_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench"><code class="xref py py-attr docutils literal notranslate"><span class="pre">wrench</span></code></a> attribute with the most recent wrench value.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="robotxclient">
+<h3>RobotXClient<a class="headerlink" href="#robotxclient" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connected">connected</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.socket_connection">socket_connection</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.tcp_port">tcp_port</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect">connect</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigator_robotx_comms.nodes.robotx_comms_client.</span></span><span class="sig-name descname"><span class="pre">RobotXClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tcp_ip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tcp_port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles communication with Technical Director server at the AUSVI RobotX competition.</p>
+<p>This class is generally handled by <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices"><code class="xref py py-class docutils literal notranslate"><span class="pre">RobotXStartServices</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.tcp_port">
+<span class="sig-name descname"><span class="pre">tcp_port</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.tcp_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>The TCP port allotted for communication between MIL and the
+Technical Director server at the competition site.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connected">
+<span class="sig-name descname"><span class="pre">connected</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether a connection is intact between the client and the
+Technical Director server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.socket_connection">
+<span class="sig-name descname"><span class="pre">socket_connection</span></span><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.socket_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The socket connection. This is
+initially set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, until it is made in <a class="reference internal" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect" title="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">connect()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/socket.html#socket.socket" title="(in Python v3.10)">socket.socket</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tcp_ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The IP address used by the Technical Director server to connect to.</p></li>
+<li><p><strong>tcp_port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The port used by the Technical Director server that MIL
+is asked to connect to.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/navigator_robotx_comms/nodes/robotx_comms_client.html#RobotXClient.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to establish a socket connection at the given IP and port number
+if no connection has already been established.</p>
+<p>If a connection can not be established, then the method sleeps for 2 seconds
+before retrying to establish a connection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
