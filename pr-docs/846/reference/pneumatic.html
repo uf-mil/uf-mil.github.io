@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_pneumatic_actuator - Pneumatic Actuator Board</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="sabertooth2x12 - Sabertooth 2x12" href="sabertooth.html" />
+        <link rel="prev" title="mil_poi - POI Handling" href="poi.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="txros.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pneumaticactuatordriver">PneumaticActuatorDriver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pneumatic-board-constants">Pneumatic Board Constants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulatedpnuematicactuatorboard">SimulatedPnuematicActuatorBoard</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="mil-pneumatic-actuator-pneumatic-actuator-board">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board<a class="headerlink" href="#mil-pneumatic-actuator-pneumatic-actuator-board" title="Permalink to this heading">¶</a></h1>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriverError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriverError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriverError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriverError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base exception class for all exceptions/errors related to the Pneumatic
+Actuator Board.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriverChecksumError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checksum_is</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum_should_be</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriverChecksumError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception representing an invalid checksum.</p>
+<p>Inherits from <a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverError" title="mil_pneumatic_actuator.PnuematicActuatorDriverError"><code class="xref py py-class docutils literal notranslate"><span class="pre">PnuematicActuatorDriverError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriverResponseError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">received</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriverResponseError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception representing an invalid response.</p>
+<p>Inherits from <a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverError" title="mil_pneumatic_actuator.PnuematicActuatorDriverError"><code class="xref py py-class docutils literal notranslate"><span class="pre">PnuematicActuatorDriverError</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorTimeoutError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorTimeoutError</span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorTimeoutError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorTimeoutError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception representing a serial timeout experienced by the board.</p>
+<p>Inherits from <a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverError" title="mil_pneumatic_actuator.PnuematicActuatorDriverError"><code class="xref py py-class docutils literal notranslate"><span class="pre">PnuematicActuatorDriverError</span></code></a>.</p>
+</dd></dl>
+
+</section>
+<section id="pneumaticactuatordriver">
+<h2>PneumaticActuatorDriver<a class="headerlink" href="#pneumaticactuatordriver" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_pneumatic_actuator.PnuematicActuatorDriver"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.close_port">close_port</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port">get_port</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.open_port">open_port</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.ping">ping</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port">set_port</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows high level ROS code to interface with Daniel’s pneumatics board.</p>
+<p>For the dropper and grabber systems, call service with <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>
+to open or close. For the shooter system, sending a <code class="docutils literal notranslate"><span class="pre">True</span></code> signal will
+pulse the valve.</p>
+<p>Further information on the board’s communication protocol can be found in the
+design documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The nname of the board to establish a serial connection to.</p></li>
+<li><p><strong>baud</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The baud rate to establish the serial connection at.</p></li>
+<li><p><strong>simulated</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to use a simulated actuator board class
+or an interface to the physical board.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.close_port">
+<span class="sig-name descname"><span class="pre">close_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.close_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.close_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes a particular port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The port to close.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError"><strong>PnuematicActuatorDriverResponseError</strong></a> – The expected response from the board
+    was not received.</p></li>
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError"><strong>PnuematicActuatorDriverChecksumError</strong></a> – The checksum expected and the checksum
+    received were not the same. The board may be malfunctioning or the
+    communication with the board may be disrupted.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The response from the board, which is frequently a standard hexadecimal value</dt><dd><p>indicating that the board closed the valve at the desired port.
+This value is equal to <a class="reference internal" href="#mil_pneumatic_actuator.Constants.CLOSE_RESPONSE" title="mil_pneumatic_actuator.Constants.CLOSE_RESPONSE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mil_pneumatic_actuator.Constants.CLOSE_RESPONSE</span></code></a>.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.get_port">
+<span class="sig-name descname"><span class="pre">get_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.get_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the data at a specific port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The port to read from.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError"><strong>PnuematicActuatorDriverResponseError</strong></a> – The expected response from the board
+    was not received.</p></li>
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError"><strong>PnuematicActuatorDriverChecksumError</strong></a> – The checksum expected and the checksum
+    received were not the same. The board may be malfunctioning or the
+    communication with the board may be disrupted.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The response served by the board.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.open_port">
+<span class="sig-name descname"><span class="pre">open_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.open_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.open_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a particular port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The port to open.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError"><strong>PnuematicActuatorDriverResponseError</strong></a> – The expected response from the board
+    was not received.</p></li>
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError"><strong>PnuematicActuatorDriverChecksumError</strong></a> – The checksum expected and the checksum
+    received were not the same. The board may be malfunctioning or the
+    communication with the board may be disrupted.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The response from the board, which is frequently a standard hexadecimal value</dt><dd><p>indicating that the board opened the valve at the desired port.
+This value is equal to <a class="reference internal" href="#mil_pneumatic_actuator.Constants.OPEN_RESPONSE" title="mil_pneumatic_actuator.Constants.OPEN_RESPONSE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mil_pneumatic_actuator.Constants.OPEN_RESPONSE</span></code></a>.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.ping">
+<span class="sig-name descname"><span class="pre">ping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.ping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.ping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a ping message to the board and returns the response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError"><strong>PnuematicActuatorDriverResponseError</strong></a> – The expected response from the board
+    was not received.</p></li>
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError"><strong>PnuematicActuatorDriverChecksumError</strong></a> – The checksum expected and the checksum
+    received were not the same. The board may be malfunctioning or the
+    communication with the board may be disrupted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the board.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.set_port">
+<span class="sig-name descname"><span class="pre">set_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_open</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.set_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the data at a particular port to opened/closed. This does not depend
+on the internal state of the port when called, ie, if you request a port to
+be closed, and the port is already closed, then the response is sent anyways.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The specific port to open/close.</p></li>
+<li><p><strong>do_open</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to open the port. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the port
+is closed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError" title="mil_pneumatic_actuator.PnuematicActuatorDriverResponseError"><strong>PnuematicActuatorDriverResponseError</strong></a> – The expected response from the board
+    was not received.</p></li>
+<li><p><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError" title="mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError"><strong>PnuematicActuatorDriverChecksumError</strong></a> – The checksum expected and the checksum
+    received were not the same. The board may be malfunctioning or the
+    communication with the board may be disrupted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pneumatic-board-constants">
+<h2>Pneumatic Board Constants<a class="headerlink" href="#pneumatic-board-constants" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_pneumatic_actuator.Constants"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.CHECKSUM_CODE">CHECKSUM_CODE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.CLOSE_REQUEST_BASE">CLOSE_REQUEST_BASE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.CLOSE_RESPONSE">CLOSE_RESPONSE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.OPEN_REQUEST_BASE">OPEN_REQUEST_BASE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.OPEN_RESPONSE">OPEN_RESPONSE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.PING_REQUEST">PING_REQUEST</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.PING_RESPONSE">PING_RESPONSE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_pneumatic_actuator.Constants.READ_REQUEST_BASE">READ_REQUEST_BASE</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_pneumatic_actuator.Constants.create_checksum">Constants.create_checksum</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_pneumatic_actuator.Constants.deserialize_packet">Constants.deserialize_packet</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_pneumatic_actuator.Constants.serialize_packet">Constants.serialize_packet</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#mil_pneumatic_actuator.Constants.verify_checksum">Constants.verify_checksum</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">Constants</span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constant codes and functions used in both the driver and the simulated board.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.OPEN_REQUEST_BASE">
+<span class="sig-name descname"><span class="pre">OPEN_REQUEST_BASE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.OPEN_REQUEST_BASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a request to the board to open a valve.
+Currently set to <code class="docutils literal notranslate"><span class="pre">0x20</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.OPEN_RESPONSE">
+<span class="sig-name descname"><span class="pre">OPEN_RESPONSE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.OPEN_RESPONSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a response from the board when the open
+request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x01</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.CLOSE_REQUEST_BASE">
+<span class="sig-name descname"><span class="pre">CLOSE_REQUEST_BASE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.CLOSE_REQUEST_BASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a request to the board to close a valve.
+Currently set to <code class="docutils literal notranslate"><span class="pre">0x30</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.CLOSE_RESPONSE">
+<span class="sig-name descname"><span class="pre">CLOSE_RESPONSE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.CLOSE_RESPONSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a response from the board when the close
+request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x00</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.READ_REQUEST_BASE">
+<span class="sig-name descname"><span class="pre">READ_REQUEST_BASE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.READ_REQUEST_BASE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a request to the board to read
+the value of a valve. Currently set to <code class="docutils literal notranslate"><span class="pre">0x40</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.PING_REQUEST">
+<span class="sig-name descname"><span class="pre">PING_REQUEST</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.PING_REQUEST" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a ping request. Currently set to <code class="docutils literal notranslate"><span class="pre">0x10</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.PING_RESPONSE">
+<span class="sig-name descname"><span class="pre">PING_RESPONSE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.PING_RESPONSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A constant representing a response from the board when the ping
+request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x11</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.CHECKSUM_CODE">
+<span class="sig-name descname"><span class="pre">CHECKSUM_CODE</span></span><a class="headerlink" href="#mil_pneumatic_actuator.Constants.CHECKSUM_CODE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The checksum code used by the board. Currently sent to <code class="docutils literal notranslate"><span class="pre">0xFF</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.create_checksum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.create_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.create_checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a checksum given a piece of data. The checksum is calculated through
+the XOR operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The data to compute the checksum on.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The checksum.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.deserialize_packet">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.deserialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.deserialize_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserializes a piece of data (a bytes object) into a tuple of two numbers.
+The first number is the data carried by the packet, and the second is the checksum
+computed by the board.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The serialized packet.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.serialize_packet">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.serialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.serialize_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes a piece of data (an integer) into a bytes object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The serialized packet.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.verify_checksum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.verify_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.verify_checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that two checksums are the same.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The data to verify the constructed checksum of.</p></li>
+<li><p><strong>checksum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The checksum to validate the constructed checksum against.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the two checksums are the same.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="simulatedpnuematicactuatorboard">
+<h2>SimulatedPnuematicActuatorBoard<a class="headerlink" href="#simulatedpnuematicactuatorboard" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write">write</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">SimulatedPnuematicActuatorBoard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/simulated_board.html#SimulatedPnuematicActuatorBoard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simulation of the pneumatic actuator board’s serial protocol</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/simulated_board.html#SimulatedPnuematicActuatorBoard.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes a series of bytes and completes the necessary actions.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
