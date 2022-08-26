@@ -168,6 +168,22 @@ the simulated device. These classes simply append to the buffer string which wil
 on reads to the simulated device.</p>
 <p>Note: <a class="reference internal" href="#mil_tools.NoopSerial" title="mil_tools.NoopSerial"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoopSerial</span></code></a> and <a class="reference internal" href="#mil_tools.SimulatedSerial" title="mil_tools.SimulatedSerial"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulatedSerial</span></code></a> are generic and are
 candidates for mil_common.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty prints the <code class="docutils literal notranslate"><span class="pre">SimulatedSerial</span></code> object, its address, and the start
+of its buffer.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Pretty prints the <code class="docutils literal notranslate"><span class="pre">SimulatedSerial</span></code> object, its address, and the start
+of its buffer. Equivalent to <code class="docutils literal notranslate"><span class="pre">str(x)</span></code>.</p>
+</dd></dl>
+
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mil_tools.SimulatedSerial.buffer">
 <span class="sig-name descname"><span class="pre">buffer</span></span><a class="headerlink" href="#mil_tools.SimulatedSerial.buffer" title="Permalink to this definition">¶</a></dt>

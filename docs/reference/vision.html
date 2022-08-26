@@ -114,6 +114,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#cameramodel">CameraModel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#roscamerastream">ROSCameraStream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pcdsubpubalgorithm">PcdSubPubAlgorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imagepublisher">ImagePublisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imagesubscriber">ImageSubscriber</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
@@ -3265,6 +3267,197 @@ func</span><a class="reference internal" href="#classmil__vision_1_1PcdSubPubAlg
 <dt class="sig sig-object cpp" id="_CPPv4N10mil_vision18PcdSubPubAlgorithmD0Ev">
 <span id="_CPPv3N10mil_vision18PcdSubPubAlgorithmD0Ev"></span><span id="_CPPv2N10mil_vision18PcdSubPubAlgorithmD0Ev"></span><span id="mil_vision::PcdSubPubAlgorithm::~PcdSubPubAlgorithm"></span><span class="target" id="classmil__vision_1_1PcdSubPubAlgorithm_1a37e1ec8578564e43d354fa2599558066"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~PcdSubPubAlgorithm</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10mil_vision18PcdSubPubAlgorithmD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="imagepublisher">
+<h2>ImagePublisher<a class="headerlink" href="#imagepublisher" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="_CPPv414ImagePublisher"><div class="attribute-table-column">
+<span>
+Functions</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImagePublisher_1a23e0502eed9365f08f438004a63b959a">ImagePublisher</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImagePublisher_1a1240e952bcf630afa5fe3217cdcda4d1">publish</a></li></ul>
+</div></div><dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv414ImagePublisher">
+<span id="_CPPv314ImagePublisher"></span><span id="_CPPv214ImagePublisher"></span><span id="ImagePublisher"></span><span class="target" id="classImagePublisher"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ImagePublisher</span></span></span><a class="headerlink" href="#_CPPv414ImagePublisher" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Abstraction for publishing images to without the necessary boiler plate. All that’s needed to publish an image is a cv::Mat. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14ImagePublisher14ImagePublisherERKN3ros10NodeHandleERKNSt6stringERKNSt6stringEi">
+<span id="_CPPv3N14ImagePublisher14ImagePublisherERKN3ros10NodeHandleERKNSt6stringERKNSt6stringEi"></span><span id="_CPPv2N14ImagePublisher14ImagePublisherERKN3ros10NodeHandleERKNSt6stringERKNSt6stringEi"></span><span id="ImagePublisher::ImagePublisher__ros::NodeHandleCR.ssCR.ssCR.i"></span><span class="target" id="classImagePublisher_1a23e0502eed9365f08f438004a63b959a"></span><span class="sig-name descname"><span class="n"><span class="pre">ImagePublisher</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ros</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">NodeHandle</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">nh</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">encoding</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;bgr8&quot;</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">queue_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ImagePublisher14ImagePublisherERKN3ros10NodeHandleERKNSt6stringERKNSt6stringEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates an <a class="reference internal" href="#classImagePublisher"><span class="std std-ref">ImagePublisher</span></a> in the namespace of nh. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nh</strong> – NodeHandle to have node in the correct namespace. </p></li>
+<li><p><strong>topic</strong> – Camera topic to publish images to. </p></li>
+<li><p><strong>encoding</strong> – Type of image encoding </p></li>
+<li><p><strong>queue_size</strong> – Size of the queue for the publisher. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14ImagePublisher7publishERN2cv3MatE">
+<span id="_CPPv3N14ImagePublisher7publishERN2cv3MatE"></span><span id="_CPPv2N14ImagePublisher7publishERN2cv3MatE"></span><span id="ImagePublisher::publish__cv::MatR"></span><span class="target" id="classImagePublisher_1a1240e952bcf630afa5fe3217cdcda4d1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publish</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">cv</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Mat</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">image_arg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14ImagePublisher7publishERN2cv3MatE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes an OpenCV image. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_arg</strong> – OpenCV image to publish. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="imagesubscriber">
+<h2>ImageSubscriber<a class="headerlink" href="#imagesubscriber" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="_CPPv415ImageSubscriber"><div class="attribute-table-column">
+<span>
+Functions</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1a516bd0d6b18e0fa9d83dcec5821beae1">ImageSubscriber</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#">T</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1a59e5cbfba0f715ad8071dda8c2010fe4">getLastImageTime</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1afc058dff47220171915eb163ceb8fb17">imageCallbackCopy</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1af9590b5881ef16efbb4735399f0701d8">imageCallbackReference</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1a2937d93d13b9cebfc4d322c20915d3e0">infoCallback</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1abffd78ecee7f0a8d5ca27c12f06c75ad">waitForCameraInfo</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="function">
+func</span><a class="reference internal" href="#classImageSubscriber_1a363b7eb24930c9351ae0b175ae58799f">waitForCameraModel</a></li></ul>
+</div></div><dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv415ImageSubscriber">
+<span id="_CPPv315ImageSubscriber"></span><span id="_CPPv215ImageSubscriber"></span><span id="ImageSubscriber"></span><span class="target" id="classImageSubscriber"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ImageSubscriber</span></span></span><a class="headerlink" href="#_CPPv415ImageSubscriber" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Abstraction for subscribing to image outputs and their info. This returns a copy or reference of the image depending on what you specify in the constructor. The camera info contains valuable information such as the camera matrix and will exit gracefully if not found. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi">
+<span id="_CPPv3I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi"></span><span id="_CPPv2I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classImageSubscriber_1a9d01f2c0e192ebf24eee45682017cb85"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ImageSubscriber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ros</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">NodeHandle</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">nh</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi" title="ImageSubscriber::ImageSubscriber::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">::</span></span><span class="p"><span class="pre">*</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">func</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">cv</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Mat</span></span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span>, <a class="reference internal" href="#_CPPv4I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi" title="ImageSubscriber::ImageSubscriber::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">object</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">use_copy</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">encoding</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;bgr8&quot;</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">queue_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEM1TFvRN2cv3MatEEP1TbRKNSt6stringEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create an <a class="reference internal" href="#classImageSubscriber"><span class="std std-ref">ImageSubscriber</span></a> using a class member function as the function callback. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nh</strong> – NodeHandle for the node that is subscribing to a camera topic. </p></li>
+<li><p><strong>topic</strong> – Contains the camera topic to subscribe to. </p></li>
+<li><p><strong>func</strong> – Function pointer to class member callback function. </p></li>
+<li><p><strong>object</strong> – Pointer to object that function belongs to. </p></li>
+<li><p><strong>use_copy</strong> – Whether to use a copy or reference of the converted image. If unsure use copy. </p></li>
+<li><p><strong>encoding</strong> – Type of encoding for camera topic. </p></li>
+<li><p><strong>queue_size</strong> – Queue size to use for subscriber. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEPFvRN2cv3MatEEbRKNSt6stringEi">
+<span id="_CPPv3N15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEPFvRN2cv3MatEEbRKNSt6stringEi"></span><span id="_CPPv2N15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEPFvRN2cv3MatEEbRKNSt6stringEi"></span><span class="target" id="classImageSubscriber_1a516bd0d6b18e0fa9d83dcec5821beae1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ImageSubscriber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">ros</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">NodeHandle</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">nh</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">func</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">cv</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Mat</span></span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">use_copy</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">encoding</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;bgr8&quot;</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">queue_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber15ImageSubscriberERKN3ros10NodeHandleERKNSt6stringEPFvRN2cv3MatEEbRKNSt6stringEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create an <a class="reference internal" href="#classImageSubscriber"><span class="std std-ref">ImageSubscriber</span></a> using a normal function as the function callback. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nh</strong> – NodeHandle for the node that is subscribing to a camera topic. </p></li>
+<li><p><strong>topic</strong> – Contains the camera topic to subscribe to. </p></li>
+<li><p><strong>func</strong> – Function pointer to callback function. </p></li>
+<li><p><strong>use_copy</strong> – Whether to use a copy or reference of the converted image. If unsure use copy. </p></li>
+<li><p><strong>encoding</strong> – Type of encoding for camera topic. </p></li>
+<li><p><strong>queue_size</strong> – Queue size to use for subscriber. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber17waitForCameraInfoEj">
+<span id="_CPPv3N15ImageSubscriber17waitForCameraInfoEj"></span><span id="_CPPv2N15ImageSubscriber17waitForCameraInfoEj"></span><span id="ImageSubscriber::waitForCameraInfo__unsigned-i"></span><span class="target" id="classImageSubscriber_1abffd78ecee7f0a8d5ca27c12f06c75ad"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">sensor_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">CameraInfo</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">waitForCameraInfo</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">timeout</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">10</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber17waitForCameraInfoEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Safely returns the camera info if it is found. Waits for timeout seconds to receive the camera info. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> – Time in seconds to wait for camera info to be received. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>optional value to return data if available otherwise nothing if not. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber18waitForCameraModelERN14image_geometry18PinholeCameraModelEj">
+<span id="_CPPv3N15ImageSubscriber18waitForCameraModelERN14image_geometry18PinholeCameraModelEj"></span><span id="_CPPv2N15ImageSubscriber18waitForCameraModelERN14image_geometry18PinholeCameraModelEj"></span><span id="ImageSubscriber::waitForCameraModel__image_geometry::PinholeCameraModelR.unsigned-i"></span><span class="target" id="classImageSubscriber_1a363b7eb24930c9351ae0b175ae58799f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">waitForCameraModel</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">image_geometry</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">PinholeCameraModel</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">pinhole_camera</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">timeout</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">10</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber18waitForCameraModelERN14image_geometry18PinholeCameraModelEj" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Waits for camera info to be received and fills in the given PinholeCameraModel with the data from it. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pinhole_camera</strong> – PineholeCameraModel to store the resulting camera model in. </p></li>
+<li><p><strong>timeout</strong> – Time in seconds to wait for camera info to be received. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if data is received, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber12infoCallbackERKN11sensor_msgs10CameraInfoE">
+<span id="_CPPv3N15ImageSubscriber12infoCallbackERKN11sensor_msgs10CameraInfoE"></span><span id="_CPPv2N15ImageSubscriber12infoCallbackERKN11sensor_msgs10CameraInfoE"></span><span id="ImageSubscriber::infoCallback__sensor_msgs::CameraInfoCR"></span><span class="target" id="classImageSubscriber_1a2937d93d13b9cebfc4d322c20915d3e0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">infoCallback</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">CameraInfo</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">info</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber12infoCallbackERKN11sensor_msgs10CameraInfoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Function callback for camera info. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>info</strong> – Camera info message from ROS. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber17imageCallbackCopyERKN11sensor_msgs13ImageConstPtrE">
+<span id="_CPPv3N15ImageSubscriber17imageCallbackCopyERKN11sensor_msgs13ImageConstPtrE"></span><span id="_CPPv2N15ImageSubscriber17imageCallbackCopyERKN11sensor_msgs13ImageConstPtrE"></span><span id="ImageSubscriber::imageCallbackCopy__sensor_msgs::ImageConstPtrCR"></span><span class="target" id="classImageSubscriber_1afc058dff47220171915eb163ceb8fb17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">imageCallbackCopy</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ImageConstPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">image</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber17imageCallbackCopyERKN11sensor_msgs13ImageConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Function callback for the image copy. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Image message from ROS. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber22imageCallbackReferenceERKN11sensor_msgs13ImageConstPtrE">
+<span id="_CPPv3N15ImageSubscriber22imageCallbackReferenceERKN11sensor_msgs13ImageConstPtrE"></span><span id="_CPPv2N15ImageSubscriber22imageCallbackReferenceERKN11sensor_msgs13ImageConstPtrE"></span><span id="ImageSubscriber::imageCallbackReference__sensor_msgs::ImageConstPtrCR"></span><span class="target" id="classImageSubscriber_1af9590b5881ef16efbb4735399f0701d8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">imageCallbackReference</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">sensor_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ImageConstPtr</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">image</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber22imageCallbackReferenceERKN11sensor_msgs13ImageConstPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Function callback for the image reference. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Image message from ROS. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15ImageSubscriber16getLastImageTimeEv">
+<span id="_CPPv3N15ImageSubscriber16getLastImageTimeEv"></span><span id="_CPPv2N15ImageSubscriber16getLastImageTimeEv"></span><span id="ImageSubscriber::getLastImageTime"></span><span class="target" id="classImageSubscriber_1a59e5cbfba0f715ad8071dda8c2010fe4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">optional</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Time</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getLastImageTime</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15ImageSubscriber16getLastImageTimeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the timestamp for the last image. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>optional value containing the time the last image was received. </p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 </dd></dl>
