@@ -169,6 +169,18 @@
 <span class="sd">    Note: :class:`NoopSerial` and :class:`SimulatedSerial` are generic and are</span>
 <span class="sd">    candidates for mil_common.</span>
 
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty prints the ``SimulatedSerial`` object, its address, and the start</span>
+<span class="sd">            of its buffer.</span>
+
+<span class="sd">        .. describe:: repr(x)</span>
+
+<span class="sd">            Pretty prints the ``SimulatedSerial`` object, its address, and the start</span>
+<span class="sd">            of its buffer. Equivalent to ``str(x)``.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        buffer (bytes): A buffer of bytes waiting to be read from the device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -179,7 +191,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;SimulatedSerial at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, buffer=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;SimulatedSerial at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, buffer=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
