@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Continuous Integration</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="File Server" href="file_server.html" />
+        <link rel="prev" title="Network Box" href="network_box.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Infrastructure</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="network.html">Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_box.html">Network Box</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Continuous Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#self-hosted-runners">Self-Hosted Runners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runs-jobs-steps">Runs, Jobs, Steps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-ci">Updating CI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_server.html">File Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar_park.html">Solar Park</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shipping.html">Shipping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="continuous-integration">
+<h1>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permalink to this heading">¶</a></h1>
+<p>Continuous integration is a helpful software engineering practice completed in
+order to ensure code quality over a long period of time. Continuous integration
+ensures that multiple tests run on each commit, allowing you to see if your
+newly committed code may be causing problems. Code which “fails CI” (or doesn’t
+pass one of the various tests) will not be merged into the master branch,
+because it causes problems.</p>
+<p>Currently, we use GitHub Actions as our CI provider. It provides quick check markers to
+show which specific tests failed for a given commit.</p>
+<section id="self-hosted-runners">
+<h2>Self-Hosted Runners<a class="headerlink" href="#self-hosted-runners" title="Permalink to this heading">¶</a></h2>
+<p>Currently, we use self-hosted runners as our provider of CI. On Zobelisk,
+we run 12 Docker containers that each serve as a separate runner. Each runner
+can handle on job at a time. This means that a lot of CI jobs are automatically
+run in parallel. If too many CI jobs are requested at once, a queue will begin
+to form.</p>
+<p>These runners run in the background, and should not be killed. If the Docker
+containers are for some reason killed, you will need to launch the <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code>
+file with <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span> <span class="pre">-d</span></code>. You will need to get a valid auth token to add
+GitHub self-hosted runners from the GitHub Actions self-hosted runner adder GUI.</p>
+</section>
+<section id="runs-jobs-steps">
+<h2>Runs, Jobs, Steps<a class="headerlink" href="#runs-jobs-steps" title="Permalink to this heading">¶</a></h2>
+<p>There are multiple pieces to the GitHub Actions CI. The largest piece is the run.
+This is the sum of all jobs in the run. Some runs may run more jobs than others.
+Currently, the CI job that’s spun up on each commit runs around 15 jobs. Inside
+each job are multiple steps. Similar to a Dockerfile, each step specifies one
+action to do: setup Python, download the repo, and compile a package are all
+separate steps. Steps are shared between jobs.</p>
+<p>Each run is also associated with a graph showing the relationship between the
+jobs in the run. This is helpful to see what jobs other jobs depend on, as well
+as why a job might be failing.</p>
+</section>
+<section id="updating-ci">
+<h2>Updating CI<a class="headerlink" href="#updating-ci" title="Permalink to this heading">¶</a></h2>
+<p>To update the CI process, you will need to change the GitHub Actions file, found
+in <code class="docutils literal notranslate"><span class="pre">~/.github/workflows</span></code>. Whenever you change the file and push your changes
+to the repo, you can head over to the “Actions” tab of the GitHub repo site
+to see how your new changes changed the CI process.</p>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
