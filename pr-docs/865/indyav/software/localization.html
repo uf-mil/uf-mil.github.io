@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Localization</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="next" title="Perception" href="perception.html" />
+        <link rel="prev" title="IndyAV Joydrive Utility" href="control/joydrive/joydrive.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="localization">
+<h1>Localization<a class="headerlink" href="#localization" title="Permalink to this heading">¶</a></h1>
+<section id="localization-packages">
+<h2>Localization Packages<a class="headerlink" href="#localization-packages" title="Permalink to this heading">¶</a></h2>
+<p>Sylphase INS</p>
+</section>
+<section id="discussion">
+<h2>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">¶</a></h2>
+<p>Currently we are investigating 3 types of sensor to be used used for localization:</p>
+<section id="inertial-navigator-sensors-and-gnss-gps-glonass-etc">
+<h3>Inertial Navigator Sensors and GNSS (GPS, GLONASS, etc.)<a class="headerlink" href="#inertial-navigator-sensors-and-gnss-gps-glonass-etc" title="Permalink to this heading">¶</a></h3>
+<p>INS and GNSS are usually coupled into an single device.</p>
+<section id="pros">
+<h4>Pros<a class="headerlink" href="#pros" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Directly yields position and orientation data, minimal computation required.</p></li>
+<li><p>RTK and other corrections can greatly boost the accuracy of the position measurement.</p></li>
+</ul>
+</section>
+<section id="cons">
+<h4>Cons<a class="headerlink" href="#cons" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>GNSS data rate is slow &lt; 10Hz</p></li>
+<li><p>Position can drift if too reliant on inertial sensors.</p></li>
+<li><p>GNSS is known to produce large errors if environmental conditions negatively affect the signals.</p></li>
+</ul>
+</section>
+</section>
+<section id="lidar-localization">
+<h3>LIDAR Localization<a class="headerlink" href="#lidar-localization" title="Permalink to this heading">¶</a></h3>
+<section id="id1">
+<h4>Pros<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>High definition geometric data that can be compared to a know point cloud.</p></li>
+<li><p>Plenty of existing algorithms to do this: e.g NDT Matching</p></li>
+<li><p>Operates in almost any lighting conditions</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>Cons<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Slow data acquisition rate, at high speeds a mechanical spinning LIDAR would not capture the world correctly</p></li>
+<li><p>Somewhat costly, not as bad anymore</p></li>
+<li><p>Mechanical spinning LIDARS will be affected my the fast movements of the vehicle.</p></li>
+</ul>
+</section>
+</section>
+<section id="camera-localization">
+<h3>Camera Localization<a class="headerlink" href="#camera-localization" title="Permalink to this heading">¶</a></h3>
+<p>Camera based localization would rely on algorithm suchs as [ORB-SLAM](<a class="reference external" href="https://webdiis.unizar.es/~raulmur/orbslam/">https://webdiis.unizar.es/~raulmur/orbslam/</a>) to determine the position and orientation of the sensor with respect to a pre-constructed map.</p>
+<section id="id3">
+<h4>Pros<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Cheaper than LIDARs most of the time</p></li>
+<li><p>High data acquisition rate, 100+ FPS</p></li>
+</ul>
+</section>
+<section id="id4">
+<h4>Cons<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Camera based computations can be costly which would reduce the effectiveness of their high data acquisition</p></li>
+<li><p>Lighting can extremely affect the usability of the sensor.</p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
