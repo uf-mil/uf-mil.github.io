@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Serial</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Message Handlers" href="msghandlers.html" />
+        <link rel="prev" title="Images" href="images.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Serial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utility-functions">Utility Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#noopserial">NoopSerial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulatedserial">SimulatedSerial</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="txros.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="serial">
+<h1>Serial<a class="headerlink" href="#serial" title="Permalink to this heading">¶</a></h1>
+<section id="utility-functions">
+<h2>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mil_tools.hexify">
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">hexify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#hexify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.hexify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a buffer of bytes in hex format. This should take a bytes object, and
+will return a bytes string in hex format.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">CommandPacket</span><span class="o">.</span><span class="n">create_send_packet</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">can_id</span> <span class="o">=</span> <span class="n">can_id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_bytes</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sending &#39;</span><span class="p">,</span> <span class="n">hexify</span><span class="p">(</span><span class="n">p_bytes</span><span class="p">))</span>
+<span class="go">Sending c0:14:09:48:45:4c:4c:4f:c1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="noopserial">
+<h2>NoopSerial<a class="headerlink" href="#noopserial" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_tools.NoopSerial"></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_tools.NoopSerial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">NoopSerial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#NoopSerial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.NoopSerial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits from <a class="reference external" href="https://pyserial.readthedocs.io/en/latest/pyserial_api.html#serial.Serial" title="(in pySerial v3.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">serial.Serial</span></code></a>, doing nothing for each function.</p>
+<p>Allows super classes to implement custom behavior for simulating
+serial devices.</p>
+</dd></dl>
+
+</section>
+<section id="simulatedserial">
+<h2>SimulatedSerial<a class="headerlink" href="#simulatedserial" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_tools.SimulatedSerial"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#mil_tools.SimulatedSerial.buffer">buffer</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#mil_tools.SimulatedSerial.in_waiting">in_waiting</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_tools.SimulatedSerial.read">read</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mil_tools.SimulatedSerial.reset_input_buffer">reset_input_buffer</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_tools.SimulatedSerial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">SimulatedSerial</span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates a serial device, storing a buffer to be read in a program like a
+normal OS serial device.</p>
+<p>Intended to be extended by other classes, which should override the write function
+to receive writes to
+the simulated device. These classes simply append to the buffer string which will be returned
+on reads to the simulated device.</p>
+<p>Note: <a class="reference internal" href="#mil_tools.NoopSerial" title="mil_tools.NoopSerial"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoopSerial</span></code></a> and <a class="reference internal" href="#mil_tools.SimulatedSerial" title="mil_tools.SimulatedSerial"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimulatedSerial</span></code></a> are generic and are
+candidates for mil_common.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty prints the <code class="docutils literal notranslate"><span class="pre">SimulatedSerial</span></code> object, its address, and the start
+of its buffer.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Pretty prints the <code class="docutils literal notranslate"><span class="pre">SimulatedSerial</span></code> object, its address, and the start
+of its buffer. Equivalent to <code class="docutils literal notranslate"><span class="pre">str(x)</span></code>.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mil_tools.SimulatedSerial.buffer">
+<span class="sig-name descname"><span class="pre">buffer</span></span><a class="headerlink" href="#mil_tools.SimulatedSerial.buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A buffer of bytes waiting to be read from the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mil_tools.SimulatedSerial.in_waiting">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">in_waiting</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><a class="headerlink" href="#mil_tools.SimulatedSerial.in_waiting" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of bytes waiting to be read. This does not modify the buffer in
+any way; the buffer is only inspected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The count of bytes in the buffer.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_tools.SimulatedSerial.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads an amount of bytes from the buffer. All bytes read are removed from the
+buffer upon reading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The amount of bytes desired to be read.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The bytes originating from the top of the buffer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_tools.SimulatedSerial.reset_input_buffer">
+<span class="sig-name descname"><span class="pre">reset_input_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.reset_input_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.reset_input_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the buffer to contain no content. The buffer is set to an empty
+byte string.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
