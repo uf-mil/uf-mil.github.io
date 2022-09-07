@@ -79,13 +79,12 @@
                 
   <h1>Source code for mil_passive_sonar.tx_interface</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">Vector3Stamped</span>
 <span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">SetBoolRequest</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">,</span> <span class="n">TriggerRequest</span>
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
-<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">util</span>
-<span class="kn">from</span> <span class="nn">txros.serviceclient</span> <span class="kn">import</span> <span class="n">ServiceClient</span>
+<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 
 
 <div class="viewcode-block" id="TxHydrophonesClient"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient">[docs]</a><span class="k">class</span> <span class="nc">TxHydrophonesClient</span><span class="p">:</span>
@@ -112,23 +111,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_position_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;/hydrophones/position&quot;</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dir_callback</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="TxHydrophonesClient.get_direction"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">:</span>
+<div class="viewcode-block" id="TxHydrophonesClient.get_direction"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the next processed direction to the pinger.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            defer.Deferred: A deferred object which can be used to get the next message</span>
-<span class="sd">                of the pinger&#39;s direction.</span>
+<span class="sd">            asycio.Future: A Future object which can be used to get the next message</span>
+<span class="sd">            of the pinger&#39;s direction.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TxHydrophonesClient.get_position"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">:</span>
+<div class="viewcode-block" id="TxHydrophonesClient.get_position"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the next processed position of the pinger.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            defer.Deferred: A deferred object which can be used to get the next</span>
-<span class="sd">                message of the pinger&#39;s position.</span>
+<span class="sd">            asyncio.Future: A Future object which can be used to get the next</span>
+<span class="sd">            message of the pinger&#39;s position.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span></div>
 
