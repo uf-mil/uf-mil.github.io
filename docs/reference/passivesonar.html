@@ -73,7 +73,7 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
@@ -359,7 +359,7 @@ def</span><a class="reference internal" href="#mil_passive_sonar.TxHydrophonesCl
 def</span><a class="reference internal" href="#mil_passive_sonar.TxHydrophonesClient.set_callback">set_callback</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_passive_sonar.TxHydrophonesClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_passive_sonar.</span></span><span class="sig-name descname"><span class="pre">TxHydrophonesClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="txros.html#txros.NodeHandle" title="txros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_passive_sonar.</span></span><span class="sig-name descname"><span class="pre">TxHydrophonesClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>TxROS abstraction for interacting with the nodes in this package.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mil_passive_sonar.TxHydrophonesClient.dir_callback">
@@ -376,7 +376,7 @@ is received.</p>
 <p>Construct a client.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>nh</strong> (<a class="reference internal" href="txros.html#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The TxROS node handler.</p>
+<dd class="field-odd"><p><strong>nh</strong> (<a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The TxROS node handler.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -393,18 +393,15 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_passive_sonar.TxHydrophonesClient.get_direction">
-<span class="sig-name descname"><span class="pre">get_direction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient.get_direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient.get_direction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_direction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Future</span></span></span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient.get_direction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient.get_direction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the next processed direction to the pinger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>A deferred object which can be used to get the next message</dt><dd><p>of the pinger’s direction.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p>A Future object which can be used to get the next message
+of the pinger’s direction.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>defer.Deferred</p>
+<dd class="field-even"><p>asycio.Future</p>
 </dd>
 </dl>
 </dd></dl>
@@ -425,18 +422,15 @@ is received.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_passive_sonar.TxHydrophonesClient.get_position">
-<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Deferred</span></span></span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient.get_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient.get_position" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Future</span></span></span><a class="reference internal" href="../_modules/mil_passive_sonar/tx_interface.html#TxHydrophonesClient.get_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_passive_sonar.TxHydrophonesClient.get_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the next processed position of the pinger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>A deferred object which can be used to get the next</dt><dd><p>message of the pinger’s position.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p>A Future object which can be used to get the next
+message of the pinger’s position.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>defer.Deferred</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)">asyncio.Future</a></p>
 </dd>
 </dl>
 </dd></dl>

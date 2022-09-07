@@ -2402,30 +2402,30 @@ func</span><a class="reference internal" href="#classOGridGen_1ad36168544a746a3a
 <span>
 Methods</span><ul>
 <li class="attribute-table-entry">
-<span class="attribute-table-badge" title="method">
-def</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.dump">dump</a></li><li class="attribute-table-entry">
-<span class="attribute-table-badge" title="method">
-def</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.make_dict">make_dict</a></li><li class="attribute-table-entry">
-<span class="attribute-table-badge" title="method">
-def</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.start_caching">start_caching</a></li></ul>
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.dump">dump</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.make_dict">make_dict</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#sub8_gazebo_tools.BagManager.start_caching">start_caching</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="sub8_gazebo_tools.BagManager">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_gazebo_tools.</span></span><span class="sig-name descname"><span class="pre">BagManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diag_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="sub8_gazebo_tools.BagManager.dump">
-<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.dump" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.dump"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save cached bags and save the next ‘post_cache_time’ seconds.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sub8_gazebo_tools.BagManager.make_dict">
-<span class="sig-name descname"><span class="pre">make_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.make_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.make_dict" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.make_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.make_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate caching dictionary from a yaml file.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sub8_gazebo_tools.BagManager.start_caching">
-<span class="sig-name descname"><span class="pre">start_caching</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.start_caching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.start_caching" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_caching</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_gazebo_tools/bag_manager.html#BagManager.start_caching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_gazebo_tools.BagManager.start_caching" title="Permalink to this definition">¶</a></dt>
 <dd><p>Caches bags using big dicts.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="n">topic_name_1</span><span class="p">:</span> <span class="n">subscriber_1</span><span class="p">,</span> <span class="n">topic_name_2</span><span class="p">:</span> <span class="n">subscriber_2</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
 </pre></div>
