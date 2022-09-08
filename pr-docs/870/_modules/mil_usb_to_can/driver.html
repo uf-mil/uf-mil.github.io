@@ -110,7 +110,7 @@
         <span class="n">baud</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~baudrate&quot;</span><span class="p">,</span> <span class="mi">115200</span><span class="p">)</span>
         <span class="n">can_id</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~can_id&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">simulation</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/is_simulation&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="c1"># If simulation mode, load simualted devices</span>
+        <span class="c1"># If simulation mode, load simulated devices</span>
         <span class="k">if</span> <span class="n">simulation</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                 <span class="s2">&quot;CAN2USB driver in simulation! Will not talk to real hardware.&quot;</span>

@@ -125,8 +125,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_unkill_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
             <span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span>
         <span class="p">)</span>
-        <span class="c1"># Sends hearbeat to board</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hearbeat_timer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.4</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">)</span>
+        <span class="c1"># Sends heartbeat to board</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_heartbeat_timer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.4</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">)</span>
         <span class="c1"># Create a subscribe for thruster commands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
             <span class="s2">&quot;/thrusters/thrust&quot;</span><span class="p">,</span> <span class="n">Thrust</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
@@ -213,7 +213,7 @@
             <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">mobo_soft_kill</span><span class="p">:</span>
                 <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;mobo&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">heartbeat_lost</span><span class="p">:</span>
-                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;hearbeat&quot;</span><span class="p">)</span>
+                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;heartbeat&quot;</span><span class="p">)</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Soft kill from: &quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reasons</span><span class="p">)</span>
         <span class="n">raised</span> <span class="o">=</span> <span class="n">severity</span> <span class="o">!=</span> <span class="mi">0</span>
 
