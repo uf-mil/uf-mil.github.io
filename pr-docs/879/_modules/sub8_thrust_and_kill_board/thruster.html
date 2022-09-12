@@ -142,7 +142,7 @@
 <span class="sd">            thrust (???): The amount of thrust.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">unclipped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort_from_thrust_unclipped</span><span class="p">(</span><span class="n">thrust</span><span class="p">)</span>
-        <span class="c1"># Theoritically can limit to .66 under 16V assumptions or .5 under 12V assumptions... So do both (.5 + 66)/2</span>
+        <span class="c1"># Theoretically can limit to .66 under 16V assumptions or .5 under 12V assumptions... So do both (.5 + 66)/2</span>
         <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">unclipped</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.58</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">)</span></div></div>
 </pre></div>
 

@@ -103,7 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Mission System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
@@ -627,7 +627,7 @@ def</span><a class="reference internal" href="#mil_usb_to_can.SimulatedUSBtoCAN.
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_usb_to_can.SimulatedUSBtoCAN">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_usb_to_can.</span></span><span class="sig-name descname"><span class="pre">SimulatedUSBtoCAN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">devices={0:</span> <span class="pre">&lt;class</span> <span class="pre">'mil_usb_to_can.simulation.SimulatedCANDevice'&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_id=-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_usb_to_can/simulation.html#SimulatedUSBtoCAN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_usb_to_can.SimulatedUSBtoCAN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulates the USB to CAN board. Is supplied with a dictionary of simualted
+<dd><p>Simulates the USB to CAN board. Is supplied with a dictionary of simulated
 CAN devices to simulate the behavior of the whole CAN network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -762,7 +762,7 @@ def</span><a class="reference internal" href="#mil_usb_to_can.Packet.to_bytes">t
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_usb_to_can.Packet.to_bytes">
 <span class="sig-name descname"><span class="pre">to_bytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_usb_to_can/utils.html#Packet.to_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_usb_to_can.Packet.to_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the binary represnetation of this packet to be sent across the CAN network.
+<dd><p>Returns the binary representation of this packet to be sent across the CAN network.
 Uses <a class="reference external" href="https://docs.python.org/3/library/struct.html#struct.Struct.pack" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">struct.Struct.pack()</span></code></a> to pack the payload between the <a class="reference internal" href="#mil_usb_to_can.Packet.SOF" title="mil_usb_to_can.Packet.SOF"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SOF</span></code></a> and
 <a class="reference internal" href="#mil_usb_to_can.Packet.EOF" title="mil_usb_to_can.Packet.EOF"><code class="xref py py-attr docutils literal notranslate"><span class="pre">EOF</span></code></a>.</p>
 <dl class="field-list simple">
