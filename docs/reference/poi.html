@@ -85,7 +85,10 @@
 <li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-with-rviz">Using with Rviz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#poiserver">POIServer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#txpoiclient">TxPOIClient</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
@@ -110,8 +113,71 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <section id="mil-poi-poi-handling">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling<a class="headerlink" href="#mil-poi-poi-handling" title="Permalink to this heading">¶</a></h1>
+  <section id="module-mil_poi">
+<span id="mil-poi-poi-handling"></span><h1><a class="reference internal" href="#module-mil_poi" title="mil_poi"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code></a> - POI Handling<a class="headerlink" href="#module-mil_poi" title="Permalink to this heading">¶</a></h1>
+<p>The MIL POI system is used to keep track of relevant points of interest across
+a landscape. This can be used to give a robotic system a headstart in determining
+the final target of a mission; for example, a robotic system could be instructed
+to head to a specific POI before looking around more closely to find the actual object
+it needs to interact with.</p>
+<div class="services docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">/poi_server/add</span></span></dt>
+<dd><p><a class="reference internal" href="services.html#mil_poi.srv.AddPOIRequest" title="mil_poi.srv.AddPOIRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.AddPOIRequest</span></code></a> → <a class="reference internal" href="services.html#mil_poi.srv.AddPOIResponse" title="mil_poi.srv.AddPOIResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.AddPOIResponse</span></code></a></p>
+<p>Add a POI object into the POI server listing.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">/poi_server/delete</span></span></dt>
+<dd><p><a class="reference internal" href="services.html#mil_poi.srv.DeletePOIRequest" title="mil_poi.srv.DeletePOIRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.DeletePOIRequest</span></code></a> → <a class="reference internal" href="services.html#mil_poi.srv.DeletePOIResponse" title="mil_poi.srv.DeletePOIResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.DeletePOIResponse</span></code></a></p>
+<p>Deletes a POI with the given name, and returns whether the deletion was successful.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">/poi_server/move</span></span></dt>
+<dd><p><a class="reference internal" href="services.html#mil_poi.srv.MovePOIRequest" title="mil_poi.srv.MovePOIRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.MovePOIRequest</span></code></a> → <a class="reference internal" href="services.html#mil_poi.srv.MovePOIResponse" title="mil_poi.srv.MovePOIResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_poi.srv.MovePOIResponse</span></code></a></p>
+<p>Moves a POI with the given name to the given position, and returns whether
+the move was successful.</p>
+</dd></dl>
+
+</div>
+<div class="topics docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">/points_of_interest/update</span></span></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">visualization_msgs.msg.InteractiveMarkerUpdate</span></code></p>
+<p>Sends updates about changes to interactive markers. When attempting to view
+interactive markers in Rviz, the <code class="docutils literal notranslate"><span class="pre">update_topic</span></code> parameter of the Interactive
+Markers panel needs to be set to this topic.</p>
+</dd></dl>
+
+</div>
+<section id="using-with-rviz">
+<h2>Using with Rviz<a class="headerlink" href="#using-with-rviz" title="Permalink to this heading">¶</a></h2>
+<p>To view and interactive with interactive marker POIs in Rviz, you will need to enable
+the “Interactive Markers” panel in Rviz. You will then need to set the update topic
+to be equal to the update topic published by the interactive marker server published
+by the POI server. This topic name will likely end in <code class="docutils literal notranslate"><span class="pre">/update</span></code>.</p>
+<p>All POIs are represented as spheres in the interactive marker server; you can move
+these spheres around to change their location. Note that points are currently
+fixed to the x and y axes, meaning that you can not have floating or submerged points.</p>
+</section>
+<section id="configuration-files">
+<h2>Configuration Files<a class="headerlink" href="#configuration-files" title="Permalink to this heading">¶</a></h2>
+<p>When the POI server is launched, it is provided with several ROS parameters to
+describe how the server should function. This includes POIs that are spawned by
+default upon server initialization.</p>
+<p>The default format of the POI configuration file is the following format:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="nt">global_frame</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enu</span><span class="w"> </span><span class="c1"># Name of the frame to derive POI locations from</span><span class="w"></span>
+<span class="nt">initial_pois</span><span class="p">:</span><span class="w"> </span><span class="c1"># List of POIs that are spawned by default</span><span class="w"></span>
+<span class="w">  </span><span class="nt">start_gate</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="c1"># Name (key) and location (value) of specific POIs</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
 <section id="poiserver">
 <h2>POIServer<a class="headerlink" href="#poiserver" title="Permalink to this heading">¶</a></h2>
 <div class="attribute-table" data-move-to-id="mil_poi.POIServer"><div class="attribute-table-column">
@@ -242,6 +308,49 @@ experienced an exception.</p>
 <dt class="sig sig-object py" id="mil_poi.POIServer.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update interactive markers server and POI publish of changes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="txpoiclient">
+<h2>TxPOIClient<a class="headerlink" href="#txpoiclient" title="Permalink to this heading">¶</a></h2>
+<div class="attribute-table" data-move-to-id="mil_poi.TxPOIClient"><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mil_poi.TxPOIClient.get">get</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mil_poi.TxPOIClient.setup">setup</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mil_poi.TxPOIClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_poi.</span></span><span class="sig-name descname"><span class="pre">TxPOIClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client for getting the positions of POIs in a POI server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nh</strong> (<a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.NodeHandle"><em>txros.NodeHandle</em></a>) – The node handle to use.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_poi.TxPOIClient.get">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_fresh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of POI in the global frame as a 3x1 numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the POI.</p></li>
+<li><p><strong>only_fresh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If the POI is already known, wait for a fresh
+message before returning.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_poi.TxPOIClient.setup">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the client. Must be called before using the client.</p>
 </dd></dl>
 
 </dd></dl>
