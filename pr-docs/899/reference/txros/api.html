@@ -100,7 +100,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -138,8 +138,15 @@
 <h2>Exception Hierarchy<a class="headerlink" href="#exception-hierarchy" title="Permalink to this heading">¶</a></h2>
 <div class="exception-hierarchy-content">
 <ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TxrosException</span></code></a></dt><dd><ul>
 <li><p><a class="reference internal" href="#txros.XMLRPCException" title="txros.XMLRPCException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">XMLRPCException</span></code></a></p></li>
-<li><p><a class="reference internal" href="#txros.ROSMasterException" title="txros.ROSMasterException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ROSMasterException</span></code></a></p></li>
+<li><p><a class="reference internal" href="#txros.ROSMasterError" title="txros.ROSMasterError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ROSMasterError</span></code></a></p></li>
+<li><p><a class="reference internal" href="#txros.ROSMasterFailure" title="txros.ROSMasterFailure"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ROSMasterFailure</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
 <li><p><a class="reference internal" href="#txros.ServiceError" title="txros.ServiceError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ServiceError</span></code></a></p></li>
 <li><p><a class="reference internal" href="#txros.TooPastError" title="txros.TooPastError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TooPastError</span></code></a></p></li>
 </ul>
@@ -152,13 +159,12 @@
 Attributes</span><ul>
 <li class="attribute-table-entry">
 <a class="reference internal" href="#txros.XMLRPCException.exception">exception</a></li><li class="attribute-table-entry">
-<a class="reference internal" href="#txros.XMLRPCException.node_handle">node_handle</a></li><li class="attribute-table-entry">
 <a class="reference internal" href="#txros.XMLRPCException.request_body">request_body</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="txros.XMLRPCException">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">XMLRPCException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><span class="pre">Exception</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/rosxmlrpc.html#XMLRPCException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.XMLRPCException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Represents an error that occurred in the XMLRPC communication. Inherits only
-from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<dd><p>Represents an error that occurred in the XMLRPC communication. Inherits
+from <a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-class docutils literal notranslate"><span class="pre">TxrosException</span></code></a>.</p>
 <div class="operations docutils container">
 <dl class="describe">
 <dt class="sig sig-object">
@@ -180,7 +186,7 @@ from <a class="reference external" href="https://docs.python.org/3/library/excep
 <dd><p>The exception caught in the error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)">Exception</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -196,34 +202,46 @@ from <a class="reference external" href="https://docs.python.org/3/library/excep
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="txros.TxrosException"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#txros.TxrosException.node_handle">node_handle</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.TxrosException">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">TxrosException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/exceptions.html#TxrosException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.TxrosException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception related to txROS. Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="txros.XMLRPCException.node_handle">
-<span class="sig-name descname"><span class="pre">node_handle</span></span><a class="headerlink" href="#txros.XMLRPCException.node_handle" title="Permalink to this definition">¶</a></dt>
-<dd><p>The node handle which made the request
-that caused the exception.</p>
+<dt class="sig sig-object py" id="txros.TxrosException.node_handle">
+<span class="sig-name descname"><span class="pre">node_handle</span></span><a class="headerlink" href="#txros.TxrosException.node_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The node handle which caused the exception.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeHandle</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle">txros.NodeHandle</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-<div class="attribute-table" data-move-to-id="txros.ROSMasterException"><div class="attribute-table-column">
+<div class="attribute-table" data-move-to-id="txros.ROSMasterError"><div class="attribute-table-column">
 <span>
 Attributes</span><ul>
 <li class="attribute-table-entry">
-<a class="reference internal" href="#txros.ROSMasterException.code">code</a></li><li class="attribute-table-entry">
-<a class="reference internal" href="#txros.ROSMasterException.ros_message">ros_message</a></li></ul>
+<a class="reference internal" href="#txros.ROSMasterError.ros_message">ros_message</a></li></ul>
 </div></div><dl class="py class">
-<dt class="sig sig-object py" id="txros.ROSMasterException">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ROSMasterException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/rosxmlrpc.html#ROSMasterException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ROSMasterException" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="txros.ROSMasterError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ROSMasterError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/rosxmlrpc.html#ROSMasterError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ROSMasterError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents an exception that occurred when attempting to communicate with the
-ROS Master Server. Inherits only from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+ROS Master Server. Unlike <a class="reference internal" href="#txros.ROSMasterFailure" title="txros.ROSMasterFailure"><code class="xref py py-class docutils literal notranslate"><span class="pre">ROSMasterFailure</span></code></a>, this indicates that the
+request completed, but the returned value is not usable. Similar to a bad request
+HTTP error.</p>
+<p>Inherits from <a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-class docutils literal notranslate"><span class="pre">TxrosException</span></code></a>.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="txros.ROSMasterException.ros_message">
-<span class="sig-name descname"><span class="pre">ros_message</span></span><a class="headerlink" href="#txros.ROSMasterException.ros_message" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="txros.ROSMasterError.ros_message">
+<span class="sig-name descname"><span class="pre">ros_message</span></span><a class="headerlink" href="#txros.ROSMasterError.ros_message" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message from ROS explaining the exception.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -232,13 +250,28 @@ ROS Master Server. Inherits only from <a class="reference external" href="https:
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="txros.ROSMasterFailure"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#txros.ROSMasterFailure.ros_message">ros_message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.ROSMasterFailure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ROSMasterFailure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/rosxmlrpc.html#ROSMasterFailure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ROSMasterFailure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a failure that occurred after a node sent an outgoing XMLRPC request
+to ROS Master. Unlike <a class="reference internal" href="#txros.ROSMasterError" title="txros.ROSMasterError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ROSMasterError</span></code></a>, this indicates that the request
+failed in progress, and did not complete. This may cause side effects visible
+in other ROS services.</p>
+<p>Inherits from <a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-class docutils literal notranslate"><span class="pre">TxrosException</span></code></a>.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="txros.ROSMasterException.code">
-<span class="sig-name descname"><span class="pre">code</span></span><a class="headerlink" href="#txros.ROSMasterException.code" title="Permalink to this definition">¶</a></dt>
-<dd><p>The code from ROS associated with the exception.</p>
+<dt class="sig sig-object py" id="txros.ROSMasterFailure.ros_message">
+<span class="sig-name descname"><span class="pre">ros_message</span></span><a class="headerlink" href="#txros.ROSMasterFailure.ros_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message from ROS explaining the exception.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,52 +459,6 @@ in the node which already exists being killed to make way for the new node
 you are initiailizing. If the other node is shutdown, it will be shutdown
 safely.</p>
 </div>
-<p>The node handle can be used for general purposes, such as parameters and sleeping:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">txros</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
-<span class="go">&#39;/test/special_node&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
-<span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">delete_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">except</span> <span class="n">txros</span><span class="o">.</span><span class="n">ROSMasterException</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This parameter does not exist!&quot;</span><span class="p">)</span>
-<span class="go">This parameter does not exist!</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Sleeps for 2 seconds</span>
-</pre></div>
-</div>
-<p>The node handle can also be used for publishing and subscribing to topics. Note
-that all publishers and subscribers must be setup.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">txros</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">txros</span><span class="o">.</span><span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">advertise</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">pub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span> <span class="nf">publish</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="gp">... </span>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Int32</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
-<span class="gp">... </span>            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="gp">... </span>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="c1"># When task gets cancelled, stop publishing</span>
-<span class="gp">... </span>        <span class="k">pass</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">publish</span><span class="p">())</span> <span class="c1"># Start publishing!</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">())</span>
-<span class="go">4</span>
-<span class="go">5</span>
-<span class="go">6</span>
-</pre></div>
-</div>
 <div class="operations docutils container">
 <dl class="describe">
 <dt class="sig sig-object">
@@ -605,14 +592,26 @@ when they connect to the publisher.</p></li>
 arguments passed to this method are passed into the constructor of the service;
 check there for information on what arguments can be passed in.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name to use for the service.</p></li>
+<li><p><strong>service_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.10)"><em>type</em></a><em>[</em><em>genpy.Message</em><em>]</em>) – A ROS service class to use with the service.
+The callback method used by the class will receive the request
+class associated with the service, and is expected to return the
+response class associated with this class.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>genpy.Message</em><em>]</em><em>, </em><em>Awaitable</em><em>[</em><em>genpy.Message</em><em>]</em><em>]</em>) – An asynchronous callback
+to process all incoming service requests. The returned message type
+should be the reply type associated with the service.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The given service.</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#txros.Service" title="txros.Service">txros.Service</a></p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The given service.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#txros.Service" title="txros.Service">txros.Service</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -687,7 +686,7 @@ namespace is returned.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#txros.ROSMasterException" title="txros.ROSMasterException"><strong>txros.ROSMasterException</strong></a> – The parameter is not set.</p></li>
+<li><p><strong>txros.ROSMasterException</strong> – The parameter is not set.</p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><strong>RuntimeError</strong></a> – The node is not running.</p></li>
 </ul>
 </dd>
@@ -806,7 +805,7 @@ Will always be opposite of <a class="reference internal" href="#txros.NodeHandle
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Whether the node handle is not running. This is <code class="docutils literal notranslate"><span class="pre">True</span></code> by default,
 calling <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> on the node will make this <code class="docutils literal notranslate"><span class="pre">False</span></code>. Will always
-be opposite of :meth`~.is_running`.</p>
+be opposite of <a class="reference internal" href="#txros.NodeHandle.is_running" title="txros.NodeHandle.is_running"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_running()</span></code></a>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
@@ -899,7 +898,7 @@ this value can be ignored.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.NodeHandle.shutdown">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.shutdown" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shutdown_servers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.shutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shuts down all active connections. This should always be called before
 the loop is closed, or else multiple instances of <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ResourceWarning" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceWarning</span></code></a>
 will be emitted.</p>
@@ -926,7 +925,7 @@ for.</p>
 <dd><p>Sleeps for a specified amount of time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>time</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>genpy.Time</em><em>]</em>) – The amount of time to sleep until.
+<dd class="field-odd"><p><strong>future_time</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>genpy.Time</em><em>]</em>) – The amount of time to sleep until.
 If a float or integer is used, then the generated time is constructed
 through the <code class="docutils literal notranslate"><span class="pre">from_sec</span></code> method of <code class="docutils literal notranslate"><span class="pre">genpy.Time</span></code>.</p>
 </dd>
@@ -1274,9 +1273,9 @@ the service.</p></li>
 The callback method used by the class will receive the request
 class associated with the service, and is expected to return the
 response class associated with this class.</p></li>
-<li><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>genpy.Message</em><em>]</em><em>, </em><em>defer.Deferred</em><em>]</em>) – The callback
-to process all incoming service requests. The callback should return
-the service response class through a Deferred object.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em><em>[</em><em>[</em><em>genpy.Message</em><em>]</em><em>, </em><em>Awaitable</em><em>[</em><em>genpy.Message</em><em>]</em><em>]</em>) – An asynchronous callback
+to process all incoming service requests. The returned message type
+should be the reply type associated with the service.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1446,7 +1445,10 @@ If the status code is not 1, then <code class="xref py py-class docutils literal
 <dt>Raises:</dt><dd><dl class="simple">
 <dt><a class="reference internal" href="#txros.XMLRPCException" title="txros.XMLRPCException"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLRPCException</span></code></a>: General error in communication. This could</dt><dd><p>be due to a multitude of reasons.</p>
 </dd>
-<dt><a class="reference internal" href="#txros.ROSMasterException" title="txros.ROSMasterException"><code class="xref py py-class docutils literal notranslate"><span class="pre">ROSMasterException</span></code></a>: The status code returned by the ROS master</dt><dd><p>server was not 1, indicating that the request was not complete.</p>
+<dt><a class="reference internal" href="#txros.ROSMasterError" title="txros.ROSMasterError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ROSMasterError</span></code></a>: The status code returned by the ROS master</dt><dd><p>server was -1, indicating that the request completed, but the associated
+return value is not usable.</p>
+</dd>
+<dt><a class="reference internal" href="#txros.ROSMasterFailure" title="txros.ROSMasterFailure"><code class="xref py py-class docutils literal notranslate"><span class="pre">ROSMasterFailure</span></code></a>: The status code returned by the ROS master</dt><dd><p>server was 0, indicating that the request did not successfully complete.</p>
 </dd>
 </dl>
 </dd>
@@ -1533,6 +1535,8 @@ def</span><a class="reference internal" href="#txros.GoalManager.get_result">get
 <dt class="sig sig-object py" id="txros.GoalManager">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">GoalManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_client</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.ActionClient" title="txros.action.ActionClient"><span class="pre">ActionClient</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.Goal" title="txros.action.Goal"><span class="pre">Goal</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/action.html#GoalManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.GoalManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Manages the interactions between a specific goal and an action client.</p>
+<p>This class is not meant to be constructed by client objects; rather it is instantiated
+by the <a class="reference internal" href="#txros.ActionClient" title="txros.ActionClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">ActionClient</span></code></a> to talk to the <a class="reference internal" href="#txros.SimpleActionServer" title="txros.SimpleActionServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleActionServer</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1648,10 +1652,12 @@ is called.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.SimpleActionServer.is_active">
 <span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#SimpleActionServer.is_active"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_active" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether there is an active goal running.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>Returns whether there is an active goal running.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1659,10 +1665,12 @@ is called.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.SimpleActionServer.is_cancel_requested">
 <span class="sig-name descname"><span class="pre">is_cancel_requested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#SimpleActionServer.is_cancel_requested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_cancel_requested" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether a goal is currently active and a cancel has been requested.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>Whether a goal is currently active and a cancel has been requested.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1670,10 +1678,9 @@ is called.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.SimpleActionServer.is_new_goal_available">
 <span class="sig-name descname"><span class="pre">is_new_goal_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#SimpleActionServer.is_new_goal_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_new_goal_available" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether the next goal of the server is defined.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Whether the next goal is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dd class="field-odd"><p>Whether the next goal is defined, or not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
@@ -1684,11 +1691,13 @@ is called.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.SimpleActionServer.is_preempt_requested">
 <span class="sig-name descname"><span class="pre">is_preempt_requested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#SimpleActionServer.is_preempt_requested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.SimpleActionServer.is_preempt_requested" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether the goal has been requested to be cancelled, and there is both
-a goal currently running and a goal scheduled to be run shortly.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>Whether the goal has been requested to be cancelled, and there is both
+a goal currently running and a goal scheduled to be run shortly.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1806,11 +1815,29 @@ def</span><a class="reference internal" href="#txros.ActionClient.cancel_goals_a
 <span class="attribute-table-badge" title="method">
 def</span><a class="reference internal" href="#txros.ActionClient.send_goal">send_goal</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#txros.ActionClient.setup">setup</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#txros.ActionClient.shutdown">shutdown</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#txros.ActionClient.wait_for_server">wait_for_server</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="txros.ActionClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">ActionClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.10)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">types.ActionMessage</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/action.html#ActionClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p>Representation of an action client in txros. This works in conjunction with
+the <a class="reference internal" href="#txros.SimpleActionServer" title="txros.SimpleActionServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleActionServer</span></code></a> by sending the servers goals to execute.
+In response, the client receives feedback updates and the final result of the goal,
+which it can handle by itself.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_handle</strong> (<a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><em>txros.NodeHandle</em></a>) – Node handle used to power the action client.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the action client.</p></li>
+<li><p><strong>action_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.10)"><em>type</em></a><em>[</em><em>genpy.Message</em><em>]</em>) – The action message type used by the
+action client and server.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="txros.ActionClient.cancel_all_goals">
 <span class="sig-name descname"><span class="pre">cancel_all_goals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#ActionClient.cancel_all_goals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.cancel_all_goals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sends a message to the mission cancellation topic requesting all goals to
@@ -1831,7 +1858,9 @@ be cancelled.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.ActionClient.send_goal">
 <span class="sig-name descname"><span class="pre">send_goal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.Goal" title="txros.action.Goal"><span class="pre">Goal</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#txros.GoalManager" title="txros.action.GoalManager"><span class="pre">GoalManager</span></a></span></span><a class="reference internal" href="../../_modules/txros/action.html#ActionClient.send_goal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.send_goal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sends a goal to a goal manager.</p>
+<dd><p>Sends a goal to a goal manager. The goal manager is responsible for the
+communication between the action client and server; it assists in this process
+by maintaining individual <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The manager of the goal.</p>
@@ -1840,6 +1869,20 @@ be cancelled.</p>
 <dd class="field-even"><p><a class="reference internal" href="#txros.GoalManager" title="txros.GoalManager">GoalManager</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.setup">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/action.html#ActionClient.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the action client. This must be called before the action client
+can be used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.ActionClient.shutdown">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/action.html#ActionClient.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.ActionClient.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts down the action client. This should always be called when the action
+client is no longer needed.</p>
 </dd></dl>
 
 <dl class="py method">

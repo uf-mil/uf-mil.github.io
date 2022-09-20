@@ -92,6 +92,8 @@
 <span class="kn">from</span> <span class="nn">xmlrpc</span> <span class="kn">import</span> <span class="n">client</span>
 <span class="kn">from</span> <span class="nn">lxml.etree</span> <span class="kn">import</span> <span class="n">XMLParser</span><span class="p">,</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">tostring</span>
 
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">TxrosException</span>
+
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 
@@ -189,6 +191,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="n">AsyncioTransport</span><span class="p">(</span><span class="n">node_handle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">node_handle</span><span class="o">.</span><span class="n">_aiohttp_session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">headers</span><span class="p">:</span>
@@ -230,10 +233,10 @@
         <span class="k">return</span> <span class="n">XMLRPCMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__request</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="XMLRPCException"><a class="viewcode-back" href="../../reference/txros/api.html#txros.XMLRPCException">[docs]</a><span class="k">class</span> <span class="nc">XMLRPCException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="XMLRPCException"><a class="viewcode-back" href="../../reference/txros/api.html#txros.XMLRPCException">[docs]</a><span class="k">class</span> <span class="nc">XMLRPCException</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represents an error that occurred in the XMLRPC communication. Inherits only</span>
-<span class="sd">    from :class:`Exception`.</span>
+<span class="sd">    Represents an error that occurred in the XMLRPC communication. Inherits</span>
+<span class="sd">    from :class:`~.TxrosException`.</span>
 
 <span class="sd">    .. container:: operations</span>
 
@@ -247,10 +250,8 @@
 <span class="sd">            ``str(x)``.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        exception (:class:`Exception`): The exception caught in the error.</span>
+<span class="sd">        exception (Exception): The exception caught in the error.</span>
 <span class="sd">        request_body (bytes): The request body of the request which caused the exception.</span>
-<span class="sd">        node_handle (:class:`~txros.NodeHandle`): The node handle which made the request</span>
-<span class="sd">            that caused the exception.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">request_body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
@@ -268,24 +269,44 @@
 
         <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">if</span> <span class="n">exception</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;ClientConnectorError&quot;</span> <span class="ow">and</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;requestTopic&quot;</span><span class="p">:</span>
-            <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;It appears the node may not be able to find a node publishing the topic it is attempting to listen to. This likely means that the node publishing to the topic has died. Please check the publisher to the topic for issues and restart ROS.&quot;</span>
+            <span class="n">help_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;It appears the node may not be able to find a node publishing the topic it is attempting to listen to. This likely means that the node publishing to the topic has died. Please check the publisher to the topic for issues and restart ROS.</span><span class="se">\n\n</span><span class="s2">Request body: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">request_body</span><span class="si">}</span><span class="s2">&quot;</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred in the XMLRPC communication. The &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; node attempted to call &#39;</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&#39; resulting in an error. For help resolving this exception, please see the txros documentation.&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">{</span><span class="n">help_message</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">help_message</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error occurred in the XMLRPC communication. The &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; node attempted to call &#39;</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&#39; resulting in an error. For help resolving this exception, please see the txros documentation.&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">{</span><span class="n">help_message</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">help_message</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ROSMasterException"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterException">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ROSMasterError"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterError">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterError</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an exception that occurred when attempting to communicate with the</span>
-<span class="sd">    ROS Master Server. Inherits only from :class:`Exception`.</span>
+<span class="sd">    ROS Master Server. Unlike :class:`~.ROSMasterFailure`, this indicates that the</span>
+<span class="sd">    request completed, but the returned value is not usable. Similar to a bad request</span>
+<span class="sd">    HTTP error.</span>
+
+<span class="sd">    Inherits from :class:`~.TxrosException`.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        ros_message (:class:`str`): The message from ROS explaining the exception.</span>
-<span class="sd">        code (:class:`int`): The code from ROS associated with the exception.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ros_message</span> <span class="o">=</span> <span class="n">message</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An error was sent by ROS when communicating over XMLRPC. The code was &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">&#39; and the message was &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ros_message</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span> <span class="c1"># Should always be -1</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Request from </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ROSMasterFailure"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterFailure">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterFailure</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a failure that occurred after a node sent an outgoing XMLRPC request</span>
+<span class="sd">    to ROS Master. Unlike :class:`~.ROSMasterError`, this indicates that the request</span>
+<span class="sd">    failed in progress, and did not complete. This may cause side effects visible</span>
+<span class="sd">    in other ROS services.</span>
+
+<span class="sd">    Inherits from :class:`~.TxrosException`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        ros_message (:class:`str`): The message from ROS explaining the exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ros_message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span> <span class="c1"># Should always be 0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Request from </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> caused ROS failure: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">. Please consider restarting ROS.&quot;</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ROSMasterProxy"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterProxy">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterProxy</span><span class="p">:</span>
@@ -330,9 +351,11 @@
 <span class="sd">            Raises:</span>
 <span class="sd">                :class:`XMLRPCException`: General error in communication. This could</span>
 <span class="sd">                    be due to a multitude of reasons.</span>
-<span class="sd">                :class:`ROSMasterException`: The status code returned by the ROS master</span>
-<span class="sd">                    server was not 1, indicating that the request was not complete.</span>
-
+<span class="sd">                :class:`ROSMasterError`: The status code returned by the ROS master</span>
+<span class="sd">                    server was -1, indicating that the request completed, but the associated</span>
+<span class="sd">                    return value is not usable.</span>
+<span class="sd">                :class:`ROSMasterFailure`: The status code returned by the ROS master</span>
+<span class="sd">                    server was 0, indicating that the request did not successfully complete.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="p">:</span> <span class="n">AsyncServerProxy</span><span class="p">,</span> <span class="n">caller_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -352,7 +375,9 @@
             <span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_caller_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># SUCCESS</span>
                 <span class="k">return</span> <span class="n">value</span>
-            <span class="k">raise</span> <span class="n">ROSMasterException</span><span class="p">(</span><span class="n">status_message</span><span class="p">,</span> <span class="n">status_code</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ROSMasterError</span><span class="p">(</span><span class="n">status_message</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">node_handle</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ROSMasterFailure</span><span class="p">(</span><span class="n">status_message</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">node_handle</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">remote_caller</span>
 

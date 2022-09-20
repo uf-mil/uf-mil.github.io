@@ -123,9 +123,9 @@
 <span class="sd">                The callback method used by the class will receive the request</span>
 <span class="sd">                class associated with the service, and is expected to return the</span>
 <span class="sd">                response class associated with this class.</span>
-<span class="sd">            callback (Callable[[genpy.Message], defer.Deferred]): The callback</span>
-<span class="sd">                to process all incoming service requests. The callback should return</span>
-<span class="sd">                the service response class through a Deferred object.</span>
+<span class="sd">            callback (Callable[[genpy.Message], Awaitable[genpy.Message]]): An asynchronous callback</span>
+<span class="sd">                to process all incoming service requests. The returned message type</span>
+<span class="sd">                should be the reply type associated with the service.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">resolve_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
