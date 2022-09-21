@@ -111,6 +111,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_poi_sub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span></div>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_poi_sub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
     <span class="k">def</span> <span class="nf">_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal callback on new points_of_interest updates</span>

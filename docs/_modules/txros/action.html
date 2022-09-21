@@ -100,8 +100,10 @@
 <div class="viewcode-block" id="GoalManager"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager">[docs]</a><span class="k">class</span> <span class="nc">GoalManager</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Manages the interactions between a specific goal and an action client.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
 
+<span class="sd">    This class is not meant to be constructed by client objects; rather it is instantiated</span>
+<span class="sd">    by the :class:`~.ActionClient` to talk to the :class:`~.SimpleActionServer`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_action_client</span><span class="p">:</span> <span class="n">ActionClient</span>
     <span class="n">_goal</span><span class="p">:</span> <span class="n">Goal</span>
     <span class="n">_goal_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -150,17 +152,15 @@
 
     <span class="k">def</span> <span class="nf">_status_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
         <span class="k">del</span> <span class="n">status</span>
-        <span class="k">pass</span>  <span class="c1"># XXX update state</span>
 
     <span class="k">def</span> <span class="nf">_result_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">):</span>
         <span class="k">del</span> <span class="n">status</span>
-        <span class="c1"># XXX update state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forget</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_result_fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_fut</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_feedback_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">):</span>
-        <span class="c1"># XXX update state</span>
         <span class="k">del</span> <span class="n">status</span>
 
         <span class="n">old</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_futs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_futs</span><span class="p">,</span> <span class="p">[]</span>
@@ -194,10 +194,6 @@
                 <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
-
-        <span class="c1"># XXX update state</span>
-
-        <span class="c1"># self.forget()</span>
 
 <div class="viewcode-block" id="GoalManager.forget"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager.forget">[docs]</a>    <span class="k">def</span> <span class="nf">forget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -394,7 +390,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="p">:</span>
+        <span class="c1"># Shutdown can also be achieved by just shutting down each pub/sub</span>
+        <span class="n">subs_pubs_running</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_status_pub</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result_pub</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_pub</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_goal_sub</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_sub</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">subs_pubs_running</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; action server was never shutdown(). This may cause issues with this instance of ROS - please fix the errors and completely restart ROS.&quot;</span><span class="p">,</span>
@@ -462,38 +466,30 @@
 
 <div class="viewcode-block" id="SimpleActionServer.is_new_goal_available"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.is_new_goal_available">[docs]</a>    <span class="k">def</span> <span class="nf">is_new_goal_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Whether the next goal of the server is defined.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            bool: Whether the next goal is not ``None``.</span>
+<span class="sd">            bool: Whether the next goal is defined, or not ``None``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_preempt_requested"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.is_preempt_requested">[docs]</a>    <span class="k">def</span> <span class="nf">is_preempt_requested</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Whether the goal has been requested to be cancelled, and there is both</span>
-<span class="sd">        a goal currently running and a goal scheduled to be run shortly.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            bool</span>
+<span class="sd">            bool: Whether the goal has been requested to be cancelled, and there is both</span>
+<span class="sd">            a goal currently running and a goal scheduled to be run shortly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cancel_requested</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_cancel_requested"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.is_cancel_requested">[docs]</a>    <span class="k">def</span> <span class="nf">is_cancel_requested</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Whether a goal is currently active and a cancel has been requested.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            bool</span>
+<span class="sd">            bool: Whether a goal is currently active and a cancel has been requested.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cancel_requested</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_active"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.is_active">[docs]</a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns whether there is an active goal running.</span>
-
 <span class="sd">        Returns:</span>
-<span class="sd">            bool</span>
+<span class="sd">            bool: Returns whether there is an active goal running.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
@@ -661,7 +657,20 @@
 
 
 <div class="viewcode-block" id="ActionClient"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient">[docs]</a><span class="k">class</span> <span class="nc">ActionClient</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Representation of an action client in txros. This works in conjunction with</span>
+<span class="sd">    the :class:`~.SimpleActionServer` by sending the servers goals to execute.</span>
+<span class="sd">    In response, the client receives feedback updates and the final result of the goal,</span>
+<span class="sd">    which it can handle by itself.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionMessage</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_handle (txros.NodeHandle): Node handle used to power the action client.</span>
+<span class="sd">            name (str): The name of the action client.</span>
+<span class="sd">            action_type (type[genpy.Message]): The action message type used by the</span>
+<span class="sd">                action client and server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">action_type</span>
@@ -685,23 +694,31 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span> <span class="s2">&quot;/feedback&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_callback</span>
         <span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActionClient.setup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the action client. This must be called before the action client</span>
+<span class="sd">        can be used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status_sub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result_sub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_sub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActionClient.shutdown"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shuts down the action client. This should always be called when the action</span>
+<span class="sd">        client is no longer needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_pub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status_sub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result_sub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_feedback_sub</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(),</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_status_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">GoalStatusArray</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">status_list</span><span class="p">:</span>
@@ -721,7 +738,9 @@
 
 <div class="viewcode-block" id="ActionClient.send_goal"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient.send_goal">[docs]</a>    <span class="k">def</span> <span class="nf">send_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GoalManager</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sends a goal to a goal manager.</span>
+<span class="sd">        Sends a goal to a goal manager. The goal manager is responsible for the</span>
+<span class="sd">        communication between the action client and server; it assists in this process</span>
+<span class="sd">        by maintaining individual :class:`asyncio.Future` objects.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            GoalManager: The manager of the goal.</span>

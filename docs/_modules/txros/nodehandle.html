@@ -148,16 +148,21 @@
         <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">master_uri</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">rpc_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shutdown requested. Reason:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
-        <span class="c1"># XXX should somehow tell/wait for user code to cleanly exit here, e.g.</span>
-        <span class="c1"># by .cancel()ing main coroutine</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shutdown of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> node requested. Reason: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">shutdown_servers</span> <span class="o">=</span> <span class="kc">False</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+            <span class="k">pass</span>
 
         <span class="k">async</span> <span class="k">def</span> <span class="nf">_kill_soon</span><span class="p">():</span>
-            <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">shutdown_servers</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shut down of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> node complete.&quot;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="n">_kill_soon</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">_kill_soon</span><span class="p">())</span>
+        <span class="c1"># Get exception so the loop doesn&#39;t print it out later when the program</span>
+        <span class="c1"># has completed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_task</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">exception</span><span class="p">())</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">rpc_getPid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
@@ -205,56 +210,6 @@
 <span class="sd">        in the node which already exists being killed to make way for the new node</span>
 <span class="sd">        you are initiailizing. If the other node is shutdown, it will be shutdown</span>
 <span class="sd">        safely.</span>
-
-<span class="sd">    The node handle can be used for general purposes, such as parameters and sleeping:</span>
-
-<span class="sd">    .. code-block:: python</span>
-
-<span class="sd">        &gt;&gt;&gt; import os</span>
-<span class="sd">        &gt;&gt;&gt; import txros</span>
-<span class="sd">        &gt;&gt;&gt; nh = await NodeHandle(&quot;/test&quot;, &quot;special_node&quot;, &quot;localhost&quot;, os.environ[&quot;ROS_MASTER_URI&quot;], {})</span>
-<span class="sd">        &gt;&gt;&gt; nh.get_name()</span>
-<span class="sd">        &#39;/test/special_node&#39;</span>
-<span class="sd">        &gt;&gt;&gt; await nh.set_param(&quot;special_param&quot;, True)</span>
-<span class="sd">        &gt;&gt;&gt; await nh.get_param(&quot;special_param&quot;)</span>
-<span class="sd">        True</span>
-<span class="sd">        &gt;&gt;&gt; await nh.delete_param(&quot;special_param&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; try:</span>
-<span class="sd">        ...     await nh.get_param(&quot;special_param&quot;)</span>
-<span class="sd">        ... except txros.ROSMasterException:</span>
-<span class="sd">        ...     print(&quot;This parameter does not exist!&quot;)</span>
-<span class="sd">        This parameter does not exist!</span>
-<span class="sd">        &gt;&gt;&gt; await nh.sleep(2) # Sleeps for 2 seconds</span>
-
-<span class="sd">    The node handle can also be used for publishing and subscribing to topics. Note</span>
-<span class="sd">    that all publishers and subscribers must be setup.</span>
-
-<span class="sd">    .. code-block:: python</span>
-
-<span class="sd">        &gt;&gt;&gt; import os</span>
-<span class="sd">        &gt;&gt;&gt; import txros</span>
-<span class="sd">        &gt;&gt;&gt; nh = await txros.NodeHandle(&quot;/test&quot;, &quot;special_node&quot;, &quot;localhost&quot;, os.environ[&quot;ROS_MASTER_URI&quot;], {})</span>
-<span class="sd">        &gt;&gt;&gt; from std_msgs.msg import Int32</span>
-<span class="sd">        &gt;&gt;&gt; pub = nh.advertise(&quot;running_time&quot;, Int32)</span>
-<span class="sd">        &gt;&gt;&gt; await pub.setup()</span>
-<span class="sd">        &gt;&gt;&gt; async def publish():</span>
-<span class="sd">        ...     try:</span>
-<span class="sd">        ...         count = 0</span>
-<span class="sd">        ...         while True:</span>
-<span class="sd">        ...             pub.publish(Int32(count))</span>
-<span class="sd">        ...             count += 1</span>
-<span class="sd">        ...             await asyncio.sleep(1)</span>
-<span class="sd">        ...     except asyncio.CancelledError as _:</span>
-<span class="sd">        ...         # When task gets cancelled, stop publishing</span>
-<span class="sd">        ...         pass</span>
-<span class="sd">        &gt;&gt;&gt; task = asyncio.create_task(publish()) # Start publishing!</span>
-<span class="sd">        &gt;&gt;&gt; sub = nh.subscribe(&quot;running_time&quot;, Int32)</span>
-<span class="sd">        &gt;&gt;&gt; await sub.setup()</span>
-<span class="sd">        &gt;&gt;&gt; while True:</span>
-<span class="sd">        ...     print(await sub.get_next_message())</span>
-<span class="sd">        4</span>
-<span class="sd">        5</span>
-<span class="sd">        6</span>
 
 <span class="sd">    .. container:: operations</span>
 
@@ -443,10 +398,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">AppRunner</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_site</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">TCPSite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.1.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_site</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">TCPSite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_site</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="o">.</span><span class="n">cleanup</span><span class="p">)</span>
+        <span class="c1"># self.shutdown_callbacks.add(self._xmlrpc_runner.cleanup)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xmlrpc_server_uri</span> <span class="o">=</span> <span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%i</span><span class="s2">/&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_site</span><span class="o">.</span><span class="n">_server</span><span class="o">.</span><span class="n">sockets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span>
@@ -456,23 +411,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">start_server</span><span class="p">(</span>
             <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">tcpros</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">),</span>
             <span class="n">family</span><span class="o">=</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span>
+            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span>
             <span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>  <span class="c1"># Port 0 lets the host assign the port for us</span>
         <span class="n">tcpros_server_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">sockets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server_addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="p">,</span> <span class="n">tcpros_server_port</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;rosrpc://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">tcpros_server_port</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;XMLRPC URI: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">xmlrpc_server_uri</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">other_node_uri</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">lookupNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-            <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterException</span><span class="p">:</span>
+            <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterError</span><span class="p">:</span>
                 <span class="k">break</span>  <span class="c1"># assume that error means unknown node</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
                 <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
                 <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># pause so we don&#39;t retry immediately</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">AsyncServerProxy</span><span class="p">(</span><span class="n">other_node_uri</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+                <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterProxy</span><span class="p">(</span><span class="n">other_node_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span>
                         <span class="n">other_node_proxy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="s2">&quot;new node registered with same name&quot;</span><span class="p">),</span>
@@ -486,7 +442,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/use_sim_time&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterException</span><span class="p">:</span>  <span class="c1"># assume that error means not found</span>
+        <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterError</span><span class="p">:</span>  <span class="c1"># assume that error means not found</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span><span class="p">:</span>
@@ -548,37 +504,50 @@
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NodeHandle.shutdown"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NodeHandle.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="NodeHandle.shutdown"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NodeHandle.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">shutdown_servers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts down all active connections. This should always be called before</span>
 <span class="sd">        the loop is closed, or else multiple instances of :class:`ResourceWarning`</span>
 <span class="sd">        will be emitted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_shutdown_thread&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_real_shutdown</span><span class="p">()</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_thread</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> node is not currently running. It may have been shutdown previously or never started.&quot;</span><span class="p">,</span>
+                <span class="ne">ResourceWarning</span>
+            <span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
+            <span class="k">return</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">_real_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_real_shutdown</span><span class="p">(</span><span class="n">shutdown_servers</span><span class="p">)</span></div>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown_servers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aiohttp_session</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aiohttp_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_real_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shutdown_servers</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
 
+        <span class="n">count</span><span class="p">,</span> <span class="n">total_coros</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="p">)</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="p">,</span> <span class="n">old</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_callbacks</span>
             <span class="n">old_coros</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">()</span> <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">old</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">coro</span> <span class="ow">in</span> <span class="n">old_coros</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">await</span> <span class="n">coro</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">except</span><span class="p">:</span>
                     <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
 
         <span class="c1"># Close the open aiohttp connection used for XMLRPC</span>
         <span class="c1"># Clean this up LAST - other services/publishers/subscribers may still</span>
         <span class="c1"># be using this session</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aiohttp_session</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
-            <span class="c1"># print(&quot;it&#39;s not closed lol&quot;)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xmlrpc_runner</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aiohttp_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">shutdown_servers</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_servers</span><span class="p">()</span>
 
 <div class="viewcode-block" id="NodeHandle.get_name"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NodeHandle.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -606,7 +575,7 @@
 <span class="sd">        Sleeps for a specified amount of time.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            time (Union[float, int, genpy.Time]): The amount of time to sleep until.</span>
+<span class="sd">            future_time (Union[float, int, genpy.Time]): The amount of time to sleep until.</span>
 <span class="sd">                If a float or integer is used, then the generated time is constructed</span>
 <span class="sd">                through the ``from_sec`` method of ``genpy.Time``.</span>
 
@@ -690,7 +659,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the node handle is not running. This is ``True`` by default,</span>
 <span class="sd">            calling :meth:`~.setup` on the node will make this ``False``. Will always</span>
-<span class="sd">            be opposite of :meth`~.is_running`.</span>
+<span class="sd">            be opposite of :meth:`~.is_running`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
 
@@ -704,6 +673,16 @@
 <span class="sd">        Creates a service using this node handle. The arguments and keyword</span>
 <span class="sd">        arguments passed to this method are passed into the constructor of the service;</span>
 <span class="sd">        check there for information on what arguments can be passed in.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name to use for the service.</span>
+<span class="sd">            service_message (type[genpy.Message]): A ROS service class to use with the service.</span>
+<span class="sd">                The callback method used by the class will receive the request</span>
+<span class="sd">                class associated with the service, and is expected to return the</span>
+<span class="sd">                response class associated with this class.</span>
+<span class="sd">            callback (Callable[[genpy.Message], Awaitable[genpy.Message]]): An asynchronous callback</span>
+<span class="sd">                to process all incoming service requests. The returned message type</span>
+<span class="sd">                should be the reply type associated with the service.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
