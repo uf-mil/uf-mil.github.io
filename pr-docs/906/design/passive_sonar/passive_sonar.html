@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Passive sonar</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="next" title="MIL’s Pneumatic Board" href="../pneumatic_board.html" />
+        <link rel="prev" title="odom_estimator" href="../odom_estimator/odom_estimator.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../design.html">Design</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../odom_estimator/odom_estimator.html">odom_estimator (Kalman filter)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Passive Sonar</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use">How to Use</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#launch">Launch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugging">Debugging</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#to-play-back-a-file">To Play Back a File</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#to-step-through-a-file">To step through a file</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#to-play-back-a-file-at-real-speed">To Play back a file at real speed</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#visualize-data-in-the-pipeline">Visualize Data in the Pipeline</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#to-view-all-points-of-the-triggering-pipline">To view all points of the triggering pipline</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#to-view-raw-samples-from-all-hydrophones-around-the-triggering-time">To view raw samples from all hydrophones around the triggering time</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#to-view-the-frequency-response-of-the-bandpass-filter">To view the frequency response of the bandpass filter</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#to-view-the-signals-sent-to-the-ping-locator-node">To view the signals sent to the ping locator node</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#to-view-the-cross-correlations-between-the-hydrophones">To view the cross correlations between the hydrophones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration">Configuration</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#to-make-a-custom-configation">To make a custom configation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#to-change-the-configuration-at-runtime">To change the configuration at runtime</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-ros-bridge">Testing ROS bridge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-does-it-work">How Does It Work?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pneumatic_board.html">MIL Pneumatic Actuator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="passive-sonar">
+<h1>Passive sonar<a class="headerlink" href="#passive-sonar" title="Permalink to this heading">¶</a></h1>
+<section id="how-to-use">
+<h2>How to Use<a class="headerlink" href="#how-to-use" title="Permalink to this heading">¶</a></h2>
+<section id="launch">
+<h3>Launch<a class="headerlink" href="#launch" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">sub8_launch</span> <span class="pre">passive_sonar.launch</span></code></p>
+</section>
+<section id="debugging">
+<h3>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading">¶</a></h3>
+<section id="to-play-back-a-file">
+<h4>To Play Back a File<a class="headerlink" href="#to-play-back-a-file" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Download <a class="reference external" href="http://sylphase.com/files/oof.bin">oof.bin</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">sub8_launch</span> <span class="pre">passive_sonar.launch</span> <span class="pre">environment:=file</span></code></p></li>
+</ul>
+<section id="to-step-through-a-file">
+<h5>To step through a file<a class="headerlink" href="#to-step-through-a-file" title="Permalink to this heading">¶</a></h5>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosrun</span> <span class="pre">mil_tools</span> <span class="pre">stream_tcp_dump</span> <span class="pre">~/Downloads/oof.bin</span> <span class="pre">--batch_size=960000</span> <span class="pre">--advance_on_arrow=True</span></code></p></li>
+</ul>
+</section>
+<section id="to-play-back-a-file-at-real-speed">
+<h5>To Play back a file at real speed<a class="headerlink" href="#to-play-back-a-file-at-real-speed" title="Permalink to this heading">¶</a></h5>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rosrun</span> <span class="pre">mil_tools</span> <span class="pre">stream_tcp_dump</span> <span class="pre">~/Downloads/oof.bin</span> <span class="pre">--batch_size=960000</span> <span class="pre">--rate=10</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="visualize-data-in-the-pipeline">
+<h4>Visualize Data in the Pipeline<a class="headerlink" href="#visualize-data-in-the-pipeline" title="Permalink to this heading">¶</a></h4>
+<p>This pipline makes use of the <code class="docutils literal notranslate"><span class="pre">mil_common/utils/mil_tools/mil_ros_tools/plotter.py</span></code> utility to plot batches of data over on ROS Topics as CV2 images at most points in the processiong pipeline.</p>
+<section id="to-view-all-points-of-the-triggering-pipline">
+<h5>To view all points of the triggering pipline<a class="headerlink" href="#to-view-all-points-of-the-triggering-pipline" title="Permalink to this heading">¶</a></h5>
+<p>(raw, max convolution, gradient) that caused the most recent trigger (only hydrophone 0), look at <code class="docutils literal notranslate"><span class="pre">/hydrophones/triggering/trigger_debug</span></code></p>
+<p>It should look something like this (30kHz):</p>
+<img alt="../../_images/trigger_debug.png" src="../../_images/trigger_debug.png" />
+</section>
+<section id="to-view-raw-samples-from-all-hydrophones-around-the-triggering-time">
+<h5>To view raw samples from all hydrophones around the triggering time<a class="headerlink" href="#to-view-raw-samples-from-all-hydrophones-around-the-triggering-time" title="Permalink to this heading">¶</a></h5>
+<p>look at <code class="docutils literal notranslate"><span class="pre">/hydrophones/triggering/sample_at_trigger_debug</span></code></p>
+<p>It should look something like this (30kHz):</p>
+<img alt="../../_images/sample_at_trigger_debug.png" src="../../_images/sample_at_trigger_debug.png" />
+</section>
+<section id="to-view-the-frequency-response-of-the-bandpass-filter">
+<h5>To view the frequency response of the bandpass filter<a class="headerlink" href="#to-view-the-frequency-response-of-the-bandpass-filter" title="Permalink to this heading">¶</a></h5>
+<p>open <code class="docutils literal notranslate"><span class="pre">/hydrophones/triggering/filter_debug</span></code> in rviz. Then, in a new panel <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span> <span class="pre">/hydrophones/triggering/filter_debug_trigger</span> <span class="pre">&quot;{}&quot;</span></code> Go look at the rviz and see the frequency response of the filter cropped for our general frequency range.</p>
+<p>It should look something like this (30kHz):</p>
+<img alt="../../_images/filter_debug.png" src="../../_images/filter_debug.png" />
+</section>
+<section id="to-view-the-signals-sent-to-the-ping-locator-node">
+<h5>To view the signals sent to the ping locator node<a class="headerlink" href="#to-view-the-signals-sent-to-the-ping-locator-node" title="Permalink to this heading">¶</a></h5>
+<p>(and vertical lines at the trigger times) view <code class="docutils literal notranslate"><span class="pre">/hydrophones/ping_locator/samples_debug</span></code>
+<em>NOTE:The Vertical lines are where triggering is detected on each hydrophone channel.</em></p>
+<p>It should look something like this (90deg to the right):</p>
+<img alt="../../_images/samples.png" src="../../_images/samples.png" />
+</section>
+<section id="to-view-the-cross-correlations-between-the-hydrophones">
+<h5>To view the cross correlations between the hydrophones<a class="headerlink" href="#to-view-the-cross-correlations-between-the-hydrophones" title="Permalink to this heading">¶</a></h5>
+<p>(and therefore the time delays) look at <code class="docutils literal notranslate"><span class="pre">/hydrophones/ping_locator/cross_correlation_debug</span></code>
+<em>NOTE:The Vertical lines are the max of the cross correleation and therefore the negative of the time delays.</em></p>
+<p>It should look something like this (90deg to the right):</p>
+<img alt="../../_images/cross_correlation_debug.png" src="../../_images/cross_correlation_debug.png" />
+</section>
+</section>
+</section>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h3>
+<p>All parameters that are expected to be changed in tuining are ROS Params initialized in <code class="docutils literal notranslate"><span class="pre">passive_sonar.yaml</span></code></p>
+<section id="to-make-a-custom-configation">
+<h4>To make a custom configation<a class="headerlink" href="#to-make-a-custom-configation" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">roscd</span> <span class="pre">sub8_launch</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">config/passive_sonar.yaml</span> <span class="pre">config/my_passive_sonar.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">my_passive_sonar.yaml</span></code></p></li>
+<li><p>change whatever parameters you like</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">sub8_launch</span> <span class="pre">passive_sonar.launch</span> <span class="pre">config_file:=my_passive_sonar.yaml</span></code></p></li>
+</ul>
+</section>
+<section id="to-change-the-configuration-at-runtime">
+<h4>To change the configuration at runtime<a class="headerlink" href="#to-change-the-configuration-at-runtime" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>set whatever param you want to change ie:<code class="docutils literal notranslate"><span class="pre">rosparam</span> <span class="pre">set</span> <span class="pre">/hydrophones/triggering/target_frequency</span> <span class="pre">25000</span></code></p></li>
+<li><p>call the reset service ie: <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span> <span class="pre">/hydrophones/triggering/reset</span> <span class="pre">&quot;{}&quot;</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="testing-ros-bridge">
+<h2>Testing ROS bridge<a class="headerlink" href="#testing-ros-bridge" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Download <a class="reference external" href="http://sylphase.com/files/oof.bin">example TCP dump,</a></p></li>
+<li><p>Run ROS bridge <code class="docutils literal notranslate"><span class="pre">rosrun</span> <span class="pre">mil_passive_sonar</span> <span class="pre">sylphase_sonar_ros_bridge</span> <span class="pre">_port:=10001</span> <span class="pre">_ip:=127.0.0.1</span></code></p></li>
+<li><p>Either stream a TCP dump or run the driver on a real robot
+* Stream TCP dump <code class="docutils literal notranslate"><span class="pre">rosrun</span> <span class="pre">mil_tools</span> <span class="pre">stream_tcp_dump</span>&#160; <span class="pre">~/Downloads/oof.bin</span> <span class="pre">--port=10001</span> <span class="pre">--ip</span> <span class="pre">127.0.0.1</span></code>
+* On Sub8 run the actual driver <code class="docutils literal notranslate"><span class="pre">(cd</span> <span class="pre">~/.mil/sylphase-sonar/;</span> <span class="pre">./driver/publish</span> <span class="pre">10001)</span></code></p></li>
+<li><p>Make sure samples are being published <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">echo</span> <span class="pre">/samples</span></code></p></li>
+</ul>
+</section>
+<section id="how-does-it-work">
+<h2>How Does It Work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading">¶</a></h2>
+<div class="graphviz"><img src="../../_images/graphviz-005c34009679b50a0d66b2865396f744120b5079.png" alt="digraph passive_sonar {
+
+  &quot;Forrest's Hydrophone Board&quot; -&gt;
+  &quot;Forrest's Driver&quot; -&gt;
+  &quot;TCP Port&quot; -&gt;
+  &quot;Slyphase Ros Bridge&quot;-&gt;
+  &quot;ROS Topic (/hydrophones/samples)&quot; -&gt;
+  wait_for_new_data_triggering;
+
+  subgraph cluster_triggering
+  {
+    style=filled;
+    color=lightgrey;
+    label = &quot;Triggering ROS \nNode&quot;;
+    labeljust=&quot;l&quot;;
+    &quot;Gradient(Hydrophone 0) &gt;\nTheshold&quot; [shape=diamond];
+    wait_for_new_data_triggering[label=&quot;Wait For New Data&quot;];
+    wait_for_new_data_triggering -&gt;
+    &quot;Raw Hydrophone Data&quot;-&gt;
+    &quot;Band pass the data for target frequency&quot;-&gt;
+    &quot;Max Convolution of Data&quot;-&gt;
+    &quot;Gradient of Max Convolution&quot;-&gt;
+    &quot;Gradient(Hydrophone 0) &gt;\nTheshold&quot;;
+
+    &quot;Gradient(Hydrophone 0) &gt;\nTheshold&quot;:e -&gt;
+    wait_for_new_data_triggering:e [label=&quot;NO&quot;];
+
+    &quot;Gradient(Hydrophone 0) &gt;\nTheshold&quot;:s -&gt;
+    &quot;Crop Gradient(All Hydrophones)\n around where its &gt; threshold&quot;:n [label=&quot;YES&quot;];
+
+    &quot;Crop Gradient(All Hydrophones)\n around where its &gt; threshold&quot; -&gt;
+    &quot;Publish Gradient (All Hydrophones)\n to ROS Topic\n (/hydrophones/pings)&quot;;
+
+  }
+
+  &quot;Publish Gradient (All Hydrophones)\n to ROS Topic\n (/hydrophones/pings)&quot;-&gt;
+  wait_for_new_data_ping_locator;
+
+  &quot;Hydrophone Visualization&quot;;
+
+  subgraph cluster_ping_locator
+  {
+    style=filled;
+    color=lightgrey;
+    label = &quot;Ping Locator ROS\nNode&quot;;
+    labeljust=&quot;l&quot;;
+
+    wait_for_new_data_ping_locator[label=&quot;Wait For New Data&quot;];
+    wait_for_new_data_ping_locator -&gt;
+    &quot;Cross Correlate the Hydrophones&quot; -&gt;
+    &quot;Get time Deltas from \nCross Correlation (Time delay)&quot; -&gt;
+    &quot;Calculate the unit vector\n of the direction of the\n ping from Deltas (utils.py calcualte_dir_pinger)&quot; -&gt;
+    &quot;publish the vector on ROS\n Topic (/hydrophones/direction)&quot; -&gt;
+    wait_for_new_data_ping_locator:e;
+
+  }
+
+  &quot;publish the vector on ROS\n Topic (/hydrophones/direction)&quot; -&gt;
+  &quot;Hydrophone Visualization&quot;;
+
+  &quot;Hydrophone Visualization&quot; -&gt;
+  &quot;publish ROS Topic (/hydrophones/direction_marker)&quot;
+
+}" class="graphviz" /></div>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
