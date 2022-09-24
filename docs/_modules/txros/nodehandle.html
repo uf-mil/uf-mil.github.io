@@ -108,6 +108,7 @@
 <span class="kn">from</span> <span class="nn">rosgraph_msgs.msg</span> <span class="kn">import</span> <span class="n">Clock</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">exceptions</span><span class="p">,</span>
     <span class="n">publisher</span><span class="p">,</span>
     <span class="n">rosxmlrpc</span><span class="p">,</span>
     <span class="n">service</span><span class="p">,</span>
@@ -150,7 +151,9 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">rpc_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shutdown of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> node requested. Reason: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">shutdown_servers</span> <span class="o">=</span> <span class="kc">False</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">shutdown_servers</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="mi">3</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -259,7 +262,12 @@
 
 <div class="viewcode-block" id="NodeHandle.from_argv_with_remaining"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NodeHandle.from_argv_with_remaining">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_argv_with_remaining</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">default_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">argv</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">anonymous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">default_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">argv</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">anonymous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">always_default_name</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NodeHandle</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a handle from an argument vector. Attempts to find any missing</span>
@@ -271,6 +279,9 @@
 <span class="sd">            argv (list[str] | None): The argument vector to use.</span>
 <span class="sd">            anonymous (bool): Whether to make the node anonymous. Appends a random</span>
 <span class="sd">                number to the end of the node name.</span>
+<span class="sd">            always_default_name (bool): Whether to always use the default name of</span>
+<span class="sd">                the node, avoiding remappings. Commonly used in testing or complex</span>
+<span class="sd">                environments where stronger node control is desired. Defaults to ``True``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">argv</span><span class="p">:</span>
             <span class="n">argv</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span>
@@ -288,7 +299,7 @@
         <span class="n">name</span> <span class="o">=</span> <span class="n">default_name</span>
         <span class="k">if</span> <span class="n">anonymous</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:016x}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">64</span><span class="p">))</span>
-        <span class="k">if</span> <span class="s2">&quot;__name&quot;</span> <span class="ow">in</span> <span class="n">remappings</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;__name&quot;</span> <span class="ow">in</span> <span class="n">remappings</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">always_default_name</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">remappings</span><span class="p">[</span><span class="s2">&quot;__name&quot;</span><span class="p">]</span>
 
         <span class="n">addr</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>  <span class="c1"># could be a bit smarter</span>
@@ -355,6 +366,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_remappings</span> <span class="o">=</span> <span class="n">remappings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;txros.NodeHandle at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span><span class="si">}</span><span class="s2"> tcpros_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_tcpros_server_uri&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2"> xmlrpc_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;xmlrpc_server_uri&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
 <div class="viewcode-block" id="NodeHandle.setup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NodeHandle.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -428,7 +442,9 @@
                 <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># pause so we don&#39;t retry immediately</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">AsyncServerProxy</span><span class="p">(</span><span class="n">other_node_uri</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-                <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterProxy</span><span class="p">(</span><span class="n">other_node_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+                <span class="n">other_node_proxy</span> <span class="o">=</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterProxy</span><span class="p">(</span>
+                    <span class="n">other_node_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+                <span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wrap_timeout</span><span class="p">(</span>
                         <span class="n">other_node_proxy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="s2">&quot;new node registered with same name&quot;</span><span class="p">),</span>
@@ -514,7 +530,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> node is not currently running. It may have been shutdown previously or never started.&quot;</span><span class="p">,</span>
-                <span class="ne">ResourceWarning</span>
+                <span class="ne">ResourceWarning</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="k">return</span>
@@ -608,8 +624,11 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: The argument passed to ``duration`` was not an allowed type.</span>
+<span class="sd">            ValueError: The request sleep length was non-negative.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The sleep length must be non-negative.&quot;</span><span class="p">)</span>
             <span class="n">duration</span> <span class="o">=</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_sec</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;expected float or genpy.Duration&quot;</span><span class="p">)</span>
@@ -685,15 +704,13 @@
 <span class="sd">                should be the reply type associated with the service.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            txros.Service: The given service.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">service_message</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span></div>
 
@@ -715,15 +732,13 @@
 <span class="sd">                the main message class.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            txros.ServiceClient: The constructed service client.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">serviceclient</span><span class="o">.</span><span class="n">ServiceClient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">service_type</span><span class="p">)</span></div>
 
@@ -748,15 +763,13 @@
 <span class="sd">                shared by the topic and return None.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            txros.Subscriber: The constructed subscriber.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">message_type</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span></div>
 
@@ -779,15 +792,13 @@
 <span class="sd">                when they connect to the publisher.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            txros.Publisher: The given publisher.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">publisher</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">message_type</span><span class="p">,</span> <span class="n">latching</span><span class="p">)</span></div>
 
@@ -802,16 +813,14 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            txros.ROSMasterException: The parameter is not set.</span>
-<span class="sd">            RuntimeError: The node is not running.</span>
+<span class="sd">            NotSetup: The node is not running.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            :class:`txros.XMLRPCLegalType`: The value of the parameter with the given</span>
 <span class="sd">            name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
@@ -824,15 +833,13 @@
 <span class="sd">            key (str): The name of the parameter to check the status of.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the parameter server has the specified key.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">hasParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
@@ -844,16 +851,14 @@
 <span class="sd">            key (str): The parameter to delete from the parameter server.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int: The result of the delete operation. According to ROS documentation,</span>
 <span class="sd">            this value can be ignored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">deleteParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
@@ -866,16 +871,14 @@
 <span class="sd">            value (:class:`txros.XMLRPCLegalType`): The value to set for the given parameter.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            int: The result of setting the parameter. According to the ROS documentation,</span>
 <span class="sd">            this value can be ignored.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">setParam</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
@@ -891,15 +894,13 @@
 <span class="sd">            key (str): The search key to use to find parameters.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The name of the first key found.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">searchParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
@@ -908,15 +909,13 @@
 <span class="sd">        Gets the names of all parameters in the ROS parameter server.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            RuntimeError: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
+<span class="sd">            NotSetup: The node is not running. The node likely needs to be :meth:`~.setup`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            List[str]: The names of all parameters in the server.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="s2">&quot;The node is not currently running. It may never have been setup() or may have already been shutdown().&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">getParamNames</span><span class="p">()</span></div></div>
 </pre></div>

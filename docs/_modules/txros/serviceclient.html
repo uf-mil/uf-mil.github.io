@@ -82,16 +82,16 @@
 
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Generic</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">genpy</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rosxmlrpc</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">types</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rosxmlrpc</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">util</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 
-<span class="n">S</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="n">bound</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">ServiceMessage</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">types</span><span class="o">.</span><span class="n">ServiceMessage</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">ServiceType</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
@@ -130,15 +130,17 @@
 
 <div class="viewcode-block" id="ServiceClient"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ServiceClient">[docs]</a><span class="k">class</span> <span class="nc">ServiceClient</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">S</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A client connected to a service in txROS.</span>
+<span class="sd">    A client connected to a service in txROS. This is the client class of the</span>
+<span class="sd">    client-server relationship in ROS; the server is the :class:`txros.Service`</span>
+<span class="sd">    class.</span>
 
 <span class="sd">    .. container:: operations</span>
 
-<span class="sd">        .. describe:: x(request_class)</span>
+<span class="sd">        .. describe:: await x(request_class)</span>
 
 <span class="sd">            Makes a request to the service using an instance of the ``request_class``</span>
-<span class="sd">            request type. This operation returns a Deferred containing the result</span>
-<span class="sd">            sent by the topic through the master server. Any errors will raise an</span>
+<span class="sd">            request type. This operation returns the result sent by the topic</span>
+<span class="sd">            through the master server. Any errors will raise an</span>
 <span class="sd">            instance of :class:`txros.ServiceError`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -153,6 +155,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">service_type</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_request_class</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_request_class</span><span class="si">}</span><span class="s2"> message type when calling </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> service, but got </span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2"> instead.&quot;</span>
+            <span class="p">)</span>
+
         <span class="n">service_url</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">lookup_service</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
 
         <span class="n">protocol</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">service_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;://&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -162,9 +169,7 @@
         <span class="k">assert</span> <span class="n">protocol</span> <span class="o">==</span> <span class="s2">&quot;rosrpc&quot;</span>
 
         <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
-        <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span>
-            <span class="n">host</span><span class="p">,</span> <span class="n">port</span>
-        <span class="p">)</span>
+        <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">tcpros</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span>
                 <span class="n">tcpros</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span>
@@ -175,7 +180,7 @@
                         <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_type</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">),</span>
-                <span class="n">writer</span>
+                <span class="n">writer</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">((</span><span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)))</span>
@@ -189,7 +194,7 @@
             <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_byte</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">result</span><span class="p">:</span>  <span class="c1"># success</span>
-                <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_response_class</span><span class="p">()</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_response_class</span><span class="p">()</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ServiceError</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
         <span class="k">finally</span><span class="p">:</span>
