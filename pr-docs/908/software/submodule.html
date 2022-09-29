@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Working with Git Submodules</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Extension Support" href="extension_support.html" />
+        <link rel="prev" title="Calibrating Cameras" href="calibrating_cams.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Developing with Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-new-submodule">Adding a new submodule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloning-a-repository-with-submodules">Cloning a repository with submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pulling-in-upstream-changes-in-submodules">Pulling in upstream changes in submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#through-the-submodule-remote">Through the submodule remote</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#through-the-main-project-remote">Through the main project remote</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#working-on-a-submodule">Working on a submodule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="working-with-git-submodules">
+<h1>Working with Git Submodules<a class="headerlink" href="#working-with-git-submodules" title="Permalink to this heading">¶</a></h1>
+<p>Submodules are an important part of the MIL repo! These submodules allow our code to function properly! Formally, these submodules are directories inside of our repository somewhere which are actually a Git repository themselves. In essence, these directories (inside of the main MIL directory) are pointing at a specific commit inside of another Git repository.</p>
+<p>This pattern can be confusing, so here are some commands to help you out!</p>
+<section id="adding-a-new-submodule">
+<h2>Adding a new submodule<a class="headerlink" href="#adding-a-new-submodule" title="Permalink to this heading">¶</a></h2>
+<p>To add a new submodule into a repository, you can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">add</span> <span class="pre">&lt;url&gt;</span></code>!</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule add https://github.com/chaconinc/DbConnector
+</pre></div>
+</div>
+<p>When you do this, a new directory called <code class="docutils literal notranslate"><span class="pre">DbConnector</span></code> will appear, and the <code class="docutils literal notranslate"><span class="pre">.gitmodules</span></code> file (which keeps track of your submodules) will be updated. Now, you’ll need to actually commit it to the repository, like any other folder you add:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git commit -am <span class="s1">&#39;Add DbConnector module&#39;</span>
+$ git push
+</pre></div>
+</div>
+</section>
+<section id="cloning-a-repository-with-submodules">
+<h2>Cloning a repository with submodules<a class="headerlink" href="#cloning-a-repository-with-submodules" title="Permalink to this heading">¶</a></h2>
+<p>When you clone a repository with nested submodules, you must run some commands to get your submodules up and running:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --init --recursive
+</pre></div>
+</div>
+<p>In this command, <code class="docutils literal notranslate"><span class="pre">--init</span></code> initializes your submodule configuration file, while <code class="docutils literal notranslate"><span class="pre">--recursive</span></code> does this for all nested submodules in the project.</p>
+</section>
+<section id="pulling-in-upstream-changes-in-submodules">
+<h2>Pulling in upstream changes in submodules<a class="headerlink" href="#pulling-in-upstream-changes-in-submodules" title="Permalink to this heading">¶</a></h2>
+<section id="through-the-submodule-remote">
+<h3>Through the submodule remote<a class="headerlink" href="#through-the-submodule-remote" title="Permalink to this heading">¶</a></h3>
+<p>Sometimes, submodules can be updated by another user, and you’ll need to pull these changes into your own copy. If you would like to do this for one submodule, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the submodule, and then update the specific submodule yourself:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> DbConnector
+$ git fetch
+$ git merge origin/master
+$ <span class="nb">cd</span> ..
+$ git commit -am <span class="s1">&#39;Pulled in new submodule code&#39;</span>
+$ git push
+</pre></div>
+</div>
+<p>Because you committed with the new submodule code, whenever others fetch new changes, they will also get the update submodule changes.</p>
+<p>While the above is great for small, independent submodule changes where you want more customizability in how the submodule is updated, repeatedly doing multiple commands to update the submodule can get annoying! Thankfully, git helps to fix that with:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote
+</pre></div>
+</div>
+<p>This command will update all submodules from their <code class="docutils literal notranslate"><span class="pre">remote</span></code> repositories. If you want to update a submodule from another branch its on, you can change your Git config.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git config .gitmodules submodule.DbConnector.branch stable
+$ git submodule update --remote DbConnector
+</pre></div>
+</div>
+<p>Now, when you update the <code class="docutils literal notranslate"><span class="pre">DbConnector</span></code> repository, it will pull from the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch. You can then <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> as normal.</p>
+</section>
+<section id="through-the-main-project-remote">
+<h3>Through the main project remote<a class="headerlink" href="#through-the-main-project-remote" title="Permalink to this heading">¶</a></h3>
+<p>Normally, to update the project, you would run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>. However, when working with submodules, this won’t be enough to create effective changes. This will get the relevant changes that occurred in the submodules, but it won’t actually <em>update</em> the submodules.</p>
+<p>Instead, you will also need to run:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --init --recursive
+</pre></div>
+</div>
+<p>These two commands can be simplified into one through:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git pull --recurse-submodules
+</pre></div>
+</div>
+<p>Sounds like a lot to type? Let’s make <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> default!</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git config submodule.recurse <span class="nb">true</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="working-on-a-submodule">
+<h2>Working on a submodule<a class="headerlink" href="#working-on-a-submodule" title="Permalink to this heading">¶</a></h2>
+<p>Eventually, you may want to make some changes to the submodule to help improve the code!</p>
+<p>Before working, let’s merge in any changes from the upstream:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote --merge
+</pre></div>
+</div>
+<p>Now, we can make some changes:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> DbConnector/
+$ vim src/example.cpp
+$ git commit -am <span class="s2">&quot;Add example test&quot;</span>
+</pre></div>
+</div>
+<p>You’ve now made a commit to the submodule. If it’s been a while and you want to rebase changes from the upstream:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote --rebase
+<span class="c1"># OR</span>
+$ git submodule update --remote --merge
+</pre></div>
+</div>
+<p>But, we still haven’t actually pushed the changes!</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git push --recurse-submodules<span class="o">=</span>on-demand
+</pre></div>
+</div>
+<p>Note that this will push any commits for <strong>every</strong> submodule. If you want to push some commits for one submodule, then <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the submodule directory and use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>.</p>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
