@@ -87,7 +87,7 @@
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
@@ -141,16 +141,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
 
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;txros.Service at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;service_type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;node_handle=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
+
 <div class="viewcode-block" id="Service.setup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Service.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the service to be able to receive incoming connections.</span>
 
 <span class="sd">        This must be called before the service can be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AlreadySetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
         <span class="k">assert</span> <span class="p">(</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[</span>
-            <span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span>
+        <span class="p">]</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">register_service</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">_tcpros_server_uri</span><span class="p">,</span>

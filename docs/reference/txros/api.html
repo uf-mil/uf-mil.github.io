@@ -75,7 +75,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="resources.html">Managing Resources</a></li>
-<li class="toctree-l3"><a class="reference internal" href="errors.html">Common Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errors.html">Errors and Known Issues</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">API Reference</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#exception-hierarchy">Exception Hierarchy</a></li>
@@ -141,6 +141,7 @@
 <li><dl class="simple">
 <dt><a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TxrosException</span></code></a></dt><dd><ul>
 <li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotSetup</span></code></a></p></li>
+<li><p><a class="reference internal" href="#txros.AlreadySetup" title="txros.AlreadySetup"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AlreadySetup</span></code></a></p></li>
 <li><p><a class="reference internal" href="#txros.XMLRPCException" title="txros.XMLRPCException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">XMLRPCException</span></code></a></p></li>
 <li><p><a class="reference internal" href="#txros.ROSMasterError" title="txros.ROSMasterError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ROSMasterError</span></code></a></p></li>
 <li><p><a class="reference internal" href="#txros.ROSMasterFailure" title="txros.ROSMasterFailure"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ROSMasterFailure</span></code></a></p></li>
@@ -183,6 +184,14 @@ Attributes</span><ul>
 <dd><p>Indicates that a resource (such as a <a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.NodeHandle</span></code></a>) was not setup,
 or was previously shutdown and not setup again. To solve this issue, you will
 likely need to call the class’ <code class="docutils literal notranslate"><span class="pre">setup()</span></code> method.</p>
+<p>Inherits from <a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-class docutils literal notranslate"><span class="pre">TxrosException</span></code></a>.</p>
+</dd></dl>
+
+<div class="attribute-table" data-move-to-id="txros.AlreadySetup"></div><dl class="py class">
+<dt class="sig sig-object py" id="txros.AlreadySetup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">AlreadySetup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Resource</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_handle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/exceptions.html#AlreadySetup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.AlreadySetup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates that a resource (such as a <a class="reference internal" href="#txros.NodeHandle" title="txros.NodeHandle"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.NodeHandle</span></code></a>) was already setup,
+but <code class="docutils literal notranslate"><span class="pre">setup()</span></code> was called again.</p>
 <p>Inherits from <a class="reference internal" href="#txros.TxrosException" title="txros.TxrosException"><code class="xref py py-class docutils literal notranslate"><span class="pre">TxrosException</span></code></a>.</p>
 </dd></dl>
 
@@ -452,7 +461,7 @@ async</span><a class="reference internal" href="#txros.NodeHandle.sleep_until">s
 def</span><a class="reference internal" href="#txros.NodeHandle.subscribe">subscribe</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="txros.NodeHandle">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">NodeHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remappings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">NodeHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remappings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a Pythonic handle for a ROS node, similar to the C++
 concept of a node handle. This class provides asynchronous communication with
 several ROS features, including publishers, subscribers, and services through
@@ -534,7 +543,7 @@ for incoming TCPROS connections. This allows the node to route incoming
 connections to the appropriate class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], types.TCPROSProtocol]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a>], <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)">list</a>[types.TCPROSProtocol]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -554,7 +563,7 @@ handlers for incoming XMLRPC connections. Acts similar to <a class="reference in
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The namespace to put the node under. The namespace should
+<li><p><strong>namespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The namespace to put the node under. The namespace should
 not end with a <cite>/</cite>. For example, <cite>nsexample/test</cite>.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the node itself. The name will be appended behind
 the namespace.</p></li>
@@ -635,7 +644,11 @@ should be the reply type associated with the service.</p></li>
 <dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The parameter to delete from the parameter server.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p></li>
+<li><p><a class="reference internal" href="#txros.ROSMasterError" title="txros.ROSMasterError"><strong>ROSMasterError</strong></a> – The specified key does not exist.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The key provided is not a string.</p></li>
+</ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The result of the delete operation. According to ROS documentation,
@@ -701,6 +714,7 @@ namespace is returned.</p>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>txros.ROSMasterException</strong> – The parameter is not set.</p></li>
 <li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The key provided is not a string.</p></li>
 </ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -785,7 +799,10 @@ name.</p>
 <dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the parameter to check the status of.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The key provided is not a string.</p></li>
+</ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Whether the parameter server has the specified key.</p>
@@ -862,7 +879,10 @@ the <a class="reference external" href="http://wiki.ros.org/ROS/Parameter%20Serv
 <dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The search key to use to find parameters.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The key provided is not a string.</p></li>
+</ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The name of the first key found.</p>
@@ -875,8 +895,13 @@ the <a class="reference external" href="http://wiki.ros.org/ROS/Parameter%20Serv
 
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.NodeHandle.set_param">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.10)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle.set_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.set_param" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_param</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.10)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><span class="pre">tuple</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../../_modules/txros/nodehandle.html#NodeHandle.set_param"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.NodeHandle.set_param" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a parameter and value in the ROS parameter server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tuples are stored as lists in the parameter server. All contents remain
+the same, and the contents of the tuple are stored in the same order.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -885,7 +910,10 @@ the <a class="reference external" href="http://wiki.ros.org/ROS/Parameter%20Serv
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The node is not running. The node likely needs to be <a class="reference internal" href="#txros.NodeHandle.setup" title="txros.NodeHandle.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.10)"><strong>TypeError</strong></a> – The key provided is not a string.</p></li>
+</ul>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The result of setting the parameter. According to the ROS documentation,
@@ -1000,6 +1028,8 @@ def</span><a class="reference internal" href="#txros.Subscriber.get_last_message
 def</span><a class="reference internal" href="#txros.Subscriber.get_next_message">get_next_message</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="method">
 def</span><a class="reference internal" href="#txros.Subscriber.is_running">is_running</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#txros.Subscriber.recently_read">recently_read</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#txros.Subscriber.setup">setup</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="coroutine">
@@ -1031,6 +1061,11 @@ shared by the topic and return None.</p></li>
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are subscribing to a publisher publishing messages at a very
+fast rate, you should always use a callback over <a class="reference internal" href="#txros.Subscriber.get_next_message" title="txros.Subscriber.get_next_message"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_next_message()</span></code></a>.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.Subscriber.get_connections">
 <span class="sig-name descname"><span class="pre">get_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/txros/subscriber.html#Subscriber.get_connections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_connections" title="Permalink to this definition">¶</a></dt>
@@ -1080,7 +1115,16 @@ no message has been received yet.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="txros.Subscriber.get_next_message">
 <span class="sig-name descname"><span class="pre">get_next_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><span class="pre">asyncio.Future</span></a><span class="p"><span class="pre">[</span></span><span class="pre">M</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/txros/subscriber.html#Subscriber.get_next_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.get_next_message" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a deferred which will contain the next message.</p>
+<dd><p>Returns a <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Future</span></code></a> which will contain the next message
+received by the subscriber.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method should not be used to reliably obtain messages from publishers
+publishing at very high rates. Because of the overhead in setting up
+futures, this method will likely cause some messages to get lost.</p>
+<p>Instead, you should use a callback with the subscriber - all messages
+are passed through the callback.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#txros.NotSetup" title="txros.NotSetup"><strong>NotSetup</strong></a> – The subscriber was never <a class="reference internal" href="#txros.Subscriber.setup" title="txros.Subscriber.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> or was previously
@@ -1105,6 +1149,36 @@ the next message published on the topic.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="txros.Subscriber.recently_read">
+<span class="sig-name descname"><span class="pre">recently_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../../_modules/txros/subscriber.html#Subscriber.recently_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Subscriber.recently_read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the subscriber has recently read messages.</p>
+<p>Using this method is helpful when the subscriber may not be fast enough
+to keep up with all messages published. This method can be used to determine
+when the subscriber has finished reading queued messages. This is helpful
+at the end of programs, when a publisher has stopped publishing, but the
+subscriber has not yet received all messages.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">sub</span><span class="o">.</span><span class="n">recently_read</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Subscriber is still reading messages...&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Subscriber has finished catching up on messages!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The number of seconds to wait after receiving a message
+before claiming that the subscriber is no longer actively reading messages.
+Defaults to 1 second.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the subscriber has recently read messages.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1967,7 +2041,7 @@ cls</span><a class="reference internal" href="#txros.Transform.identity">Transfo
 def</span><a class="reference internal" href="#txros.Transform.inverse">inverse</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="txros.Transform">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/txros_tf.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">txros.</span></span><span class="sig-name descname"><span class="pre">Transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/txros/txros_tf.html#Transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#txros.Transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a tf transform in the txROS suite.</p>
 <div class="operations docutils container">
 <dl class="describe">

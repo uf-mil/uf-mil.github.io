@@ -5,7 +5,7 @@
         <!-- HTML meta -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-        <title>Common Errors</title>
+        <title>Errors and Known Issues</title>
         <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -75,8 +75,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="resources.html">Managing Resources</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Common Errors</a><ul>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Errors and Known Issues</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#handling-aiohttp-clientconnectionerror">Handling <code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientConnectionError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subscribing-to-parameter-updates">Subscribing to parameter updates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subscribing-to-high-rate-publishers">Subscribing to high-rate publishers</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -116,8 +118,8 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <section id="common-errors">
-<h1>Common Errors<a class="headerlink" href="#common-errors" title="Permalink to this heading">¶</a></h1>
+  <section id="errors-and-known-issues">
+<h1>Errors and Known Issues<a class="headerlink" href="#errors-and-known-issues" title="Permalink to this heading">¶</a></h1>
 <section id="handling-aiohttp-clientconnectionerror">
 <h2>Handling <a class="reference external" href="https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientConnectionError" title="(in aiohttp v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientConnectionError</span></code></a><a class="headerlink" href="#handling-aiohttp-clientconnectionerror" title="Permalink to this heading">¶</a></h2>
 <p>When using txros, you may encounter an instance of <a class="reference external" href="https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientConnectionError" title="(in aiohttp v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">aiohttp.ClientConnectionError</span></code></a>
@@ -131,6 +133,33 @@ related to some connection error… but how do you actually fix it?</p>
 <p>If these appear correct, try restarting ROS (either by restarting <cite>roscore</cite> or <cite>roslaunch</cite>).
 It may be the case that a node stopped incorrectly or a service was improperly started,
 in which case ROS may believe a resource exists when it actually does not.</p>
+</section>
+<section id="subscribing-to-parameter-updates">
+<h2>Subscribing to parameter updates<a class="headerlink" href="#subscribing-to-parameter-updates" title="Permalink to this heading">¶</a></h2>
+<p>Using <cite>rospy</cite>, individual nodes can “subscribe” to particular parameters to receive
+updates on when these parameters are updated. This allows the nodes to quickly respond
+to changes made in the parameter server.</p>
+<p>However, this behavior has not been implemented in txros. This is because a more
+modern approach to this behavior includes using <a class="reference external" href="https://wiki.ros.org/dynamic_reconfigure">Dynamic Reconfigure</a>.
+Dynamic Reconfigure is more efficient than using the parameter subscriber feature
+previously mentioned, as dynamic reconfigure uses callbacks to indicate new changes,
+while nodes use a consistent polling feature to get updates on parameters.</p>
+</section>
+<section id="subscribing-to-high-rate-publishers">
+<h2>Subscribing to high-rate publishers<a class="headerlink" href="#subscribing-to-high-rate-publishers" title="Permalink to this heading">¶</a></h2>
+<p>Some publishers publish messages at very fast rates, which can add reliability
+and speed to a robotic system. However, txros may not be able to keep up with the
+high rate of incoming messages if the client code is constructed in particular
+ways.</p>
+<p>To ensure that the subscriber is able to read all incoming messages, ensure the following:</p>
+<ol class="arabic simple">
+<li><p>Supply a callback to the subscriber that receives all incoming messages; do
+not depend on using <a class="reference internal" href="api.html#txros.Subscriber.get_next_message" title="txros.Subscriber.get_next_message"><code class="xref py py-meth docutils literal notranslate"><span class="pre">txros.Subscriber.get_next_message()</span></code></a>. The latter method
+will cause messages to never be read if a callback is not supplied.</p></li>
+<li><p>When attempting to read all messages published by a publisher over a specific
+period, use <a class="reference internal" href="api.html#txros.Subscriber.recently_read" title="txros.Subscriber.recently_read"><code class="xref py py-meth docutils literal notranslate"><span class="pre">txros.Subscriber.recently_read()</span></code></a> to determine if more messages
+still need to be read before the subscriber can be closed.</p></li>
+</ol>
 </section>
 </section>
 

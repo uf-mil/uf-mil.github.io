@@ -123,7 +123,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_message</span> <span class="o">=</span> <span class="n">message</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;ServiceError(</span><span class="si">%r</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="p">,)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ServiceError(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_message</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span></div>
 
@@ -154,6 +154,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">resolve_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">=</span> <span class="n">service_type</span>
 
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;txros.ServiceClient at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;service_type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;node_handle=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
+
     <span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_request_class</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
@@ -183,7 +193,7 @@
                 <span class="n">writer</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">((</span><span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)))</span>
+            <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">(</span><span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">))</span>
 
             <span class="c1"># request could be sent before header is received to reduce latency...</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>

@@ -91,7 +91,7 @@
 <span class="kn">from</span> <span class="nn">actionlib_msgs.msg</span> <span class="kn">import</span> <span class="n">GoalID</span><span class="p">,</span> <span class="n">GoalStatus</span><span class="p">,</span> <span class="n">GoalStatusArray</span>
 <span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Header</span>
 
-<span class="kn">from</span> <span class="nn">txros.exceptions</span> <span class="kn">import</span> <span class="n">NotSetup</span>
+<span class="kn">from</span> <span class="nn">txros.exceptions</span> <span class="kn">import</span> <span class="n">AlreadySetup</span><span class="p">,</span> <span class="n">NotSetup</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">types</span><span class="p">,</span> <span class="n">util</span>
 
@@ -122,7 +122,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span> <span class="o">=</span> <span class="n">action_client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_goal</span> <span class="o">=</span> <span class="n">goal</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:016x}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">64</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">64</span><span class="p">)</span><span class="si">:</span><span class="s2">016x</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">_goal_managers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">_goal_managers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
@@ -365,6 +365,9 @@
 <span class="sd">        Sets up the action server. This must be called before the action server</span>
 <span class="sd">        can be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">AlreadySetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_status_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
@@ -744,6 +747,9 @@
 <span class="sd">        Sets up the action client. This must be called before the action client</span>
 <span class="sd">        can be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">AlreadySetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_goal_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_pub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span>
