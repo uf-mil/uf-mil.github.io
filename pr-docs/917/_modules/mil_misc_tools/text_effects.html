@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_misc_tools.text_effects</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_misc_tools.text_effects</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+
+
+<span class="k">class</span> <span class="nc">Colors</span><span class="p">:</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[31m&quot;</span>
+    <span class="n">green</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[32m&quot;</span>
+    <span class="n">yellow</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[33m&quot;</span>
+    <span class="n">blue</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[34m&quot;</span>
+    <span class="n">purple</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[35m&quot;</span>
+    <span class="n">cyan</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[36m&quot;</span>
+    <span class="n">white</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[37m&quot;</span>
+
+    <span class="n">underline</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[2m&quot;</span>
+    <span class="n">bold</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1m&quot;</span>
+    <span class="n">negative</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[3m&quot;</span>
+
+    <span class="n">reset</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="c1"># If we get a non existent color, return the reset color</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset</span>
+
+
+<span class="k">class</span> <span class="nc">Printer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">autospace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autospace</span> <span class="o">=</span> <span class="n">autospace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">=</span> <span class="n">string</span>
+
+        <span class="c1"># Default adding text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="n">text</span>
+
+        <span class="c1"># Colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">red</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">red</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">green</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">green</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yellow</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">yellow</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blue</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">blue</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">purple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">purple</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cyan</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">cyan</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">white</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">Colors</span><span class="o">.</span><span class="n">white</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+
+        <span class="c1"># Text effects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">underline</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">underline</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">bold</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">negative</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">negative</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+        <span class="p">)</span>
+
+        <span class="c1"># For passing in custom formatting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">,</span> <span class="n">effect</span><span class="p">:</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="n">effect</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+
+    <span class="fm">__str__</span> <span class="o">=</span> <span class="fm">__repr__</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">extra_space</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autospace</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">extra_space</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">other</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_autospace</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_red</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_green</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">green</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_yellow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">yellow</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_blue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_purple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">purple</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_cyan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">cyan</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set_white</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">white</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">newline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Printer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">enable_autospaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autospace</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">disable_autospaces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_autospace</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<div class="viewcode-block" id="FprintFactory"><a class="viewcode-back" href="../../reference/io.html#mil_tools.FprintFactory">[docs]</a><span class="k">class</span> <span class="nc">FprintFactory</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Factory method for producing a printer with the specified characteristics.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        title (Optional[str]): The title to produce with each printed</span>
+<span class="sd">            message.</span>
+<span class="sd">        time (Optional[Callable]): A method for getting the time to produce</span>
+<span class="sd">            with each method. If ``None``, then no time is sent with a message.</span>
+<span class="sd">        msg_color (Optional[str]): The color of each message. If ``None``,</span>
+<span class="sd">            defaults to white.</span>
+<span class="sd">        auto_bold (bool): Automatically bolds each method. Defaults to ``True``.</span>
+<span class="sd">        newline (int): The number of newlines to print after each method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">msg_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">auto_bold</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">newline</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">assert</span> <span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">callable</span><span class="p">(</span>
+            <span class="n">time</span>
+        <span class="p">),</span> <span class="s2">&quot;`time` should be `None` for no printing or a function that generates a timestamp.&quot;</span>
+        <span class="k">assert</span> <span class="n">msg_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">msg_color</span><span class="p">,</span> <span class="nb">str</span>
+        <span class="p">),</span> <span class="s2">&quot;`msg_color` should be `None` for default printing or a string color.&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">auto_bold</span><span class="p">,</span> <span class="nb">bool</span>
+        <span class="p">),</span> <span class="s2">&quot;`auto_bold` should be true or false if messages should be printed</span><span class="se">\</span>
+<span class="s2">                               as bold by default or not&quot;</span>
+        <span class="k">assert</span> <span class="n">newline</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">newline</span><span class="p">,</span> <span class="nb">int</span>
+        <span class="p">),</span> <span class="s2">&quot;`newline` should be the number of newlines after the text (default 1)&quot;</span>
+
+        <span class="c1"># All these can be overwritten if not specified here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>  <span class="c1"># Title to print with each message</span>
+        <span class="c1"># Either `None` for no printing or a function that generates a</span>
+        <span class="c1"># timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg_color</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">msg_color</span>  <span class="c1"># Either `None` for default printing or a string color</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_bold</span> <span class="o">=</span> <span class="n">auto_bold</span>  <span class="c1"># Should each message be bolded by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">newline</span> <span class="o">=</span> <span class="n">newline</span>  <span class="c1"># The number of newlines characters to add to the end</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">printer</span> <span class="o">=</span> <span class="n">Printer</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FprintFactory.fprint"><a class="viewcode-back" href="../../reference/io.html#mil_tools.FprintFactory.fprint">[docs]</a>    <span class="k">def</span> <span class="nf">fprint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints some text with the specified characteristics. Characteristics</span>
+<span class="sd">        can be passed through the kwargs argument or through the class&#39; constructor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text (str): The text to format and then print</span>
+<span class="sd">            kwargs: Any characteristics to print with the text. All keyword arguments</span>
+<span class="sd">              are the same as the arguments specified in the constructor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">msg_color</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;msg_color&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg_color</span><span class="p">)</span>
+        <span class="n">auto_bold</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;auto_bold&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_bold</span><span class="p">)</span>
+        <span class="n">newline</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;newline&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">newline</span><span class="p">)</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">printer</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">set_blue</span><span class="o">.</span><span class="n">bold</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">.</span><span class="n">reset</span><span class="o">.</span><span class="n">space</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">bold</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">space</span><span class="p">()</span>
+
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;: &quot;</span>
+
+        <span class="k">if</span> <span class="n">auto_bold</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">printer</span><span class="o">.</span><span class="n">bold</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">msg_color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">custom</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Colors</span><span class="p">,</span> <span class="n">msg_color</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">newline</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">newline</span><span class="p">(</span><span class="n">newline</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div></div>
+
+
+<span class="c1"># Standard instantiation</span>
+<span class="n">fprint</span> <span class="o">=</span> <span class="n">FprintFactory</span><span class="p">()</span><span class="o">.</span><span class="n">fprint</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
