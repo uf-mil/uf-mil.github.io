@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>sub8_thrust_and_kill_board.thruster</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for sub8_thrust_and_kill_board.thruster</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">polyval</span>
+
+
+<span class="k">def</span> <span class="nf">make_thruster_dictionary</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a dictionary mapping thruster names to :class:`Thruster` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">thruster</span><span class="p">,</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ret</span><span class="p">[</span><span class="n">thruster</span><span class="p">]</span> <span class="o">=</span> <span class="n">Thruster</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+
+<div class="viewcode-block" id="Thruster"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.Thruster">[docs]</a><span class="k">class</span> <span class="nc">Thruster</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Models the force (thrust) to PWM (effort) of a thruster.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        forward_calibration (???): ???</span>
+<span class="sd">        backward_calibration (???): ???</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward_calibration</span><span class="p">,</span> <span class="n">backward_calibration</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_calibration</span> <span class="o">=</span> <span class="n">forward_calibration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backward_calibration</span> <span class="o">=</span> <span class="n">backward_calibration</span>
+
+<div class="viewcode-block" id="Thruster.from_dict"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.Thruster.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the class from a dictionary. The dictionary should be formatted</span>
+<span class="sd">        as so:</span>
+
+<span class="sd">        .. code-block:: python3</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;calib&quot;: {</span>
+<span class="sd">                    &quot;forward&quot;: ...,</span>
+<span class="sd">                    &quot;backward&quot;: ...,</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (Dict[str, Dict[str, Any]]): The dictionary containing the initialization info.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forward_calibration</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;calib&quot;</span><span class="p">][</span><span class="s2">&quot;forward&quot;</span><span class="p">]</span>
+        <span class="n">backward_calibration</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;calib&quot;</span><span class="p">][</span><span class="s2">&quot;backward&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">forward_calibration</span><span class="p">,</span> <span class="n">backward_calibration</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">effort_from_thrust_unclipped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thrust</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">thrust</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">polyval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backward_calibration</span><span class="p">,</span> <span class="n">thrust</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">polyval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward_calibration</span><span class="p">,</span> <span class="n">thrust</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Thruster.effort_from_thrust"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.Thruster.effort_from_thrust">[docs]</a>    <span class="k">def</span> <span class="nf">effort_from_thrust</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thrust</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attempts to find the effort from a particular value of thrust.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            thrust (???): The amount of thrust.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">unclipped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort_from_thrust_unclipped</span><span class="p">(</span><span class="n">thrust</span><span class="p">)</span>
+        <span class="c1"># Theoretically can limit to .66 under 16V assumptions or .5 under 12V assumptions... So do both (.5 + 66)/2</span>
+        <span class="k">return</span> <span class="n">clip</span><span class="p">(</span><span class="n">unclipped</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.58</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
