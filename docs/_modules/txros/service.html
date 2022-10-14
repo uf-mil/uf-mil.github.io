@@ -244,13 +244,14 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">tcpros</span><span class="o">.</span><span class="n">send_byte</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">writer</span><span class="p">)</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="o">.</span><span class="n">_response_class</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+                    <span class="n">resp</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
                     <span class="n">tcpros</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">getvalue</span><span class="p">(),</span> <span class="n">writer</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">):</span>
             <span class="c1"># Usually means that the client has just disconnected</span>
             <span class="k">pass</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+            <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span></div>
 </pre></div>
 
             </main>
