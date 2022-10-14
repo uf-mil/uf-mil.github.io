@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>An Introduction to Asyncio</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Writing Unit Tests with rostest" href="rostest.html" />
+        <link rel="prev" title="Accessing Zobelisk" href="zobelisk.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">An Introduction to Asyncio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#migrating-from-twisted-to-asyncio">Migrating from Twisted to Asyncio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coroutines-tasks-and-futures">Coroutines, Tasks, and Futures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#help-from-asyncio">Help from <code class="docutils literal notranslate"><span class="pre">asyncio</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#yielding-control">Yielding Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#typing-asyncio-code">Typing <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> Code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#asynchronous-functions">Asynchronous Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#futures-and-tasks">Futures and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-uvloop">Using <code class="docutils literal notranslate"><span class="pre">uvloop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="an-introduction-to-asyncio">
+<h1>An Introduction to Asyncio<a class="headerlink" href="#an-introduction-to-asyncio" title="Permalink to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">asyncio</span></code> is a standard Python library used to write concurrent code using asynchronous
+syntax. This library is similar to a predecessor library known as Twisted, which
+was used heavily in our repository for nearly a decade before it was removed from
+most files in our repository.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are planning to work with asynchronous code and have not already set up
+an IDE or editor with a language server, you are <strong>highly recommended</strong> to do so.
+It is very common to make mistakes in asynchronous programming (adding <code class="docutils literal notranslate"><span class="pre">await</span></code> somewhere
+it shouldn’t be, using the wrong <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> method, etc.) and having to run your
+program each time to figure out if you made any of these mistakes is not ideal.</p>
+<p>A type checker in your IDE can catch these mistakes immediately. Setting up a language
+server can take as little as 10 minutes, and is very worth it in the long run.</p>
+</div>
+<section id="migrating-from-twisted-to-asyncio">
+<h2>Migrating from Twisted to Asyncio<a class="headerlink" href="#migrating-from-twisted-to-asyncio" title="Permalink to this heading">¶</a></h2>
+<p>In Twisted, coroutines were specified through the following syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
+<span class="kn">from</span> <span class="nn">txros.util</span> <span class="kn">import</span> <span class="n">cancellableInlineCallbacks</span>
+
+<span class="k">class</span> <span class="nc">Example</span><span class="p">():</span>
+    <span class="nd">@defer</span><span class="o">.</span><span class="n">inlineCallbacks</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">some_sleep_helper</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">other_coroutine</span><span class="p">()</span>
+        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># or</span>
+    <span class="nd">@cancellableInlineCallbacks</span>
+    <span class="k">def</span> <span class="nf">other_example</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">other_coroutine</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The second decorator, created by a former MIL member, was used to enhance <code class="docutils literal notranslate"><span class="pre">defer.inlineCallbacks</span></code>
+by allowing for the cancellation of nested coroutines. It’s primary function was
+very similar to that of the standard <code class="docutils literal notranslate"><span class="pre">defer.inlineCallbacks</span></code> method.</p>
+<p>Now, we can use <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> to achieve similar results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">class</span> <span class="nc">Example</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">other_coroutine</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s2">&quot;Done!&quot;</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">other_example</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">other_coroutine</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You’ll notice some nice syntax improvements: the loss of a standard decorator to
+mark a method as being a coroutine, the use of special keywords made specifically
+for <code class="docutils literal notranslate"><span class="pre">async</span></code>, the ability to call <code class="docutils literal notranslate"><span class="pre">return</span></code> in a coroutine, and some helper functions
+provided by the standard <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> library.</p>
+</section>
+<section id="coroutines-tasks-and-futures">
+<h2>Coroutines, Tasks, and Futures<a class="headerlink" href="#coroutines-tasks-and-futures" title="Permalink to this heading">¶</a></h2>
+<p>There are three notable parts of <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> you should be familiar with:</p>
+<ul class="simple">
+<li><p><strong>Coroutines</strong>: These are asynchronous functions. You can write these using
+the <code class="docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code> syntax. Coroutines can be called with the <code class="docutils literal notranslate"><span class="pre">await</span></code> keyword to
+start the execution of the coroutine.</p></li>
+<li><p><strong>Futures</strong>: A future is an object that is <em>immediately returned</em> with the expectation
+that it will have a populated value at a later date. You can <code class="docutils literal notranslate"><span class="pre">await</span></code> futures
+to pause execution of the current method until the future has a result. In Python,
+futures are reresented through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> object.</p></li>
+<li><p><strong>Tasks</strong>: Tasks are high-level futures that are easier to work with in client
+code. When writing high-level code (missions, for example), you should try to use
+tasks, not futures. Tasks are represented in Python through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a>
+class and are typically spawned through <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>.</p></li>
+<li><p><strong>Awaitables</strong>: This name refers to all three of the above, because all three of
+the above can have the <code class="docutils literal notranslate"><span class="pre">await</span></code> keyword called on them.</p></li>
+</ul>
+<p>For some great examples of these three different classes, check out the Python
+documentation on <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#coroutine" title="(in Python v3.10)"><span class="xref std std-ref">Coroutines</span></a>.</p>
+</section>
+<section id="help-from-asyncio">
+<h2>Help from <code class="docutils literal notranslate"><span class="pre">asyncio</span></code><a class="headerlink" href="#help-from-asyncio" title="Permalink to this heading">¶</a></h2>
+<p>The standard library <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> will provide you a lot of help when working with
+awaitables. Let’s take a look at some methods that you may want to use:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>: This coroutine pauses the parent coroutine for a specific
+number of seconds. Useful!</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait_for" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait_for()</span></code></a>: Sets a time limit for a coroutine: if the coroutine
+does not finish within the time limit, then an exception is raised.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait()</span></code></a>: Waits for a bunch of coroutines to finish in a certain manner.
+This function can either wait for the first coroutine to finish, or it can
+wait for all coroutines to finish.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.shield" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.shield()</span></code></a>: Prevents a coroutine from being cancelled.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.gather()</span></code></a>: Run coroutines concurrently (ie, together). This can speed
+up execution time by a great amount, but be weary of issues that may be caused
+by running two coroutines at the same time (what if the other coroutine needs a resource
+that can only be providd by the other coroutine?).</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>: Creates a <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> that begins the execution
+of a coroutine all by itself. Similar to running a function in a thread. Note
+that this method is not a coroutine, and therefore should not be called with
+<code class="docutils literal notranslate"><span class="pre">await</span></code>.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>: Synchronous method that provides an entrypoint into an asynchronous
+program. This should always be called if you need to call an asynchronous method
+directly when starting a program. This should rarely be used if the program has
+<em>already</em> started.</p></li>
+</ul>
+</section>
+<section id="yielding-control">
+<h2>Yielding Control<a class="headerlink" href="#yielding-control" title="Permalink to this heading">¶</a></h2>
+<p>When writing asynchronous functions, you need to be careful to avoid hogging the
+event loop. If you do this, you are going to prevent other coroutines from running
+at the same time.</p>
+<p>For example, this coroutine:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">uh_oh</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>would block all other coroutines on the event loop. This coroutine need to yield
+control.</p>
+<p>The simplest way to do this is to use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>, even if the argument
+is zero. This coroutine will not end up blocking the event loop:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">uh_oh</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Yield control to other coroutines!</span>
+</pre></div>
+</div>
+</section>
+<section id="typing-asyncio-code">
+<h2>Typing <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> Code<a class="headerlink" href="#typing-asyncio-code" title="Permalink to this heading">¶</a></h2>
+<p>As our repository becomes more and more typed, you may encounter a challenge where
+you need to type an asynchronous part of a program. How do you go about this?</p>
+<section id="asynchronous-functions">
+<h3>Asynchronous Functions<a class="headerlink" href="#asynchronous-functions" title="Permalink to this heading">¶</a></h3>
+<p>For most asynchronous functions, you can mark the return type as whatever
+the coroutine itself returns after being scheduled.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>However, if you want to type the actual asynchronous function itself, you will
+need to type the coroutine itself. You can either use <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Coroutine" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Coroutine</span></code></a>
+or <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Coroutine" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Coroutine</span></code></a> for this. This type takes three generics. Usually,
+the first two can be <code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Any</span></code> - the third generic is the return type
+of the coroutine.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Coroutine</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">gimme_a_test</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="futures-and-tasks">
+<h3>Futures and Tasks<a class="headerlink" href="#futures-and-tasks" title="Permalink to this heading">¶</a></h3>
+<p>Both <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> are generics, each taking
+one type: the result type of the future or task. While you are not required to type
+these classes as generics, its recommended for easier understanding later.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">test</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">fut</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
+    <span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fut</span>
+</pre></div>
+</div>
+</section>
+<section id="txros">
+<h3><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a><a class="headerlink" href="#txros" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a> now has a lot of great typing support for its asynchronous pieces.
+<a class="reference internal" href="../reference/txros/api.html#txros.Subscriber" title="txros.Subscriber"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Subscriber</span></code></a> and <a class="reference internal" href="../reference/txros/api.html#txros.Publisher" title="txros.Publisher"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Publisher</span></code></a> are generics which accept
+the message type that they are receiving and publishing.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">nh</span> <span class="o">=</span> <span class="n">NodeHandle</span><span class="o">.</span><span class="n">from_argv</span><span class="p">(</span><span class="s2">&quot;my_special_node&quot;</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">advertise</span><span class="p">(</span><span class="s2">&quot;special_point&quot;</span><span class="p">,</span> <span class="n">Point</span><span class="p">)</span>
+    <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">PointStamped</span><span class="p">())</span> <span class="c1"># This is a type error</span>
+    <span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-uvloop">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">uvloop</span></code><a class="headerlink" href="#using-uvloop" title="Permalink to this heading">¶</a></h2>
+<p>One extension that can be used on top of <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> is an extension known as <code class="docutils literal notranslate"><span class="pre">uvloop</span></code>.
+When installed, this extension greatly speeds up the event loop itself, which helps
+the loop to move through coroutines faster. This can make your programs much more
+performant.</p>
+<p>Therefore, whenever you use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>, you should also be using <code class="docutils literal notranslate"><span class="pre">uvloop.install</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">uvloop</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="n">uvloop</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
