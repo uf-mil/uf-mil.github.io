@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>lqrrt.planner</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for lqrrt.planner</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The main class for lqRRT.</span>
+
+<span class="sd">Create an instance of Planner and then call update_plan to generate a plan internal to the instance.</span>
+<span class="sd">To get the state or effort at some time t, use the functions get_state(t) and get_effort(t).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1">################################################# DEPENDENCIES</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="nn">npl</span>
+
+<span class="kn">from</span> <span class="nn">.tree</span> <span class="kn">import</span> <span class="n">Tree</span>
+<span class="kn">from</span> <span class="nn">.constraints</span> <span class="kn">import</span> <span class="n">Constraints</span>
+
+<span class="c1"># Check scipy version for assume_sorted argument in interp1d</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span>
+
+<span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">interp1d</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;assume_sorted&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">interp1d</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="c1">################################################# PRIMARY CLASS</span>
+
+<div class="viewcode-block" id="Planner"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner">[docs]</a><span class="k">class</span> <span class="nc">Planner</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes an lqRRT planner class.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dynamics: Callable - Function that returns the next state given</span>
+<span class="sd">          the current state x and the current effort u,</span>
+<span class="sd">          and timestep dt. That is, xnext = dynamics(x, u, dt).</span>
+<span class="sd">        lqr: Callable - Function that returns the local LQR cost-to-go matrix S</span>
+<span class="sd">          and policy matrix K as a tuple of arrays (S, K) where S</span>
+<span class="sd">          solves the local Riccati equation and K is the associated</span>
+<span class="sd">          feedback gain matrix. That is, (S, K) = lqr(x, u).</span>
+<span class="sd">        constraints: Constraints - Instance of the Constraints class that defines</span>
+<span class="sd">          feasibility of states &amp; efforts, goal region, etc...</span>
+<span class="sd">        horizon: Union[float, Tuple] - The simulation duration in seconds used</span>
+<span class="sd">          to extend the tree. If you give a tuple (min, max), an adaptive</span>
+<span class="sd">          horizon heuristic will be used.</span>
+<span class="sd">        dt: float - The simulation timestep in seconds used to extend the tree.</span>
+<span class="sd">        FPR: float - Failed Path Retention factor. When a path is grown and found to be infeasible,</span>
+<span class="sd">          this is the fraction of the path that is retained up to that infeasible point.</span>
+<span class="sd">        error_tol: float - The state error array or scalar defining controller convergence.</span>
+<span class="sd">        erf: Callable - Function that takes two states xgoal and x and returns the state error</span>
+<span class="sd">          between them. Defaults to simple subtraction xgoal - x. This is useful</span>
+<span class="sd">          if your state includes a quaternion or heading.</span>
+<span class="sd">        min_time: float - The least number of seconds that the tree will</span>
+<span class="sd">          grow for. That is, even if a feasible plan is found</span>
+<span class="sd">          before min_time, it will keep growing until min_time</span>
+<span class="sd">          is reached and then give the best of the plans.</span>
+<span class="sd">        max_time: int - The max number of seconds that the tree will grow for.</span>
+<span class="sd">          That is, if there are still no feasible plans after this</span>
+<span class="sd">          amount of time, the plan_reached_goal flag will remain False</span>
+<span class="sd">          and the plan that gets closest to the goal is given.</span>
+<span class="sd">        max_nodes: int - If the tree reaches this number of nodes but no path is</span>
+<span class="sd">          found, the plan_reached_goal flag will remain False and the</span>
+<span class="sd">          plan that gets closest to the goal is given.</span>
+<span class="sd">        goal0: Optional[List] - The initial goal state. If left as None, update_plan</span>
+<span class="sd">          cannot be run. Use set_goal to set the goal at any time.</span>
+<span class="sd">          Be sure to update the plan after setting a new goal.</span>
+<span class="sd">        sys_time: Callable - Function that returns the real-world system time.</span>
+<span class="sd">          Defaults to the Python time library&#39;s time().</span>
+<span class="sd">        printing: bool - Bool that specifies if internal stuff should be printed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dynamics</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">lqr</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="p">:</span> <span class="n">Constraints</span><span class="p">,</span>
+        <span class="n">horizon</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">FPR</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">error_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">erf</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">,</span>
+        <span class="n">min_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">max_nodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+        <span class="n">goal0</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sys_time</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+        <span class="n">printing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_system</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="n">lqr</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">erf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_resolution</span><span class="p">(</span><span class="n">horizon</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">FPR</span><span class="p">,</span> <span class="n">error_tol</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_runtime</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">,</span> <span class="n">max_nodes</span><span class="p">,</span> <span class="n">sys_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_goal</span><span class="p">(</span><span class="n">goal0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">printing</span> <span class="o">=</span> <span class="n">printing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.update_plan"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.update_plan">[docs]</a>    <span class="k">def</span> <span class="nf">update_plan</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">x0</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+        <span class="n">sample_space</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span>
+        <span class="n">goal_bias</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">guide</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">xrand_gen</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">pruning</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">finish_on_goal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">specific_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A new tree is grown from the seed x0 in an attempt to plan</span>
+<span class="sd">        a path to the goal. The returned path can be accessed with</span>
+<span class="sd">        the interpolator functions get_state(t) and get_effort(t).</span>
+
+<span class="sd">        The tree is motivated by uniform random samples in the over</span>
+<span class="sd">        the given sample_space. The sample_space is a list of n tuples</span>
+<span class="sd">        where n is the number of states; [(min1, max1), (min2, max2)...].</span>
+
+<span class="sd">        The goal_bias is the fraction of the time the goal is sampled.</span>
+<span class="sd">        It can be a scalar from 0 (none of the time) to 1 (all the time)</span>
+<span class="sd">        or a list of scalars corresponding to each state dimension.</span>
+
+<span class="sd">        Alternatively, you can give a function xrand_gen which takes the</span>
+<span class="sd">        current planner instance (self) and outputs the random sample state.</span>
+<span class="sd">        Doing this will override both sample_space and goal_bias, which you</span>
+<span class="sd">        can set to arbitrary values only if you provide an xrand_gen function.</span>
+
+<span class="sd">        Or, instead of a function, you can set xrand_gen to a single integer</span>
+<span class="sd">        1 or greater, which will act as the number of tries allowed for</span>
+<span class="sd">        finding a feasible random sample in the default random sampling</span>
+<span class="sd">        routine. (Leaving the default None will set the limit to 10 tries).</span>
+
+<span class="sd">        After min_time seconds, the fastest available path from x0 to</span>
+<span class="sd">        the current goal is returned and the functions get_state(t)</span>
+<span class="sd">        and get_effort(t) are modified to interpolate this new path.</span>
+
+<span class="sd">        If no path was found yet, the search continues until max_time or</span>
+<span class="sd">        until the node limit is breached. After the limit, a warning is</span>
+<span class="sd">        printed and the path that gets nearest to the guide is</span>
+<span class="sd">        used instead. If guide is left None, it defaults to goal.</span>
+
+<span class="sd">        If pruning is True, then nodes can be marked as &quot;ignore&quot; during</span>
+<span class="sd">        growth. Right now, only nodes on a completed path are ignored.</span>
+
+<span class="sd">        If finish_on_goal is set to True, once the plan makes it to the goal</span>
+<span class="sd">        region (goal plus buffer), it will attempt to steer one more path</span>
+<span class="sd">        directly into the exact goal. Can fail for nonholonomic systems.</span>
+
+<span class="sd">        If you want this update_plan to plan for some specific amount of</span>
+<span class="sd">        time (instead of using the global min_time and max_time), pass it</span>
+<span class="sd">        in as specific_time in seconds.</span>
+
+<span class="sd">        This function returns True if it finished fully, or False if it was</span>
+<span class="sd">        haulted. It can hault if it is killed or if the tree exceeds max_nodes,</span>
+<span class="sd">        or if no goal has been set yet.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Safety first!</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No goal has been set yet!&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">x0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_effort</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Store timing</span>
+        <span class="k">if</span> <span class="n">specific_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">min_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span>
+            <span class="n">max_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">min_time</span> <span class="o">=</span> <span class="n">specific_time</span>
+            <span class="n">max_time</span> <span class="o">=</span> <span class="n">specific_time</span>
+
+        <span class="c1"># Reset the tree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">)))</span>
+        <span class="n">ignores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+        <span class="c1"># If not given an xrand_gen function, make the standard one</span>
+        <span class="k">if</span> <span class="n">xrand_gen</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">xrand_gen</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+
+            <span class="c1"># Properly cast the given goal bias</span>
+            <span class="k">if</span> <span class="n">goal_bias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">goal_bias</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">goal_bias</span><span class="p">,</span> <span class="s2">&quot;__contains__&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">goal_bias</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Expected goal_bias to be scalar or have same length as state.&quot;</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">goal_bias</span> <span class="o">=</span> <span class="p">[</span><span class="n">goal_bias</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span>
+
+            <span class="c1"># Set the number of tries for sample feasibility</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xrand_gen</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">xrand_gen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">tries_limit</span> <span class="o">=</span> <span class="n">xrand_gen</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tries_limit</span> <span class="o">=</span> <span class="mi">10</span>
+
+            <span class="c1"># Properly cast the given sample space and extract statistics</span>
+            <span class="n">sample_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sample_space</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">sample_space</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstates</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected sample_space to be list of nstates tuples.&quot;</span><span class="p">)</span>
+            <span class="n">sampling_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sample_space</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">sampling_spans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sample_space</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+            <span class="c1"># Standard sampling</span>
+            <span class="k">def</span> <span class="nf">xrand_gen</span><span class="p">(</span><span class="n">planner</span><span class="p">):</span>
+                <span class="n">tries</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">while</span> <span class="n">tries</span> <span class="o">&lt;</span> <span class="n">tries_limit</span><span class="p">:</span>
+                    <span class="n">xrand</span> <span class="o">=</span> <span class="n">sampling_centers</span> <span class="o">+</span> <span class="n">sampling_spans</span> <span class="o">*</span> <span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstates</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">choice</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">goal_bias</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">())</span>
+                    <span class="p">):</span>
+                        <span class="k">if</span> <span class="n">choice</span><span class="p">:</span>
+                            <span class="n">xrand</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">is_feasible</span><span class="p">(</span><span class="n">xrand</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">)):</span>
+                        <span class="k">return</span> <span class="n">xrand</span>
+                    <span class="n">tries</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">return</span> <span class="n">xrand</span>
+
+        <span class="c1"># Otherwise, use given sampling function</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xrand_gen</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Expected xrand_gen to be None, an integer &gt;= 1,  or a function.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Store guide state</span>
+        <span class="k">if</span> <span class="n">guide</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xguide</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">xguide</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">guide</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="c1"># Loop managers</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">...planning...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan_reached_goal</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">time_elapsed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">time_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_time</span><span class="p">()</span>
+
+        <span class="c1"># Planning loop!</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+            <span class="c1"># Random sample state</span>
+            <span class="n">xrand</span> <span class="o">=</span> <span class="n">xrand_gen</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="c1"># The &quot;nearest&quot; node to xrand has the least cost-to-go of all nodes</span>
+            <span class="k">if</span> <span class="n">pruning</span><span class="p">:</span>
+                <span class="n">nearestIDs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs_to_go</span><span class="p">(</span><span class="n">xrand</span><span class="p">))</span>
+                <span class="n">nearestID</span> <span class="o">=</span> <span class="n">nearestIDs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">nearestIDs</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignores</span><span class="p">:</span>
+                        <span class="n">nearestID</span> <span class="o">=</span> <span class="n">ID</span>
+                        <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nearestID</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs_to_go</span><span class="p">(</span><span class="n">xrand</span><span class="p">))</span>
+
+            <span class="c1"># Candidate extension to the tree</span>
+            <span class="n">xnew_seq</span><span class="p">,</span> <span class="n">unew_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steer</span><span class="p">(</span><span class="n">nearestID</span><span class="p">,</span> <span class="n">xrand</span><span class="p">,</span> <span class="n">force_arrive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># If steer produced any feasible results, extend tree</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xnew_seq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                <span class="c1"># Add the new node to the tree</span>
+                <span class="n">xnew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">xnew_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+                    <span class="n">nearestID</span><span class="p">,</span>
+                    <span class="n">xnew</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">unew_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
+                    <span class="n">xnew_seq</span><span class="p">,</span>
+                    <span class="n">unew_seq</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Check if the newest node reached the goal region</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_goal</span><span class="p">(</span><span class="n">xnew</span><span class="p">):</span>
+
+                    <span class="c1"># Raise flag</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">plan_reached_goal</span> <span class="o">=</span> <span class="kc">True</span>
+
+                    <span class="c1"># Climb tree to construct sequence of states for this path</span>
+                    <span class="n">node_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">climb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">x_seq</span><span class="p">,</span> <span class="n">u_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">trajectory</span><span class="p">(</span><span class="n">node_seq</span><span class="p">)</span>
+
+                    <span class="c1"># Ignore nodes on any succeeded path</span>
+                    <span class="n">ignores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">ignores</span><span class="p">,</span> <span class="n">node_seq</span><span class="p">)))</span>
+
+                    <span class="c1"># Expected time to complete this plan</span>
+                    <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_seq</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+
+                    <span class="c1"># Retain this plan if it is faster than the previous one</span>
+                    <span class="k">if</span> <span class="n">T</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span> <span class="o">=</span> <span class="n">node_seq</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span> <span class="o">=</span> <span class="n">x_seq</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">u_seq</span> <span class="o">=</span> <span class="n">u_seq</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">t_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span>
+                                <span class="s2">&quot;Found plan at elapsed time: </span><span class="si">{}</span><span class="s2"> s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">time_elapsed</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+
+            <span class="c1"># For checking if we should stop planning</span>
+            <span class="n">time_elapsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_start</span>
+
+            <span class="c1"># Abrupt termination</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">killed</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Close-out for reached-goal</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_reached_goal</span> <span class="ow">and</span> <span class="n">time_elapsed</span> <span class="o">&gt;=</span> <span class="n">min_time</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">finish_on_goal</span><span class="p">:</span>
+                    <span class="c1"># Steer to exact goal</span>
+                    <span class="n">xgoal_seq</span><span class="p">,</span> <span class="n">ugoal_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steer</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="n">force_arrive</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+                    <span class="c1"># If it works, tack it onto the plan</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xgoal_seq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">xgoal_seq</span><span class="p">,</span> <span class="n">ugoal_seq</span>
+                        <span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">xgoal_seq</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">u_seq</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ugoal_seq</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">t_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+                <span class="c1"># Over and out!</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;Tree size: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">ETA: </span><span class="si">{1}</span><span class="s2"> s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_interpolators</span><span class="p">()</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Close-out for didn&#39;t-reach-goal</span>
+            <span class="k">elif</span> <span class="n">time_elapsed</span> <span class="o">&gt;=</span> <span class="n">max_time</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_nodes</span><span class="p">:</span>
+                <span class="c1"># Find closest node to guide state</span>
+                <span class="n">Sguide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xguide</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">goal_buffer</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+                        <span class="n">Sguide</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">guide_diffs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">erf_v</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xguide</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+                <span class="n">closestID</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">guide_diffs</span><span class="p">,</span> <span class="n">Sguide</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">guide_diffs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">climb</span><span class="p">(</span><span class="n">closestID</span><span class="p">)</span>
+                <span class="c1"># Construct plan</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">u_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span>
+                <span class="c1"># Over and out!</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;Didn&#39;t reach goal.</span><span class="se">\n</span><span class="s2">Tree size: </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">ETA: </span><span class="si">{1}</span><span class="s2"> s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_interpolators</span><span class="p">()</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_nodes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plan update terminated abruptly!&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="c1">#################################################</span>
+
+    <span class="k">def</span> <span class="nf">_costs_to_go</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an array of costs to go to x for each node in the</span>
+<span class="sd">        current tree, in the same ordering as the nodes. This cost</span>
+<span class="sd">        is  (v-x).T * S * (v-x)  for each node state v where S is</span>
+<span class="sd">        found by LQR about x, not v.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x: List - The relevant state</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray - The array of costs to go for each node in the tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">diffs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">erf_v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">diffs</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">diffs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1">#################################################</span>
+
+    <span class="k">def</span> <span class="nf">_steer</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">ID</span><span class="p">,</span> <span class="n">xtar</span><span class="p">,</span> <span class="n">force_arrive</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>  <span class="c1"># &lt;&lt;&lt; need to numpy this function for final speedup!</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Starting from the given node ID&#39;s state, the system dynamics are</span>
+<span class="sd">        forward simulated using the local LQR policy toward xtar.</span>
+
+<span class="sd">        If the state updates into an infeasible condition, the simulation</span>
+<span class="sd">        is finished and the path returned is half what was generated.</span>
+
+<span class="sd">        If force_arrive is set to True, then the simulation isn&#39;t finished</span>
+<span class="sd">        until xtar is achieved or until a physical timeout.</span>
+
+<span class="sd">        If it is False, then the simulation will stop after self.horizon sim</span>
+<span class="sd">        seconds or if the error drops below some reasonable self.error_tol.</span>
+
+<span class="sd">        Returns the sequences of states and efforts. Note that the initial</span>
+<span class="sd">        state is not included in the returned trajectory (to avoid tree overlap).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set up</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">lqr</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">ID</span><span class="p">])</span>
+        <span class="n">x_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">u_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_emag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+        <span class="c1"># Management</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_time</span><span class="p">()</span>
+
+        <span class="c1"># Simulate</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+            <span class="c1"># Compute effort using local LQR policy</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">xtar</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+            <span class="c1"># Step forward dynamics</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+
+            <span class="c1"># Check for feasibility</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">is_feasible</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+                <span class="n">x_seq</span> <span class="o">=</span> <span class="n">x_seq</span><span class="p">[:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FPR</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_seq</span><span class="p">))]</span>
+                <span class="n">u_seq</span> <span class="o">=</span> <span class="n">u_seq</span><span class="p">[:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FPR</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">u_seq</span><span class="p">))]</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Check force-arrive finish criteria</span>
+            <span class="k">if</span> <span class="n">force_arrive</span><span class="p">:</span>
+
+                <span class="c1"># Physical time limit</span>
+                <span class="n">elapsed_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                <span class="k">if</span> <span class="n">elapsed_time</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">printing</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(exact goal-convergence timed-out)&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+                <span class="c1"># Definite convergence criteria</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xtar</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># or check lenient-arrive finish criteria</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">emag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+                <span class="c1"># Adaptive horizon heuristic</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hfactor</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">emag</span> <span class="o">&gt;=</span> <span class="n">last_emag</span><span class="p">):</span>
+                        <span class="n">x_seq</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="n">u_seq</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">hfactor</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                        <span class="k">break</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">hfactor</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="n">last_emag</span> <span class="o">=</span> <span class="n">emag</span>
+
+                <span class="c1"># Horizon, or tolerable convergence criteria</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">emag</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_tol</span><span class="p">):</span>
+                    <span class="k">break</span>
+
+            <span class="c1"># Record</span>
+            <span class="n">x_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">u_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+
+            <span class="c1"># Get next control policy</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">x_seq</span><span class="p">,</span> <span class="n">u_seq</span><span class="p">)</span>
+
+    <span class="c1">#################################################</span>
+
+    <span class="k">def</span> <span class="nf">_in_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if some state x is in the goal region.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x: np.ndarray - The state to determine whether in the goal region</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool - Whether the entire state is in the goal region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="n">goal_span</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">goal_span</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">goal_span</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal_region</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1">#################################################</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_interpolators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the interpolator functions the user calls</span>
+<span class="sd">        to interpolate the current plan.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_effort</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_state</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t_seq</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">assume_sorted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">bounds_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">fill_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:],</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_effort</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">t_seq</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u_seq</span><span class="p">),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">assume_sorted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">bounds_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">fill_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">u_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:],</span>
+            <span class="p">)</span>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.set_goal"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_goal">[docs]</a>    <span class="k">def</span> <span class="nf">set_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Modifies the goal state and region.</span>
+<span class="sd">        Be sure to update the plan after modifying the goal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            goal: Optional[List]] - The list to update the goal with, if any.</span>
+<span class="sd">              If None, then updates the goal to None.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError - Goal state does not have the same dimensionality a</span>
+<span class="sd">              state space.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">goal</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The goal state must have same dimensionality as state space.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">goal_region</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">buff</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">goal_buffer</span><span class="p">):</span>
+                <span class="n">goal_region</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">buff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">buff</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">goal_region</span> <span class="o">=</span> <span class="n">goal_region</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plan_reached_goal</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.set_runtime"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_runtime">[docs]</a>    <span class="k">def</span> <span class="nf">set_runtime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_nodes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sys_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the runtime settings of the lqRRT system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            min_time: Optional[float] - The least number of seconds that</span>
+<span class="sd">              the tree will grow for. That is, even if a feasible plan is found</span>
+<span class="sd">              before min_time, it will keep growing until min_time</span>
+<span class="sd">              is reached and then give the best of the plans.</span>
+<span class="sd">            max_time: Optional[float] - The max number of seconds that the</span>
+<span class="sd">              tree will grow for. That is, if there are still no feasible</span>
+<span class="sd">              plans after this amount of time, the plan_reached_goal flag</span>
+<span class="sd">              will remain False and the plan that gets closest to the goal</span>
+<span class="sd">              is given.</span>
+<span class="sd">            max_nodes: Optional[int] - If the tree reaches this number of nodes but</span>
+<span class="sd">              no path is found, the plan_reached_goal flag will remain False</span>
+<span class="sd">              and the plan that gets closest to the goal is given.</span>
+<span class="sd">            sys_time: Callable - Function that returns the real-world system</span>
+<span class="sd">              time. Defaults to the Python time library&#39;s time().</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError - The maximum amount of time is less than the minimum</span>
+<span class="sd">              amount of time allotted to the tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">min_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">=</span> <span class="n">min_time</span>
+
+        <span class="k">if</span> <span class="n">max_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span> <span class="o">=</span> <span class="n">max_time</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The min_time must be less than or equal to the max_time.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">max_nodes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_nodes</span> <span class="o">=</span> <span class="n">max_nodes</span>
+
+        <span class="k">if</span> <span class="n">sys_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys_time</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sys_time</span> <span class="o">=</span> <span class="n">sys_time</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected sys_time to be a function.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.set_resolution"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_resolution">[docs]</a>    <span class="k">def</span> <span class="nf">set_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">horizon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">FPR</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">error_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets resolution settings of the lqRRT system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            horizon: Optional[Union[float, Tuple]] - The simulation duration in seconds</span>
+<span class="sd">              used to extend the tree. If you give a tuple (min, max), an</span>
+<span class="sd">              adaptive horizon heuristic will be used.</span>
+<span class="sd">            dt: Optional[float] - The simulation timestep in seconds used to extend</span>
+<span class="sd">              the tree.</span>
+<span class="sd">            FPR: Optional[float] - Failed Path Retention factor. When a path is grown</span>
+<span class="sd">              and found to be infeasible, this is the fraction of the path</span>
+<span class="sd">              that is retained up to that infeasible point.</span>
+<span class="sd">            error_tol: Optional[Union[float, List]] - The state error array or scalar defining</span>
+<span class="sd">              controller convergence.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError - Could be due to several conditions</span>
+<span class="sd">                # error_tol is not a scalar or is a list with a shape that</span>
+<span class="sd">                  does not match the number of states.</span>
+<span class="sd">                # horizon is not either a scalar or a tuple of (min, max)</span>
+<span class="sd">                # horizon (or the min of the tuple) is less than dt</span>
+<span class="sd">                # in the horizon tuple, min &gt; max</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">horizon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">horizon</span> <span class="o">=</span> <span class="n">horizon</span>
+
+        <span class="k">if</span> <span class="n">dt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span>
+
+        <span class="k">if</span> <span class="n">FPR</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FPR</span> <span class="o">=</span> <span class="n">FPR</span>
+
+        <span class="k">if</span> <span class="n">error_tol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">error_tol</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nstates</span><span class="p">,)]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error_tol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">error_tol</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Shape of error_tol must be scalar or length of state.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">,</span> <span class="s2">&quot;__contains__&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Expected horizon to be tuple (min, max) or a single scalar.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The minimum horizon must be at least as big as dt.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;A horizon range tuple must be given as (min, max) where min &lt; max.&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizon</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hfactor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizon</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hspan</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">horizon_iters</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hfactor</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The horizon must be at least as big as dt.&quot;</span><span class="p">)</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.set_system"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_system">[docs]</a>    <span class="k">def</span> <span class="nf">set_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lqr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">constraints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Constraints</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">erf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If dynamics gets modified, so must lqr (and vis versa).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dynamics: Callable - Function that returns the next state given</span>
+<span class="sd">              the current state x and the current effort u,</span>
+<span class="sd">              and timestep dt. That is, xnext = dynamics(x, u, dt).</span>
+<span class="sd">            lqr: Callable - Function that returns the local LQR cost-to-go matrix S</span>
+<span class="sd">              and policy matrix K as a tuple of arrays (S, K) where S</span>
+<span class="sd">              solves the local Riccati equation and K is the associated</span>
+<span class="sd">              feedback gain matrix. That is, (S, K) = lqr(x, u).</span>
+<span class="sd">            constraints: Constraints - Instance of the Constraints class that defines</span>
+<span class="sd">              feasibility of states &amp; efforts, goal region, etc...</span>
+<span class="sd">            erf: Callable - Function that takes two states xgoal and x and</span>
+<span class="sd">              returns the state error between them. Defaults to simple</span>
+<span class="sd">              subtraction xgoal - x. This is useful if your state includes a</span>
+<span class="sd">              quaternion or heading.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError - One of the parameters provided is not of the required</span>
+<span class="sd">              type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dynamics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lqr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">dynamics</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dynamics</span> <span class="o">=</span> <span class="n">dynamics</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected dynamics to be a function.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">lqr</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lqr</span> <span class="o">=</span> <span class="n">lqr</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected lqr to be a function.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">constraints</span><span class="p">,</span> <span class="n">Constraints</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">nstates</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ncontrols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">ncontrols</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Expected constraints to be an instance of the Constraints class.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">erf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">erf</span><span class="p">,</span> <span class="s2">&quot;__call__&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">erf</span> <span class="o">=</span> <span class="n">erf</span>
+                <span class="k">if</span> <span class="n">erf</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">erf_v</span> <span class="o">=</span> <span class="n">erf</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">erf_v</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">g</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">erf</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected erf to be a function.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan_reached_goal</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.kill_update"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.kill_update">[docs]</a>    <span class="k">def</span> <span class="nf">kill_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises a flag that will cause an abrupt termination of</span>
+<span class="sd">        the update_plan routine.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.unkill"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.unkill">[docs]</a>    <span class="k">def</span> <span class="nf">unkill</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lowers the kill_update flag. Do this if you made a mistake.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1">#################################################</span>
+
+<div class="viewcode-block" id="Planner.visualize"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plots the (dx,dy)-cross-section of the current tree,</span>
+<span class="sd">        and highlights the current plan&#39;s trajectory.</span>
+<span class="sd">        For example, dx=0, dy=1 plots the states #0 and #1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dx: int - The index of the first state to plot.</span>
+<span class="sd">            dy: int - The index of the second state to plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;node_seq&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">node_seq</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_seq</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There is no plan to visualize!&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
