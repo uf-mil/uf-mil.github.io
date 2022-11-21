@@ -5,7 +5,7 @@
         <!-- HTML meta -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-        <title>mil_missions - Mission System</title>
+        <title>Managing Resources</title>
         <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -26,8 +26,8 @@
         <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../../genindex.html" />
         <link rel="search" title="Search" href="../../search.html" />
-        <link rel="next" title="mil_missions_core - Base mission classes" href="core.html" />
-        <link rel="prev" title="sabertooth2x12 - Sabertooth 2x12" href="../sabertooth.html" />
+        <link rel="next" title="Errors and Known Issues" href="errors.html" />
+        <link rel="prev" title="axros - Independent extensions for ROS" href="index.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -73,7 +73,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Managing Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errors.html">Errors and Known Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
@@ -87,10 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Base mission classes</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="../mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
@@ -110,18 +113,19 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <section id="mil-missions-mission-system">
-<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System<a class="headerlink" href="#mil-missions-mission-system" title="Permalink to this heading">¶</a></h1>
-<p>The mission system is used to run “missions”, or client modules used to orchestrate
-the desired end behavior of the robot. Missions are commonly implemented to orchestrate
-the behavior of a robot in preparation for a competition. Usually, mission code
-will not be used in other parts of the repository; rather, other modules are used
-by mission code.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="core.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions_core</span></code> - Base mission classes</a></li>
-</ul>
-</div>
+  <section id="managing-resources">
+<h1>Managing Resources<a class="headerlink" href="#managing-resources" title="Permalink to this heading">¶</a></h1>
+<p>When using resources in axros, you must be mindful of how you start the resource,
+and how you clean the resource up. Many times, these actions are not done for you
+(to give you more control), and you must be mindful of when you plan to do them
+yourself. Doing these actions in the improper order or not doing them at all can result
+in resources becoming broken.</p>
+<p>For example, to start a publisher, you must first call the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Publisher.setup()</span></code>
+after initializing the class. Then, you must either shut down the publisher using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Publisher.shutdown()</span></code> or shut down the entire node handle using <code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeHandle.shutdown()</span></code> - this
+will shutdown all publishers spawned by the node.</p>
+<p>Furthermore, attempting to shut down a resource more than once will result in an
+instance of <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> being raised.</p>
 </section>
 
 

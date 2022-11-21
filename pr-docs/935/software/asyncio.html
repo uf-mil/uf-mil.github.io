@@ -74,7 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#typing-asyncio-code">Typing <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> Code</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#asynchronous-functions">Asynchronous Functions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#futures-and-tasks">Futures and Tasks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#using-uvloop">Using <code class="docutils literal notranslate"><span class="pre">uvloop</span></code></a></li>
@@ -135,7 +135,7 @@ server can take as little as 10 minutes, and is very worth it in the long run.</
 <h2>Migrating from Twisted to Asyncio<a class="headerlink" href="#migrating-from-twisted-to-asyncio" title="Permalink to this heading">¶</a></h2>
 <p>In Twisted, coroutines were specified through the following syntax:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
-<span class="kn">from</span> <span class="nn">txros.util</span> <span class="kn">import</span> <span class="n">cancellableInlineCallbacks</span>
+<span class="kn">from</span> <span class="nn">axros.util</span> <span class="kn">import</span> <span class="n">cancellableInlineCallbacks</span>
 
 <span class="k">class</span> <span class="nc">Example</span><span class="p">():</span>
     <span class="nd">@defer</span><span class="o">.</span><span class="n">inlineCallbacks</span><span class="p">()</span>
@@ -289,13 +289,13 @@ these classes as generics, its recommended for easier understanding later.</p>
 </pre></div>
 </div>
 </section>
-<section id="txros">
-<h3><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a><a class="headerlink" href="#txros" title="Permalink to this heading">¶</a></h3>
-<p><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a> now has a lot of great typing support for its asynchronous pieces.
-<a class="reference internal" href="../reference/txros/api.html#txros.Subscriber" title="txros.Subscriber"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Subscriber</span></code></a> and <a class="reference internal" href="../reference/txros/api.html#txros.Publisher" title="txros.Publisher"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Publisher</span></code></a> are generics which accept
+<section id="axros">
+<h3><a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a><a class="headerlink" href="#axros" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a> now has a lot of great typing support for its asynchronous pieces.
+<a class="reference internal" href="../reference/axros/api.html#axros.Subscriber" title="axros.Subscriber"><code class="xref py py-class docutils literal notranslate"><span class="pre">axros.Subscriber</span></code></a> and <a class="reference internal" href="../reference/axros/api.html#axros.Publisher" title="axros.Publisher"><code class="xref py py-class docutils literal notranslate"><span class="pre">axros.Publisher</span></code></a> are generics which accept
 the message type that they are receiving and publishing.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
+<span class="kn">from</span> <span class="nn">axros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 <span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
