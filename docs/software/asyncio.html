@@ -74,7 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#typing-asyncio-code">Typing <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> Code</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#asynchronous-functions">Asynchronous Functions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#futures-and-tasks">Futures and Tasks</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#using-uvloop">Using <code class="docutils literal notranslate"><span class="pre">uvloop</span></code></a></li>
@@ -135,7 +135,7 @@ server can take as little as 10 minutes, and is very worth it in the long run.</
 <h2>Migrating from Twisted to Asyncio<a class="headerlink" href="#migrating-from-twisted-to-asyncio" title="Permalink to this heading">¶</a></h2>
 <p>In Twisted, coroutines were specified through the following syntax:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span>
-<span class="kn">from</span> <span class="nn">txros.util</span> <span class="kn">import</span> <span class="n">cancellableInlineCallbacks</span>
+<span class="kn">from</span> <span class="nn">axros.util</span> <span class="kn">import</span> <span class="n">cancellableInlineCallbacks</span>
 
 <span class="k">class</span> <span class="nc">Example</span><span class="p">():</span>
     <span class="nd">@defer</span><span class="o">.</span><span class="n">inlineCallbacks</span><span class="p">()</span>
@@ -181,39 +181,39 @@ start the execution of the coroutine.</p></li>
 <li><p><strong>Futures</strong>: A future is an object that is <em>immediately returned</em> with the expectation
 that it will have a populated value at a later date. You can <code class="docutils literal notranslate"><span class="pre">await</span></code> futures
 to pause execution of the current method until the future has a result. In Python,
-futures are reresented through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> object.</p></li>
+futures are reresented through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> object.</p></li>
 <li><p><strong>Tasks</strong>: Tasks are high-level futures that are easier to work with in client
 code. When writing high-level code (missions, for example), you should try to use
-tasks, not futures. Tasks are represented in Python through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a>
-class and are typically spawned through <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>.</p></li>
+tasks, not futures. Tasks are represented in Python through the <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a>
+class and are typically spawned through <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>.</p></li>
 <li><p><strong>Awaitables</strong>: This name refers to all three of the above, because all three of
 the above can have the <code class="docutils literal notranslate"><span class="pre">await</span></code> keyword called on them.</p></li>
 </ul>
 <p>For some great examples of these three different classes, check out the Python
-documentation on <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#coroutine" title="(in Python v3.10)"><span class="xref std std-ref">Coroutines</span></a>.</p>
+documentation on <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#coroutine" title="(in Python v3.11)"><span class="xref std std-ref">Coroutines</span></a>.</p>
 </section>
 <section id="help-from-asyncio">
 <h2>Help from <code class="docutils literal notranslate"><span class="pre">asyncio</span></code><a class="headerlink" href="#help-from-asyncio" title="Permalink to this heading">¶</a></h2>
 <p>The standard library <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> will provide you a lot of help when working with
 awaitables. Let’s take a look at some methods that you may want to use:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>: This coroutine pauses the parent coroutine for a specific
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>: This coroutine pauses the parent coroutine for a specific
 number of seconds. Useful!</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait_for" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait_for()</span></code></a>: Sets a time limit for a coroutine: if the coroutine
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait_for" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait_for()</span></code></a>: Sets a time limit for a coroutine: if the coroutine
 does not finish within the time limit, then an exception is raised.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait()</span></code></a>: Waits for a bunch of coroutines to finish in a certain manner.
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.wait" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.wait()</span></code></a>: Waits for a bunch of coroutines to finish in a certain manner.
 This function can either wait for the first coroutine to finish, or it can
 wait for all coroutines to finish.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.shield" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.shield()</span></code></a>: Prevents a coroutine from being cancelled.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.gather()</span></code></a>: Run coroutines concurrently (ie, together). This can speed
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.shield" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.shield()</span></code></a>: Prevents a coroutine from being cancelled.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.gather" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.gather()</span></code></a>: Run coroutines concurrently (ie, together). This can speed
 up execution time by a great amount, but be weary of issues that may be caused
 by running two coroutines at the same time (what if the other coroutine needs a resource
 that can only be providd by the other coroutine?).</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>: Creates a <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> that begins the execution
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.create_task" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.create_task()</span></code></a>: Creates a <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> that begins the execution
 of a coroutine all by itself. Similar to running a function in a thread. Note
 that this method is not a coroutine, and therefore should not be called with
 <code class="docutils literal notranslate"><span class="pre">await</span></code>.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>: Synchronous method that provides an entrypoint into an asynchronous
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-runner.html#asyncio.run" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>: Synchronous method that provides an entrypoint into an asynchronous
 program. This should always be called if you need to call an asynchronous method
 directly when starting a program. This should rarely be used if the program has
 <em>already</em> started.</p></li>
@@ -232,7 +232,7 @@ at the same time.</p>
 </div>
 <p>would block all other coroutines on the event loop. This coroutine need to yield
 control.</p>
-<p>The simplest way to do this is to use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>, even if the argument
+<p>The simplest way to do this is to use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.sleep" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.sleep()</span></code></a>, even if the argument
 is zero. This coroutine will not end up blocking the event loop:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 
@@ -258,8 +258,8 @@ the coroutine itself returns after being scheduled.</p>
 </pre></div>
 </div>
 <p>However, if you want to type the actual asynchronous function itself, you will
-need to type the coroutine itself. You can either use <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Coroutine" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Coroutine</span></code></a>
-or <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Coroutine" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Coroutine</span></code></a> for this. This type takes three generics. Usually,
+need to type the coroutine itself. You can either use <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Coroutine" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Coroutine</span></code></a>
+or <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Coroutine" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Coroutine</span></code></a> for this. This type takes three generics. Usually,
 the first two can be <code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Any</span></code> - the third generic is the return type
 of the coroutine.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
@@ -277,7 +277,7 @@ of the coroutine.</p>
 </section>
 <section id="futures-and-tasks">
 <h3>Futures and Tasks<a class="headerlink" href="#futures-and-tasks" title="Permalink to this heading">¶</a></h3>
-<p>Both <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> are generics, each taking
+<p>Both <a class="reference external" href="https://docs.python.org/3/library/asyncio-future.html#asyncio.Future" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Future</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.Task</span></code></a> are generics, each taking
 one type: the result type of the future or task. While you are not required to type
 these classes as generics, its recommended for easier understanding later.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
@@ -289,13 +289,13 @@ these classes as generics, its recommended for easier understanding later.</p>
 </pre></div>
 </div>
 </section>
-<section id="txros">
-<h3><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a><a class="headerlink" href="#txros" title="Permalink to this heading">¶</a></h3>
-<p><a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a> now has a lot of great typing support for its asynchronous pieces.
-<a class="reference internal" href="../reference/txros/api.html#txros.Subscriber" title="txros.Subscriber"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Subscriber</span></code></a> and <a class="reference internal" href="../reference/txros/api.html#txros.Publisher" title="txros.Publisher"><code class="xref py py-class docutils literal notranslate"><span class="pre">txros.Publisher</span></code></a> are generics which accept
+<section id="axros">
+<h3><a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a><a class="headerlink" href="#axros" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a> now has a lot of great typing support for its asynchronous pieces.
+<a class="reference internal" href="../reference/axros/api.html#axros.Subscriber" title="axros.Subscriber"><code class="xref py py-class docutils literal notranslate"><span class="pre">axros.Subscriber</span></code></a> and <a class="reference internal" href="../reference/axros/api.html#axros.Publisher" title="axros.Publisher"><code class="xref py py-class docutils literal notranslate"><span class="pre">axros.Publisher</span></code></a> are generics which accept
 the message type that they are receiving and publishing.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
+<span class="kn">from</span> <span class="nn">axros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 <span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span>
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -316,7 +316,7 @@ the message type that they are receiving and publishing.</p>
 When installed, this extension greatly speeds up the event loop itself, which helps
 the loop to move through coroutines faster. This can make your programs much more
 performant.</p>
-<p>Therefore, whenever you use <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.run" title="(in Python v3.10)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>, you should also be using <code class="docutils literal notranslate"><span class="pre">uvloop.install</span></code>.</p>
+<p>Therefore, whenever you use <a class="reference external" href="https://docs.python.org/3/library/asyncio-runner.html#asyncio.run" title="(in Python v3.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">asyncio.run()</span></code></a>, you should also be using <code class="docutils literal notranslate"><span class="pre">uvloop.install</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">uvloop</span>
 

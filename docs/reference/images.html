@@ -81,7 +81,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
@@ -137,7 +137,7 @@ def</span><a class="reference internal" href="#mil_ros_tools.BagCrawler.convert"
 def</span><a class="reference internal" href="#mil_ros_tools.BagCrawler.crawl">crawl</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_ros_tools.BagCrawler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_ros_tools.</span></span><span class="sig-name descname"><span class="pre">BagCrawler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bag_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/bag_crawler.html#BagCrawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_ros_tools.BagCrawler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_ros_tools.</span></span><span class="sig-name descname"><span class="pre">BagCrawler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bag_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/bag_crawler.html#BagCrawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_ros_tools.BagCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crawls a bag file and displays each image message of a camera through
 OpenCV.</p>
 <dl class="py attribute">
@@ -145,8 +145,8 @@ OpenCV.</p>
 <span class="sig-name descname"><span class="pre">bag_path</span></span><a class="headerlink" href="#mil_ros_tools.BagCrawler.bag_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path to the bag file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -156,7 +156,7 @@ OpenCV.</p>
 <span class="sig-name descname"><span class="pre">bag</span></span><a class="headerlink" href="#mil_ros_tools.BagCrawler.bag" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bag object representing a bag file at the file location.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>rosbag.Bag</p>
 </dd>
 </dl>
@@ -167,7 +167,7 @@ OpenCV.</p>
 <span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/bag_crawler.html#BagCrawler.convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_ros_tools.BagCrawler.convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an Image message to a cv2 compatible image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>msg</strong> (<a class="reference internal" href="messages.html#sensor_msgs.msg.Image" title="sensor_msgs.msg.Image"><em>sensor_msgs.msg.Image</em></a>) – The Image message.</p>
 </dd>
 </dl>
@@ -175,20 +175,20 @@ OpenCV.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_ros_tools.BagCrawler.crawl">
-<span class="sig-name descname"><span class="pre">crawl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_msgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/bag_crawler.html#BagCrawler.crawl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_ros_tools.BagCrawler.crawl" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">crawl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_msgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/bag_crawler.html#BagCrawler.crawl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_ros_tools.BagCrawler.crawl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crawls a bag file and returns a generator yielding each message in the
 file. Additionally, a tqdm progress bar is displayed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>topic</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – <p>???</p>
+<li><p><strong>topic</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – <p>???</p>
 </p></li>
-<li><p><strong>is_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – <p>???</p>
+<li><p><strong>is_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – <p>???</p>
 </p></li>
-<li><p><strong>max_msgs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – The maximum number of messages to return.</p></li>
+<li><p><strong>max_msgs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The maximum number of messages to return.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dt class="field-even">Yields</dt>
 <dd class="field-even"><p><em>genpy.Message</em> – A message in the bag file.</p>
 </dd>
 </dl>
@@ -196,7 +196,7 @@ file. Additionally, a tqdm progress bar is displayed.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mil_ros_tools.BagCrawler.image_info_topics">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_info_topics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mil_ros_tools.BagCrawler.image_info_topics" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_info_topics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mil_ros_tools.BagCrawler.image_info_topics" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This function may not function properly. If the method works,
@@ -205,8 +205,8 @@ please remove this message.</p>
 <p>Finds all topics that use the sensor_msgs/CameraInfo type and exist on a
 specific camera.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cam</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The camera to find image topics on. Should either be
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cam</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The camera to find image topics on. Should either be
 ‘left’ or ‘right’.</p>
 </dd>
 </dl>
@@ -214,7 +214,7 @@ specific camera.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mil_ros_tools.BagCrawler.image_topics">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_topics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mil_ros_tools.BagCrawler.image_topics" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_topics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mil_ros_tools.BagCrawler.image_topics" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This function may not function properly. If the method works,
@@ -223,8 +223,8 @@ please remove this message.</p>
 <p>Finds all topics that use the sensor_msgs/Image type and exist on a
 specific camera.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cam</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The camera to find image topics on. Should either be
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cam</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The camera to find image topics on. Should either be
 ‘left’ or ‘right’.</p>
 </dd>
 </dl>
@@ -256,15 +256,15 @@ Methods</span><ul>
 def</span><a class="reference internal" href="#mil_tools.CvDebug.add_image">add_image</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_tools.CvDebug">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">CvDebug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">win_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'debug'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/cv_debug.html#CvDebug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.CvDebug" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">CvDebug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="axros/api.html#axros.NodeHandle" title="axros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">win_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'debug'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/cv_debug.html#CvDebug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.CvDebug" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class that contains methods that assist with debugging with images.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mil_tools.CvDebug.width">
 <span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#mil_tools.CvDebug.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>The width of the debug image</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,8 +274,8 @@ def</span><a class="reference internal" href="#mil_tools.CvDebug.add_image">add_
 <span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#mil_tools.CvDebug.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>The height of the debug image</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -286,8 +286,8 @@ def</span><a class="reference internal" href="#mil_tools.CvDebug.add_image">add_
 <dd><p>The node handle for the image stream. If <code class="docutils literal notranslate"><span class="pre">None</span></code>,
 then images are displayed through the OpenCV GUI.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.NodeHandle">NodeHandle</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="axros/api.html#axros.NodeHandle" title="axros.NodeHandle">NodeHandle</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,8 +297,8 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">total</span></span><a class="headerlink" href="#mil_tools.CvDebug.total" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -308,8 +308,8 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">hor_num</span></span><a class="headerlink" href="#mil_tools.CvDebug.hor_num" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -319,8 +319,8 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">max_width</span></span><a class="headerlink" href="#mil_tools.CvDebug.max_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -330,8 +330,8 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">max_height</span></span><a class="headerlink" href="#mil_tools.CvDebug.max_height" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -341,8 +341,8 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">wait</span></span><a class="headerlink" href="#mil_tools.CvDebug.wait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not to wait after showing the image. Set in the constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -352,35 +352,35 @@ then images are displayed through the OpenCV GUI.</p>
 <span class="sig-name descname"><span class="pre">win_name</span></span><a class="headerlink" href="#mil_tools.CvDebug.win_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the OpenCV GUI image display window. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <p>Initialize the Debug class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nh</strong> (<a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.NodeHandle"><em>NodeHandle</em></a>) – The node handle for the image stream</p></li>
-<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The width of the image that smaller images are added to</p></li>
-<li><p><strong>h</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The height of the image that smaller images are added to</p></li>
-<li><p><strong>win_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the name of the window that is shown in opencv</p></li>
-<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether or not to wait after showing the image</p></li>
+<li><p><strong>nh</strong> (<a class="reference internal" href="axros/api.html#axros.NodeHandle" title="axros.NodeHandle"><em>NodeHandle</em></a>) – The node handle for the image stream</p></li>
+<li><p><strong>w</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The width of the image that smaller images are added to</p></li>
+<li><p><strong>h</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The height of the image that smaller images are added to</p></li>
+<li><p><strong>win_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – the name of the window that is shown in opencv</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – whether or not to wait after showing the image</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.CvDebug.add_image">
-<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'image'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_ros_tools/cv_debug.html#CvDebug.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.CvDebug.add_image" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">33</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'image'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_ros_tools/cv_debug.html#CvDebug.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.CvDebug.add_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add an image to show to either with a topic or using <code class="xref py py-meth docutils literal notranslate"><span class="pre">cv2.imshow()</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A unique key name for the image, use the same name if you
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique key name for the image, use the same name if you
 want to switch out this image for another.</p></li>
-<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The amount of wait time for the imshow image.</p></li>
-<li><p><strong>topic</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the topic to publish the image to.</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The amount of wait time for the imshow image.</p></li>
+<li><p><strong>topic</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the topic to publish the image to.</p></li>
 </ul>
 </dd>
 </dl>
@@ -406,7 +406,7 @@ Methods</span><ul>
 def</span><a class="reference internal" href="#mil_tools.Image_Publisher.publish">publish</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_tools.Image_Publisher">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">Image_Publisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bgr8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Publisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Publisher" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">Image_Publisher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bgr8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Publisher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Publisher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publishes OpenCV image mats directly to a ROS topic, avoiding the need for
 continual conversion.</p>
 <dl class="py attribute">
@@ -414,7 +414,7 @@ continual conversion.</p>
 <span class="sig-name descname"><span class="pre">bridge</span></span><a class="headerlink" href="#mil_tools.Image_Publisher.bridge" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ROS bridge to OpenCV. Created upon instantiation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>CvBridge</p>
 </dd>
 </dl>
@@ -426,8 +426,8 @@ continual conversion.</p>
 <dd><p>The encoding of the images. Supplied upon creation.
 Defaults to <code class="docutils literal notranslate"><span class="pre">bgr8</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,7 +439,7 @@ Defaults to <code class="docutils literal notranslate"><span class="pre">bgr8</s
 images to a ROS topic. The topic name and queue size are supplied
 through the constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>rospy.Publisher</p>
 </dd>
 </dl>
@@ -447,7 +447,7 @@ through the constructor.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.Image_Publisher.publish">
-<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cv_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Publisher.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Publisher.publish" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cv_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Publisher.publish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Publisher.publish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publishes an OpenCV image mat to the ROS topic. <code class="xref py py-class docutils literal notranslate"><span class="pre">CvBridgeError</span></code>
 exceptions are caught and logged.</p>
 </dd></dl>
@@ -493,8 +493,8 @@ additional image conversion.</p>
 <dd><p>The encoding used to convert between OpenCV and ROS image
 types.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -504,7 +504,7 @@ types.</p>
 <span class="sig-name descname"><span class="pre">camera_info</span></span><a class="headerlink" href="#mil_tools.Image_Subscriber.camera_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>The information about the camera related to the topic.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>CameraInfo</p>
 </dd>
 </dl>
@@ -515,7 +515,7 @@ types.</p>
 <span class="sig-name descname"><span class="pre">last_image_header</span></span><a class="headerlink" href="#mil_tools.Image_Subscriber.last_image_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header of the last image received.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -526,7 +526,7 @@ types.</p>
 <span class="sig-name descname"><span class="pre">last_image_time</span></span><a class="headerlink" href="#mil_tools.Image_Subscriber.last_image_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>The time of the last image received.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>genpy.Time</p>
 </dd>
 </dl>
@@ -538,7 +538,7 @@ types.</p>
 <dd><p>The subscriber to the image topic. The topic
 name and queue size are received through the constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>rospy.Subscriber</p>
 </dd>
 </dl>
@@ -551,7 +551,7 @@ name and queue size are received through the constructor.</p>
 The topic name is derived from the root of the supplied topic and the
 queue size is derived from the constructor.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>rospy.Susbcriber</p>
 </dd>
 </dl>
@@ -562,7 +562,7 @@ queue size is derived from the constructor.</p>
 <span class="sig-name descname"><span class="pre">bridge</span></span><a class="headerlink" href="#mil_tools.Image_Subscriber.bridge" title="Permalink to this definition">¶</a></dt>
 <dd><p>The bridge between OpenCV and ROS.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>CvBridge</p>
 </dd>
 </dl>
@@ -574,7 +574,7 @@ queue size is derived from the constructor.</p>
 <dd><p>The callback function to call upon receiving each
 image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Callable</p>
 </dd>
 </dl>
@@ -589,7 +589,7 @@ image received.</p>
 <p>Upon receiving the image, this method converts the image to be in the
 OpenCV format and calls the class’ <a class="reference internal" href="#mil_tools.Image_Subscriber.callback" title="mil_tools.Image_Subscriber.callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">callback()</span></code></a> method.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="messages.html#sensor_msgs.msg.Image" title="sensor_msgs.msg.Image"><em>Image</em></a>) – The message type representing an image in ROS.</p>
 </dd>
 </dl>
@@ -603,7 +603,7 @@ topic.</p>
 <p>This callback only executes once, as calling this method unregisters the
 subscriber.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>msg</strong> (<em>CameraInfo</em>) – The message containing information about the camera.</p>
 </dd>
 </dl>
@@ -611,15 +611,15 @@ subscriber.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.Image_Subscriber.wait_for_camera_info">
-<span class="sig-name descname"><span class="pre">wait_for_camera_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Subscriber.wait_for_camera_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Subscriber.wait_for_camera_info" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">wait_for_camera_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Subscriber.wait_for_camera_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Subscriber.wait_for_camera_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocks until camera info has been received for a number of seconds.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The amount of seconds to wait for camera info.
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The amount of seconds to wait for camera info.
 Defaults to 10 seconds.</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><strong>Exception</strong></a> – No camera info was found after the timeout had finished.</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><strong>Exception</strong></a> – No camera info was found after the timeout had finished.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -629,10 +629,10 @@ Defaults to 10 seconds.</p>
 <span class="sig-name descname"><span class="pre">wait_for_camera_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#Image_Subscriber.wait_for_camera_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Image_Subscriber.wait_for_camera_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Waits for the camera model information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The camera model.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dt class="field-even">Return type</dt>
 <dd class="field-even"><p>PinholeCameraModel</p>
 </dd>
 </dl>
@@ -664,7 +664,7 @@ Methods</span><ul>
 def</span><a class="reference internal" href="#mil_tools.StereoImageSubscriber.wait_for_camera_info">wait_for_camera_info</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_tools.StereoImageSubscriber">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">StereoImageSubscriber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_image_topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_image_topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.10)"><span class="pre">Callable</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bgr8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#StereoImageSubscriber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.StereoImageSubscriber" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">StereoImageSubscriber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_image_topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_image_topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><span class="pre">Callable</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.11)"><span class="pre">Callable</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'bgr8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#StereoImageSubscriber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.StereoImageSubscriber" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstraction to subscribe to two image topics (ex: left and right camera) and
 receive callbacks for synchronized images (already converted to numpy arrays).
 Also contains a helper function to block until the camera info messages for both
@@ -675,7 +675,7 @@ cameras are received.</p>
 <dd><p>The bridge between ROS and OpenCV. Created when the
 class is instantiated.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>CvBridge</p>
 </dd>
 </dl>
@@ -686,8 +686,8 @@ class is instantiated.</p>
 <span class="sig-name descname"><span class="pre">encoding</span></span><a class="headerlink" href="#mil_tools.StereoImageSubscriber.encoding" title="Permalink to this definition">¶</a></dt>
 <dd><p>The encoding between ROS and OpenCV.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -700,7 +700,7 @@ left and right image is received. The method should accept a parameter
 for the left image and a parameter for the right image, both of which
 are <code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code> types.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Callable</p>
 </dd>
 </dl>
@@ -713,7 +713,7 @@ are <code class="xref py py-class docutils literal notranslate"><span class="pre
 image. Upon instantiation, set to <code class="docutils literal notranslate"><span class="pre">None</span></code> and updated only after receiving
 camera info data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[CameraInfo]</p>
 </dd>
 </dl>
@@ -726,7 +726,7 @@ camera info data.</p>
 image. Upon instantiation, set to <code class="docutils literal notranslate"><span class="pre">None</span></code> and updated only after receiving
 camera info data.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[CameraInfo]</p>
 </dd>
 </dl>
@@ -739,7 +739,7 @@ camera info data.</p>
 camera. This value is set to <code class="docutils literal notranslate"><span class="pre">None</span></code> upon class instantiation and
 should be updated by <a class="reference internal" href="#mil_tools.StereoImageSubscriber.callback" title="mil_tools.StereoImageSubscriber.callback"><code class="xref py py-attr docutils literal notranslate"><span class="pre">StereoImageSubscriber.callback</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="messages.html#sensor_msgs.msg.Image" title="sensor_msgs.msg.Image">Image</a>]</p>
 </dd>
 </dl>
@@ -752,7 +752,7 @@ should be updated by <a class="reference internal" href="#mil_tools.StereoImageS
 camera. This value is set to <code class="docutils literal notranslate"><span class="pre">None</span></code> upon class instantiation and
 should be updated by <a class="reference internal" href="#mil_tools.StereoImageSubscriber.callback" title="mil_tools.StereoImageSubscriber.callback"><code class="xref py py-attr docutils literal notranslate"><span class="pre">StereoImageSubscriber.callback</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="messages.html#sensor_msgs.msg.Image" title="sensor_msgs.msg.Image">Image</a>]</p>
 </dd>
 </dl>
@@ -764,7 +764,7 @@ should be updated by <a class="reference internal" href="#mil_tools.StereoImageS
 <dd><p>The timestamp when the last
 left image was received. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> upon class instantiation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[genpy.Time]</p>
 </dd>
 </dl>
@@ -776,7 +776,7 @@ left image was received. Set to <code class="docutils literal notranslate"><span
 <dd><p>The timestamp when the last
 left image was received. Set to <code class="docutils literal notranslate"><span class="pre">None</span></code> upon class instantiation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[genpy.Time]</p>
 </dd>
 </dl>
@@ -802,25 +802,25 @@ consider synced if left and right images have exact same header time.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.StereoImageSubscriber.wait_for_camera_info">
-<span class="sig-name descname"><span class="pre">wait_for_camera_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">CameraInfo</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">CameraInfo</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#StereoImageSubscriber.wait_for_camera_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.StereoImageSubscriber.wait_for_camera_info" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">wait_for_camera_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unregister</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">CameraInfo</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">CameraInfo</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/image_helpers.html#StereoImageSubscriber.wait_for_camera_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.StereoImageSubscriber.wait_for_camera_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocks until camera info has been received.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Time in seconds to wait before throwing exception if camera info is not received</p></li>
-<li><p><strong>unregister</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether to unsubscribe from the camera info topics
+<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Time in seconds to wait before throwing exception if camera info is not received</p></li>
+<li><p><strong>unregister</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to unsubscribe from the camera info topics
 after receiving the first message so that <a class="reference internal" href="#mil_tools.StereoImageSubscriber.camera_info_left" title="mil_tools.StereoImageSubscriber.camera_info_left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">camera_info_left</span></code></a>
 and <a class="reference internal" href="#mil_tools.StereoImageSubscriber.camera_info_right" title="mil_tools.StereoImageSubscriber.camera_info_right"><code class="xref py py-attr docutils literal notranslate"><span class="pre">camera_info_right</span></code></a> will not be updated.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A tuple containing the camera info for the left and right cameras, respectively.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[CameraInfo, CameraInfo]</p>
 </dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.10)"><strong>Exception</strong></a> – if camera info for both cameras is not received within timeout</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><strong>Exception</strong></a> – if camera info for both cameras is not received within timeout</p>
 </dd>
 </dl>
 </dd></dl>
@@ -848,7 +848,7 @@ def</span><a class="reference internal" href="#mil_tools.Plotter.is_go">is_go</a
 def</span><a class="reference internal" href="#mil_tools.Plotter.publish_plots">publish_plots</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_tools.Plotter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">Plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">Plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publishes several plots of 2D data over rostopic via <code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code> messages.</p>
 <p>Basic Usage Example:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#  Import</span>
@@ -877,7 +877,7 @@ def</span><a class="reference internal" href="#mil_tools.Plotter.publish_plots">
 <dd><p>The ROS publisher node. The topic name is passed
 in upon construction and the queue size is 1.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>rospy.Publisher</p>
 </dd>
 </dl>
@@ -888,8 +888,8 @@ in upon construction and the queue size is 1.</p>
 <span class="sig-name descname"><span class="pre">thread</span></span><a class="headerlink" href="#mil_tools.Plotter.thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>The thread used to publish data and plots on.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.10)">threading.Thread</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.11)">threading.Thread</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -900,13 +900,13 @@ in upon construction and the queue size is 1.</p>
 <dd><p>Serves as a callback for the service responsible for enabling and disabling the
 plotter.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>req</strong> (<a class="reference internal" href="services.html#std_srvs.srv.SetBoolRequest" title="std_srvs.srv.SetBoolRequest"><em>SetBoolRequest</em></a>) – The message received by the service.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The response sent back by the service.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="services.html#std_srvs.srv.SetBoolResponse" title="std_srvs.srv.SetBoolResponse">SetBoolResponse</a></p>
 </dd>
 </dl>
@@ -914,22 +914,22 @@ plotter.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.Plotter.is_go">
-<span class="sig-name descname"><span class="pre">is_go</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter.is_go"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter.is_go" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_go</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter.is_go"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter.is_go" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to run the plotter. <code class="docutils literal notranslate"><span class="pre">True</span></code> if the plotter is enabled, there is
 more than one connection connected to the publisher and the thread is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Whether to run the plotter.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.Plotter.publish_plots">
-<span class="sig-name descname"><span class="pre">publish_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">titles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter.publish_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter.publish_plots" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">publish_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">titles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/plotter.html#Plotter.publish_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.Plotter.publish_plots" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts as new thread to publish the data on a plot.</p>
 </dd></dl>
 

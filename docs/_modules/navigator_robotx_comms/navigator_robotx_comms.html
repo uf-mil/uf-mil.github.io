@@ -87,25 +87,16 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">import</span> <span class="nn">rospy</span>
 <span class="kn">import</span> <span class="nn">tf.transformations</span> <span class="k">as</span> <span class="nn">trans</span>
 <span class="kn">from</span> <span class="nn">mil_tools</span> <span class="kn">import</span> <span class="n">rosmsg_to_numpy</span>
 <span class="kn">from</span> <span class="nn">nav_msgs.msg</span> <span class="kn">import</span> <span class="n">Odometry</span>
 <span class="kn">from</span> <span class="nn">navigator_msgs.srv</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">MessageDetectDockRequest</span><span class="p">,</span>
-    <span class="n">MessageDetectDockResponse</span><span class="p">,</span>
     <span class="n">MessageEntranceExitGateRequest</span><span class="p">,</span>
-    <span class="n">MessageEntranceExitGateResponse</span><span class="p">,</span>
     <span class="n">MessageFindFlingRequest</span><span class="p">,</span>
-    <span class="n">MessageFindFlingResponse</span><span class="p">,</span>
     <span class="n">MessageFollowPathRequest</span><span class="p">,</span>
-    <span class="n">MessageFollowPathResponse</span><span class="p">,</span>
     <span class="n">MessageReactReportRequest</span><span class="p">,</span>
-    <span class="n">MessageReactReportResponse</span><span class="p">,</span>
     <span class="n">MessageUAVReplenishmentRequest</span><span class="p">,</span>
-    <span class="n">MessageUAVReplenishmentResponse</span><span class="p">,</span>
-    <span class="n">MessageUAVSearchReportRequest</span><span class="p">,</span>
-    <span class="n">MessageUAVSearchReportResponse</span><span class="p">,</span>
 <span class="p">)</span>
 
 

@@ -168,8 +168,8 @@ $ xdg-open html/index.html <span class="c1"># Browse the HTML file to determine 
 </section>
 </section>
 <section id="python-unit-tests-with-unittest">
-<h2>Python unit tests with <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a><a class="headerlink" href="#python-unit-tests-with-unittest" title="Permalink to this heading">¶</a></h2>
-<p>To write unit tests in python, you should use <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.10)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a>. The structure of a unit
+<h2>Python unit tests with <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a><a class="headerlink" href="#python-unit-tests-with-unittest" title="Permalink to this heading">¶</a></h2>
+<p>To write unit tests in python, you should use <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a>. The structure of a unit
 test looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">rostest</span>
@@ -197,18 +197,18 @@ test looks like this:</p>
 </div>
 <p>In the example, there are several important pieces:</p>
 <ol class="arabic simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUp" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.tearDown" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code></a>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUp" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.tearDown" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code></a>
 are called before and after each test, respectively. These methods can be used
 to set up and clean up resources, as needed.</p></li>
 <li><p>Each test is a method that begins with <code class="docutils literal notranslate"><span class="pre">test_</span></code>. Methods that do not begin with
 <code class="docutils literal notranslate"><span class="pre">test_</span></code> will not register as tests.</p></li>
 <li><p>You can use <code class="docutils literal notranslate"><span class="pre">assertX</span></code> methods to assert that the results of operations are
-expected. Example method names include <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEqual()</span></code></a>,
-<a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertTrue" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTrue()</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIn" title="(in Python v3.10)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertIn()</span></code></a>.</p></li>
+expected. Example method names include <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEqual()</span></code></a>,
+<a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertTrue" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTrue()</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIn" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertIn()</span></code></a>.</p></li>
 </ol>
 <p>You can also write unit tests for asynchronous operations. Check out our example
-from our <a class="reference internal" href="../reference/txros/index.html#module-txros" title="txros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code></a> module:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">txros</span>
+from our <a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a> module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">axros</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">rostest</span>
 
@@ -217,10 +217,10 @@ from our <a class="reference internal" href="../reference/txros/index.html#modul
 <span class="sd">    Tests basic nodehandle functionality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">nh</span><span class="p">:</span> <span class="n">txros</span><span class="o">.</span><span class="n">NodeHandle</span>
+    <span class="n">nh</span><span class="p">:</span> <span class="n">axros</span><span class="o">.</span><span class="n">NodeHandle</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncSetUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nh</span> <span class="o">=</span> <span class="n">txros</span><span class="o">.</span><span class="n">NodeHandle</span><span class="o">.</span><span class="n">from_argv</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="n">always_default_name</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nh</span> <span class="o">=</span> <span class="n">axros</span><span class="o">.</span><span class="n">NodeHandle</span><span class="o">.</span><span class="n">from_argv</span><span class="p">(</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="n">always_default_name</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">nh</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">test_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -230,7 +230,7 @@ from our <a class="reference internal" href="../reference/txros/index.html#modul
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">nh</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">rostest</span><span class="o">.</span><span class="n">rosrun</span><span class="p">(</span><span class="s2">&quot;txros&quot;</span><span class="p">,</span> <span class="s2">&quot;test_basic_nodehandle&quot;</span><span class="p">,</span> <span class="n">BasicNodeHandleTest</span><span class="p">)</span>
+    <span class="n">rostest</span><span class="o">.</span><span class="n">rosrun</span><span class="p">(</span><span class="s2">&quot;axros&quot;</span><span class="p">,</span> <span class="s2">&quot;test_basic_nodehandle&quot;</span><span class="p">,</span> <span class="n">BasicNodeHandleTest</span><span class="p">)</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -244,12 +244,12 @@ folder, write a <code class="docutils literal notranslate"><span class="pre">.te
 file, so you have a lot of flexibility in what launches when the test is executed.
 However, the most important tag is the <code class="docutils literal notranslate"><span class="pre">&lt;test&gt;</span></code> tag. This specifies what tests
 are actually ran and analyzed for their output.</p>
-<p>Below is an example test file named <code class="docutils literal notranslate"><span class="pre">txros.test</span></code>. This test file launches one test
+<p>Below is an example test file named <code class="docutils literal notranslate"><span class="pre">axros.test</span></code>. This test file launches one test
 file named <code class="docutils literal notranslate"><span class="pre">test_basic_nodehandle.py</span></code>. At its core, this is all you need to run
 tests from a test file. You can optionally also launch nodes, set parameters, and
 use conditionals, as you can with any launch file.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
-    <span class="nt">&lt;test</span> <span class="na">test-name=</span><span class="s">&quot;test_basic_nodehandle&quot;</span> <span class="na">pkg=</span><span class="s">&quot;txros&quot;</span> <span class="na">type=</span><span class="s">&quot;test_basic_nodehandle.py&quot;</span> <span class="na">time-limit=</span><span class="s">&quot;180.0&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;test</span> <span class="na">test-name=</span><span class="s">&quot;test_basic_nodehandle&quot;</span> <span class="na">pkg=</span><span class="s">&quot;axros&quot;</span> <span class="na">type=</span><span class="s">&quot;test_basic_nodehandle.py&quot;</span> <span class="na">time-limit=</span><span class="s">&quot;180.0&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </div>
@@ -261,7 +261,7 @@ that it doesn’t run forever.</p>
 file. You can do so by adding a few lines to this file:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">if</span><span class="p">(</span><span class="s">CATKIN_ENABLE_TESTING</span><span class="p">)</span>
 <span class="w">  </span><span class="nb">find_package</span><span class="p">(</span><span class="s">rostest</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<span class="w">  </span><span class="nb">add_rostest</span><span class="p">(</span><span class="s">test/txros.test</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">add_rostest</span><span class="p">(</span><span class="s">test/axros.test</span><span class="p">)</span>
 <span class="nb">endif</span><span class="p">()</span>
 </pre></div>
 </div>
