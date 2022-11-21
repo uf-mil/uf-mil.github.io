@@ -80,10 +80,19 @@
   <h1>Source code for txros.exceptions</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.action</span> <span class="kn">import</span> <span class="n">ActionClient</span><span class="p">,</span> <span class="n">SimpleActionServer</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
+    <span class="kn">from</span> <span class="nn">.publisher</span> <span class="kn">import</span> <span class="n">Publisher</span>
+    <span class="kn">from</span> <span class="nn">.service</span> <span class="kn">import</span> <span class="n">Service</span>
+    <span class="kn">from</span> <span class="nn">.subscriber</span> <span class="kn">import</span> <span class="n">Subscriber</span>
+
+    <span class="n">Resource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">Subscriber</span><span class="p">,</span> <span class="n">Publisher</span><span class="p">,</span> <span class="n">Service</span><span class="p">,</span> <span class="n">ActionClient</span><span class="p">,</span> <span class="n">SimpleActionServer</span>
+    <span class="p">]</span>
+
 
 <div class="viewcode-block" id="TxrosException"><a class="viewcode-back" href="../../reference/txros/api.html#txros.TxrosException">[docs]</a><span class="k">class</span> <span class="nc">TxrosException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -92,9 +101,45 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        node_handle (txros.NodeHandle): The node handle which caused the exception.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception in txros related to </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Exception in txros related to </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NotSetup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.NotSetup">[docs]</a><span class="k">class</span> <span class="nc">NotSetup</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Indicates that a resource (such as a :class:`txros.NodeHandle`) was not setup,</span>
+<span class="sd">    or was previously shutdown and not setup again. To solve this issue, you will</span>
+<span class="sd">    likely need to call the class&#39; ``setup()`` method.</span>
+
+<span class="sd">    Inherits from :class:`~txros.TxrosException`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Resource has not been setup(), or was previously shutdown(): </span><span class="si">{</span><span class="n">resource</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">node_handle</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AlreadySetup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.AlreadySetup">[docs]</a><span class="k">class</span> <span class="nc">AlreadySetup</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Indicates that a resource (such as a :class:`txros.NodeHandle`) was already setup,</span>
+<span class="sd">    but ``setup()`` was called again.</span>
+
+<span class="sd">    Inherits from :class:`~txros.TxrosException`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">:</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Resource was already setup, but setup() was called again: </span><span class="si">{</span><span class="n">resource</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">node_handle</span><span class="p">,</span>
+        <span class="p">)</span></div>
 </pre></div>
 
             </main>

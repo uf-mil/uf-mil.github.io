@@ -72,6 +72,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#writing-a-configuration">Writing a configuration</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#tmux">Tmux</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tmuxinator">Tmuxinator</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#bash-and-zsh">Bash and Zsh</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#bash">Bash</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#zsh">Zsh</a></li>
@@ -85,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
@@ -93,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
 <li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
@@ -232,6 +238,34 @@ walkthrough the process here. However, here are some things you may want to setu
 <li><p>Finding a beautiful colorscheme!</p></li>
 <li><p>Setting up extensions to make your life easier (A lot of great ones can be found at <a class="reference external" href="https://vimawesome.com/">vimawesome</a>)</p></li>
 </ul>
+</section>
+</section>
+<section id="tmux">
+<h2>Tmux<a class="headerlink" href="#tmux" title="Permalink to this heading">¶</a></h2>
+<p>Tmux is a famous terminal multiplexer that allows for more flexibility over your
+terminal environment. Specifically, the program can enable you to pause terminal
+environments when your terminal session closes, switch between terminals quickly,
+and view multiple terminal panes at once. If you are going to work on the live robots,
+you should have the program installed, as it allows multiple members to share the
+same terminal environment on the robot at the same time.</p>
+<p>To learn more about Tmux in general, check out the <a class="reference external" href="https://github.com/tmux/tmux/wiki">Tmux GitHub wiki</a>.
+A quick reference sheet can be found at <a class="reference external" href="https://tmuxcheatsheet.com/">https://tmuxcheatsheet.com</a>.</p>
+<section id="tmuxinator">
+<h3>Tmuxinator<a class="headerlink" href="#tmuxinator" title="Permalink to this heading">¶</a></h3>
+<p>Managing Tmux sessions manually can be exteremly time consuming, so we use
+tmuxinator to provide a version controlled interface for our robots and
+simulators. Basic commands are:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ tx list <span class="c1"># show configs available to start</span>
+$ tx start &lt;config&gt; <span class="c1"># start (or join if already started) a tmuxinator session</span>
+$ tmux ls <span class="c1"># Show active all tmux sessions ( not only ones started by tmuxinator )</span>
+$ tx stop &lt;config&gt; <span class="c1"># stop a session that is running</span>
+</pre></div>
+</div>
+<p>The MIL configs for tmuxinator are hard linked from
+<code class="docutils literal notranslate"><span class="pre">$MIL_REPO/.tmuxinatorConfigs/&lt;name&gt;.yaml</span></code> to <code class="docutils literal notranslate"><span class="pre">~/.config/tmuxinator/&lt;name&gt;.yaml</span></code>.
+If you want to add personal tmuxinator configurations you, should add them in
+<code class="docutils literal notranslate"><span class="pre">.config/tmuxinator/</span></code>. If you want to add MIL-wide configs, place them in
+<code class="docutils literal notranslate"><span class="pre">$MIL_REPO/.tmuxinatorConfigs</span></code>.</p>
 </section>
 </section>
 <section id="bash-and-zsh">

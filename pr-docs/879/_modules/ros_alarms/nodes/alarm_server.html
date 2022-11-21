@@ -199,7 +199,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">Alarm</span><span class="p">):</span>
             <span class="n">alarm</span> <span class="o">=</span> <span class="n">res</span>
             <span class="n">alarm</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">=</span> <span class="n">meta_alarm</span>  <span class="c1"># Ensure alarm name is correct</span>
-        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="c1"># If it is a boolean, only update if it changes the raised status</span>
             <span class="n">raised_status</span> <span class="o">=</span> <span class="n">res</span>
             <span class="k">if</span> <span class="n">raised_status</span> <span class="o">==</span> <span class="n">meta</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>

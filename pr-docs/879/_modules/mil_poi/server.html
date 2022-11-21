@@ -84,9 +84,8 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
-<span class="kn">import</span> <span class="nn">tf2_geometry_msgs</span>  <span class="c1"># noqa</span>
 <span class="kn">import</span> <span class="nn">tf2_ros</span>
-<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">Pose</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">Pose</span><span class="p">,</span> <span class="n">Quaternion</span>
 <span class="kn">from</span> <span class="nn">interactive_markers.interactive_marker_server</span> <span class="kn">import</span> <span class="n">InteractiveMarkerServer</span>
 <span class="kn">from</span> <span class="nn">mil_poi.msg</span> <span class="kn">import</span> <span class="n">POI</span><span class="p">,</span> <span class="n">POIArray</span>
 <span class="kn">from</span> <span class="nn">mil_poi.srv</span> <span class="kn">import</span> <span class="p">(</span>
@@ -149,12 +148,14 @@
             <span class="n">pois</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~initial_pois&quot;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pois</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">pois</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span>
-                <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
-                <span class="n">position</span> <span class="o">=</span> <span class="n">numpy_to_point</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+                <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
+                <span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">numpy_to_point</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pose</span><span class="p">)</span>
 
         <span class="c1"># Update clients / markers of changes from param</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
@@ -217,7 +218,7 @@
             <span class="k">return</span>
 
         <span class="c1"># Update position of marker</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">feedback</span><span class="o">.</span><span class="n">marker_name</span><span class="p">,</span> <span class="n">feedback</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">feedback</span><span class="o">.</span><span class="n">marker_name</span><span class="p">,</span> <span class="n">feedback</span><span class="o">.</span><span class="n">pose</span><span class="p">)</span></div>
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">save_to_param_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriggerResponse</span><span class="p">:</span>
@@ -256,15 +257,20 @@
 <span class="sd">            indicating why.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
         <span class="c1"># If frame is empty, just initialize it to zero</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">position</span> <span class="o">=</span> <span class="n">numpy_to_point</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
         <span class="c1"># Otherwise transform position into global frame</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_position</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;tf error (bad poi)&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+
+        <span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">position</span><span class="p">,</span> <span class="n">orientation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;already exists (bad poi)&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
 
@@ -301,12 +307,12 @@
         <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;tf error (bad poi)&quot;</span><span class="p">)</span>
         <span class="c1"># Return error if marker did not exist</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Pose</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))):</span>
             <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;does not exist (bad poi)&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a POI, updating clients and Rviz when done.</span>
 
@@ -339,7 +345,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the position of a POI, updating clients and Rviz when done.</span>
 
@@ -364,7 +370,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">applyChanges</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal implementation of update_position, which is NOT thread safe</span>
 <span class="sd">        and does NOT update clients of change.</span>
@@ -372,13 +378,10 @@
         <span class="c1"># Find poi with specified name</span>
         <span class="k">for</span> <span class="n">poi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
-                <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
-                <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
-                <span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">setPose</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">setPose</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
                     <span class="k">return</span> <span class="kc">False</span>
                 <span class="c1"># Set pose in message</span>
-                <span class="n">poi</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+                <span class="n">poi</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">position</span>
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
@@ -397,7 +400,7 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal implementation of add_poi, which is NOT thread safe and does</span>
 <span class="sd">        NOT update clients of change.</span>
@@ -406,22 +409,29 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">poi</span> <span class="o">=</span> <span class="n">POI</span><span class="p">()</span>
         <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="n">poi</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="n">poi</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">poi</span><span class="p">)</span>
 
         <span class="n">point_marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">()</span>
-        <span class="n">point_marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">SPHERE</span>
-        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span>
-        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span>
-        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">ARROW</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mi">1</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mf">0.25</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mf">0.25</span>
         <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">text_marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">()</span>
         <span class="n">text_marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">TEXT_VIEW_FACING</span>
         <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.5</span>
         <span class="n">text_marker</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span>
         <span class="n">text_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -433,18 +443,22 @@
         <span class="n">int_marker</span> <span class="o">=</span> <span class="n">InteractiveMarker</span><span class="p">()</span>
         <span class="n">int_marker</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span>
         <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
         <span class="n">int_marker</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="n">int_marker</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span>
 
         <span class="c1"># insert a box</span>
         <span class="n">control</span> <span class="o">=</span> <span class="n">InteractiveMarkerControl</span><span class="p">()</span>
-        <span class="n">control</span><span class="o">.</span><span class="n">interaction_mode</span> <span class="o">=</span> <span class="n">InteractiveMarkerControl</span><span class="o">.</span><span class="n">MOVE_3D</span>
-        <span class="n">control</span><span class="o">.</span><span class="n">always_visible</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">interaction_mode</span> <span class="o">=</span> <span class="n">InteractiveMarkerControl</span><span class="o">.</span><span class="n">MOVE_ROTATE</span>
         <span class="n">control</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_marker</span><span class="p">)</span>
         <span class="n">control</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text_marker</span><span class="p">)</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">always_visible</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">int_marker</span><span class="o">.</span><span class="n">controls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">control</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">int_marker</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_feedback</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="kc">True</span></div>

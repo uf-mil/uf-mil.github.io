@@ -78,9 +78,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -118,7 +118,7 @@
 <h2>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.hexify">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">hexify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#hexify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.hexify" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">hexify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#hexify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.hexify" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display a buffer of bytes in hex format. This should take a bytes object, and
 will return a bytes string in hex format.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">CommandPacket</span><span class="o">.</span><span class="n">create_send_packet</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">can_id</span> <span class="o">=</span> <span class="n">can_id</span><span class="p">)</span>
@@ -189,48 +189,48 @@ of its buffer. Equivalent to <code class="docutils literal notranslate"><span cl
 <span class="sig-name descname"><span class="pre">buffer</span></span><a class="headerlink" href="#mil_tools.SimulatedSerial.buffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>A buffer of bytes waiting to be read from the device.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mil_tools.SimulatedSerial.in_waiting">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">in_waiting</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><a class="headerlink" href="#mil_tools.SimulatedSerial.in_waiting" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">in_waiting</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#mil_tools.SimulatedSerial.in_waiting" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of bytes waiting to be read. This does not modify the buffer in
 any way; the buffer is only inspected.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The count of bytes in the buffer.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.SimulatedSerial.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.read" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads an amount of bytes from the buffer. All bytes read are removed from the
 buffer upon reading.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The amount of bytes desired to be read.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The amount of bytes desired to be read.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The bytes originating from the top of the buffer.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.10)">bytes</a></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_tools.SimulatedSerial.reset_input_buffer">
-<span class="sig-name descname"><span class="pre">reset_input_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.reset_input_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.reset_input_buffer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset_input_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_misc_tools/serial_tools.html#SimulatedSerial.reset_input_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.SimulatedSerial.reset_input_buffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the buffer to contain no content. The buffer is set to an empty
 byte string.</p>
 </dd></dl>

@@ -147,9 +147,9 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -199,7 +199,7 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="actionlib_msgs.msg.GoalStatus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">actionlib_msgs.msg.</span></span><span class="sig-name descname"><span class="pre">GoalStatus</span></span><a class="headerlink" href="#actionlib_msgs.msg.GoalStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Message type indicating the status of a goal in an actions server. Used by
-the SimpleActionClient implemented by ROS and txros’ layer over it.</p>
+the SimpleActionClient implemented by ROS and axros’ layer over it.</p>
 <p>The specific attributes of the message are also used in order to indicate
 a specific type of status.</p>
 <dl class="py attribute">
@@ -257,8 +257,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">alarm_name</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.alarm_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the alarm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,8 +268,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">raised</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the alarm was raised.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -279,8 +279,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">node_name</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.node_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The node name associated with the alarm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -290,8 +290,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">problem_description</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.problem_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>The problem description associated with the alarm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -301,8 +301,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>The JSON parameters associated with the alarm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -312,8 +312,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">severity</span></span><a class="headerlink" href="#ros_alarms.msg.Alarm.severity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The severity of the alarm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -343,8 +343,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#geometry_msgs.msg.Quaternion.w" title="Permalink to this definition">¶</a></dt>
 <dd><p>The first element of the quaternion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -354,8 +354,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#geometry_msgs.msg.Quaternion.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>The second element of the quaternion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -365,8 +365,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#geometry_msgs.msg.Quaternion.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>The third element of the quaternion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -376,8 +376,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#geometry_msgs.msg.Quaternion.z" title="Permalink to this definition">¶</a></dt>
 <dd><p>The fourth element of the quaternion.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,8 +403,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#geometry_msgs.msg.Point.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>The x-value of the point.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,8 +414,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#geometry_msgs.msg.Point.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>The y-value of the point.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -425,8 +425,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#geometry_msgs.msg.Point.z" title="Permalink to this definition">¶</a></dt>
 <dd><p>The z-value of the point.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -451,7 +451,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#geometry_msgs.msg.PointStamped.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header associated with the point.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Header</span></code></p>
 </dd>
 </dl>
@@ -462,7 +462,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#geometry_msgs.msg.PointStamped.position" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position associated with the point</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></p>
 </dd>
 </dl>
@@ -489,8 +489,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#geometry_msgs.msg.Vector3.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>The x-value of the vector.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -500,8 +500,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#geometry_msgs.msg.Vector3.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>The y-value of the vector.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -511,8 +511,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">z</span></span><a class="headerlink" href="#geometry_msgs.msg.Vector3.z" title="Permalink to this definition">¶</a></dt>
 <dd><p>The z-value of the vector.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -537,7 +537,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#geometry_msgs.msg.Pose.position" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position of the pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Pose" title="geometry_msgs.msg.Pose"><em>Pose</em></a></p>
 </dd>
 </dl>
@@ -548,7 +548,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">orientation</span></span><a class="headerlink" href="#geometry_msgs.msg.Pose.orientation" title="Permalink to this definition">¶</a></dt>
 <dd><p>The orientation of the pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Quaternion" title="geometry_msgs.msg.Quaternion"><em>Quaternion</em></a></p>
 </dd>
 </dl>
@@ -575,8 +575,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#geometry_msgs.msg.Pose2D.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>The x-value of the pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -586,8 +586,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#geometry_msgs.msg.Pose2D.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>The y-value of the pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -597,8 +597,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">theta</span></span><a class="headerlink" href="#geometry_msgs.msg.Pose2D.theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>The theta value of the pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -623,7 +623,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">pose</span></span><a class="headerlink" href="#geometry_msgs.msg.PoseWithCovariance.pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>The object’s pose.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Pose" title="geometry_msgs.msg.Pose"><em>Pose</em></a></p>
 </dd>
 </dl>
@@ -634,8 +634,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">covariance</span></span><a class="headerlink" href="#geometry_msgs.msg.PoseWithCovariance.covariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>The object’s covariance. Consists of a list of 36 values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -660,7 +660,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">translation</span></span><a class="headerlink" href="#geometry_msgs.msg.Transform.translation" title="Permalink to this definition">¶</a></dt>
 <dd><p>The translation of the transform.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -671,7 +671,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">rotation</span></span><a class="headerlink" href="#geometry_msgs.msg.Transform.rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>The rotation of the transform.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Quaternion" title="geometry_msgs.msg.Quaternion"><em>Quaternion</em></a></p>
 </dd>
 </dl>
@@ -698,7 +698,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#geometry_msgs.msg.TransformStamped.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header of the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header"><em>Header</em></a></p>
 </dd>
 </dl>
@@ -709,8 +709,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">child_frame_id</span></span><a class="headerlink" href="#geometry_msgs.msg.TransformStamped.child_frame_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ID of the child frame.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -720,7 +720,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">transform</span></span><a class="headerlink" href="#geometry_msgs.msg.TransformStamped.transform" title="Permalink to this definition">¶</a></dt>
 <dd><p>The transform in the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Transform" title="geometry_msgs.msg.Transform"><em>Transform</em></a></p>
 </dd>
 </dl>
@@ -746,7 +746,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">linear</span></span><a class="headerlink" href="#geometry_msgs.msg.Accel.linear" title="Permalink to this definition">¶</a></dt>
 <dd><p>The linear acceleration of the twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -757,7 +757,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">angular</span></span><a class="headerlink" href="#geometry_msgs.msg.Accel.angular" title="Permalink to this definition">¶</a></dt>
 <dd><p>The angular acceleration of the twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -783,7 +783,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">linear</span></span><a class="headerlink" href="#geometry_msgs.msg.Twist.linear" title="Permalink to this definition">¶</a></dt>
 <dd><p>The linear direction of the twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -794,7 +794,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">angular</span></span><a class="headerlink" href="#geometry_msgs.msg.Twist.angular" title="Permalink to this definition">¶</a></dt>
 <dd><p>The angular direction of the twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -820,7 +820,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">twist</span></span><a class="headerlink" href="#geometry_msgs.msg.TwistWithCovariance.twist" title="Permalink to this definition">¶</a></dt>
 <dd><p>The object’s twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Twist" title="geometry_msgs.msg.Twist"><em>Twist</em></a></p>
 </dd>
 </dl>
@@ -831,8 +831,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">covariance</span></span><a class="headerlink" href="#geometry_msgs.msg.TwistWithCovariance.covariance" title="Permalink to this definition">¶</a></dt>
 <dd><p>The object’s covariance. Consists of a list of 36 values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -856,7 +856,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#geometry_msgs.msg.Polygon.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>The points constructing the polygon.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point"><em>Point</em></a>]</p>
 </dd>
 </dl>
@@ -882,7 +882,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">force</span></span><a class="headerlink" href="#geometry_msgs.msg.Wrench.force" title="Permalink to this definition">¶</a></dt>
 <dd><p>The force associated with the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -893,7 +893,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">torque</span></span><a class="headerlink" href="#geometry_msgs.msg.Wrench.torque" title="Permalink to this definition">¶</a></dt>
 <dd><p>The torque associated with the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3"><em>Vector3</em></a></p>
 </dd>
 </dl>
@@ -919,7 +919,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#geometry_msgs.msg.WrenchStamped.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header associated with the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header"><em>Header</em></a></p>
 </dd>
 </dl>
@@ -930,7 +930,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">wrench</span></span><a class="headerlink" href="#geometry_msgs.msg.WrenchStamped.wrench" title="Permalink to this definition">¶</a></dt>
 <dd><p>The wrench associated with the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Wrench" title="geometry_msgs.msg.Wrench"><em>Wrench</em></a></p>
 </dd>
 </dl>
@@ -960,7 +960,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">pose</span></span><a class="headerlink" href="#mil_msgs.msg.PoseTwist.pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>The pose of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Pose" title="geometry_msgs.msg.Pose"><em>Pose</em></a></p>
 </dd>
 </dl>
@@ -971,7 +971,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">twist</span></span><a class="headerlink" href="#mil_msgs.msg.PoseTwist.twist" title="Permalink to this definition">¶</a></dt>
 <dd><p>The twist of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Twist" title="geometry_msgs.msg.Twist"><em>Twist</em></a></p>
 </dd>
 </dl>
@@ -982,7 +982,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">acceleration</span></span><a class="headerlink" href="#mil_msgs.msg.PoseTwist.acceleration" title="Permalink to this definition">¶</a></dt>
 <dd><p>The acceleration of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Accel" title="geometry_msgs.msg.Accel"><em>Accel</em></a></p>
 </dd>
 </dl>
@@ -1010,8 +1010,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mil_msgs.msg.ObjectInImage.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1021,7 +1021,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#mil_msgs.msg.ObjectInImage.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>The center of the object in the image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#mil_msgs.msg.Point2D" title="mil_msgs.msg.Point2D"><em>Point2D</em></a></p>
 </dd>
 </dl>
@@ -1032,8 +1032,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">confidence</span></span><a class="headerlink" href="#mil_msgs.msg.ObjectInImage.confidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>The confidence of the object’s position, ranging between 0 and 1.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1043,8 +1043,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#mil_msgs.msg.ObjectInImage.attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1069,8 +1069,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#mil_msgs.msg.Point2D.x" title="Permalink to this definition">¶</a></dt>
 <dd><p>The x-position.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1080,8 +1080,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#mil_msgs.msg.Point2D.y" title="Permalink to this definition">¶</a></dt>
 <dd><p>The y-position.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1111,7 +1111,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#nav_msgs.msg.Odometry.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header"><em>Header</em></a></p>
 </dd>
 </dl>
@@ -1122,7 +1122,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">child_frame_id</span></span><a class="headerlink" href="#nav_msgs.msg.Odometry.child_frame_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The child frame ID, used to determine the frame of the robot’s twist.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Twist" title="geometry_msgs.msg.Twist"><em>Twist</em></a></p>
 </dd>
 </dl>
@@ -1133,7 +1133,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">pose</span></span><a class="headerlink" href="#nav_msgs.msg.Odometry.pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>The pose (along with covariance) determined within the frame of <a class="reference internal" href="#std_msgs.msg.Header.frame_id" title="std_msgs.msg.Header.frame_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">frame_id</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.PoseWithCovariance" title="geometry_msgs.msg.PoseWithCovariance"><em>PoseWithCovariance</em></a></p>
 </dd>
 </dl>
@@ -1144,7 +1144,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">twist</span></span><a class="headerlink" href="#nav_msgs.msg.Odometry.twist" title="Permalink to this definition">¶</a></dt>
 <dd><p>The twist (along with covariance) determined within the frame of <a class="reference internal" href="#nav_msgs.msg.Odometry.child_frame_id" title="nav_msgs.msg.Odometry.child_frame_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">child_frame_id</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.TwistWithCovariance" title="geometry_msgs.msg.TwistWithCovariance"><em>TwistWithCovariance</em></a></p>
 </dd>
 </dl>
@@ -1169,7 +1169,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">linear</span></span><a class="headerlink" href="#navigator_msgs.msg.Acceleration.linear" title="Permalink to this definition">¶</a></dt>
 <dd><p>The linear component of the acceleration.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3">Vector3</a></p>
 </dd>
 </dl>
@@ -1180,7 +1180,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">angular</span></span><a class="headerlink" href="#navigator_msgs.msg.Acceleration.angular" title="Permalink to this definition">¶</a></dt>
 <dd><p>The angular component of the acceleration.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3">Vector3</a></p>
 </dd>
 </dl>
@@ -1211,8 +1211,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.overall">
 <span class="sig-name descname"><span class="pre">overall</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.overall" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1221,8 +1221,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.pf">
 <span class="sig-name descname"><span class="pre">pf</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.pf" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1231,8 +1231,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.pa">
 <span class="sig-name descname"><span class="pre">pa</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.pa" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1241,8 +1241,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.sf">
 <span class="sig-name descname"><span class="pre">sf</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.sf" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1251,8 +1251,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.sa">
 <span class="sig-name descname"><span class="pre">sa</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.sa" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1261,8 +1261,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.remote">
 <span class="sig-name descname"><span class="pre">remote</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.remote" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1271,8 +1271,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.computer">
 <span class="sig-name descname"><span class="pre">computer</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.computer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1281,8 +1281,8 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="navigator_msgs.msg.KillStatus.remote_conn">
 <span class="sig-name descname"><span class="pre">remote_conn</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.remote_conn" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1336,7 +1336,7 @@ system.</p>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -1347,8 +1347,8 @@ system.</p>
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1359,8 +1359,8 @@ system.</p>
 <dd><p>The constant string field representing the platform to detect and deliver.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">shooter</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1371,8 +1371,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing the dock in the Identify and Dock mission.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">dock</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1383,8 +1383,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing the Scan the Code totem. Actual
 string value is <code class="docutils literal notranslate"><span class="pre">scan_the_code</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1395,8 +1395,8 @@ string value is <code class="docutils literal notranslate"><span class="pre">sca
 <dd><p>The constant string field representing the totem in the Find Totems mission.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">totem</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1407,8 +1407,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing the buoy of the start gate.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">start_gate</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1419,8 +1419,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing a buoy.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">buoy</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1431,8 +1431,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing an unknown object.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">unknown</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1443,8 +1443,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing all objects found.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">all</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1455,8 +1455,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing a fake shooter.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Shooter</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1467,8 +1467,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing a fake dock in the Identify and Dock mission.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Dock</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1479,8 +1479,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing a fake Scan the Code totem in the
 Scan the Code mission. Actual string value is <code class="docutils literal notranslate"><span class="pre">Dock</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1491,8 +1491,8 @@ Scan the Code mission. Actual string value is <code class="docutils literal notr
 <dd><p>The constant string field representing the first gate.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_1</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1503,8 +1503,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing the first gate.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_2</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1515,8 +1515,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing the first gate.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_3</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1527,8 +1527,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing a field of buoys.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">BuoyField</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1539,8 +1539,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing ???.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">FindBreak</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1551,8 +1551,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing ???.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">CoralSurvey</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1563,8 +1563,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing an acoustic pinger.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">AcousticPinger</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1575,8 +1575,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The constant string field representing empty space.
 Actual string value is <code class="docutils literal notranslate"><span class="pre">EmptySpace</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1586,7 +1586,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimated position of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point">Point</a></p>
 </dd>
 </dl>
@@ -1597,8 +1597,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ID of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1608,8 +1608,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">confidence</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.confidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>The confidence of the object detection, from 0 to 255.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1619,7 +1619,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>The size of the object in all dimensions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3">Vector3</a></p>
 </dd>
 </dl>
@@ -1630,7 +1630,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>The points (in the ENU frame) that belong to the buoy.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[Point32]</p>
 </dd>
 </dl>
@@ -1641,8 +1641,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">intensity</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.intensity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The intensity of each point in the ENU frame.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1652,8 +1652,8 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">pclInliers</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.pclInliers" title="Permalink to this definition">¶</a></dt>
 <dd><p>The inliners for the PCL plane fitting algorithm.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1663,7 +1663,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">normal</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.normal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unit vector for normal to one of the vertical planes of the object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3">Vector3</a></p>
 </dd>
 </dl>
@@ -1674,7 +1674,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <span class="sig-name descname"><span class="pre">color</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObject.color" title="Permalink to this definition">¶</a></dt>
 <dd><p>Average color of the buoy.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.ColorRGBA" title="std_msgs.msg.ColorRGBA">ColorRGBA</a></p>
 </dd>
 </dl>
@@ -1699,7 +1699,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">objects</span></span><a class="headerlink" href="#navigator_msgs.msg.PerceptionObjectArray.objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>The objects in the array.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#navigator_msgs.msg.PerceptionObject" title="navigator_msgs.msg.PerceptionObject">PerceptionObject</a>]</p>
 </dd>
 </dl>
@@ -1730,8 +1730,8 @@ address with a status.</p>
 <span class="sig-name descname"><span class="pre">hostname</span></span><a class="headerlink" href="#navigator_msgs.msg.Host.hostname" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the host.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1741,8 +1741,8 @@ address with a status.</p>
 <span class="sig-name descname"><span class="pre">ip</span></span><a class="headerlink" href="#navigator_msgs.msg.Host.ip" title="Permalink to this definition">¶</a></dt>
 <dd><p>The IP address of the host.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1752,8 +1752,8 @@ address with a status.</p>
 <span class="sig-name descname"><span class="pre">status</span></span><a class="headerlink" href="#navigator_msgs.msg.Host.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>The status of the host.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1782,8 +1782,8 @@ equal to:</p>
 <div><p>mil-nav-wamv mil-nav-ubnt-wamv mil-nav-ubnt-shore mil-com-velodyne-vlp16 mil-com-sick-lms111</p>
 </div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1793,7 +1793,7 @@ equal to:</p>
 <span class="sig-name descname"><span class="pre">hosts</span></span><a class="headerlink" href="#navigator_msgs.msg.Hosts.hosts" title="Permalink to this definition">¶</a></dt>
 <dd><p>The hosts belonging to the group.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#navigator_msgs.msg.Host" title="navigator_msgs.msg.Host"><em>Host</em></a>]</p>
 </dd>
 </dl>
@@ -1824,8 +1824,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">channels</span></span><a class="headerlink" href="#mil_passive_sonar.msg.HydrophoneSamples.channels" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of channels supported by the hydrophones.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1835,8 +1835,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#mil_passive_sonar.msg.HydrophoneSamples.samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of samples on each channel.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1847,8 +1847,8 @@ Attributes</span><ul>
 <dd><p>The rate at which samples are recorded, per channel. Equal to the number
 of samples per second.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1859,8 +1859,8 @@ of samples per second.</p>
 <dd><p>The data recorded from the hydrophones. Each “word” in the data is a piece
 of data from one hydrophone, such as <code class="docutils literal notranslate"><span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">H2</span> <span class="pre">H3</span> <span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">...</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1885,7 +1885,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#mil_passive_sonar.msg.HydrophoneSamplesStamped.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -1896,7 +1896,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">hydrophone_samples</span></span><a class="headerlink" href="#mil_passive_sonar.msg.HydrophoneSamplesStamped.hydrophone_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>The hydrophone samples received.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#mil_passive_sonar.msg.HydrophoneSamples" title="mil_passive_sonar.msg.HydrophoneSamples">HydrophoneSamples</a></p>
 </dd>
 </dl>
@@ -1933,7 +1933,7 @@ although it may be removed in the future.</p>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Ping.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -1944,8 +1944,8 @@ although it may be removed in the future.</p>
 <span class="sig-name descname"><span class="pre">channels</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Ping.channels" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of channels supported by the hydrophones.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1955,8 +1955,8 @@ although it may be removed in the future.</p>
 <span class="sig-name descname"><span class="pre">samples</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Ping.samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of samples on each channel.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1967,8 +1967,8 @@ although it may be removed in the future.</p>
 <dd><p>The rate at which samples are recorded, per channel. Equal to the number
 of samples per second.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1979,8 +1979,8 @@ of samples per second.</p>
 <dd><p>The data recorded from the hydrophones. Each “word” in the data is a piece
 of data from one hydrophone, such as <code class="docutils literal notranslate"><span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">H2</span> <span class="pre">H3</span> <span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">...</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2008,7 +2008,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#mil_passive_sonar.msg.ProcessedPing.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2019,7 +2019,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#mil_passive_sonar.msg.ProcessedPing.position" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position of the processed ping.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point">Point</a></p>
 </dd>
 </dl>
@@ -2030,8 +2030,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">freq</span></span><a class="headerlink" href="#mil_passive_sonar.msg.ProcessedPing.freq" title="Permalink to this definition">¶</a></dt>
 <dd><p>The frequency of the processed ping.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2041,8 +2041,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">amplitude</span></span><a class="headerlink" href="#mil_passive_sonar.msg.ProcessedPing.amplitude" title="Permalink to this definition">¶</a></dt>
 <dd><p>The amplitude of the processed ping.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2052,8 +2052,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">valid</span></span><a class="headerlink" href="#mil_passive_sonar.msg.ProcessedPing.valid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the processed ping is valid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2079,7 +2079,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Triggered.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2090,7 +2090,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">hydrophone_samples</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Triggered.hydrophone_samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#mil_passive_sonar.msg.HydrophoneSamples" title="mil_passive_sonar.msg.HydrophoneSamples">HydrophoneSamples</a></p>
 </dd>
 </dl>
@@ -2101,8 +2101,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">trigger_time</span></span><a class="headerlink" href="#mil_passive_sonar.msg.Triggered.trigger_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>The time at which the ping was detected.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2132,8 +2132,8 @@ variety of messages.</p>
 <span class="sig-name descname"><span class="pre">seq</span></span><a class="headerlink" href="#std_msgs.msg.Header.seq" title="Permalink to this definition">¶</a></dt>
 <dd><p>The sequence ID of the header. A consecutively increasing ID.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2143,7 +2143,7 @@ variety of messages.</p>
 <span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#std_msgs.msg.Header.time" title="Permalink to this definition">¶</a></dt>
 <dd><p>The time of the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>genpy.rostime.Time</p>
 </dd>
 </dl>
@@ -2154,8 +2154,8 @@ variety of messages.</p>
 <span class="sig-name descname"><span class="pre">frame_id</span></span><a class="headerlink" href="#std_msgs.msg.Header.frame_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The frame that this object is associated with.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2182,8 +2182,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#std_msgs.msg.ColorRGBA.r" title="Permalink to this definition">¶</a></dt>
 <dd><p>The red value of the color.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2193,8 +2193,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">g</span></span><a class="headerlink" href="#std_msgs.msg.ColorRGBA.g" title="Permalink to this definition">¶</a></dt>
 <dd><p>The green value of the color.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2204,8 +2204,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#std_msgs.msg.ColorRGBA.b" title="Permalink to this definition">¶</a></dt>
 <dd><p>The blue value of the color.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2215,8 +2215,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#std_msgs.msg.ColorRGBA.a" title="Permalink to this definition">¶</a></dt>
 <dd><p>The alpha value of the color.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2249,7 +2249,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header associated with the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2260,8 +2260,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>The height of the image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2271,8 +2271,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.width" title="Permalink to this definition">¶</a></dt>
 <dd><p>The width of the image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2282,8 +2282,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">encoding</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.encoding" title="Permalink to this definition">¶</a></dt>
 <dd><p>The encoding of the image.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2293,8 +2293,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">is_bigendian</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.is_bigendian" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the image uses the big-endian format to store values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2304,8 +2304,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">step</span></span><a class="headerlink" href="#sensor_msgs.msg.Image.step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Full length of a row, in bytes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2316,8 +2316,8 @@ Attributes</span><ul>
 <dd><p>Actual image data. The size of the list is equal to <a class="reference internal" href="#sensor_msgs.msg.Image.step" title="sensor_msgs.msg.Image.step"><code class="xref py py-attr docutils literal notranslate"><span class="pre">step</span></code></a> multiplied
 by the number of rows.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2353,8 +2353,8 @@ Attributes</span><ul>
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">1</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2365,8 +2365,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">2</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2377,8 +2377,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">3</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2389,8 +2389,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">4</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2401,8 +2401,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">5</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2413,8 +2413,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">6</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2425,8 +2425,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">7</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2437,8 +2437,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>Constant of the data type that can be used to represent the data type of a
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">8</span></code> in the message definition.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2448,8 +2448,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#sensor_msgs.msg.PointField.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the field.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2459,8 +2459,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#sensor_msgs.msg.PointField.offset" title="Permalink to this definition">¶</a></dt>
 <dd><p>The offset from the start of the point struct.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2470,8 +2470,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <span class="sig-name descname"><span class="pre">datatype</span></span><a class="headerlink" href="#sensor_msgs.msg.PointField.datatype" title="Permalink to this definition">¶</a></dt>
 <dd><p>The datatype, represented by using one of the attributes above.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2481,8 +2481,8 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#sensor_msgs.msg.PointField.count" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of elements in the field.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2514,7 +2514,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2525,8 +2525,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">height</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.height" title="Permalink to this definition">¶</a></dt>
 <dd><p>The height of the point cloud. If the cloud is unordered, then <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2537,8 +2537,8 @@ Attributes</span><ul>
 <dd><p>The width of the point cloud. If the cloud is unordered, then this value
 is set to the length of the point cloud.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2548,7 +2548,7 @@ is set to the length of the point cloud.</p>
 <span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>The fields in the point cloud.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#sensor_msgs.msg.PointField" title="sensor_msgs.msg.PointField">PointField</a>]</p>
 </dd>
 </dl>
@@ -2559,8 +2559,8 @@ is set to the length of the point cloud.</p>
 <span class="sig-name descname"><span class="pre">is_bigendian</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.is_bigendian" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether the field is big endian.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2570,8 +2570,8 @@ is set to the length of the point cloud.</p>
 <span class="sig-name descname"><span class="pre">point_step</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.point_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>The length of a point in bytes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2581,8 +2581,8 @@ is set to the length of the point cloud.</p>
 <span class="sig-name descname"><span class="pre">row_step</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.row_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>The length of a row in bytes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2593,8 +2593,8 @@ is set to the length of the point cloud.</p>
 <dd><p>The actual data inside the point cloud. The size of the array is <a class="reference internal" href="#sensor_msgs.msg.PointCloud2.row_step" title="sensor_msgs.msg.PointCloud2.row_step"><code class="xref py py-attr docutils literal notranslate"><span class="pre">row_step</span></code></a>
 multiplied by <a class="reference internal" href="#sensor_msgs.msg.PointCloud2.height" title="sensor_msgs.msg.PointCloud2.height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">height</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a>]</p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2604,8 +2604,8 @@ multiplied by <a class="reference internal" href="#sensor_msgs.msg.PointCloud2.h
 <span class="sig-name descname"><span class="pre">is_dense</span></span><a class="headerlink" href="#sensor_msgs.msg.PointCloud2.is_dense" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if there are no invalid points.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)">bool</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2638,7 +2638,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header of the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2649,8 +2649,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">motor_current</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.motor_current" title="Permalink to this definition">¶</a></dt>
 <dd><p>Current flowing through the motors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2661,8 +2661,8 @@ Attributes</span><ul>
 <dd><p>Relative motor power, as a proportion of the full motor power.
 Lives in a range from -1 to 1.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2672,8 +2672,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">commanded_velocity</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.commanded_velocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The velocity commanded of the motor. Output is in <code class="docutils literal notranslate"><span class="pre">rad/s</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2683,8 +2683,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">measured_velocity</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.measured_velocity" title="Permalink to this definition">¶</a></dt>
 <dd><p>The true velocity of the motor. Output is in <code class="docutils literal notranslate"><span class="pre">rad/s</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2694,8 +2694,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">measured_position</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.measured_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position of the motor, in <code class="docutils literal notranslate"><span class="pre">rad</span></code>. Wraps around -6/6M.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2705,8 +2705,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">supply_voltage</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.supply_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>The voltage supplied to the motor, in volts.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2716,8 +2716,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">supply_current</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.supply_current" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current supplied to the motor, in amps.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2727,8 +2727,8 @@ Lives in a range from -1 to 1.</p>
 <span class="sig-name descname"><span class="pre">motor_temperature</span></span><a class="headerlink" href="#roboteq_msgs.msg.Feedback.motor_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>The temperature of the motor, in Celsius.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2739,8 +2739,8 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The temperature of the FETs, as reported by the controller. Units are in
 Celsius.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2784,7 +2784,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The header of the message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -2796,8 +2796,8 @@ Attributes</span><ul>
 <dd><p>A representation of any fault that occurred in the motor. Likely one of the
 enumerated fault types of this class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2808,10 +2808,10 @@ enumerated fault types of this class.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of overheating.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>1</p>
 </dd>
 </dl>
@@ -2823,10 +2823,10 @@ as a result of overheating.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of too much voltage.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>2</p>
 </dd>
 </dl>
@@ -2838,10 +2838,10 @@ as a result of too much voltage.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of too little voltage.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>4</p>
 </dd>
 </dl>
@@ -2853,10 +2853,10 @@ as a result of too little voltage.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of a short circuit.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>8</p>
 </dd>
 </dl>
@@ -2868,10 +2868,10 @@ as a result of a short circuit.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of an emergency stop.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>16</p>
 </dd>
 </dl>
@@ -2883,10 +2883,10 @@ as a result of an emergency stop.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of an excitation error.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>32</p>
 </dd>
 </dl>
@@ -2898,10 +2898,10 @@ as a result of an excitation error.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of a failure in the MOSFET system.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>64</p>
 </dd>
 </dl>
@@ -2913,10 +2913,10 @@ as a result of a failure in the MOSFET system.</p>
 <dd><p>Constant attribute used to represent that the motor experienced a fault
 as a result of a failure in the startup configuration.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>128</p>
 </dd>
 </dl>
@@ -2928,8 +2928,8 @@ as a result of a failure in the startup configuration.</p>
 <dd><p>The status of the motor. Likely set to a combination of the class’ enumerated
 types.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2939,10 +2939,10 @@ types.</p>
 <span class="sig-name descname"><span class="pre">STATUS_SERIAL_MODE</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_SERIAL_MODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that the motor is in serial mode.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>1</p>
 </dd>
 </dl>
@@ -2953,10 +2953,10 @@ types.</p>
 <span class="sig-name descname"><span class="pre">STATUS_PULSE_MODE</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_PULSE_MODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that the motor is in pulse mode.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>2</p>
 </dd>
 </dl>
@@ -2967,10 +2967,10 @@ types.</p>
 <span class="sig-name descname"><span class="pre">STATUS_ANALOG_MODE</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_ANALOG_MODE" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that the motor is in analog mode.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>4</p>
 </dd>
 </dl>
@@ -2982,10 +2982,10 @@ types.</p>
 <dd><p>Constant attribute used to represent that the power stage of the motor is
 off.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>8</p>
 </dd>
 </dl>
@@ -2996,10 +2996,10 @@ off.</p>
 <span class="sig-name descname"><span class="pre">STATUS_STALL_DETECTED</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_STALL_DETECTED" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that a stall was detected.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>16</p>
 </dd>
 </dl>
@@ -3010,10 +3010,10 @@ off.</p>
 <span class="sig-name descname"><span class="pre">STATUS_AT_LIMIT</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_AT_LIMIT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that the motor is at its limit.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>32</p>
 </dd>
 </dl>
@@ -3024,10 +3024,10 @@ off.</p>
 <span class="sig-name descname"><span class="pre">STATUS_MICROBASIC_SCRIPT_RUNNING</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.STATUS_MICROBASIC_SCRIPT_RUNNING" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constant attribute used to represent that the microbasic script is running.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
-<dt class="field-even">Value<span class="colon">:</span></dt>
+<dt class="field-even">Value</dt>
 <dd class="field-even"><p>128</p>
 </dd>
 </dl>
@@ -3038,8 +3038,8 @@ off.</p>
 <span class="sig-name descname"><span class="pre">ic_temperature</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.ic_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>The temperature of the main logic chip, in Celsius.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3049,8 +3049,8 @@ off.</p>
 <span class="sig-name descname"><span class="pre">internal_voltage</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.internal_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>The internal voltage, in volts.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3060,8 +3060,8 @@ off.</p>
 <span class="sig-name descname"><span class="pre">adc_voltage</span></span><a class="headerlink" href="#roboteq_msgs.msg.Status.adc_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>The voltage of the analog-to-digital converter, in volts.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3101,8 +3101,8 @@ Attributes</span><ul>
 <dd><p>The shape of the dock. Likely either <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.CROSS</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.CIRCLE</span></code>,
 or <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.TRIANGLE</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3112,8 +3112,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">CROSS</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.CROSS" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock holds the cross shape.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3123,8 +3123,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">CIRCLE</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.CIRCLE" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock holds the circle shape.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3134,8 +3134,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">TRIANGLE</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.TRIANGLE" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock holds the triangle shape.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3146,8 +3146,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The color of the dock. Likely either <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.RED</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.BLUE</span></code>,
 or <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.GREEN</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3157,8 +3157,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">RED</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.RED" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock shape is red.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3168,8 +3168,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">BLUE</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.BLUE" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock shape is blue.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3179,8 +3179,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">GREEN</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.GREEN" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dock shape is green.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3190,8 +3190,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">CenterX</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.CenterX" title="Permalink to this definition">¶</a></dt>
 <dd><p>The x-dimension of the center of the dock shape.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3201,8 +3201,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">CenterY</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.CenterY" title="Permalink to this definition">¶</a></dt>
 <dd><p>The y-dimension of the center of the dock shape.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)">int</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3212,7 +3212,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">header</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.header" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -3223,7 +3223,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>???</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point"><em>Point</em></a>]</p>
 </dd>
 </dl>
@@ -3234,8 +3234,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">color_confidence</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.color_confidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>The relative confidence that the color prediction is correct.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3245,8 +3245,8 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <span class="sig-name descname"><span class="pre">shape_confidence</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShape.shape_confidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>The relative confidence that the shape prediction is correct.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3271,7 +3271,7 @@ found by the vision system.</p>
 <span class="sig-name descname"><span class="pre">list</span></span><a class="headerlink" href="#navigator_msgs.msg.DockShapes.list" title="Permalink to this definition">¶</a></dt>
 <dd><p>The list of shapes found.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="#navigator_msgs.msg.DockShape" title="navigator_msgs.msg.DockShape">DockShape</a>]</p>
 </dd>
 </dl>
@@ -3298,8 +3298,8 @@ Code totem.</p>
 <dd><p>The pattern shown. <code class="docutils literal notranslate"><span class="pre">R</span></code> stands for red, <code class="docutils literal notranslate"><span class="pre">B</span></code> stands for blue, and <code class="docutils literal notranslate"><span class="pre">G</span></code>
 stands for green.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>

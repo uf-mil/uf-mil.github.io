@@ -27,7 +27,7 @@
         <link rel="index" title="Index" href="../../genindex.html" />
         <link rel="search" title="Search" href="../../search.html" />
         <link rel="next" title="API Reference" href="api.html" />
-        <link rel="prev" title="Common Errors" href="errors.html" />
+        <link rel="prev" title="Errors and Known Issues" href="errors.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -75,13 +75,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="resources.html">Managing Resources</a></li>
-<li class="toctree-l3"><a class="reference internal" href="errors.html">Common Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errors.html">Errors and Known Issues</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api.html">API Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -152,6 +152,52 @@ able to successfully receive.</p>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">uvloop</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The node handle can be used for general purposes, such as parameters and sleeping:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">txros</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="go">&#39;/test/special_node&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">delete_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">txros</span><span class="o">.</span><span class="n">ROSMasterException</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This parameter does not exist!&quot;</span><span class="p">)</span>
+<span class="go">This parameter does not exist!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Sleeps for 2 seconds</span>
+</pre></div>
+</div>
+<p>The node handle can also be used for publishing and subscribing to topics. Note
+that all publishers and subscribers must be setup.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">txros</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">txros</span><span class="o">.</span><span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">advertise</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">pub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span> <span class="nf">publish</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">Int32</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+<span class="gp">... </span>            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># When task gets cancelled, stop publishing</span>
+<span class="gp">... </span>        <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">publish</span><span class="p">())</span> <span class="c1"># Start publishing!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">())</span>
+<span class="go">4</span>
+<span class="go">5</span>
+<span class="go">6</span>
 </pre></div>
 </div>
 </section>

@@ -81,7 +81,7 @@
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 
-<div class="viewcode-block" id="MissionException"><a class="viewcode-back" href="../../reference/mission.html#mil_missions_core.MissionException">[docs]</a><span class="k">class</span> <span class="nc">MissionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="MissionException"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.MissionException">[docs]</a><span class="k">class</span> <span class="nc">MissionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An exception representing a general error which occurred during the execution</span>
 <span class="sd">    of a mission.</span>
@@ -97,7 +97,7 @@
         <span class="nb">super</span><span class="p">(</span><span class="ne">Exception</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TimeoutException"><a class="viewcode-back" href="../../reference/mission.html#mil_missions_core.TimeoutException">[docs]</a><span class="k">class</span> <span class="nc">TimeoutException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeoutException"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.TimeoutException">[docs]</a><span class="k">class</span> <span class="nc">TimeoutException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an exception from a mission or submission not finishing within</span>
 <span class="sd">    the requested time.</span>
@@ -122,7 +122,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;failed to finish within </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="si">}</span><span class="s2"> seconds&quot;</span></div>
 
 
-<div class="viewcode-block" id="ParametersException"><a class="viewcode-back" href="../../reference/mission.html#mil_missions_core.ParametersException">[docs]</a><span class="k">class</span> <span class="nc">ParametersException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ParametersException"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.ParametersException">[docs]</a><span class="k">class</span> <span class="nc">ParametersException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an exception from a mission or submission where the mission&#39;s parameters</span>
 <span class="sd">    had an error or inconsistency.</span>
@@ -147,7 +147,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;invalid parameters: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="SubmissionException"><a class="viewcode-back" href="../../reference/mission.html#mil_missions_core.SubmissionException">[docs]</a><span class="k">class</span> <span class="nc">SubmissionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="SubmissionException"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.SubmissionException">[docs]</a><span class="k">class</span> <span class="nc">SubmissionException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an exception encountered while running a submission.</span>
 

@@ -80,14 +80,14 @@
   <h1>Source code for txros.publisher</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
 
-<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span>
+<span class="kn">from</span> <span class="nn">txros</span> <span class="kn">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
@@ -148,6 +148,19 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_event</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;txros.Publisher at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;message_type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;latching=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_latching</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;node_handle=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
 <div class="viewcode-block" id="Publisher.setup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Publisher.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -157,17 +170,26 @@
 
 <span class="sd">        This should always be called before the publisher is ever used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[</span>
-            <span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
-        <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span>
-            <span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_requestTopic</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AlreadySetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span>
+            <span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_requestTopic</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_requestTopic</span>
+            <span class="p">]</span>
 
         <span class="c1"># Register the publisher with the master ROS node</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">register_publisher</span><span class="p">(</span>
@@ -195,6 +217,11 @@
     <span class="p">):</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_close_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Publisher.shutdown"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Publisher.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts the publisher down. All operations scheduled by the publisher are cancelled.</span>
@@ -206,7 +233,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> subscriber is not currently running. It may have been shutdown previously or never started.&quot;</span><span class="p">,</span>
-                <span class="ne">ResourceWarning</span>
+                <span class="ne">ResourceWarning</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="k">return</span>
@@ -217,8 +244,18 @@
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span>
+
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_close_connections</span><span class="p">()</span>
+
+        <span class="n">handlers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span>
+        <span class="n">handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_tcpros_conn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">handlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">tcpros_handlers</span><span class="p">[(</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span>
+
+        <span class="n">handlers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span>
+        <span class="n">handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_requestTopic</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">handlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span></div>
@@ -267,20 +304,14 @@
                 <span class="n">tcpros</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_message_data</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">writer</span><span class="p">]</span> <span class="o">=</span> <span class="n">headers</span><span class="p">[</span><span class="s2">&quot;callerid&quot;</span><span class="p">]</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">))</span>
-            <span class="k">except</span> <span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">):</span>
-                <span class="c1"># These exceptions are likely related to the client exiting, so we</span>
-                <span class="c1"># can ignore them</span>
-                <span class="k">pass</span>
-            <span class="k">finally</span><span class="p">:</span>
-                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">writer</span><span class="p">]</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">):</span>
             <span class="c1"># Exceptions related to client exiting - ignore</span>
             <span class="k">pass</span>
         <span class="k">finally</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">writer</span><span class="p">]</span>
             <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Publisher.publish"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Publisher.publish">[docs]</a>    <span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">M</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -289,10 +320,22 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            msg (genpy.Message): The ROS message to send to all connected clients.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: The message type was invalid.</span>
+<span class="sd">            NotSetup: The publisher was not :meth:`~.setup` or was previously :meth:`~.shutdown`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Cannot publish message of type </span><span class="si">{</span><span class="n">msg</span><span class="o">.</span><span class="vm">__class__</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> publisher, which only accepts </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
+        <span class="n">buff</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">buff</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">:</span>
             <span class="n">tcpros</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>

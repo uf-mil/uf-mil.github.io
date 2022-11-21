@@ -26,7 +26,7 @@
         <link rel="shortcut icon" href="../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../genindex.html" />
         <link rel="search" title="Search" href="../search.html" />
-        <link rel="next" title="txros - Independent extensions for ROS" href="txros/index.html" />
+        <link rel="next" title="axros - Independent extensions for ROS" href="axros/index.html" />
         <link rel="prev" title="Serial" href="serial.html" />
     </head>
     <body>
@@ -73,9 +73,9 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -111,7 +111,7 @@
 <h1>Message Handlers<a class="headerlink" href="#message-handlers" title="Permalink to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.pose_to_numpy">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">pose_to_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pose</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.10)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#pose_to_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.pose_to_numpy" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">pose_to_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Pose</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#pose_to_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.pose_to_numpy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turns a <code class="xref py py-class docutils literal notranslate"><span class="pre">Pose</span></code> message into a tuple of position and orientation.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -119,14 +119,14 @@
 which will be deprecated in the future. This method will need to be updated.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>pose</strong> (<a class="reference internal" href="messages.html#geometry_msgs.msg.Pose" title="geometry_msgs.msg.Pose"><em>Pose</em></a>) – The pose message.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The tuple of position and orientation.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -141,14 +141,14 @@ which will be deprecated in the future. This method will need to be updated.</p>
 which will be deprecated in the future. This method will need to be updated.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>twist</strong> (<a class="reference internal" href="messages.html#geometry_msgs.msg.Twist" title="geometry_msgs.msg.Twist"><em>Twist</em></a>) – The twist message.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The tuple of linear and angular speeds.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a>]]</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>], List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,13 +163,13 @@ which will be deprecated in the future. This method will need to be updated.</p>
 which will be deprecated in the future. This method will need to be updated.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>twist</strong> (<a class="reference internal" href="messages.html#mil_msgs.msg.PoseTwist" title="mil_msgs.msg.PoseTwist"><em>PoseTwist</em></a>) – The pose + twist message.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The tuple of linear and angular speeds.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[Tuple[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]]</p>
 </dd>
 </dl>
@@ -186,10 +186,10 @@ and twist covariance.</p>
 which will be deprecated in the future. This method will need to be updated.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>odom</strong> (<a class="reference internal" href="messages.html#nav_msgs.msg.Odometry" title="nav_msgs.msg.Odometry"><em>Odometry</em></a>) – The odometry message.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>Tuple[Tuple[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray],</dt><dd><p>np.ndarray, np.ndarray]: The tuple of pose, twist, pose covariance,
 and twist covariance.</p>
@@ -211,13 +211,13 @@ numpy arrays.</p>
 which will be deprecated in the future. This method will need to be updated.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>wrench</strong> (<a class="reference internal" href="messages.html#geometry_msgs.msg.Wrench" title="geometry_msgs.msg.Wrench"><em>Wrench</em></a>) – The wrench message.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The tuple of force and torque.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[np.ndarray, np.ndarray]</p>
 </dd>
 </dl>
@@ -226,15 +226,15 @@ which will be deprecated in the future. This method will need to be updated.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.numpy_to_point">
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns a List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>] into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> message.</p>
+<dd><p>Turns a List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>] into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>vector</strong> (<em>np.ndarray</em>) – The vector to convert</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>geometry_msgs.Point</p>
 </dd>
 </dl>
@@ -245,14 +245,14 @@ which will be deprecated in the future. This method will need to be updated.</p>
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_point2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Point2D</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_point2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_point2d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turns a <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code> into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Point2D</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>vector</strong> (<em>np.ndarray</em>) – The vector to convert. Should have two values, the
 first of which represents x and the other y.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#mil_msgs.msg.Point2D" title="mil_msgs.msg.Point2D">Point2D</a></p>
 </dd>
 </dl>
@@ -261,16 +261,16 @@ first of which represents x and the other y.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.numpy_to_quaternion">
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_quaternion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">np_quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Quaternion</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_quaternion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_quaternion" title="Permalink to this definition">¶</a></dt>
-<dd><p>Turns a List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>] into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Quaternion</span></code> message.</p>
+<dd><p>Turns a List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>] into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Quaternion</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>np_quaternion</strong> (<em>np.ndarray</em>) – The vector to convert. Should have four values,
 representing <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>, and <code class="docutils literal notranslate"><span class="pre">w</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Quaternion" title="geometry_msgs.msg.Quaternion">Quaternion</a></p>
 </dd>
 </dl>
@@ -281,7 +281,7 @@ representing <code class="docutils literal notranslate"><span class="pre">x</spa
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_twist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">linear_vel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">angular_vel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Twist</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_twist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_twist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turns two <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray`s</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">:class:`Twist</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>linear_vel</strong> (<em>np.ndarray</em>) – The vector to convert. Values should represent
 the individual components of <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
@@ -289,10 +289,10 @@ the individual components of <code class="docutils literal notranslate"><span cl
 the individual components of <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Twist" title="geometry_msgs.msg.Twist">Twist</a></p>
 </dd>
 </dl>
@@ -303,15 +303,15 @@ the individual components of <code class="docutils literal notranslate"><span cl
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_wrench</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forcetorque</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_wrench"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_wrench" title="Permalink to this definition">¶</a></dt>
 <dd><p>Turns a np.ndarray into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Wrench</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>forcetorque</strong> (<em>np.ndarray</em>) – The vector to convert. Values should represent
 the individual components of <code class="docutils literal notranslate"><span class="pre">force.x</span></code>, <code class="docutils literal notranslate"><span class="pre">force.y</span></code>, <code class="docutils literal notranslate"><span class="pre">force.z</span></code>,
 <code class="docutils literal notranslate"><span class="pre">torque.x</span></code>, <code class="docutils literal notranslate"><span class="pre">torque.y</span></code>, and <code class="docutils literal notranslate"><span class="pre">torque.z</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Wrench" title="geometry_msgs.msg.Wrench">Wrench</a></p>
 </dd>
 </dl>
@@ -323,13 +323,13 @@ the individual components of <code class="docutils literal notranslate"><span cl
 <dd><p>Given a 3x3 rotation matrix, convert to a quaternion, and return the quaternion
 as a ROS message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>np_matrix</strong> (<em>np.ndarray</em>) – The 3x3 rotation matrix.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Quaternion" title="geometry_msgs.msg.Quaternion">Quaternion</a></p>
 </dd>
 </dl>
@@ -340,17 +340,17 @@ as a ROS message.</p>
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_pair_to_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">np_translation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">np_rotation_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pose</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_pair_to_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_pair_to_pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a rotation matrix and point pair to a Pose message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>np_translation</strong> (<em>np.ndarray</em>) – An array of 2 or 3 points representing the
 object’s position.</p></li>
 <li><p><strong>np_rotation_matrix</strong> (<em>np.ndarray</em>) – A 3x3 rotation matrix.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Pose message with the position and orientation.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>geometry_msgs.Pose</p>
 </dd>
 </dl>
@@ -361,7 +361,7 @@ object’s position.</p></li>
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_quat_pair_to_pose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">np_translation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">np_quaternion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pose</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_quat_pair_to_pose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_quat_pair_to_pose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a quaternion array and point array pair to a Pose message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>np_translation</strong> (<em>np.ndarray</em>) – An array of 2 or 3 points representing the
 object’s position.</p></li>
@@ -369,10 +369,10 @@ object’s position.</p></li>
 <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>, and <code class="docutils literal notranslate"><span class="pre">w</span></code> of a quaternion describing the object.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Pose message with the position and orientation.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>geometry_msgs.Pose</p>
 </dd>
 </dl>
@@ -380,16 +380,16 @@ object’s position.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.numpy_to_points">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Point</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_points" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Point</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray`s</span> <span class="pre">into</span> <span class="pre">:class:`Point</span></code> messages.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>points</strong> (<em>List</em><em>[</em><em>np.ndarray</em><em>]</em>) – The points that will be converted to messages.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The resulting point messages.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>List[<a class="reference internal" href="messages.html#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point">Point</a>]</p>
 </dd>
 </dl>
@@ -397,17 +397,17 @@ object’s position.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.numpy_to_polygon">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Polygon</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_polygon" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polygon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Polygon</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#numpy_to_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_polygon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray`s</span> <span class="pre">(representing</span> <span class="pre">:class:`Point`s)</span> <span class="pre">into</span> <span class="pre">a</span>
 <span class="pre">:class:`Polygon</span></code> message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>points</strong> (<em>List</em><em>[</em><em>np.ndarray</em><em>]</em>) – The points that will be added to the polygon.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The resulting message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Polygon" title="geometry_msgs.msg.Polygon">Polygon</a></p>
 </dd>
 </dl>
@@ -419,13 +419,13 @@ object’s position.</p></li>
 <dd><p>Convert a <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">float`s</span> <span class="pre">with</span> <span class="pre">length</span> <span class="pre">3</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">:class:`Vector3</span></code>
 message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>vec</strong> (<em>np.ndarray</em>) – A numpy array with <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Vector3 message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Vector3" title="geometry_msgs.msg.Vector3">Vector3</a></p>
 </dd>
 </dl>
@@ -437,13 +437,13 @@ message.</p>
 <dd><p>Convert a <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">float`s</span> <span class="pre">with</span> <span class="pre">length</span> <span class="pre">3</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">:class:`Pose2D</span></code>
 message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>pose</strong> (<em>np.ndarray</em>) – A numpy array with <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, and <code class="docutils literal notranslate"><span class="pre">theta</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Pose2D message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.Pose2D" title="geometry_msgs.msg.Pose2D">Pose2D</a></p>
 </dd>
 </dl>
@@ -455,13 +455,13 @@ message.</p>
 <dd><p>Convert a <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code> of <code class="xref py py-class docutils literal notranslate"><span class="pre">float`s</span> <span class="pre">with</span> <span class="pre">length</span> <span class="pre">4</span> <span class="pre">into</span> <span class="pre">a</span> <span class="pre">:class:`ColorRGBA</span></code>
 message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>color</strong> (<em>np.ndarray</em>) – A numpy array with <code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The ColorRGBA message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#std_msgs.msg.ColorRGBA" title="std_msgs.msg.ColorRGBA">ColorRGBA</a></p>
 </dd>
 </dl>
@@ -469,21 +469,21 @@ message.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.numpy_to_pointcloud2">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_pointcloud2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Time</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PointCloud2</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/pointcloud_helpers.html#numpy_to_pointcloud2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_pointcloud2" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">numpy_to_pointcloud2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Time</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PointCloud2</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/pointcloud_helpers.html#numpy_to_pointcloud2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.numpy_to_pointcloud2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a sensor_msgs.PointCloud2 from an array of points.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>points</strong> (<em>np.ndarray</em>) – The array of points.</p></li>
 <li><p><strong>stamp</strong> (<em>Optional</em><em>[</em><em>genpy.rostime.Time</em><em>]</em>) – An optional timestamp for the message header.</p></li>
-<li><p><strong>frame_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>]</em>) – An optional string describing the frame
+<li><p><strong>frame_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – An optional string describing the frame
 associated with the point cloud.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A PointCloud2 message with the provided information.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#sensor_msgs.msg.PointCloud2" title="sensor_msgs.msg.PointCloud2">PointCloud2</a></p>
 </dd>
 </dl>
@@ -494,18 +494,18 @@ associated with the point cloud.</p></li>
 <span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">make_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/body'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Header</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#make_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.make_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a message header.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the frame to attach to the header. Defaults to
+<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the frame to attach to the header. Defaults to
 <code class="docutils literal notranslate"><span class="pre">/body</span></code>.</p></li>
 <li><p><strong>stamp</strong> (<em>Optional</em><em>[</em><em>rospy.rostime.Time</em><em>]</em>) – The timestamp to attach to the header
 of the message. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the current time is used.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed header.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#std_msgs.msg.Header" title="std_msgs.msg.Header">Header</a></p>
 </dd>
 </dl>
@@ -513,22 +513,22 @@ of the message. If <code class="docutils literal notranslate"><span class="pre">
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.make_wrench_stamped">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">make_wrench_stamped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">torque</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/body'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#make_wrench_stamped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.make_wrench_stamped" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">make_wrench_stamped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">torque</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/body'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#make_wrench_stamped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.make_wrench_stamped" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a WrenchStamped message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>force</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – An array representing the force components. The list
+<li><p><strong>force</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – An array representing the force components. The list
 should contain <code class="docutils literal notranslate"><span class="pre">force.x</span></code>, <code class="docutils literal notranslate"><span class="pre">force.y</span></code>, <code class="docutils literal notranslate"><span class="pre">force.z</span></code>.</p></li>
-<li><p><strong>torque</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – An array representing the torque components. The list
+<li><p><strong>torque</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – An array representing the torque components. The list
 should contain <code class="docutils literal notranslate"><span class="pre">torque.x</span></code>, <code class="docutils literal notranslate"><span class="pre">torque.y</span></code>, and <code class="docutils literal notranslate"><span class="pre">torque.z</span></code>.</p></li>
-<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The frame to attach to the header. Defaults to <code class="docutils literal notranslate"><span class="pre">/body</span></code>.</p></li>
+<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The frame to attach to the header. Defaults to <code class="docutils literal notranslate"><span class="pre">/body</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.WrenchStamped" title="geometry_msgs.msg.WrenchStamped">WrenchStamped</a></p>
 </dd>
 </dl>
@@ -536,23 +536,23 @@ should contain <code class="docutils literal notranslate"><span class="pre">torq
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mil_tools.make_pose_stamped">
-<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">make_pose_stamped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.10)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/body'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">WrenchStamped</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#make_pose_stamped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.make_pose_stamped" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mil_tools.</span></span><span class="sig-name descname"><span class="pre">make_pose_stamped</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/body'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">WrenchStamped</span></span></span><a class="reference internal" href="../_modules/mil_ros_tools/msg_helpers.html#make_pose_stamped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_tools.make_pose_stamped" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a PoseStamped message.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>position</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – An array representing the force components. The list
+<li><p><strong>position</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – An array representing the force components. The list
 should contain <code class="docutils literal notranslate"><span class="pre">position.x</span></code>, <code class="docutils literal notranslate"><span class="pre">position.y</span></code>, <code class="docutils literal notranslate"><span class="pre">position.z</span></code>.</p></li>
-<li><p><strong>orientation</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>]</em>) – An array representing the torque components. The list
+<li><p><strong>orientation</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – An array representing the torque components. The list
 should contain <code class="docutils literal notranslate"><span class="pre">orientation.x</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation.y</span></code>, <code class="docutils literal notranslate"><span class="pre">orientation.z</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">orientation.w</span></code>.</p></li>
-<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The frame to attach to the header. Defaults to <code class="docutils literal notranslate"><span class="pre">/body</span></code>.</p></li>
+<li><p><strong>frame</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The frame to attach to the header. Defaults to <code class="docutils literal notranslate"><span class="pre">/body</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed message.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="messages.html#geometry_msgs.msg.WrenchStamped" title="geometry_msgs.msg.WrenchStamped">WrenchStamped</a></p>
 </dd>
 </dl>

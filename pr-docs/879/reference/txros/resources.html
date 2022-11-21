@@ -26,7 +26,7 @@
         <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../../genindex.html" />
         <link rel="search" title="Search" href="../../search.html" />
-        <link rel="next" title="Common Errors" href="errors.html" />
+        <link rel="next" title="Errors and Known Issues" href="errors.html" />
         <link rel="prev" title="txros - Independent extensions for ROS" href="index.html" />
     </head>
     <body>
@@ -75,13 +75,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Managing Resources</a></li>
-<li class="toctree-l3"><a class="reference internal" href="errors.html">Common Errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errors.html">Errors and Known Issues</a></li>
 <li class="toctree-l3"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api.html">API Reference</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">point_cloud_object_detection_and_recognition</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
@@ -125,7 +125,7 @@ after initializing the class. Then, you must either shut down the publisher usin
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Publisher.shutdown()</span></code> or shut down the entire node handle using <code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeHandle.shutdown()</span></code> - this
 will shutdown all publishers spawned by the node.</p>
 <p>Furthermore, attempting to shut down a resource more than once will result in an
-instance of <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> being raised.</p>
+instance of <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> being raised.</p>
 </section>
 
 

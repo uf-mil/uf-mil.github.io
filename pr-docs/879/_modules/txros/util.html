@@ -86,11 +86,10 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">asyncio</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Awaitable</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Awaitable</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">genpy</span>
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">defer</span><span class="p">,</span> <span class="n">stdio</span>
-<span class="kn">from</span> <span class="nn">twisted.protocols</span> <span class="kn">import</span> <span class="n">basic</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
@@ -107,37 +106,6 @@
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;expected float or genpy.Duration&quot;</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span></div>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
-    <span class="c1"># printing rather than using DeprecationWarning because DeprecationWarning</span>
-    <span class="c1"># is disabled by default, and that&#39;s useless.</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;txros.util.sleep is deprecated! use txros.util.wall_sleep instead.&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">await</span> <span class="n">wall_sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">nonblocking_raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
-    <span class="c1"># We need an equivalent method for this</span>
-    <span class="k">class</span> <span class="nc">P</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">LineOnlyReceiver</span><span class="p">):</span>
-        <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-
-        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span> <span class="o">=</span> <span class="n">prompt</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">defer</span><span class="o">.</span><span class="n">Deferred</span><span class="p">()</span>
-
-        <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prompt</span><span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">lineReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
-
-    <span class="n">p</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">Awaitable</span><span class="p">)</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">stdio</span><span class="o">.</span><span class="n">StandardIO</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">p</span><span class="o">.</span><span class="n">df</span>
-        <span class="n">defer</span><span class="o">.</span><span class="n">returnValue</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="wrap_timeout"><a class="viewcode-back" href="../../reference/txros/api.html#txros.wrap_timeout">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">wrap_timeout</span><span class="p">(</span>
@@ -158,7 +126,7 @@
 <span class="sd">            cancel the future when the task times out.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        :class:`asyncio.TimeoutError`: The task did not complete on time.</span>
+<span class="sd">        asyncio.TimeoutError: The task did not complete on time.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Any: The data returned from the awaitable.</span>
@@ -173,11 +141,27 @@
     <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">shield</span><span class="p">(</span><span class="n">fut</span><span class="p">),</span> <span class="n">timeout</span><span class="p">)</span></div>
 
 
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_print_message_helper</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> is taking a while...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
 <div class="viewcode-block" id="wrap_time_notice"><a class="viewcode-back" href="../../reference/txros/api.html#txros.wrap_time_notice">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">wrap_time_notice</span><span class="p">(</span>
     <span class="n">fut</span><span class="p">:</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Prints a message if a future is taking longer than the noted duration.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        &gt;&gt;&gt; await txros.wrap_time_notice(asyncio.sleep(3), 2, &quot;Example task&quot;)</span>
+<span class="sd">        Example task is taking a while... # printed at 2 seconds</span>
+<span class="sd">        Example task succeeded! # printed at 3 seconds</span>
+<span class="sd">        &gt;&gt;&gt; await txros.wrap_time_notice(asyncio.sleep(1), 2, &quot;Example task&quot;) # nothing is printed</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        fut (:class:`asyncio.Future`): The future object.</span>
@@ -188,13 +172,20 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Any: The result from the awaitable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="n">wrap_timeout</span><span class="p">(</span><span class="n">fut</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> is taking a while...&quot;</span><span class="p">)</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fut</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;... </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> succeeded.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span></div>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">):</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+    <span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">_print_message_helper</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">description</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fut</span>
+    <span class="n">task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">):</span>
+        <span class="k">if</span> <span class="k">await</span> <span class="n">task</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2"> succeeded!&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
             </main>

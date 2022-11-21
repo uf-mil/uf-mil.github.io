@@ -80,20 +80,22 @@
   <h1>Source code for txros.subscriber</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">genpy</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rosxmlrpc</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">types</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">rosxmlrpc</span><span class="p">,</span> <span class="n">tcpros</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">util</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 
-<span class="n">M</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">bound</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="Subscriber"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Subscriber">[docs]</a><span class="k">class</span> <span class="nc">Subscriber</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">M</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -107,6 +109,7 @@
 <span class="sd">            On entering the block, the subscriber is :meth:`~.setup`; upon leaving the block,</span>
 <span class="sd">            the subscriber is :meth:`~.shutdown`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">_message_futs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">]</span>
     <span class="n">_publisher_threads</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">]</span>
     <span class="n">_is_running</span><span class="p">:</span> <span class="nb">bool</span>
@@ -116,7 +119,7 @@
         <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">message_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span>
-        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="n">M</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">message</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">message</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
@@ -127,6 +130,11 @@
 <span class="sd">            callback (Callable[[genpy.Message], genpy.Message | None]): The callback to use with</span>
 <span class="sd">                the subscriber. The callback should receive an instance of the message</span>
 <span class="sd">                shared by the topic and return None.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            If you are subscribing to a publisher publishing messages at a very</span>
+<span class="sd">            fast rate, you should always use a callback over :meth:`~.get_next_message`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">resolve_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -141,6 +149,18 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_reading</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;txros.Subscriber at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;message_type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;node_handle=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
 <div class="viewcode-block" id="Subscriber.setup"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Subscriber.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -149,19 +169,22 @@
 
 <span class="sd">        The subscriber must be setup before use.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span>
-            <span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
-        <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span>
-            <span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_publisher_list</span>
-        <span class="n">publishers</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">register_subscriber</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="o">.</span><span class="n">_type</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_server_uri</span><span class="p">,</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AlreadySetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_publisher_list</span>
             <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[(</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_publisher_list</span>
+            <span class="p">]</span>
+
+        <span class="n">publishers</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">register_subscriber</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="o">.</span><span class="n">_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_server_uri</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_publisher_list</span><span class="p">(</span><span class="n">publishers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span></div>
@@ -171,7 +194,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; subscriber was never shutdown(). This may cause issues with this instance of ROS - please fix the errors and completely restart ROS.&quot;</span><span class="p">,</span>
-                <span class="ne">ResourceWarning</span>
+                <span class="ne">ResourceWarning</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
 
@@ -203,10 +226,13 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;always&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> subscriber is not currently running. It may have been shutdown previously or never started.&quot;</span><span class="p">,</span>
-                <span class="ne">ResourceWarning</span>
+                <span class="ne">ResourceWarning</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
             <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_publisher_threads</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">unregisterSubscriber</span><span class="p">(</span>
@@ -214,7 +240,11 @@
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span>
+
+        <span class="n">handlers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span>
+        <span class="n">handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_publisher_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">handlers</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">xmlrpc_handlers</span><span class="p">[</span><span class="s2">&quot;publisherUpdate&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">shutdown_callbacks</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_publisher_threads</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -244,12 +274,29 @@
 
 <div class="viewcode-block" id="Subscriber.get_next_message"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Subscriber.get_next_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">M</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns a deferred which will contain the next message.</span>
+<span class="sd">        Returns a :class:`~asyncio.Future` which will contain the next message</span>
+<span class="sd">        received by the subscriber.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method should not be used to reliably obtain messages from publishers</span>
+<span class="sd">            publishing at very high rates. Because of the overhead in setting up</span>
+<span class="sd">            futures, this method will likely cause some messages to get lost.</span>
+
+<span class="sd">            Instead, you should use a callback with the subscriber - all messages</span>
+<span class="sd">            are passed through the callback.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NotSetup: The subscriber was never :meth:`~.setup` or was previously</span>
+<span class="sd">                :meth:`~.shutdown`.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            asyncio.Future[genpy.Message]: A future which will eventually contain</span>
 <span class="sd">            the next message published on the topic.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
+
         <span class="n">res</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_message_futs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span></div>
@@ -265,6 +312,36 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
+<div class="viewcode-block" id="Subscriber.recently_read"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Subscriber.recently_read">[docs]</a>    <span class="k">def</span> <span class="nf">recently_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the subscriber has recently read messages.</span>
+
+<span class="sd">        Using this method is helpful when the subscriber may not be fast enough</span>
+<span class="sd">        to keep up with all messages published. This method can be used to determine</span>
+<span class="sd">        when the subscriber has finished reading queued messages. This is helpful</span>
+<span class="sd">        at the end of programs, when a publisher has stopped publishing, but the</span>
+<span class="sd">        subscriber has not yet received all messages.</span>
+
+<span class="sd">        .. code-block:: python3</span>
+
+<span class="sd">            &gt;&gt;&gt; while sub.recently_read():</span>
+<span class="sd">            ...     print(&quot;Subscriber is still reading messages...&quot;)</span>
+<span class="sd">            ...     await asyncio.sleep(0.5)</span>
+<span class="sd">            &gt;&gt;&gt; print(&quot;Subscriber has finished catching up on messages!&quot;)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seconds (float): The number of seconds to wait after receiving a message</span>
+<span class="sd">                before claiming that the subscriber is no longer actively reading messages.</span>
+<span class="sd">                Defaults to 1 second.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the subscriber has recently read messages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">last_message_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_message_time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">last_message_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_message_time</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">seconds</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_publisher_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -277,9 +354,12 @@
                 <span class="n">_</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-                <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span>
-                    <span class="n">host</span><span class="p">,</span> <span class="n">port</span>
-                <span class="p">)</span>
+
+                <span class="c1"># Note that this line opens a connection to the host + port combo</span>
+                <span class="c1"># of the publisher - this connection will NOT be the same as the</span>
+                <span class="c1"># node handle&#39;s TCP/XMLRPC servers. This will be a randomly assigned</span>
+                <span class="c1"># port.</span>
+                <span class="n">reader</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">open_connection</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">tcpros</span><span class="o">.</span><span class="n">send_string</span><span class="p">(</span>
                         <span class="n">tcpros</span><span class="o">.</span><span class="n">serialize_dict</span><span class="p">(</span>
@@ -291,13 +371,16 @@
                                 <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="o">.</span><span class="n">_type</span><span class="p">,</span>
                             <span class="p">)</span>
                         <span class="p">),</span>
-                        <span class="n">writer</span>
+                        <span class="n">writer</span><span class="p">,</span>
                     <span class="p">)</span>
-                    <span class="n">header</span> <span class="o">=</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">((</span><span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)))</span>
+                    <span class="n">header</span> <span class="o">=</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">deserialize_dict</span><span class="p">(</span>
+                        <span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                    <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">writer</span><span class="p">]</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;callerid&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">tcpros</span><span class="o">.</span><span class="n">receive_string</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+
                             <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_type</span><span class="p">()</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                             <span class="k">try</span><span class="p">:</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -310,15 +393,32 @@
                             <span class="n">old</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_futs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_futs</span><span class="p">,</span> <span class="p">[]</span>
                             <span class="k">for</span> <span class="n">fut</span> <span class="ow">in</span> <span class="n">old</span><span class="p">:</span>
                                 <span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="p">(</span><span class="ne">ConnectionRefusedError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">,</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">):</span>
+                            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="p">(</span>
+                        <span class="ne">ConnectionRefusedError</span><span class="p">,</span>
+                        <span class="ne">BrokenPipeError</span><span class="p">,</span>
+                        <span class="ne">ConnectionResetError</span><span class="p">,</span>
+                        <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span>
+                    <span class="p">):</span>
                         <span class="k">pass</span>
                     <span class="k">finally</span><span class="p">:</span>
                         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="p">[</span><span class="n">writer</span><span class="p">]</span>
-                <span class="k">except</span> <span class="p">(</span><span class="ne">ConnectionRefusedError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">,</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">):</span>
+                <span class="k">except</span> <span class="p">(</span>
+                    <span class="ne">ConnectionRefusedError</span><span class="p">,</span>
+                    <span class="ne">BrokenPipeError</span><span class="p">,</span>
+                    <span class="ne">ConnectionResetError</span><span class="p">,</span>
+                    <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span>
+                <span class="p">):</span>
                     <span class="k">pass</span>
                 <span class="k">finally</span><span class="p">:</span>
                     <span class="n">writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">ConnectionRefusedError</span><span class="p">,</span> <span class="ne">BrokenPipeError</span><span class="p">,</span> <span class="ne">ConnectionResetError</span><span class="p">,</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">):</span>
+                    <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span>
+                <span class="ne">ConnectionRefusedError</span><span class="p">,</span>
+                <span class="ne">BrokenPipeError</span><span class="p">,</span>
+                <span class="ne">ConnectionResetError</span><span class="p">,</span>
+                <span class="n">asyncio</span><span class="o">.</span><span class="n">IncompleteReadError</span><span class="p">,</span>
+            <span class="p">):</span>
                 <span class="k">pass</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
