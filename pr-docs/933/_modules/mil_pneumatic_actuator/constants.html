@@ -113,7 +113,7 @@
     <span class="n">PING_RESPONSE</span> <span class="o">=</span> <span class="mh">0x11</span>
     <span class="n">CHECKSUM_CODE</span> <span class="o">=</span> <span class="mh">0xFF</span>
 
-<div class="viewcode-block" id="Constants.create_checksum"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.create_checksum">[docs]</a>    <span class="k">def</span> <span class="nf">create_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="Constants.create_checksum"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.create_checksum">[docs]</a>    <span class="k">def</span> <span class="nf">create_checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a checksum given a piece of data. The checksum is calculated through</span>
 <span class="sd">        the XOR operation.</span>
@@ -126,7 +126,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">byte</span> <span class="o">^</span> <span class="n">Constants</span><span class="o">.</span><span class="n">CHECKSUM_CODE</span></div>
 
-<div class="viewcode-block" id="Constants.verify_checksum"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.verify_checksum">[docs]</a>    <span class="k">def</span> <span class="nf">verify_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">checksum</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Constants.verify_checksum"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.verify_checksum">[docs]</a>    <span class="k">def</span> <span class="nf">verify_checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">checksum</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Verifies that two checksums are the same.</span>
 
@@ -137,18 +137,18 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the two checksums are the same.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">checksum</span> <span class="o">==</span> <span class="n">Constants</span><span class="o">.</span><span class="n">create_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">checksum</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Constants.serialize_packet"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.serialize_packet">[docs]</a>    <span class="k">def</span> <span class="nf">serialize_packet</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<div class="viewcode-block" id="Constants.serialize_packet"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.serialize_packet">[docs]</a>    <span class="k">def</span> <span class="nf">serialize_packet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serializes a piece of data (an integer) into a bytes object.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bytes: The serialized packet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;BB&quot;</span><span class="p">,</span> <span class="n">byte</span><span class="p">,</span> <span class="n">Constants</span><span class="o">.</span><span class="n">create_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;BB&quot;</span><span class="p">,</span> <span class="n">byte</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_checksum</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Constants.deserialize_packet"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.deserialize_packet">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize_packet</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<div class="viewcode-block" id="Constants.deserialize_packet"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.Constants.deserialize_packet">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize_packet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deserializes a piece of data (a bytes object) into a tuple of two numbers.</span>
 <span class="sd">        The first number is the data carried by the packet, and the second is the checksum</span>
