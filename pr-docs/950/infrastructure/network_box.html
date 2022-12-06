@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Network Box</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Continuous Integration" href="ci.html" />
+        <link rel="prev" title="Infrastructure" href="index.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Infrastructure</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="network.html">Networking</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Network Box</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#io">IO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#internal">Internal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring">Configuring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backup-restore">Backup / Restore</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wan-setup">WAN Setup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ci.html">Continuous Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_server.html">File Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solar_park.html">Solar Park</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shipping.html">Shipping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="network-box">
+<h1>Network Box<a class="headerlink" href="#network-box" title="Permalink to this heading">¶</a></h1>
+<div class="figure align-default">
+<img alt="An image of the network box with one ethernet connection." src="../_images/network_box.jpg" />
+</div>
+<p>The Network Box is a pelican case containing the components needed to
+duplicate the network while out testing or at competition. It is
+intended to make networking in these environments seamless and portable.
+The box is powered by a UPS so can operate for roughly an hour without
+being plugged into a wall outlet.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
+<p>To use the Network Box:</p>
+<ul>
+<li><p>If possible, plug the box into wall power using the special cable.</p></li>
+<li><p>Turn the box on by holding down the ON button until you hear a beep and the
+RED led turns on.</p></li>
+<li><p>Connect your/other developer laptops via ethernet to any of the top ports BESIDES
+the one labeled POE.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Be sure your laptop is configured to automatically configure network over DHCP.</p></li>
+<li><p>If your laptop does not have Ethernet (RJ45), you can use one of the provided
+adapters inside the box.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Connect the vehicle to the box. If connecting the Ubiquitii Antenna, connect
+it to the POE port.</p></li>
+<li><p>Wait a few minutes until your computer reports it is connected to the network.</p></li>
+<li><p>To verify functionality, try pinging the vehicle or accessing the config panel.</p></li>
+</ul>
+</section>
+<section id="io">
+<h2>IO<a class="headerlink" href="#io" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>7 LAN connections on the outside of the box connected to the internal
+switch</p>
+<ul>
+<li><p>1 labeled POE and is connected to a Ubiquity POE injector used to
+connect the Ubuiquity antenna</p></li>
+</ul>
+</li>
+<li><p>1 WAN ethernet which connects directly to the PFsense router WAN port</p></li>
+<li><p>A power cable</p></li>
+<li><p>Internal WIFI antena</p></li>
+<li><p>Labeled On/Off button (must hold)</p></li>
+<li><p>Red power indicator LED</p></li>
+</ul>
+</section>
+<section id="internal">
+<h2>Internal<a class="headerlink" href="#internal" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.trendnet.com/products/industrial-switches/TI-G80">TREDnet TI-G80 8-port gigabit switch</a></p></li>
+<li><p><a class="reference external" href="https://www.amazon.com/Xtreme-Power-Conversion-J60-350-Lithium/dp/B01M6Z1LJP/ref=pd_sbs_421_t_2/134-1879969-9121638?_encoding=UTF8&amp;pd_rd_i=B01M6Z1LJP&amp;pd_rd_r=b8c3ce7f-63e7-4436-94b9-1167024d1f20&amp;pd_rd_w=pt6dy&amp;pd_rd_wg=tIffo&amp;pf_rd_p=5cfcfe89-300f-47d2-b1ad-a4e27203a02a&amp;pf_rd_r=1FV7RXC72XPWH0T5AA14&amp;psc=1&amp;refRID=1FV7RXC72XPWH0T5AA14">Xtreme J60-OE350 AC UPS</a></p></li>
+<li><p><a class="reference external" href="https://protectli.com/product/fw1/">Protectli FW10408 PFsense router</a></p></li>
+<li><p>AC to 12v 5A DC adapter spliced to power both the switch and router</p></li>
+<li><p>Ubiquiti GP-A240-050G POE injector</p></li>
+<li><p>2 Amazon Basics USB to RJ45 devices velcrowed to the lid for
+developers without a RJ45 port</p></li>
+</ul>
+</section>
+<section id="configuring">
+<h2>Configuring<a class="headerlink" href="#configuring" title="Permalink to this heading">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Bad changes to the network box config can break communication between developers
+and robots. Proceed with caution.</p>
+</div>
+<p>You can configure things such as the WAN (internet) connection, DHCP server, etc by
+logging into the PFsense web panel at <a class="reference external" href="https://192.168.37.1">https://192.168.37.1</a> (accept the invalid
+certificate). Ask a MIL leader for the login credentials.</p>
+</section>
+<section id="backup-restore">
+<h2>Backup / Restore<a class="headerlink" href="#backup-restore" title="Permalink to this heading">¶</a></h2>
+<p>We store the XML config of the router within the repo.
+You can update this config or restore it from the web panel at
+<a class="reference external" href="https://192.168.37.1/diag_backup.php">https://192.168.37.1/diag_backup.php</a>.</p>
+<p>You can download the pfSense config XML file by clicking <a class="reference download internal" download="" href="../_downloads/b5ca8bccc3e42de4793b31ec045cb991/pfsense_config.xml"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
+<section id="wan-setup">
+<h3>WAN Setup<a class="headerlink" href="#wan-setup" title="Permalink to this heading">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not connect the MIL network or any other network using our subnet to the
+WAN port. This can cause serious issues for both networks as both will have
+an active DHCP server.</p>
+</div>
+<p>At competition, we are often given a WAN (internet) cable. Plug this cable into
+the WAN port on the box. Once connected, try pinging an internet server with</p>
+<blockquote>
+<div><p>$ ping 8.8.8.8</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
