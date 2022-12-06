@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>txros.rosxmlrpc</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for txros.rosxmlrpc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Asynchronous helper classes and methods to provide stable communication over</span>
+<span class="sd">XMLRPC.</span>
+
+<span class="sd">These classes are primarily used to implement custom handlers into the TCPROS</span>
+<span class="sd">system provided by ROS.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">xmlrpc</span> <span class="kn">import</span> <span class="n">client</span>
+
+<span class="kn">from</span> <span class="nn">lxml.etree</span> <span class="kn">import</span> <span class="n">XMLParser</span><span class="p">,</span> <span class="n">fromstring</span><span class="p">,</span> <span class="n">tostring</span>
+
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">TxrosException</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
+
+<span class="n">XMLRPCLegalType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">CallbackUnlimited</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="o">...</span>
+
+
+<span class="k">class</span> <span class="nc">XMLRPCMethod</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class to represent a specific method called on an XMLRPC server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">send</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send</span> <span class="o">=</span> <span class="n">send</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">XMLRPCMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+
+<span class="k">class</span> <span class="nc">AsyncioTransport</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">Transport</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transport class used by :class:`AsyncServerProxy` used to implement an XMLRPC-style</span>
+<span class="sd">    communication framework over HTTP.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">use_datetime</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_builtin_types</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">node_handle</span><span class="o">.</span><span class="n">_aiohttp_session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">request_body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">request_body</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/xml&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">body</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">client</span><span class="o">.</span><span class="n">ProtocolError</span><span class="p">(</span>
+                    <span class="n">url</span><span class="p">,</span>
+                    <span class="n">errcode</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                    <span class="n">errmsg</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+                <span class="p">)</span>
+        <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">XMLRPCException</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">request_body</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_response</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">parser</span><span class="p">,</span> <span class="n">unmarshaller</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getparser</span><span class="p">()</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">unmarshaller</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="AsyncServerProxy"><a class="viewcode-back" href="../../reference/txros/api.html#txros.AsyncServerProxy">[docs]</a><span class="k">class</span> <span class="nc">AsyncServerProxy</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Asynchronous server proxy to a specific server URI using :class:`aiohttp.ClientSession`.</span>
+<span class="sd">    This class is used in conjunction with :class:`txros.ROSMasterProxy`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        transport (AsyncioTransport): The transports used to facilitate requests.</span>
+<span class="sd">        session (aiohttp.ClientSession): The client session used in the communication.</span>
+<span class="sd">        uri (str): The URI used to connect to ROS master.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            uri (str): The URI used to connect to ROS Master. This can often be</span>
+<span class="sd">                obtained through ``os.environ[&quot;ROS_MASTER_URI&quot;]``.</span>
+<span class="sd">            node_handle (txros.NodeHandle): The node handle starting the asynchronous</span>
+<span class="sd">                proxy.</span>
+<span class="sd">            headers (Iterable[tuple[:class:`str`, :class:`str`]]): The specific headers</span>
+<span class="sd">                to use for connection.</span>
+<span class="sd">            context (Any | None): The context for the asynchronous session.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transport</span> <span class="o">=</span> <span class="n">AsyncioTransport</span><span class="p">(</span><span class="n">node_handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">node_handle</span><span class="o">.</span><span class="n">_aiohttp_session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">headers</span><span class="p">:</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">,</span> <span class="s2">&quot;python-mil/asyncioxmlrpc&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;Accept&quot;</span><span class="p">,</span> <span class="s2">&quot;text/xml&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;text/xml&quot;</span><span class="p">),</span>
+            <span class="p">]</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">uri</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="p">,</span>
+            <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">use_datetime</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">use_builtin_types</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+            <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">__request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">methodname</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="c1"># For debugging purposes, uncommenting this line may prove to be helpful.</span>
+        <span class="c1"># print(</span>
+        <span class="c1">#     f&quot;Requesting method {methodname} with params {params} (client closed: {self.transport.session.closed})&quot;</span>
+        <span class="c1"># )</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span> <span class="n">methodname</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">XMLRPCMethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__request</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XMLRPCException"><a class="viewcode-back" href="../../reference/txros/api.html#txros.XMLRPCException">[docs]</a><span class="k">class</span> <span class="nc">XMLRPCException</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an error that occurred in the XMLRPC communication. Inherits</span>
+<span class="sd">    from :class:`~.TxrosException`.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty-prints the error status code and message.</span>
+
+<span class="sd">        .. describe:: repr(x)</span>
+
+<span class="sd">            Pretty-prints the error status code and message. Equivalent to</span>
+<span class="sd">            ``str(x)``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        exception (Exception): The exception caught in the error.</span>
+<span class="sd">        request_body (bytes): The request body of the request which caused the exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">request_body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="n">exception</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_body</span> <span class="o">=</span> <span class="n">request_body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
+        <span class="n">method_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">XMLParser</span><span class="p">(</span><span class="n">resolve_entities</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request_body</span><span class="p">)</span>
+            <span class="n">method_name</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//methodName[1]/text()&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># If some exception is preventing parsing, don&#39;t worry about it</span>
+            <span class="k">pass</span>
+
+        <span class="n">help_message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">exception</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;ClientConnectorError&quot;</span>
+            <span class="ow">and</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;requestTopic&quot;</span>
+        <span class="p">):</span>
+            <span class="n">help_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;It appears the node may not be able to find a node publishing the topic it is attempting to listen to. This likely means that the node publishing to the topic has died. Please check the publisher to the topic for issues and restart ROS.</span><span class="se">\n\n</span><span class="s2">Request body: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">request_body</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;An error occurred in the XMLRPC communication. The &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; node attempted to call &#39;</span><span class="si">{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&#39; resulting in an error. For help resolving this exception, please see the txros documentation.&quot;</span>
+            <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">{</span><span class="n">help_message</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">help_message</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node_handle</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ROSMasterError"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterError">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterError</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an exception that occurred when attempting to communicate with the</span>
+<span class="sd">    ROS Master Server. Unlike :class:`~.ROSMasterFailure`, this indicates that the</span>
+<span class="sd">    request completed, but the returned value is not usable. Similar to a bad request</span>
+<span class="sd">    HTTP error.</span>
+
+<span class="sd">    Inherits from :class:`~.TxrosException`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        ros_message (:class:`str`): The message from ROS explaining the exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ros_message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>  <span class="c1"># Should always be -1</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Request from </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ROSMasterFailure"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterFailure">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterFailure</span><span class="p">(</span><span class="n">TxrosException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a failure that occurred after a node sent an outgoing XMLRPC request</span>
+<span class="sd">    to ROS Master. Unlike :class:`~.ROSMasterError`, this indicates that the request</span>
+<span class="sd">    failed in progress, and did not complete. This may cause side effects visible</span>
+<span class="sd">    in other ROS services.</span>
+
+<span class="sd">    Inherits from :class:`~.TxrosException`.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        ros_message (:class:`str`): The message from ROS explaining the exception.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ros_message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>  <span class="c1"># Should always be 0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Request from </span><span class="si">{</span><span class="n">node_handle</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> caused ROS failure: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">. Please consider restarting ROS.&quot;</span><span class="p">,</span>
+            <span class="n">node_handle</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ROSMasterProxy"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ROSMasterProxy">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterProxy</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The txROS proxy to the ROS master server. This class does not provide a general</span>
+<span class="sd">    suite of discrete methods for contracting with the master server, rather all</span>
+<span class="sd">    method requests are forwarded to the server through the class&#39; ``__getattr__``</span>
+<span class="sd">    method.</span>
+
+<span class="sd">    This class implements all operations related to communication with ROS through</span>
+<span class="sd">    its [Master API](https://wiki.ros.org/ROS/Master_API). Generally, this class</span>
+<span class="sd">    is used on behalf of a node or process to make outbound requests to other ROS services.</span>
+<span class="sd">    It is not used to receive connections from other ROS services.</span>
+
+<span class="sd">    Generally, this method should not be used in application-level code, rather helper</span>
+<span class="sd">    methods should be called from classes such as :class:`txros.NodeHandle` or</span>
+<span class="sd">    :class:`txros.Subscriber`. However, this class may be extended for new applications</span>
+<span class="sd">    of low-level code.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        &gt;&gt;&gt; import os</span>
+<span class="sd">        &gt;&gt;&gt; session = aiohttp.ClientSession()</span>
+<span class="sd">        &gt;&gt;&gt; proxy = AsyncServerProxy(os.environ[&quot;ROS_MASTER_URI&quot;], session)</span>
+<span class="sd">        &gt;&gt;&gt; master = ROSMasterProxy(proxy, &quot;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; print(await master.hasParam(&quot;/always_true&quot;))</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; await session.close()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        proxy (:class:`AsyncServerProxy`): The proxy to a general XMLRPC server.</span>
+<span class="sd">        caller_id (:class:`str`): The caller ID making the following requests.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: x.attr</span>
+
+<span class="sd">            Calls the master server with the attribute name representing the name</span>
+<span class="sd">            of the method to call. The value is returned in a Deferred object.</span>
+<span class="sd">            If the status code is not 1, then :class:`txros.Error` is raised.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                :class:`XMLRPCException`: General error in communication. This could</span>
+<span class="sd">                    be due to a multitude of reasons.</span>
+<span class="sd">                :class:`ROSMasterError`: The status code returned by the ROS master</span>
+<span class="sd">                    server was -1, indicating that the request completed, but the associated</span>
+<span class="sd">                    return value is not usable.</span>
+<span class="sd">                :class:`ROSMasterFailure`: The status code returned by the ROS master</span>
+<span class="sd">                    server was 0, indicating that the request did not successfully complete.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="p">:</span> <span class="n">AsyncServerProxy</span><span class="p">,</span> <span class="n">caller_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            proxy (txros.AsyncServerProxy): The proxy representing an XMLRPC connection to the ROS</span>
+<span class="sd">                master server.</span>
+<span class="sd">            caller_id (str): The ID of the caller in the proxy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span> <span class="o">=</span> <span class="n">proxy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_caller_id</span> <span class="o">=</span> <span class="n">caller_id</span>
+
+    <span class="k">def</span> <span class="nf">make_remote_caller</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CallbackUnlimited</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">remote_caller</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">status_code</span><span class="p">,</span> <span class="n">status_message</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="p">,</span> <span class="n">name</span>
+            <span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_caller_id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># SUCCESS</span>
+                <span class="k">return</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="n">status_code</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ROSMasterError</span><span class="p">(</span>
+                    <span class="n">status_message</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">node_handle</span>
+                <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ROSMasterFailure</span><span class="p">(</span>
+                <span class="n">status_message</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_master_proxy</span><span class="o">.</span><span class="n">node_handle</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">remote_caller</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CallbackUnlimited</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">request_topic</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">protocols</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">XMLRPCLegalType</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;requestTopic&quot;</span><span class="p">)(</span><span class="n">name</span><span class="p">,</span> <span class="n">protocols</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">lookup_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;lookupService&quot;</span><span class="p">)(</span><span class="n">service_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unregister_service</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_api</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;unregisterService&quot;</span><span class="p">)(</span><span class="n">service</span><span class="p">,</span> <span class="n">service_api</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">register_service</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_api</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">caller_api</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;registerService&quot;</span><span class="p">)(</span>
+            <span class="n">service</span><span class="p">,</span> <span class="n">service_api</span><span class="p">,</span> <span class="n">caller_api</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">register_subscriber</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">topic_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">caller_api</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;registerSubscriber&quot;</span><span class="p">)(</span>
+            <span class="n">topic</span><span class="p">,</span> <span class="n">topic_type</span><span class="p">,</span> <span class="n">caller_api</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">register_publisher</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">topic_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">caller_api</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;registerPublisher&quot;</span><span class="p">)(</span>
+            <span class="n">topic</span><span class="p">,</span> <span class="n">topic_type</span><span class="p">,</span> <span class="n">caller_api</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">unregister_publisher</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">caller_api</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_remote_caller</span><span class="p">(</span><span class="s2">&quot;unregisterPublisher&quot;</span><span class="p">)(</span><span class="n">topic</span><span class="p">,</span> <span class="n">caller_api</span><span class="p">)</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
