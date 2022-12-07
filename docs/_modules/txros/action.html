@@ -85,7 +85,7 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">TracebackType</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span>
 
 <span class="kn">import</span> <span class="nn">genpy</span>
 <span class="kn">from</span> <span class="nn">actionlib_msgs.msg</span> <span class="kn">import</span> <span class="n">GoalID</span><span class="p">,</span> <span class="n">GoalStatus</span><span class="p">,</span> <span class="n">GoalStatusArray</span>
@@ -99,7 +99,7 @@
     <span class="kn">from</span> <span class="nn">.nodehandle</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
 
 
-<div class="viewcode-block" id="GoalManager"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager">[docs]</a><span class="k">class</span> <span class="nc">GoalManager</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]):</span>
+<div class="viewcode-block" id="GoalManager"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager">[docs]</a><span class="k">class</span> <span class="nc">GoalManager</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Manages the interactions between a specific goal and an action client.</span>
 
@@ -107,16 +107,12 @@
 <span class="sd">    by the :class:`~.ActionClient` to talk to the :class:`~.SimpleActionServer`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_action_client</span><span class="p">:</span> <span class="n">ActionClient</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]</span>
-    <span class="n">_goal</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Goal</span>
+    <span class="n">_action_client</span><span class="p">:</span> <span class="n">ActionClient</span>
+    <span class="n">_goal</span><span class="p">:</span> <span class="n">Goal</span>
     <span class="n">_goal_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">_feedback_futs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">]]]</span>
+    <span class="n">_feedback_futs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">]]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">action_client</span><span class="p">:</span> <span class="n">ActionClient</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">],</span>
-        <span class="n">goal</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_client</span><span class="p">:</span> <span class="n">ActionClient</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">Goal</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            action_client (ActionClient): The txROS action client to use to manage</span>
@@ -163,7 +159,7 @@
     <span class="k">def</span> <span class="nf">_status_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
         <span class="k">del</span> <span class="n">status</span>
 
-    <span class="k">def</span> <span class="nf">_result_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">_result_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">):</span>
         <span class="k">del</span> <span class="n">status</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forget</span><span class="p">()</span>
 
@@ -177,7 +173,7 @@
         <span class="k">for</span> <span class="n">fut</span> <span class="ow">in</span> <span class="n">old</span><span class="p">:</span>
             <span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
 
-<div class="viewcode-block" id="GoalManager.get_result"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]]:</span>
+<div class="viewcode-block" id="GoalManager.get_result"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the result of the goal from the manager.</span>
 
@@ -186,7 +182,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_fut</span></div>
 
-<div class="viewcode-block" id="GoalManager.get_feedback"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager.get_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">get_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">]]:</span>
+<div class="viewcode-block" id="GoalManager.get_feedback"><a class="viewcode-back" href="../../reference/txros/api.html#txros.GoalManager.get_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">get_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the feedback from all feedback :class:`asyncio.Future` objects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -214,7 +210,7 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">_goal_managers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_goal_id</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="Goal"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Goal">[docs]</a><span class="k">class</span> <span class="nc">Goal</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">]):</span>
+<div class="viewcode-block" id="Goal"><a class="viewcode-back" href="../../reference/txros/api.html#txros.Goal">[docs]</a><span class="k">class</span> <span class="nc">Goal</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of a goal object in the txros adaptation of the Simple Action</span>
 <span class="sd">    Server.</span>
@@ -233,14 +229,13 @@
 <span class="sd">        status_text (str): A string representing the status of the goal</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">goal</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionGoal</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>  <span class="c1"># This needs to be defined</span>
-    <span class="n">goal_id</span><span class="p">:</span> <span class="n">GoalID</span>
+    <span class="n">goal</span><span class="p">:</span> <span class="n">GoalStatus</span> <span class="o">|</span> <span class="kc">None</span>  <span class="c1"># This needs to be defined</span>
     <span class="n">status</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">status_text</span><span class="p">:</span> <span class="nb">str</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">goal_msg</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionGoal</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">],</span>
+        <span class="n">goal_msg</span><span class="p">:</span> <span class="n">GoalStatus</span><span class="p">,</span>
         <span class="n">status</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">PENDING</span><span class="p">,</span>
         <span class="n">status_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="p">):</span>
@@ -249,9 +244,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="n">goal_msg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status_text</span> <span class="o">=</span> <span class="n">status_text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">goal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhs</span><span class="p">:</span> <span class="n">Goal</span><span class="p">):</span>
         <span class="c1"># assert isinstance(self.goal, GoalStatus), f&quot;Value was {type(self.goal)}: {self.goal}&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="n">GoalStatus</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rhs</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="n">GoalStatus</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">id</span>
@@ -273,7 +267,7 @@
         <span class="c1"># assert isinstance(self.goal, GoalStatus), f&quot;Value was {type(self.goal)}: {self.goal}&quot;</span>
 
         <span class="c1"># Assemble message</span>
-        <span class="n">msg</span><span class="o">.</span><span class="n">goal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="k">else</span> <span class="n">GoalID</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">goal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span>
         <span class="n">msg</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
         <span class="n">msg</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_text</span>
         <span class="k">return</span> <span class="n">msg</span></div></div>
@@ -317,16 +311,16 @@
     <span class="c1"># - implement optional callbacks for new goals</span>
     <span class="c1"># - ensure headers are correct for each message</span>
 
-    <span class="n">goal</span><span class="p">:</span> <span class="n">Goal</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
-    <span class="n">next_goal</span><span class="p">:</span> <span class="n">Goal</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">goal</span><span class="p">:</span> <span class="n">Goal</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">next_goal</span><span class="p">:</span> <span class="n">Goal</span> <span class="o">|</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">action_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Action</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]],</span>
-        <span class="n">goal_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">preempt_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">goal_cb</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">preempt_cb</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span> <span class="o">=</span> <span class="n">node_handle</span>
@@ -424,9 +418,7 @@
             <span class="p">)</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="fm">__aenter__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimpleActionServer</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="fm">__aenter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimpleActionServer</span><span class="p">:</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span>
 
@@ -438,7 +430,7 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;txros.SimpleActionServer at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, name=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">&#39; running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span><span class="si">}</span><span class="s2"> started=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">started</span><span class="si">}</span><span class="s2"> goal=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="si">}</span><span class="s2"> node_handle=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">register_goal_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">register_goal_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">goal_cb</span> <span class="o">=</span> <span class="n">func</span>
 
     <span class="k">def</span> <span class="nf">_process_goal_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -449,7 +441,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">preempt_cb</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">preempt_cb</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">register_preempt_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">register_preempt_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preempt_cb</span> <span class="o">=</span> <span class="n">func</span>
 
 <div class="viewcode-block" id="SimpleActionServer.start"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -474,7 +466,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">started</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-    <span class="k">def</span> <span class="nf">accept_new_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">types</span><span class="o">.</span><span class="n">Goal</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">accept_new_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="p">)</span>
 
@@ -490,12 +482,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_preempted</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;New goal accepted in simple action server&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cancel_requested</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">ACTIVE</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="k">else</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">SUCCEEDED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">ACTIVE</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_publish_status</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal</span>
 
 <div class="viewcode-block" id="SimpleActionServer.is_new_goal_available"><a class="viewcode-back" href="../../reference/txros/api.html#txros.SimpleActionServer.is_new_goal_available">[docs]</a>    <span class="k">def</span> <span class="nf">is_new_goal_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -638,7 +628,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_publish_status</span><span class="p">()</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_frequency</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_cancel_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">GoalID</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_cancel_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">cancel_current</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">cancel_next</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">stamp</span> <span class="o">!=</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">():</span>
@@ -653,10 +643,9 @@
         <span class="k">elif</span> <span class="n">msg</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
                 <span class="n">cancel_current</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
                 <span class="n">cancel_next</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">cancel_next</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">RECALLED</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">status_text</span> <span class="o">=</span> <span class="s2">&quot;Goal canceled&quot;</span>
             <span class="n">result_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_type</span><span class="p">()</span>
@@ -668,7 +657,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cancel_requested</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_process_preempt_callback</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_goal_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ActionGoal</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_goal_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">GoalStatus</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">new_goal</span> <span class="o">=</span> <span class="n">Goal</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -684,9 +673,7 @@
             <span class="n">new_goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">stamp</span> <span class="o">==</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span>
         <span class="p">):</span>  <span class="c1"># If time is not set, replace with current time</span>
             <span class="n">new_goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">now</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>  <span class="c1"># If another goal is queued, handle conflict</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># If another goal is queued, handle conflict</span>
             <span class="c1"># If next goal is later, rejct new goal</span>
             <span class="k">if</span> <span class="n">new_goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">stamp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal_id</span><span class="o">.</span><span class="n">stamp</span><span class="p">:</span>
                 <span class="n">new_goal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">GoalStatus</span><span class="o">.</span><span class="n">REJECTED</span>
@@ -713,7 +700,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_process_goal_callback</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="ActionClient"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient">[docs]</a><span class="k">class</span> <span class="nc">ActionClient</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">]):</span>
+<div class="viewcode-block" id="ActionClient"><a class="viewcode-back" href="../../reference/txros/api.html#txros.ActionClient">[docs]</a><span class="k">class</span> <span class="nc">ActionClient</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Representation of an action client in txros. This works in conjunction with</span>
 <span class="sd">    the :class:`~.SimpleActionServer` by sending the servers goals to execute.</span>

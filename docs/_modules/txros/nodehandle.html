@@ -293,10 +293,10 @@
     <span class="n">xmlrpc_server_uri</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">tcpros_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">TCPROSProtocol</span><span class="p">]]</span>
     <span class="n">xmlrpc_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]]</span>
-    <span class="n">_tcpros_server</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractServer</span>
+    <span class="n">_tcpros_server</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Server</span>
     <span class="n">_tcpros_server_addr</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
     <span class="n">_use_sim_time</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="n">_clock_sub</span><span class="p">:</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">[</span><span class="n">Clock</span><span class="p">]</span>
+    <span class="n">_clock_sub</span><span class="p">:</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span>
     <span class="n">_remappings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="n">_sim_time</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span>
     <span class="n">_xmlrpc_runner</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">AppRunner</span>
@@ -517,7 +517,7 @@
                 <span class="k">break</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/use_sim_time&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/use_sim_time&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterError</span><span class="p">:</span>  <span class="c1"># assume that error means not found</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_use_sim_time</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -806,7 +806,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">message_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span>
-        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="n">M</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">[</span><span class="n">M</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a subscriber using this node handle. The arguments and keyword</span>
