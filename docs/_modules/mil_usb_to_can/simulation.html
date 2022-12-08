@@ -163,13 +163,16 @@
 <span class="sd">    CAN devices to simulate the behavior of the whole CAN network.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">SimulatedCANDevice</span><span class="p">},</span> <span class="n">can_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">devices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">can_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            devices (Dict[:class:`int`, Any]): Dictionary containing CAN IDs and</span>
 <span class="sd">                their associated simulated classes inheriting from :class:`SimulatedCANDevice`.</span>
 <span class="sd">            can_id (int): ID of the CAN2USB device. Defaults to -1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">devices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">devices</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">SimulatedCANDevice</span><span class="p">}</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_my_id</span> <span class="o">=</span> <span class="n">can_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_devices</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">can_id</span><span class="p">:</span> <span class="n">device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">can_id</span><span class="p">,</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
