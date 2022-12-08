@@ -73,7 +73,7 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
@@ -211,8 +211,8 @@ can be modified by services or interactive markers.</p>
 <span class="sig-name descname"><span class="pre">marker_scale</span></span><a class="headerlink" href="#mil_poi.POIServer.marker_scale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radius of interactive markers for POIs. Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -222,15 +222,15 @@ can be modified by services or interactive markers.</p>
 <span class="sig-name descname"><span class="pre">add_poi_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AddPOIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AddPOIResponse</span></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.add_poi_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.add_poi_cb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback for the AddPOI service.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>req</strong> (<a class="reference internal" href="services.html#mil_poi.srv.AddPOIRequest" title="mil_poi.srv.AddPOIRequest"><em>AddPOIRequest</em></a>) – The service request. The name and position are used
 from the request.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether the operation was successful, along with a message
 indicating why.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="services.html#mil_poi.srv.AddPOIResponse" title="mil_poi.srv.AddPOIResponse">AddPOIResponse</a></p>
 </dd>
 </dl>
@@ -241,15 +241,15 @@ indicating why.</p>
 <span class="sig-name descname"><span class="pre">delete_poi_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DeletePOIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DeletePOIResponse</span></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.delete_poi_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.delete_poi_cb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback for DeletePOI service. Equivalent to calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">remove_poi()</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>req</strong> (<a class="reference internal" href="services.html#mil_poi.srv.DeletePOIRequest" title="mil_poi.srv.DeletePOIRequest"><em>DeletePOIRequest</em></a>) – The service request. The name is used to determine
 which POI to remove.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether the operation was successful, along with a
 message indicating why.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="services.html#mil_poi.srv.DeletePOIResponse" title="mil_poi.srv.DeletePOIResponse">DeletePOIResponse</a></p>
 </dd>
 </dl>
@@ -260,13 +260,13 @@ message indicating why.</p>
 <span class="sig-name descname"><span class="pre">move_poi_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MovePOIRequest</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MovePOIResponse</span></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.move_poi_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.move_poi_cb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback for MovePOI service.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>req</strong> (<a class="reference internal" href="services.html#mil_poi.srv.MovePOIRequest" title="mil_poi.srv.MovePOIRequest"><em>MovePOIRequest</em></a>) – The service request.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The response from the service.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="services.html#mil_poi.srv.MovePOIResponse" title="mil_poi.srv.MovePOIResponse">MovePOIResponse</a></p>
 </dd>
 </dl>
@@ -274,11 +274,11 @@ message indicating why.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_poi.POIServer.process_feedback">
-<span class="sig-name descname"><span class="pre">process_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InteractiveMarkerFeedback</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.process_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.process_feedback" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">process_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InteractiveMarkerFeedback</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.process_feedback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.process_feedback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process interactive marker feedback, moving markers internally
 in response to markers moved in Rviz.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>feedback</strong> (<em>InteractiveMarkerFeedback</em>) – The feedback message.</p>
 </dd>
 </dl>
@@ -286,19 +286,19 @@ in response to markers moved in Rviz.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_poi.POIServer.transform_position">
-<span class="sig-name descname"><span class="pre">transform_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PointStamped</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.10)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Point</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.transform_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.transform_position" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transform_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PointStamped</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Point</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.transform_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.transform_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempt to transform a PointStamped message into the global frame, returning
 the position of the transformed point or None if transform failed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ps</strong> (<a class="reference internal" href="messages.html#geometry_msgs.msg.PointStamped" title="geometry_msgs.msg.PointStamped"><em>PointStamped</em></a>) – The PointStamped message to be transformed into the
 global frame.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The point in the global frame, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the transform
 experienced an exception.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="messages.html#geometry_msgs.msg.Point" title="geometry_msgs.msg.Point">Point</a>]</p>
 </dd>
 </dl>
@@ -306,7 +306,7 @@ experienced an exception.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_poi.POIServer.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/server.html#POIServer.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.POIServer.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update interactive markers server and POI publish of changes.</p>
 </dd></dl>
 
@@ -322,25 +322,27 @@ Methods</span><ul>
 <span class="attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mil_poi.TxPOIClient.get">get</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="coroutine">
-async</span><a class="reference internal" href="#mil_poi.TxPOIClient.setup">setup</a></li></ul>
+async</span><a class="reference internal" href="#mil_poi.TxPOIClient.setup">setup</a></li><li class="attribute-table-entry">
+<span class="attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mil_poi.TxPOIClient.shutdown">shutdown</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_poi.TxPOIClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_poi.</span></span><span class="sig-name descname"><span class="pre">TxPOIClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_poi.</span></span><span class="sig-name descname"><span class="pre">TxPOIClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="axros/api.html#axros.NodeHandle" title="axros.nodehandle.NodeHandle"><span class="pre">NodeHandle</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client for getting the positions of POIs in a POI server.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>nh</strong> (<a class="reference internal" href="txros/api.html#txros.NodeHandle" title="txros.NodeHandle"><em>txros.NodeHandle</em></a>) – The node handle to use.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nh</strong> (<a class="reference internal" href="axros/api.html#axros.NodeHandle" title="axros.NodeHandle"><em>axros.NodeHandle</em></a>) – The node handle to use.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_poi.TxPOIClient.get">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_fresh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.get" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_fresh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the position of POI in the global frame as a 3x1 numpy array.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the POI.</p></li>
-<li><p><strong>only_fresh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If the POI is already known, wait for a fresh
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the POI.</p></li>
+<li><p><strong>only_fresh</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If the POI is already known, wait for a fresh
 message before returning.</p></li>
 </ul>
 </dd>
@@ -349,8 +351,14 @@ message before returning.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_poi.TxPOIClient.setup">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.setup" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets up the client. Must be called before using the client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mil_poi.TxPOIClient.shutdown">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/mil_poi/tx_interface.html#TxPOIClient.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_poi.TxPOIClient.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts the client down. Should be called before deconstructing the class.</p>
 </dd></dl>
 
 </dd></dl>

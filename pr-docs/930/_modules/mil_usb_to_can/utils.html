@@ -82,7 +82,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">import</span> <span class="nn">serial</span>
 
@@ -93,9 +93,7 @@
 <div class="viewcode-block" id="USB2CANException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USB2CANException">[docs]</a><span class="k">class</span> <span class="nc">USB2CANException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for exception in USB2CAN board functionality. Inherits from :class:`Exception`.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ChecksumException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ChecksumException">[docs]</a><span class="k">class</span> <span class="nc">ChecksumException</span><span class="p">(</span><span class="n">USB2CANException</span><span class="p">):</span>
