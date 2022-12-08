@@ -89,6 +89,12 @@
 <span class="sd">    is just documentation for the various functions that real missions</span>
 <span class="sd">    can overload. Individual ROS robotics platforms should extend this</span>
 <span class="sd">    base class to provide interfaces to the particular systems on the robot.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Prints the name of the mission.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">nh</span> <span class="o">=</span> <span class="kc">None</span>
@@ -280,7 +286,10 @@
 <span class="sd">            parameters: Arguments to modify the behavior of the mission. By default</span>
 <span class="sd">                will be a json decoded object from the string passed in the goal,</span>
 <span class="sd">                but can be changed by overriding decode_parameters.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__qualname__</span></div>
 </pre></div>
 
             </main>
