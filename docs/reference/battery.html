@@ -140,7 +140,7 @@ at a regular interval.</p>
 <code class="docutils literal notranslate"><span class="pre">None</span></code> if no reading has occurred yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -152,7 +152,7 @@ at a regular interval.</p>
 Each reading is from a separate motor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,7 +163,7 @@ Each reading is from a separate motor.</p>
 <dd><p>Whether a hardware kill was raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -182,7 +182,7 @@ topic. Published by the <a class="reference internal" href="#nodes.navigator_bat
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.navigator_battery_monitor.BatteryMonitor.add_voltage">
-<span class="sig-name descname"><span class="pre">add_voltage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Feedback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Status</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nodes/navigator_battery_monitor.html#BatteryMonitor.add_voltage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.navigator_battery_monitor.BatteryMonitor.add_voltage" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_voltage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Feedback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Status</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nodes/navigator_battery_monitor.html#BatteryMonitor.add_voltage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.navigator_battery_monitor.BatteryMonitor.add_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the callback function for feedback from all four motors.</p>
 <p>It appends the new readings to the end of the list and
 ensures that the list stays under 1000 entries.</p>
@@ -211,7 +211,7 @@ the hardware kill.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.navigator_battery_monitor.BatteryMonitor.publish_voltage">
-<span class="sig-name descname"><span class="pre">publish_voltage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nodes/navigator_battery_monitor.html#BatteryMonitor.publish_voltage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.navigator_battery_monitor.BatteryMonitor.publish_voltage" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">publish_voltage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/nodes/navigator_battery_monitor.html#BatteryMonitor.publish_voltage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.navigator_battery_monitor.BatteryMonitor.publish_voltage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Publishes the average voltage across all four thrusters to the <code class="docutils literal notranslate"><span class="pre">battery_voltage</span></code> node
 as a standard Float32 message and runs the voltage_check.</p>
 <p>Currently runs every second.</p>

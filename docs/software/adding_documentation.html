@@ -66,6 +66,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Updating Documentation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup-for-members-with-ros">Setup for Members with ROS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setup-for-members-without-ros">Setup for Members without ROS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-styling">Updating styling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#making-changes">Making changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#viewing-changes">Viewing changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#contributing-changes">Contributing changes</a></li>
@@ -154,6 +155,18 @@ operating system.</p>
 <li><p>Make changes to the files.</p></li>
 <li><p>To view your changes and contribute them, continue reading below.</p></li>
 </ol>
+</section>
+<section id="updating-styling">
+<h2>Updating styling<a class="headerlink" href="#updating-styling" title="Permalink to this heading">¶</a></h2>
+<p>Most of the colors used on the documentation site are controlled through <code class="docutils literal notranslate"><span class="pre">custom.css</span></code>
+or <code class="docutils literal notranslate"><span class="pre">codeblocks.css</span></code>. To update the general layout of the site, edit the <code class="docutils literal notranslate"><span class="pre">custom.css</span></code>
+and re-build the documentation. If you haven’t changed any actual content, you may
+need to build the documentation from scratch using the <code class="docutils literal notranslate"><span class="pre">-s</span></code> flag.</p>
+<p>To update the colors shown in code blocks, edit the <code class="docutils literal notranslate"><span class="pre">codeblocks.css</span></code> file. You can
+either edit this file directly, or generate a similar copy by using the <code class="docutils literal notranslate"><span class="pre">pygments</span></code>
+library. Navigate into the <code class="docutils literal notranslate"><span class="pre">uf_mil_pygments</span></code> Python package in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder,
+install the Python package (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>) and then create a CSS file using
+the Pygments Style class found in the package (<code class="docutils literal notranslate"><span class="pre">pygmentize</span> <span class="pre">-S</span> <span class="pre">mil</span> <span class="pre">-f</span> <span class="pre">html</span> <span class="pre">-a</span> <span class="pre">.highlight</span> <span class="pre">&gt;</span> <span class="pre">mil.css</span></code>).</p>
 </section>
 <section id="making-changes">
 <h2>Making changes<a class="headerlink" href="#making-changes" title="Permalink to this heading">¶</a></h2>

@@ -122,7 +122,7 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriverError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriverError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriverError" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base exception class for all exceptions/errors related to the Pneumatic
 Actuator Board.</p>
-<p>Inherits from <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
+<p>Inherits from <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#Exception" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -165,7 +165,7 @@ def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicA
 def</span><a class="reference internal" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port">set_port</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mil_pneumatic_actuator.</span></span><span class="sig-name descname"><span class="pre">PnuematicActuatorDriver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows high level ROS code to interface with Daniel’s pneumatics board.</p>
 <p>For the dropper and grabber systems, call service with <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>
 to open or close. For the shooter system, sending a <code class="docutils literal notranslate"><span class="pre">True</span></code> signal will
@@ -175,20 +175,20 @@ design documentation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The nname of the board to establish a serial connection to.</p></li>
-<li><p><strong>baud</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The baud rate to establish the serial connection at.</p></li>
-<li><p><strong>simulated</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use a simulated actuator board class
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The nname of the board to establish a serial connection to.</p></li>
+<li><p><strong>baud</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The baud rate to establish the serial connection at.</p></li>
+<li><p><strong>simulated</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to use a simulated actuator board class
 or an interface to the physical board.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.close_port">
-<span class="sig-name descname"><span class="pre">close_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.close_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.close_port" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">close_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.close_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.close_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes a particular port.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The port to close.</p>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The port to close.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -208,18 +208,18 @@ This value is equal to <a class="reference internal" href="#mil_pneumatic_actuat
 </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.get_port">
-<span class="sig-name descname"><span class="pre">get_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.get_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.get_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads the data at a specific port.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The port to read from.</p>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The port to read from.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -234,18 +234,18 @@ This value is equal to <a class="reference internal" href="#mil_pneumatic_actuat
 <dd class="field-odd"><p>The response served by the board.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.open_port">
-<span class="sig-name descname"><span class="pre">open_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.open_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.open_port" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">open_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.open_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.open_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens a particular port.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The port to open.</p>
+<dd class="field-odd"><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The port to open.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
@@ -265,14 +265,14 @@ This value is equal to <a class="reference internal" href="#mil_pneumatic_actuat
 </p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.ping">
-<span class="sig-name descname"><span class="pre">ping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.ping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.ping" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.ping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.ping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sends a ping message to the board and returns the response.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
@@ -288,22 +288,22 @@ This value is equal to <a class="reference internal" href="#mil_pneumatic_actuat
 <dd class="field-even"><p>The response from the board.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.PnuematicActuatorDriver.set_port">
-<span class="sig-name descname"><span class="pre">set_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_open</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.set_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_port</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_open</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/board.html#PnuematicActuatorDriver.set_port"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the data at a particular port to opened/closed. This does not depend
 on the internal state of the port when called, ie, if you request a port to
 be closed, and the port is already closed, then the response is sent anyways.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The specific port to open/close.</p></li>
-<li><p><strong>do_open</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to open the port. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the port
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The specific port to open/close.</p></li>
+<li><p><strong>do_open</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to open the port. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the port
 is closed.</p></li>
 </ul>
 </dd>
@@ -359,7 +359,7 @@ cls</span><a class="reference internal" href="#mil_pneumatic_actuator.Constants.
 Currently set to <code class="docutils literal notranslate"><span class="pre">0x20</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -371,7 +371,7 @@ Currently set to <code class="docutils literal notranslate"><span class="pre">0x
 request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x01</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -383,7 +383,7 @@ request is sent. Currently set to <code class="docutils literal notranslate"><sp
 Currently set to <code class="docutils literal notranslate"><span class="pre">0x30</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -395,7 +395,7 @@ Currently set to <code class="docutils literal notranslate"><span class="pre">0x
 request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x00</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -407,7 +407,7 @@ request is sent. Currently set to <code class="docutils literal notranslate"><sp
 the value of a valve. Currently set to <code class="docutils literal notranslate"><span class="pre">0x40</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -418,7 +418,7 @@ the value of a valve. Currently set to <code class="docutils literal notranslate
 <dd><p>A constant representing a ping request. Currently set to <code class="docutils literal notranslate"><span class="pre">0x10</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -430,7 +430,7 @@ the value of a valve. Currently set to <code class="docutils literal notranslate
 request is sent. Currently set to <code class="docutils literal notranslate"><span class="pre">0x11</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -441,32 +441,32 @@ request is sent. Currently set to <code class="docutils literal notranslate"><sp
 <dd><p>The checksum code used by the board. Currently sent to <code class="docutils literal notranslate"><span class="pre">0xFF</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.create_checksum">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.create_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.create_checksum" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.create_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.create_checksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a checksum given a piece of data. The checksum is calculated through
 the XOR operation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The data to compute the checksum on.</p>
+<dd class="field-odd"><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The data to compute the checksum on.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The checksum.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.deserialize_packet">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.11)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.deserialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.deserialize_packet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Tuple" title="(in Python v3.8)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.deserialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.deserialize_packet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deserializes a piece of data (a bytes object) into a tuple of two numbers.
 The first number is the data carried by the packet, and the second is the checksum
 computed by the board.</p>
@@ -475,41 +475,41 @@ computed by the board.</p>
 <dd class="field-odd"><p>The serialized packet.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)">bytes</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.serialize_packet">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.serialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.serialize_packet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.serialize_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.serialize_packet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Serializes a piece of data (an integer) into a bytes object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The serialized packet.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)">bytes</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.Constants.verify_checksum">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.verify_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.verify_checksum" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">verify_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/constants.html#Constants.verify_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.Constants.verify_checksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifies that two checksums are the same.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The data to verify the constructed checksum of.</p></li>
-<li><p><strong>checksum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The checksum to validate the constructed checksum against.</p></li>
+<li><p><strong>byte</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The data to verify the constructed checksum of.</p></li>
+<li><p><strong>checksum</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The checksum to validate the constructed checksum against.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether the two checksums are the same.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -531,7 +531,7 @@ def</span><a class="reference internal" href="#mil_pneumatic_actuator.SimulatedP
 <dd><p>A simulation of the pneumatic actuator board’s serial protocol</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/simulated_board.html#SimulatedPnuematicActuatorBoard.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mil_pneumatic_actuator/simulated_board.html#SimulatedPnuematicActuatorBoard.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes a series of bytes and completes the necessary actions.</p>
 </dd></dl>
 
