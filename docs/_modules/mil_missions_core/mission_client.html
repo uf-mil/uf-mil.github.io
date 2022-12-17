@@ -79,11 +79,13 @@
                 
   <h1>Source code for mil_missions_core.mission_client</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
 <span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">SimpleActionClient</span>
-<span class="kn">from</span> <span class="nn">mil_missions.msg</span> <span class="kn">import</span> <span class="n">DoMissionAction</span><span class="p">,</span> <span class="n">DoMissionGoal</span>
+<span class="kn">from</span> <span class="nn">mil_missions.msg</span> <span class="kn">import</span> <span class="n">DoMissionAction</span><span class="p">,</span> <span class="n">DoMissionGoal</span><span class="p">,</span> <span class="n">DoMissionResult</span>
 <span class="kn">from</span> <span class="nn">roboteq_msgs.msg</span> <span class="kn">import</span> <span class="n">Feedback</span>
 
 
@@ -100,7 +102,7 @@
         <span class="n">SimpleActionClient</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NS</span><span class="p">,</span> <span class="n">DoMissionAction</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MissionClient.available_missions"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.MissionClient.available_missions">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">available_missions</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">available_missions</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of available missions or None if parameter is not set.</span>
 
@@ -119,14 +121,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cancel_all_goals</span><span class="p">()</span></div>
 
+    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DoMissionResult</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+
 <div class="viewcode-block" id="MissionClient.run_mission"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.MissionClient.run_mission">[docs]</a>    <span class="k">def</span> <span class="nf">run_mission</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">mission</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">done_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">active_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">feedback_cb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Feedback</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+        <span class="n">done_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">active_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">feedback_cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Feedback</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a goal to start a new mission with the specified parameters.</span>
 
