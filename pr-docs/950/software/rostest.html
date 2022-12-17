@@ -168,8 +168,8 @@ $ xdg-open html/index.html <span class="c1"># Browse the HTML file to determine 
 </section>
 </section>
 <section id="python-unit-tests-with-unittest">
-<h2>Python unit tests with <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a><a class="headerlink" href="#python-unit-tests-with-unittest" title="Permalink to this heading">¶</a></h2>
-<p>To write unit tests in python, you should use <a class="reference external" href="https://docs.python.org/3/library/unittest.html#module-unittest" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a>. The structure of a unit
+<h2>Python unit tests with <a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#module-unittest" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a><a class="headerlink" href="#python-unit-tests-with-unittest" title="Permalink to this heading">¶</a></h2>
+<p>To write unit tests in python, you should use <a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#module-unittest" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code></a>. The structure of a unit
 test looks like this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">rostest</span>
@@ -197,14 +197,14 @@ test looks like this:</p>
 </div>
 <p>In the example, there are several important pieces:</p>
 <ol class="arabic simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUp" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.tearDown" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code></a>
+<li><p><a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#unittest.TestCase.setUp" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setUp()</span></code></a> and <a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#unittest.TestCase.tearDown" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tearDown()</span></code></a>
 are called before and after each test, respectively. These methods can be used
 to set up and clean up resources, as needed.</p></li>
 <li><p>Each test is a method that begins with <code class="docutils literal notranslate"><span class="pre">test_</span></code>. Methods that do not begin with
 <code class="docutils literal notranslate"><span class="pre">test_</span></code> will not register as tests.</p></li>
 <li><p>You can use <code class="docutils literal notranslate"><span class="pre">assertX</span></code> methods to assert that the results of operations are
-expected. Example method names include <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertEqual" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEqual()</span></code></a>,
-<a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertTrue" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTrue()</span></code></a>, and <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertIn" title="(in Python v3.11)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertIn()</span></code></a>.</p></li>
+expected. Example method names include <a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#unittest.TestCase.assertEqual" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertEqual()</span></code></a>,
+<a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#unittest.TestCase.assertTrue" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertTrue()</span></code></a>, and <a class="reference external" href="https://docs.python.org/3.8/library/unittest.html#unittest.TestCase.assertIn" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertIn()</span></code></a>.</p></li>
 </ol>
 <p>You can also write unit tests for asynchronous operations. Check out our example
 from our <a class="reference internal" href="../reference/axros/index.html#module-axros" title="axros"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code></a> module:</p>
