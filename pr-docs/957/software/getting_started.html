@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Getting Started</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Developer Tools" href="devtools.html" />
+        <link rel="prev" title="Software" href="index.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-ubuntu">Installing Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-packages">Updating packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-git">Install git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloning-the-repository">Cloning the repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-setup-scripts">Run the setup scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-git">Configuring Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viewing-simulation">Viewing simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-developer-tools">Installing developer tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h1>
+<p>This page describes the recommended process of setting up a new Ubuntu system
+to work with the MIL repository and its dependencies. Ubuntu is an operating system
+(similar to OS X or Windows) that MIL (and other robotics labs) choose to use
+because of its familiarity with ROS.</p>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this heading">¶</a></h2>
+<p>Autonomous robotics is computationally expensive, especially when running simulations.
+Your VM or computer should have at least 4GB, although it will run much faster with
+8GB of RAM or higher. You should have at least a dual-core system, but using
+more cores will allow compilation to run much faster.</p>
+<p>If you are using a virtual machine, you can change the amount of RAM and the
+number of CPU cores allotted to the virtual machine by visiting the settings
+of your VM software.</p>
+</section>
+<section id="installing-ubuntu">
+<h2>Installing Ubuntu<a class="headerlink" href="#installing-ubuntu" title="Permalink to this heading">¶</a></h2>
+<p>You will need to install <strong>Ubuntu 20.04 LTS</strong>, the main operating system supported by
+ROS and our tools. Our tools are not setup to work on other operating systems, including
+other Linux distributions, macOS, and Windows.</p>
+<p>To use Ubuntu in MIL, you have two options:</p>
+<ol class="arabic simple">
+<li><p>Use a <strong>virtual machine</strong>. A virtual machine uses your current operating system
+to virtually host another operating system (in this case, Ubuntu). This could
+cause your Ubuntu environment to run slow (in some cases, it might be unusable)
+and may cause you to experience issues with certain programs.</p></li>
+<li><p><strong>Dual-boot your computer.</strong> Dual booting will allocate a piece of your computer’s
+storage to a new operating system, which will be installed on your computer directly.
+This dual-booted solution will not run on top of your current operating system, but
+will instead run by directly using your computer’s resources.</p></li>
+</ol>
+<p>Dual-booting your computer is highly recommended over using a virtual machine,
+as it allows your Ubuntu setup to tap directly into your computer’s resources.
+However, it’s totally your choice.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you <strong>have an M-series (ARM) Mac computer</strong>, you will need to use a
+virtual machine as these systems are not able to have two operating systems installed
+at once. Intel-based Macs may also experience some issues with dual-booting Ubuntu.</p>
+</div>
+<p>Please follow the link that suits your best use case:</p>
+<ul class="simple">
+<li><p><strong>Dual-booting a Windows computer</strong>: Dual-booting on windows is the best option
+to install Ubuntu on a Windows computer. To complete the process, <a class="reference external" href="https://help.ubuntu.com/community/WindowsDualBoot">look here</a>.</p></li>
+<li><p><strong>Using a virtual machine on Windows:</strong> You could also use a virtual machine
+software on Windows to run Ubuntu. These software include VirtualBox or VMWare.
+Choose which virtualization software works best for you and find a tutorial on how
+to install Ubuntu.</p></li>
+<li><p><strong>Using Parallels on macOS</strong>: Parallels is a favorited virtual machine software
+available on MacOS. It is not free, although there is a student discount available.
+To see how to install Ubuntu on MacOS with parallels, see
+<a class="reference external" href="https://peterwitham.com/videos/how-to-install-ubuntu-20-04-lts-on-parallels-for-mac/">here</a>.</p></li>
+<li><p><strong>Using UTM on macOS</strong>: UTM is a virtual machine software that is compatible with
+MacOS. The software is free, unlike Parallels, but requires more setup by the user.
+For instructions on installing Ubuntu with UTM,
+<a class="reference external" href="https://mac.getutm.app/gallery/ubuntu-20-04">see here</a>.</p></li>
+<li><p><strong>Use Distrobox on another Linux distribution</strong>: If you use a Linux distribution
+as your primary operating system, you can install
+Ubuntu through <a class="reference external" href="https://github.com/89luca89/distrobox">Distrobox</a>. You can create a
+Distrobox environment using <code class="docutils literal notranslate"><span class="pre">distrobox</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">mil</span> <span class="pre">--image</span> <span class="pre">ubuntu:focal</span> <span class="pre">--home</span> <span class="pre">~/mil-home</span></code>.
+This will allow you to keep a MIL-only environment. You will also have to set the
+hostname to localhost manually by running <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">hostname</span> <span class="pre">localhost</span></code> before running setup.</p></li>
+</ul>
+<p>After you have the operating system downloaded, you may need to configure it.
+This includes setting your preferred language and keyboard layout, along with
+your username and password. Set these settings up to your liking, but note that
+having a shorter username may save you some typing in the long run.</p>
+</section>
+<section id="updating-packages">
+<h2>Updating packages<a class="headerlink" href="#updating-packages" title="Permalink to this heading">¶</a></h2>
+<p>First, we will refresh the list of packages available for your computer. You
+will install packages on Ubuntu using the <code class="docutils literal notranslate"><span class="pre">apt</span></code> package manager. You may also
+see this written as <code class="docutils literal notranslate"><span class="pre">apt-get</span></code>; the two commands are very similar and usually
+achieve the same purpose.</p>
+<p>(To access the Terminal on Ubuntu, click the 9 dots in the bottom left corner
+and find the Terminal app. You can later install a different terminal emulator,
+if you’d like.)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt update
+$ sudo apt upgrade
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$</span></code> shown before the commands above indicates that those commands are meant
+to be run in your computer’s shell. Do not type these dollar signs; only type
+what comes after them.</p>
+<p>You may also see <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code> in code examples on pages you visit later. This indicates
+that those code examples are meant to be run in the Python REPL. Furthermore,
+<code class="docutils literal notranslate"><span class="pre">...</span></code> is used to represent a Python command that is meant to be indented before
+it’s ran in the REPL.</p>
+</div>
+</section>
+<section id="install-git">
+<h2>Install git<a class="headerlink" href="#install-git" title="Permalink to this heading">¶</a></h2>
+<p>To contribute changes, you will need to have <a class="reference external" href="https://www.git-scm.com">git</a> installed.
+This program will be used to track and upload any changes that you make to the repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install git
+</pre></div>
+</div>
+</section>
+<section id="cloning-the-repository">
+<h2>Cloning the repository<a class="headerlink" href="#cloning-the-repository" title="Permalink to this heading">¶</a></h2>
+<p>You need to clone (download) a copy of the repository onto your computer so you
+can make changes.</p>
+<p>First clone the upstream (MIL’s fork) version of the repo. It is recommended
+that you first create a catkin workspace and clone it into the <code class="docutils literal notranslate"><span class="pre">src</span></code> or that
+workspace.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p ~/catkin_ws/src <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ~/catkin_ws/src
+</pre></div>
+</div>
+<p>Then, clone the repository (the <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> is essential, as that is
+what pulls the submodules, <code class="docutils literal notranslate"><span class="pre">-j8</span></code> is a speed optimization that downloads up to 8
+submodules at a time). Cloning the repository allows you to have a local copy
+of the code on your computer.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone --recurse-submodules -j8 https://github.com/uf-mil/mil.git
+</pre></div>
+</div>
+<p>Navigate to the root of the repository now. If you have followed the
+instructions exactly, you can get there through:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/catkin_ws/src/mil
+</pre></div>
+</div>
+</section>
+<section id="run-the-setup-scripts">
+<h2>Run the setup scripts<a class="headerlink" href="#run-the-setup-scripts" title="Permalink to this heading">¶</a></h2>
+<p>If you are running Ubuntu, and prefer to run code directly on your “host”
+operating system without using Docker, you can run the following scripts from
+the root of the repository.</p>
+<p>If you’re wondering what these scripts do, they install all of the tools needed
+for you to work in MIL (<code class="docutils literal notranslate"><span class="pre">git</span></code>, ROS, Python dependencies, etc.). Feel free
+to open up the file in an editor if you’re more curious.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/install.sh
+$ <span class="nb">exec</span> bash <span class="c1"># or exec zsh if you have set up zsh</span>
+</pre></div>
+</div>
+<p>Exit the terminal and enter it again.</p>
+<p>To build our tools, we use a tool that ROS provides us named <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code>. This
+searches through all of our packages and compiles them together. You can use an
+alias, <code class="docutils literal notranslate"><span class="pre">cm</span></code> to call <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code> quickly, from wherever you are in the MIL directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cm
+</pre></div>
+</div>
+<p>If something goes wrong, try the suggestions in <a class="reference internal" href="help.html"><span class="doc std std-doc">Getting Help</span></a>. It’s common
+for the build to fail if your system was unable to find enough resources to build
+the project. If you are using a VM, you may want to allocate more cores or RAM
+to the instance.</p>
+</section>
+<section id="configuring-git">
+<h2>Configuring Git<a class="headerlink" href="#configuring-git" title="Permalink to this heading">¶</a></h2>
+<p>If you have not configured Git to use your name/email on your new Ubuntu setup,
+you can use the script below to set up your Git configuration! It will help you
+register your name and email with Git and authenticate so that you can push to
+the repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/store_git.sh
+</pre></div>
+</div>
+</section>
+<section id="viewing-simulation">
+<h2>Viewing simulation<a class="headerlink" href="#viewing-simulation" title="Permalink to this heading">¶</a></h2>
+<p>Now that you’ve built the repository, check to make sure that the simulation works
+on your computer. To do this, we will use a tool called <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code>, which launches
+up a simulation of our submarine.</p>
+<p>For this, you will need multiple terminal windows! To create a new window in the
+default terminal, use <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">t</span></code>.</p>
+<p>In window one, write:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch subjugator_launch gazebo.launch
+</pre></div>
+</div>
+<p>In window two, write:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gazebogui
+</pre></div>
+</div>
+<p>The first command launches the necessary subsystems for Gazebo, while the second command
+launches the Gazebo GUI - aka, the thing you will actually interact with! If all
+goes according to plan, you should see our robot in its own little world!</p>
+</section>
+<section id="installing-developer-tools">
+<h2>Installing developer tools<a class="headerlink" href="#installing-developer-tools" title="Permalink to this heading">¶</a></h2>
+<p>After you have verified that your Git setup is working appopriately, take a look
+at installing some developer tools on the <a class="reference internal" href="devtools.html"><span class="doc std std-doc">Developer Tools</span></a>
+page.</p>
+<p>You are <strong>highly recommended</strong> to install <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>, but installing Zsh or
+a specific editor is entirely up to you. If you choose not to install <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>,
+the chance of your changes failing in CI is higher.</p>
+</section>
+<section id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this heading">¶</a></h2>
+<p>If the <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code> didn’t fail on your computer, you’re all good to go!
+Congratulations, and welcome to MIL!</p>
+<p>The next step is to get assigned a task and to dive in. You should have the setup
+to do so now!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to contribute code, you need to be in the <a class="reference external" href="https://github.com/uf-mil">uf-mil GitHub organization</a>.
+First create a GitHub account if you do not have one, then ask someone in MIL / on Slack
+to invite you.</p>
+</div>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
