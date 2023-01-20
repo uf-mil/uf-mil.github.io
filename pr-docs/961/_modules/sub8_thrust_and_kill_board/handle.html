@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>sub8_thrust_and_kill_board.handle</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for sub8_thrust_and_kill_board.handle</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">mil_usb_to_can</span> <span class="kn">import</span> <span class="n">CANDeviceHandle</span>
+<span class="kn">from</span> <span class="nn">ros_alarms</span> <span class="kn">import</span> <span class="n">AlarmBroadcaster</span><span class="p">,</span> <span class="n">AlarmListener</span>
+<span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span>
+<span class="kn">from</span> <span class="nn">rospy.timer</span> <span class="kn">import</span> <span class="n">TimerEvent</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">SetBoolRequest</span><span class="p">,</span> <span class="n">SetBoolResponse</span>
+<span class="kn">from</span> <span class="nn">subjugator_msgs.msg</span> <span class="kn">import</span> <span class="n">Thrust</span>
+
+<span class="kn">from</span> <span class="nn">.packets</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">KILL_SEND_ID</span><span class="p">,</span>
+    <span class="n">THRUST_SEND_ID</span><span class="p">,</span>
+    <span class="n">HeartbeatMessage</span><span class="p">,</span>
+    <span class="n">KillMessage</span><span class="p">,</span>
+    <span class="n">StatusMessage</span><span class="p">,</span>
+    <span class="n">ThrustPacket</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.thruster</span> <span class="kn">import</span> <span class="n">make_thruster_dictionary</span>
+
+
+<div class="viewcode-block" id="ThrusterAndKillBoard"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard">[docs]</a><span class="k">class</span> <span class="nc">ThrusterAndKillBoard</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Device handle for the thrust and kill board.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Initialize thruster mapping from params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span> <span class="o">=</span> <span class="n">make_thruster_dictionary</span><span class="p">(</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/thruster_layout/thrusters&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># Tracks last hw-kill alarm update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Tracks last go status broadcasted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Used to raise/clear hw-kill when board updates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;hw-kill&quot;</span><span class="p">)</span>
+        <span class="c1"># Alarm broadaster for GO command</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;go&quot;</span><span class="p">)</span>
+        <span class="c1"># Listens to hw-kill updates to ensure another nodes doesn&#39;t manipulate it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hw_kill_listener</span> <span class="o">=</span> <span class="n">AlarmListener</span><span class="p">(</span>
+            <span class="s2">&quot;hw-kill&quot;</span><span class="p">,</span> <span class="n">callback_funct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_hw_kill</span>
+        <span class="p">)</span>
+        <span class="c1"># Provide service for alarm handler to set/clear the motherboard kill</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unkill_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span>
+        <span class="p">)</span>
+        <span class="c1"># Sends heartbeat to board</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_heartbeat_timer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.4</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">)</span>
+        <span class="c1"># Create a subscribe for thruster commands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+            <span class="s2">&quot;/thrusters/thrust&quot;</span><span class="p">,</span> <span class="n">Thrust</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.set_mobo_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.set_mobo_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobo_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called on service calls to ``/set_mobo_kill``, sending the appropriate</span>
+<span class="sd">        packet to the board to unassert or assert to motherboard-origin kill.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (SetBoolRequest): The service request.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SetBoolResponse: The service response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span>
+            <span class="nb">bytes</span><span class="p">(</span>
+                <span class="n">KillMessage</span><span class="o">.</span><span class="n">create_kill_message</span><span class="p">(</span>
+                    <span class="n">command</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">asserted</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">SetBoolResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.send_heartbeat"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.send_heartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">TimerEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send a special heartbeat packet. Called by a recurring timer set upon</span>
+<span class="sd">        initialization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HeartbeatMessage</span><span class="o">.</span><span class="n">create</span><span class="p">()),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.on_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">on_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the classes&#39; hw-kill alarm to the latest update.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alarm (:class:`~ros_alarms.msg._Alarm.Alarm`): The alarm message to update with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span> <span class="o">=</span> <span class="n">alarm</span></div>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.on_command"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_command">[docs]</a>    <span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Thrust</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        When a thrust command message is received from the Subscriber, send the appropriate packet</span>
+<span class="sd">        to the board.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (Thrust): The thrust message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">thruster_commands</span><span class="p">:</span>
+            <span class="c1"># If we don&#39;t have a mapping for this thruster, ignore it</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Command received for </span><span class="si">{}</span><span class="s2">, but this is not a thruster.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">cmd</span><span class="o">.</span><span class="n">name</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="c1"># Map commanded thrust (in newetons) to effort value (-1 to 1)</span>
+            <span class="n">effort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">effort_from_thrust</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">thrust</span><span class="p">)</span>
+            <span class="c1"># Send packet to command specified thruster the specified force</span>
+            <span class="n">packet</span> <span class="o">=</span> <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">create_thrust_packet</span><span class="p">(</span>
+                <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">ID_MAPPING</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">effort</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">packet</span><span class="p">),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">THRUST_SEND_ID</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.update_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.update_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">update_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">StatusMessage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If needed, update the hw-kill alarm so it reflects the latest status from the board.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            status (StatusMessage): The status message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set severity / problem message appropriately</span>
+        <span class="n">severity</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">hard_killed</span><span class="p">:</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Hard kill&quot;</span>
+        <span class="k">elif</span> <span class="n">status</span><span class="o">.</span><span class="n">soft_killed</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">severity</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">switch_soft_kill</span><span class="p">:</span>
+                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;switch&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">mobo_soft_kill</span><span class="p">:</span>
+                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;mobo&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">heartbeat_lost</span><span class="p">:</span>
+                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;heartbeat&quot;</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Soft kill from: &quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reasons</span><span class="p">)</span>
+        <span class="n">raised</span> <span class="o">=</span> <span class="n">severity</span> <span class="o">!=</span> <span class="mi">0</span>
+
+        <span class="c1"># If the current status differs from the alarm, update the alarm</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span><span class="o">.</span><span class="n">raised</span> <span class="o">!=</span> <span class="n">raised</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span><span class="o">.</span><span class="n">problem_description</span> <span class="o">!=</span> <span class="n">message</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span><span class="o">.</span><span class="n">severity</span> <span class="o">!=</span> <span class="n">severity</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">raised</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
+                    <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span> <span class="n">problem_description</span><span class="o">=</span><span class="n">message</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">(</span><span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ThrusterAndKillBoard.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse the two bytes and raise kills according to a set of specifications</span>
+<span class="sd">        listed below.</span>
+
+<span class="sd">        Specifications of the first byte (where &quot;asserted&quot; is 1 and &quot;unasserted&quot; is 0):</span>
+
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | First Byte | Meaning                                   |</span>
+<span class="sd">        +============+===========================================+</span>
+<span class="sd">        | Bit 7      | Hard kill status, changed by the Hall     |</span>
+<span class="sd">        |            | Effect switch. If this becomes 1, the     |</span>
+<span class="sd">        |            | shutdown procedure begins.                |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 6      | The generalized soft kill status. Becomes |</span>
+<span class="sd">        |            | 1 if any of the specific soft kill flags  |</span>
+<span class="sd">        |            | become 1. Returns to 0 if all kills are   |</span>
+<span class="sd">        |            | cleared and the thrusters are done        |</span>
+<span class="sd">        |            | re-initializing.                          |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 5      | Soft kill flag for the Hall Effect sensor |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 4      | Motherboard command soft kill flag.       |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 3      | Soft kill indicating heartbeat was lost.  |</span>
+<span class="sd">        |            | Times out after one second.               |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 2      |                                           |</span>
+<span class="sd">        | Bit 1      | Reserved flags.                           |</span>
+<span class="sd">        | Bit 0      |                                           |</span>
+<span class="sd">        +------------+-------------------------------------------+</span>
+
+<span class="sd">        Specifications of the second byte (where &quot;pressed&quot; is 1 and &quot;unpressed&quot; is 0):</span>
+
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | Second Byte | Meaning                                   |</span>
+<span class="sd">        +=============+===========================================+</span>
+<span class="sd">        | Bit 7       | Hard kill status representing the Hall    |</span>
+<span class="sd">        |             | Effect switch. If this becomes 0 (&quot;on&quot;),  |</span>
+<span class="sd">        |             | the hard kill in the previous byte        |</span>
+<span class="sd">        |             | becomes 1.                                |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 6       | The soft kill status of the Hall Effect   |</span>
+<span class="sd">        |             | sensor. If this is &quot;pressed&quot; (1) then bit |</span>
+<span class="sd">        |             | 5 of the previous byte becomes &quot;unkilled&quot; |</span>
+<span class="sd">        |             | (0). Removing the magnet &quot;unpresses&quot; the  |</span>
+<span class="sd">        |             | switch.                                   |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 5       | Go Hall Effect switch status. &quot;Pressed&quot;   |</span>
+<span class="sd">        |             | is 1, removing the magnet &quot;unpresses&quot; the |</span>
+<span class="sd">        |             | switch.                                   |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 4       | Thruster initializing status. Becomes 1   |</span>
+<span class="sd">        |             | when the board is unkilling and starts    |</span>
+<span class="sd">        |             | powering thrusters. After the &quot;grace      |</span>
+<span class="sd">        |             | period&quot; it becomes 0 and the overall soft |</span>
+<span class="sd">        |             | kill status becomes 0. The flag also      |</span>
+<span class="sd">        |             | becomes 0 if killed in the middle of      |</span>
+<span class="sd">        |             | initializing thrusters.                   |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | Bit 3       |                                           |</span>
+<span class="sd">        | Bit 2       |                                           |</span>
+<span class="sd">        | Bit 1       | Reserved flags.                           |</span>
+<span class="sd">        | Bit 0       |                                           |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">StatusMessage</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_hw_kill</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+        <span class="n">go</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">go_switch</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">go</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">go</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
+                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug pulled!&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">(</span>
+                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug returned&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span> <span class="o">=</span> <span class="n">go</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
