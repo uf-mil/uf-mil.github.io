@@ -85,7 +85,7 @@
 
 
 <div class="viewcode-block" id="hexify"><a class="viewcode-back" href="../../reference/serial.html#mil_tools.hexify">[docs]</a><span class="k">def</span> <span class="nf">hexify</span><span class="p">(</span><span class="n">buff</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Display a buffer of bytes in hex format. This should take a bytes object, and</span>
 <span class="sd">    will return a bytes string in hex format.</span>
 
@@ -102,7 +102,7 @@
 
 
 <div class="viewcode-block" id="NoopSerial"><a class="viewcode-back" href="../../reference/serial.html#mil_tools.NoopSerial">[docs]</a><span class="k">class</span> <span class="nc">NoopSerial</span><span class="p">(</span><span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Inherits from :class:`serial.Serial`, doing nothing for each function.</span>
 
 <span class="sd">    Allows super classes to implement custom behavior for simulating</span>
@@ -157,7 +157,7 @@
 
 
 <div class="viewcode-block" id="SimulatedSerial"><a class="viewcode-back" href="../../reference/serial.html#mil_tools.SimulatedSerial">[docs]</a><span class="k">class</span> <span class="nc">SimulatedSerial</span><span class="p">(</span><span class="n">NoopSerial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simulates a serial device, storing a buffer to be read in a program like a</span>
 <span class="sd">    normal OS serial device.</span>
 
@@ -197,7 +197,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">in_waiting</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The number of bytes waiting to be read. This does not modify the buffer in</span>
 <span class="sd">        any way; the buffer is only inspected.</span>
 
@@ -207,14 +207,14 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SimulatedSerial.reset_input_buffer"><a class="viewcode-back" href="../../reference/serial.html#mil_tools.SimulatedSerial.reset_input_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">reset_input_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the buffer to contain no content. The buffer is set to an empty</span>
 <span class="sd">        byte string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="SimulatedSerial.read"><a class="viewcode-back" href="../../reference/serial.html#mil_tools.SimulatedSerial.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads an amount of bytes from the buffer. All bytes read are removed from the</span>
 <span class="sd">        buffer upon reading.</span>
 

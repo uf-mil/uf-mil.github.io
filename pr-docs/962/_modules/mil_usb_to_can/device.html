@@ -88,7 +88,7 @@
 
 
 <div class="viewcode-block" id="SimulatedCANDeviceHandle"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDeviceHandle">[docs]</a><span class="k">class</span> <span class="nc">SimulatedCANDeviceHandle</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simulates a CAN device, with functions to be overridden to handle data requests</span>
 <span class="sd">    and sends from motherboard.</span>
 
@@ -107,13 +107,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">inbound_packets</span> <span class="o">=</span> <span class="n">inbound_packets</span>
 
 <div class="viewcode-block" id="SimulatedCANDeviceHandle.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDeviceHandle.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data over the serial connection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sim_board</span><span class="o">.</span><span class="n">send_to_bus</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimulatedCANDeviceHandle.on_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDeviceHandle.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">packet</span><span class="p">:</span> <span class="n">Packet</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when an relevant incoming packet is received over the serial</span>
 <span class="sd">        connection. Relevant packets are those listed in :attr:`~.inbound_packets`.</span>
 
@@ -126,14 +126,14 @@
 
 
 <div class="viewcode-block" id="CANDeviceHandle"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle">[docs]</a><span class="k">class</span> <span class="nc">CANDeviceHandle</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class to allow developers to write handles for communication with a</span>
 <span class="sd">    particular CAN device. The two methods of the handle allow the handle to listen</span>
 <span class="sd">    to incoming data, as well as send data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">:</span> <span class="n">USBtoCANDriver</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            driver (USBtoCANBoard): Driver that is used to communicate with the board.</span>
 <span class="sd">            device_id (int): The CAN ID of the device this class will handle. Not currently used.</span>
@@ -141,7 +141,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_driver</span> <span class="o">=</span> <span class="n">driver</span>
 
 <div class="viewcode-block" id="CANDeviceHandle.on_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Packet</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when a return packet is sent over the serial connection. In the</span>
 <span class="sd">        USB to CAN protocol, it is assumed that packets will be returned to the</span>
 <span class="sd">        motherboard in the order they are sent out. Therefore, the type of packet</span>
@@ -156,7 +156,7 @@
         <span class="k">del</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="CANDeviceHandle.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Packet</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a packet over the serial connection.</span>
 
 <span class="sd">        Args:</span>

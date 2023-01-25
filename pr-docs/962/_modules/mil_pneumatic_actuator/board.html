@@ -92,7 +92,7 @@
 
 
 <div class="viewcode-block" id="PnuematicActuatorDriverError"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriverError">[docs]</a><span class="k">class</span> <span class="nc">PnuematicActuatorDriverError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The base exception class for all exceptions/errors related to the Pneumatic</span>
 <span class="sd">    Actuator Board.</span>
 
@@ -104,7 +104,7 @@
 
 
 <div class="viewcode-block" id="PnuematicActuatorDriverChecksumError"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriverChecksumError">[docs]</a><span class="k">class</span> <span class="nc">PnuematicActuatorDriverChecksumError</span><span class="p">(</span><span class="n">PnuematicActuatorDriverError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception representing an invalid checksum.</span>
 
 <span class="sd">    Inherits from :class:`PnuematicActuatorDriverError`.</span>
@@ -118,7 +118,7 @@
 
 
 <div class="viewcode-block" id="PnuematicActuatorDriverResponseError"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriverResponseError">[docs]</a><span class="k">class</span> <span class="nc">PnuematicActuatorDriverResponseError</span><span class="p">(</span><span class="n">PnuematicActuatorDriverError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception representing an invalid response.</span>
 
 <span class="sd">    Inherits from :class:`PnuematicActuatorDriverError`.</span>
@@ -132,7 +132,7 @@
 
 
 <div class="viewcode-block" id="PnuematicActuatorTimeoutError"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorTimeoutError">[docs]</a><span class="k">class</span> <span class="nc">PnuematicActuatorTimeoutError</span><span class="p">(</span><span class="n">PnuematicActuatorDriverError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception representing a serial timeout experienced by the board.</span>
 
 <span class="sd">    Inherits from :class:`PnuematicActuatorDriverError`.</span>
@@ -144,7 +144,7 @@
 
 
 <div class="viewcode-block" id="PnuematicActuatorDriver"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver">[docs]</a><span class="k">class</span> <span class="nc">PnuematicActuatorDriver</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Allows high level ROS code to interface with Daniel&#39;s pneumatics board.</span>
 
 <span class="sd">    For the dropper and grabber systems, call service with ``True`` or ``False``</span>
@@ -158,7 +158,7 @@
     <span class="c1"># TODO: Add a function to try and reconnect to the serial port if we lose connection.</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">baud</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">simulated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            port (str): The nname of the board to establish a serial connection to.</span>
 <span class="sd">            baud (int): The baud rate to establish the serial connection at.</span>
@@ -173,7 +173,7 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_verify_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">checksum</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Verifies that two checksums are equivalent. If they are not equivalent,</span>
 <span class="sd">        then an exception is raised. Otherwise, ``None`` is implicitly returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -183,7 +183,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal method to return only the desired data sent by the actuator board.</span>
 
 <span class="sd">        Returns:</span>
@@ -200,7 +200,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">_send_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">expected_response</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal method which sends some data and compares it to the expected</span>
 <span class="sd">        response (if desired) before returning it to the caller.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -212,7 +212,7 @@
         <span class="k">return</span> <span class="n">response</span>
 
 <div class="viewcode-block" id="PnuematicActuatorDriver.open_port"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.open_port">[docs]</a>    <span class="k">def</span> <span class="nf">open_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Opens a particular port.</span>
 
 <span class="sd">        Args:</span>
@@ -234,7 +234,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_request</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">Constants</span><span class="o">.</span><span class="n">OPEN_RESPONSE</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PnuematicActuatorDriver.close_port"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.close_port">[docs]</a>    <span class="k">def</span> <span class="nf">close_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Closes a particular port.</span>
 
 <span class="sd">        Args:</span>
@@ -256,7 +256,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_request</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">Constants</span><span class="o">.</span><span class="n">CLOSE_RESPONSE</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PnuematicActuatorDriver.set_port"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.set_port">[docs]</a>    <span class="k">def</span> <span class="nf">set_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">do_open</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the data at a particular port to opened/closed. This does not depend</span>
 <span class="sd">        on the internal state of the port when called, ie, if you request a port to</span>
 <span class="sd">        be closed, and the port is already closed, then the response is sent anyways.</span>
@@ -279,7 +279,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">close_port</span><span class="p">(</span><span class="n">port</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PnuematicActuatorDriver.get_port"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port">[docs]</a>    <span class="k">def</span> <span class="nf">get_port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reads the data at a specific port.</span>
 
 <span class="sd">        Args:</span>
@@ -299,7 +299,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_send_request</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PnuematicActuatorDriver.ping"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.ping">[docs]</a>    <span class="k">def</span> <span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a ping message to the board and returns the response.</span>
 
 <span class="sd">        Raises:</span>

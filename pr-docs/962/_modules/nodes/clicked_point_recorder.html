@@ -89,7 +89,7 @@
 
 
 <div class="viewcode-block" id="ClickedPointRecorder"><a class="viewcode-back" href="../../reference/rviz.html#nodes.clicked_point_recorder.ClickedPointRecorder">[docs]</a><span class="k">class</span> <span class="nc">ClickedPointRecorder</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Listens to RVIZ clicked points, storing points in a CSV file. Support for running</span>
 <span class="sd">    through `rosrun`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -99,7 +99,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">point_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/clicked_point&quot;</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_cb</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ClickedPointRecorder.point_to_dict"><a class="viewcode-back" href="../../reference/rviz.html#nodes.clicked_point_recorder.ClickedPointRecorder.point_to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">point_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">PointStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a dictionary representing a point, where the values for the</span>
 <span class="sd">        dict are obtained from the PointStamped message accepted.</span>
 
@@ -120,7 +120,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="ClickedPointRecorder.write_file"><a class="viewcode-back" href="../../reference/rviz.html#nodes.clicked_point_recorder.ClickedPointRecorder.write_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Writes the points to a CSV file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">-%H-%M-%S&quot;</span><span class="p">)</span>
@@ -135,7 +135,7 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Writing points to </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClickedPointRecorder.point_cb"><a class="viewcode-back" href="../../reference/rviz.html#nodes.clicked_point_recorder.ClickedPointRecorder.point_cb">[docs]</a>    <span class="k">def</span> <span class="nf">point_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">PointStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serves as a callback to the point subscriber. Accepts PointStamped</span>
 <span class="sd">        messages and adds the messages to the internal points array.</span>
 

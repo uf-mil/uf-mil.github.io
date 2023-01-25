@@ -99,7 +99,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dumping</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="BagManager.start_caching"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_gazebo_tools.BagManager.start_caching">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">start_caching</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Caches bags using big dicts.</span>
 
 <span class="sd">        .. code-block:: python3</span>
@@ -143,7 +143,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BagManager.make_dict"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_gazebo_tools.BagManager.make_dict">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">make_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate caching dictionary from a yaml file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diag_dir</span> <span class="o">+</span> <span class="s2">&quot;messages_to_bag.yaml&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -170,7 +170,7 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_dict</span><span class="p">[</span><span class="n">msg_topic</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="BagManager.dump"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_gazebo_tools.BagManager.dump">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save cached bags and save the next &#39;post_cache_time&#39; seconds.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dumping</span> <span class="o">=</span> <span class="kc">True</span>

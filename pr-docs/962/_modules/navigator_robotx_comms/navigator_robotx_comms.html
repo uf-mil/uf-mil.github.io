@@ -111,7 +111,7 @@
 
 
 <div class="viewcode-block" id="RobotXHeartbeatMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXHeartbeatMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXHeartbeatMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of the heartbeat message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -131,7 +131,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_last</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="RobotXHeartbeatMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXHeartbeatMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        From a message representing a message as a string, return the data and checksum</span>
 <span class="sd">        lists encoded in the string.</span>
 
@@ -159,7 +159,7 @@
         <span class="n">system_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given the necessary information to encode in the message, a message (as a string)</span>
 <span class="sd">        is created. This message is ready to be sent back through the RobotX communications</span>
 <span class="sd">        protocol.</span>
@@ -250,7 +250,7 @@
 
 
 <div class="viewcode-block" id="RobotXEntranceExitGateMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXEntranceExitGateMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXEntranceExitGateMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of entrance and exit gates message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -269,7 +269,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXGAT&quot;</span>
 
 <div class="viewcode-block" id="RobotXEntranceExitGateMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXEntranceExitGateMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -293,7 +293,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageEntranceExitGateRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -338,7 +338,7 @@
 
 
 <div class="viewcode-block" id="RobotXFollowPathMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXFollowPathMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXFollowPathMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of follow path message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -357,7 +357,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXPTH&quot;</span>
 
 <div class="viewcode-block" id="RobotXFollowPathMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXFollowPathMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -381,7 +381,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageFollowPathRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -423,7 +423,7 @@
 
 
 <div class="viewcode-block" id="RobotXReactReportMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXReactReportMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXReactReportMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of react report message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -442,7 +442,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXENC&quot;</span>
 
 <div class="viewcode-block" id="RobotXReactReportMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXReactReportMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -466,7 +466,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageReactReportRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -511,7 +511,7 @@
 
 
 <div class="viewcode-block" id="RobotXScanCodeMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXScanCodeMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXScanCodeMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation and sending of scan the code message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -530,7 +530,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXCOD&quot;</span>
 
 <div class="viewcode-block" id="RobotXScanCodeMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXScanCodeMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the information encoded in a message.</span>
 
 <span class="sd">        Args:</span>
@@ -554,7 +554,7 @@
         <span class="n">color_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a Scan the Code status message.</span>
 
 <span class="sd">        Args:</span>
@@ -586,7 +586,7 @@
 
 
 <div class="viewcode-block" id="RobotXDetectDockMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXDetectDockMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXDetectDockMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of detect dock message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -605,7 +605,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXDOK&quot;</span>
 
 <div class="viewcode-block" id="RobotXDetectDockMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXDetectDockMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -629,7 +629,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageDetectDockRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -673,7 +673,7 @@
 
 
 <div class="viewcode-block" id="RobotXFindFlingMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXFindFlingMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXFindFlingMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of find fling message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -692,7 +692,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXFLG&quot;</span>
 
 <div class="viewcode-block" id="RobotXFindFlingMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXFindFlingMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -716,7 +716,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageFindFlingRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -760,7 +760,7 @@
 
 
 <div class="viewcode-block" id="RobotXUAVReplenishmentMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXUAVReplenishmentMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXUAVReplenishmentMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of UAV replenishment message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -779,7 +779,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXUAV&quot;</span>
 
 <div class="viewcode-block" id="RobotXUAVReplenishmentMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXUAVReplenishmentMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -803,7 +803,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVReplenishmentRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 
@@ -847,7 +847,7 @@
 
 
 <div class="viewcode-block" id="RobotXUAVSearchReportMessage"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXUAVSearchReportMessage">[docs]</a><span class="k">class</span> <span class="nc">RobotXUAVSearchReportMessage</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles formation of UAV search report message.</span>
 
 <span class="sd">    .. warning::</span>
@@ -866,7 +866,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">message_id</span> <span class="o">=</span> <span class="s2">&quot;RXSAR&quot;</span>
 
 <div class="viewcode-block" id="RobotXUAVSearchReportMessage.from_string"><a class="viewcode-back" href="../../navigator/reference.html#navigator_robotx_comms.RobotXUAVSearchReportMessage.from_string">[docs]</a>    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a list of data values and a checksum list from a provided message.</span>
 
 <span class="sd">        Args:</span>
@@ -890,7 +890,7 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVReplenishmentRequest</span><span class="p">,</span>
         <span class="n">use_test_data</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a message using the provided parameters. This message is formatted</span>
 <span class="sd">        according to 2022 AUVSI specifications.</span>
 

@@ -114,7 +114,7 @@
 <span class="c1">################################################# PRIMARY CLASS</span>
 
 <div class="viewcode-block" id="Planner"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner">[docs]</a><span class="k">class</span> <span class="nc">Planner</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializes an lqRRT planner class.</span>
 
 <span class="sd">    Args:</span>
@@ -193,7 +193,7 @@
         <span class="n">finish_on_goal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">specific_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A new tree is grown from the seed x0 in an attempt to plan</span>
 <span class="sd">        a path to the goal. The returned path can be accessed with</span>
 <span class="sd">        the interpolator functions get_state(t) and get_effort(t).</span>
@@ -460,7 +460,7 @@
     <span class="c1">#################################################</span>
 
     <span class="k">def</span> <span class="nf">_costs_to_go</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an array of costs to go to x for each node in the</span>
 <span class="sd">        current tree, in the same ordering as the nodes. This cost</span>
 <span class="sd">        is  (v-x).T * S * (v-x)  for each node state v where S is</span>
@@ -481,7 +481,7 @@
     <span class="k">def</span> <span class="nf">_steer</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">ID</span><span class="p">,</span> <span class="n">xtar</span><span class="p">,</span> <span class="n">force_arrive</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>  <span class="c1"># &lt;&lt;&lt; need to numpy this function for final speedup!</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Starting from the given node ID&#39;s state, the system dynamics are</span>
 <span class="sd">        forward simulated using the local LQR policy toward xtar.</span>
 
@@ -584,7 +584,7 @@
     <span class="c1">#################################################</span>
 
     <span class="k">def</span> <span class="nf">_in_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns True if some state x is in the goal region.</span>
 
 <span class="sd">        Args:</span>
@@ -600,7 +600,7 @@
     <span class="c1">#################################################</span>
 
     <span class="k">def</span> <span class="nf">_prepare_interpolators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the interpolator functions the user calls</span>
 <span class="sd">        to interpolate the current plan.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -628,7 +628,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.set_goal"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_goal">[docs]</a>    <span class="k">def</span> <span class="nf">set_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Modifies the goal state and region.</span>
 <span class="sd">        Be sure to update the plan after modifying the goal.</span>
 
@@ -660,7 +660,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.set_runtime"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_runtime">[docs]</a>    <span class="k">def</span> <span class="nf">set_runtime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_nodes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sys_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the runtime settings of the lqRRT system.</span>
 
 <span class="sd">        Args:</span>
@@ -704,7 +704,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.set_resolution"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_resolution">[docs]</a>    <span class="k">def</span> <span class="nf">set_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">horizon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">FPR</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">error_tol</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets resolution settings of the lqRRT system.</span>
 
 <span class="sd">        Args:</span>
@@ -770,7 +770,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.set_system"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.set_system">[docs]</a>    <span class="k">def</span> <span class="nf">set_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dynamics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lqr</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">constraints</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Constraints</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">erf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If dynamics gets modified, so must lqr (and vis versa).</span>
 
 <span class="sd">        Args:</span>
@@ -827,7 +827,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.kill_update"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.kill_update">[docs]</a>    <span class="k">def</span> <span class="nf">kill_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises a flag that will cause an abrupt termination of</span>
 <span class="sd">        the update_plan routine.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -836,7 +836,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.unkill"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.unkill">[docs]</a>    <span class="k">def</span> <span class="nf">unkill</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lowers the kill_update flag. Do this if you made a mistake.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">killed</span> <span class="o">=</span> <span class="kc">False</span></div>
@@ -844,7 +844,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Planner.visualize"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Planner.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plots the (dx,dy)-cross-section of the current tree,</span>
 <span class="sd">        and highlights the current plan&#39;s trajectory.</span>
 <span class="sd">        For example, dx=0, dy=1 plots the states #0 and #1.</span>

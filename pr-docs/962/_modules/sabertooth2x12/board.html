@@ -87,7 +87,7 @@
 
 
 <div class="viewcode-block" id="Sabertooth2x12"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.Sabertooth2x12">[docs]</a><span class="k">class</span> <span class="nc">Sabertooth2x12</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper class to interface with the Sabertooth 2x12 regenerative motor driver.</span>
 
 <span class="sd">    Attributes:</span>
@@ -99,7 +99,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">baudrate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">sim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            filename (str): The name of the serial port to connect to, if a physical</span>
 <span class="sd">                serial connection is desired.</span>
@@ -119,7 +119,7 @@
 
 <div class="viewcode-block" id="Sabertooth2x12.make_packet"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.Sabertooth2x12.make_packet">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_packet</span><span class="p">(</span><span class="n">address</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a packet given an address, command, and data. The checksum is</span>
 <span class="sd">        added on to the end of the packet. All four integers are packed as unsigned</span>
 <span class="sd">        integers in the resulting packet.</span>
@@ -136,7 +136,7 @@
         <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;BBBB&quot;</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">checksum</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Sabertooth2x12.send_packet"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.Sabertooth2x12.send_packet">[docs]</a>    <span class="k">def</span> <span class="nf">send_packet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a packet over the serial connection using the class&#39; address.</span>
 
 <span class="sd">        Args:</span>
@@ -147,7 +147,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Sabertooth2x12.set_motor1"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.Sabertooth2x12.set_motor1">[docs]</a>    <span class="k">def</span> <span class="nf">set_motor1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the speed of motor 1. This constructs a packet and sends it to update</span>
 <span class="sd">        the driver.</span>
 
@@ -162,7 +162,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">send_packet</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Sabertooth2x12.set_motor2"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.Sabertooth2x12.set_motor2">[docs]</a>    <span class="k">def</span> <span class="nf">set_motor2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the speed of motor 2. This constructs a packet and sends it to update the</span>
 <span class="sd">        driver.</span>
 

@@ -86,7 +86,7 @@
 
 
 <div class="viewcode-block" id="HandlerBase"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase">[docs]</a><span class="k">class</span> <span class="nc">HandlerBase</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Listens for an alarm with this `alarm_name`. When that alarm is raised,</span>
 <span class="sd">    self.raised will be called. When that alarm is cleared, self.cleared will</span>
 <span class="sd">    be called. See the comments below for self.meta_predicate.</span>
@@ -100,7 +100,7 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">alarm_server</span><span class="p">:</span> <span class="s2">&quot;AlarmServer&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called by the alarm server to give each handler a reference to the alarm server,</span>
 <span class="sd">        so it can efficiently get and set alarms.</span>
 
@@ -111,7 +111,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">current_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Alarm</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the status of the alarm this handler is registered for.</span>
 
 <span class="sd">        Returns:</span>
@@ -120,7 +120,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_alarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HandlerBase.get_alarm"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase.get_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">get_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Alarm</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the current status of an alarm.</span>
 
 <span class="sd">        Returns:</span>
@@ -129,7 +129,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_server</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HandlerBase.on_set"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase.on_set">[docs]</a>    <span class="k">def</span> <span class="nf">on_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_alarm</span><span class="p">:</span> <span class="n">AlarmMsg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called whenever a service request is made to the alarm server to the</span>
 <span class="sd">        alarm this handler is registered for. Can be used to trigger actions</span>
 <span class="sd">        before other nodes are notified of the change or to reject the change.</span>
@@ -149,7 +149,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleared</span><span class="p">(</span><span class="n">new_alarm</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HandlerBase.raised"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">AlarmMsg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unless on_set is overridden, called whenever a node requests this alarm be raised.</span>
 <span class="sd">        If it returns False, this request is denied. Otherwise, the alarm is raised.</span>
 
@@ -160,7 +160,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="HandlerBase.cleared"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">AlarmMsg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unless on_set is overridden, called whenever a node requests this alarm be cleared.</span>
 <span class="sd">        If it returns False, this request is denied. Otherwise, the alarm is raised</span>
 
@@ -171,7 +171,7 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="HandlerBase.meta_predicate"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HandlerBase.meta_predicate">[docs]</a>    <span class="k">def</span> <span class="nf">meta_predicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">,</span> <span class="n">alarms</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Alarm</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called on an update to one of this alarms&#39;s meta alarms, if there are any.</span>
 <span class="sd">        By default, returns True if any meta alarms are raised.</span>
 

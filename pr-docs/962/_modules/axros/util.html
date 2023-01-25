@@ -95,7 +95,7 @@
 
 
 <div class="viewcode-block" id="wall_sleep"><a class="viewcode-back" href="../../reference/axros/api.html#axros.wall_sleep">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">wall_sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sleeps for a specified duration using :func:`asyncio.sleep`.</span>
 
 <span class="sd">    Args:</span>
@@ -111,7 +111,7 @@
 <div class="viewcode-block" id="wrap_timeout"><a class="viewcode-back" href="../../reference/axros/api.html#axros.wrap_timeout">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">wrap_timeout</span><span class="p">(</span>
     <span class="n">fut</span><span class="p">:</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cancel</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wraps a given future in a timeout-based future. This can be used to ensure</span>
 <span class="sd">    that select :class:`asyncio.Future` objects complete on time. Futures who</span>
 <span class="sd">    do not complete on time can be optionally cancelled.</span>
@@ -153,7 +153,7 @@
 <div class="viewcode-block" id="wrap_time_notice"><a class="viewcode-back" href="../../reference/axros/api.html#axros.wrap_time_notice">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">wrap_time_notice</span><span class="p">(</span>
     <span class="n">fut</span><span class="p">:</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Prints a message if a future is taking longer than the noted duration.</span>
 
 <span class="sd">    .. code-block:: python</span>

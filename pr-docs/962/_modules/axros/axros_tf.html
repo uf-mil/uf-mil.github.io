@@ -126,7 +126,7 @@
 
 
 <div class="viewcode-block" id="Transform"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Transform">[docs]</a><span class="k">class</span> <span class="nc">Transform</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a tf transform in the txROS suite.</span>
 
 <span class="sd">    .. container:: operations</span>
@@ -155,7 +155,7 @@
 
 <div class="viewcode-block" id="Transform.identity"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Transform.identity">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates and identity transform. The x, y, and z coordinates are all set to zero.</span>
 <span class="sd">        The quaternion is set to ``[0, 0, 0, 1]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -163,7 +163,7 @@
 
 <div class="viewcode-block" id="Transform.from_Transform_message"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Transform.from_Transform_message">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Transform_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">TransformMsg</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a transform from a :class:`geometry_msgs.msg.Transform` message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
@@ -173,7 +173,7 @@
 
 <div class="viewcode-block" id="Transform.from_Pose_message"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Transform.from_Pose_message">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Pose_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Pose</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a transform from a :class:`geometry_msgs.msg.Pose` message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
@@ -220,7 +220,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="Transform.inverse"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Transform.inverse">[docs]</a>    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Transform</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs an inverse transform.</span>
 
 <span class="sd">        Returns:</span>
@@ -289,7 +289,7 @@
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf_subscriber</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TransformListener.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.TransformListener.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts the transform listener down.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf_subscriber</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span></div>
@@ -429,11 +429,11 @@
 
 <span class="k">class</span> <span class="nc">_TooFutureError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 
-    <span class="sd">&quot;&quot;&quot;This is an internal exception; it should never escape to the user&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is an internal exception; it should never escape to the user&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="TooPastError"><a class="viewcode-back" href="../../reference/axros/api.html#axros.TooPastError">[docs]</a><span class="k">class</span> <span class="nc">TooPastError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    User asked for a transform that will never known because it&#39;s from before</span>
 <span class="sd">    the start of the history buffer.</span>
 
@@ -442,12 +442,12 @@
 
 
 <div class="viewcode-block" id="TransformBroadcaster"><a class="viewcode-back" href="../../reference/axros/api.html#axros.TransformBroadcaster">[docs]</a><span class="k">class</span> <span class="nc">TransformBroadcaster</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Broadasts transforms onto a topic.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            node_handle (NodeHandle): The node handle used to communicate with the</span>
 <span class="sd">                ROS master server.</span>
@@ -459,7 +459,7 @@
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tf_publisher</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TransformBroadcaster.send_transform"><a class="viewcode-back" href="../../reference/axros/api.html#axros.TransformBroadcaster.send_transform">[docs]</a>    <span class="k">def</span> <span class="nf">send_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform</span><span class="p">:</span> <span class="n">TransformStamped</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a stamped Transform message onto the publisher.</span>
 
 <span class="sd">        Args:</span>

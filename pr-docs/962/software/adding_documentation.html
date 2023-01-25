@@ -122,7 +122,7 @@ what you’ve built!</p>
 from our source code. Make sure you have completed the getting started process
 to ensure you have all the needed dependencies.</p>
 <p>Remember to make your changes on an accessible branch:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git checkout -b &lt;your branch name here&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;your<span class="w"> </span>branch<span class="w"> </span>name<span class="w"> </span>here&gt;
 </pre></div>
 </div>
 <p>Feel free to be flexible with this; you may not need to make a new branch if you
@@ -135,20 +135,20 @@ may not have ROS setup. Below are the steps you will need to take to get a <em>l
 setup working that allows you to contribute to the docs and preview your changes.</p>
 <ol class="arabic">
 <li><p>Install git and clone the repository.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/uf-mil/mil -j8 --recurse-submodules
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/uf-mil/mil<span class="w"> </span>-j8<span class="w"> </span>--recurse-submodules
 </pre></div>
 </div>
 </li>
 <li><p>Make your own branch off of <code class="docutils literal notranslate"><span class="pre">master</span></code>. This branch only will be used by you
 (and any collaborators working with you), so feel free to play around with things.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> mil
-$ git checkout -b &lt;your branch name here&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>mil
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;your<span class="w"> </span>branch<span class="w"> </span>name<span class="w"> </span>here&gt;
 </pre></div>
 </div>
 </li>
 <li><p>Install Python and the needed dependencies. This will vary based on your
 operating system.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip3 install -r requirements.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
 </li>
@@ -183,16 +183,16 @@ web browser to verify your changes did what you wanted them to do and they are
 quick to read.</p>
 <p>For members who have ROS setup, you can build the documentation with the following
 commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mil
-$ ./scripts/build_docs
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
+$<span class="w"> </span>./scripts/build_docs
 </pre></div>
 </div>
 <p>Members without ROS setup will need to build the documentation without the source
 files. Because you aren’t building the reference files, you will get a few errors
 explaining that Sphinx can’t find those files. This is expected. Errors related
 to files you’ve modified may be a result of your changes, however.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mil
-$ ./scripts/build_docs --no-source
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
+$<span class="w"> </span>./scripts/build_docs<span class="w"> </span>--no-source
 </pre></div>
 </div>
 <p>At the bottom of each build output, a link is displayed where you can access
@@ -202,8 +202,8 @@ but rather <code class="docutils literal notranslate"><span class="pre">file://<
 meaning that subsequent changes the docs will only re-build the files you edited
 since you last built the docs. If this is not ideal behavior, you can completely
 re-build the docs by adding another flag:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mil
-$ ./scripts/build_docs --scratch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
+$<span class="w"> </span>./scripts/build_docs<span class="w"> </span>--scratch
 </pre></div>
 </div>
 </section>

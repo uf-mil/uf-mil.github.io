@@ -158,11 +158,11 @@ use a number instead of a string?</p>
 <p>Furthermore, you can use tools to help you catch errors that should be added. <code class="docutils literal notranslate"><span class="pre">mutmut</span></code>
 is a Python tool that implements a mutation testing framework. You can run the tool
 over a specific package and its tests to identify areas that are not covered by tests.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mutmut run --runner <span class="s2">&quot;rostest package_name package_test.test&quot;</span> <span class="se">\</span>
-             --paths-to-mutate src <span class="se">\</span>
-             --tests-dir <span class="nb">test</span> <span class="c1"># Run mutation tester</span>
-$ mutmut html <span class="c1"># Create an HTML file showing what happened during testing</span>
-$ xdg-open html/index.html <span class="c1"># Browse the HTML file to determine what needs to be improved</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mutmut<span class="w"> </span>run<span class="w"> </span>--runner<span class="w"> </span><span class="s2">&quot;rostest package_name package_test.test&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">             </span>--paths-to-mutate<span class="w"> </span>src<span class="w"> </span><span class="se">\</span>
+<span class="w">             </span>--tests-dir<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="c1"># Run mutation tester</span>
+$<span class="w"> </span>mutmut<span class="w"> </span>html<span class="w"> </span><span class="c1"># Create an HTML file showing what happened during testing</span>
+$<span class="w"> </span>xdg-open<span class="w"> </span>html/index.html<span class="w"> </span><span class="c1"># Browse the HTML file to determine what needs to be improved</span>
 </pre></div>
 </div>
 </section>
@@ -213,7 +213,7 @@ from our <a class="reference internal" href="../reference/axros/index.html#modul
 <span class="kn">import</span> <span class="nn">rostest</span>
 
 <span class="k">class</span> <span class="nc">BasicNodeHandleTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">IsolatedAsyncioTestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tests basic nodehandle functionality.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -249,7 +249,7 @@ file named <code class="docutils literal notranslate"><span class="pre">test_bas
 tests from a test file. You can optionally also launch nodes, set parameters, and
 use conditionals, as you can with any launch file.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
-    <span class="nt">&lt;test</span> <span class="na">test-name=</span><span class="s">&quot;test_basic_nodehandle&quot;</span> <span class="na">pkg=</span><span class="s">&quot;axros&quot;</span> <span class="na">type=</span><span class="s">&quot;test_basic_nodehandle.py&quot;</span> <span class="na">time-limit=</span><span class="s">&quot;180.0&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;test</span><span class="w"> </span><span class="na">test-name=</span><span class="s">&quot;test_basic_nodehandle&quot;</span><span class="w"> </span><span class="na">pkg=</span><span class="s">&quot;axros&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;test_basic_nodehandle.py&quot;</span><span class="w"> </span><span class="na">time-limit=</span><span class="s">&quot;180.0&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </div>

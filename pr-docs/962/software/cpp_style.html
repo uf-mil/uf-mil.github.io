@@ -207,11 +207,11 @@ to innovate new solutions in our programming so that these robots can do new thi
 <p>When writing code, try not to be cryptic or restrictive. Let’s say you’re writing
 code to find objects in an image and you want to write a method that returns
 the position of the first image you find:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpecialObjectFinder</span><span class="o">::</span><span class="n">getLocationFirstImage</span><span class="p">();</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpecialObjectFinder</span><span class="o">::</span><span class="n">getLocationFirstImage</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>What does that <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> do? What does it represent? Let’s try again.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Position</span><span class="w"> </span><span class="nf">SpecialObjectFinder::getLocationFirstImage</span><span class="p">();</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Position</span><span class="w"> </span><span class="nf">SpecialObjectFinder::getLocationFirstImage</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Oh - a position! In the first example, the <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> was actually a vector
@@ -253,8 +253,8 @@ There’s no reason to use <code class="docutils literal notranslate"><span clas
 <h4>Classes/Types<a class="headerlink" href="#classes-types" title="Permalink to this heading">¶</a></h4>
 <p>For classes and types, use title case. If the phrase contains an acronym, then feel
 free to only use upper letters for the acronym:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DrSchwartz</span><span class="p">;</span><span class="w"></span>
-<span class="k">class</span><span class="w"> </span><span class="nc">GCPUImplementation</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DrSchwartz</span><span class="p">;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GCPUImplementation</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -262,19 +262,19 @@ free to only use upper letters for the acronym:</p>
 <h4>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h4>
 <p>Functions should use camel case. This is like title case, but the first letter is not
 capitalized.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">undoTransformation</span><span class="p">();</span><span class="w"></span>
-<span class="n">ExampleClass</span><span class="w"> </span><span class="nf">constructFromMessage</span><span class="p">();</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">undoTransformation</span><span class="p">();</span>
+<span class="n">ExampleClass</span><span class="w"> </span><span class="nf">constructFromMessage</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>One exception to this rule is the naming guidelines for accessors and mutators.
 These can be named similarly to variables:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Car</span><span class="w"> </span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
 <span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">set_speed</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">speed</span><span class="p">);</span><span class="w">  </span><span class="c1">// Woah, a setter...</span>
 <span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="nf">get_speed</span><span class="p">();</span><span class="w">  </span><span class="c1">// and a mutator!</span>
-<span class="k">private</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">speed_</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">speed_</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>
@@ -311,9 +311,9 @@ For example, <code class="docutils literal notranslate"><span class="pre">intern
 <p>Namespaces should use underscores. Namespaces should never be named <code class="docutils literal notranslate"><span class="pre">std</span></code>, and
 common namespace names (such as <code class="docutils literal notranslate"><span class="pre">util</span></code>) should be avoided. Using these namespaces
 can create problems when using fully-qualified lookups in C++. (<a class="reference external" href="https://abseil.io/tips/130">What is that?</a>)</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">large_hadron_collider</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">large_hadron_collider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -368,30 +368,30 @@ arguments, which can cause the call to become excessively long.</p>
 <p>If you need to break up the function call, you can align the rest of the arguments
 in the function call with the first argument. If you’ve already indented, then you
 can use a four space indent to align the arguments.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">funnyFunction</span><span class="p">(</span><span class="n">huge_argument_number_one_oh_my_this_is_long</span><span class="p">,</span><span class="w"></span>
-<span class="w">                            </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">funnyFunction</span><span class="p">(</span><span class="n">huge_argument_number_one_oh_my_this_is_long</span><span class="p">,</span>
+<span class="w">                            </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">funnyFunction</span><span class="p">(</span><span class="n">huge_argument_number_one_oh_my_this_is_long</span><span class="p">,</span><span class="w"></span>
-<span class="w">          </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">funnyFunction</span><span class="p">(</span><span class="n">huge_argument_number_one_oh_my_this_is_long</span><span class="p">,</span>
+<span class="w">          </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Sometimes, the arguments of function calls might be complex. In this case, feel
 free to put one arugmnet on one line by itself.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">weirdMathFunction</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">quat</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">  </span><span class="c1">// Crazy Scientist A&#39;s matrix determinant formula</span>
-<span class="w">                                </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span><span class="w"></span>
+<span class="w">                                </span><span class="n">argument_two</span><span class="p">,</span><span class="w"> </span><span class="n">argument_three</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Sometimes, you may want specific arguments to exist on specific lines for readability.
 This is totally okay, too!</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">magic</span><span class="p">[][]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createMagicSquare</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">x3</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                  </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">y3</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                  </span><span class="n">z1</span><span class="p">,</span><span class="w"> </span><span class="n">z2</span><span class="p">,</span><span class="w"> </span><span class="n">z3</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">magic</span><span class="p">[][]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">createMagicSquare</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="n">x3</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">y3</span><span class="p">,</span>
+<span class="w">                                  </span><span class="n">z1</span><span class="p">,</span><span class="w"> </span><span class="n">z2</span><span class="p">,</span><span class="w"> </span><span class="n">z3</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -401,20 +401,20 @@ This is totally okay, too!</p>
 In the case that the logic inside a control block is short (one line or less),
 then the braces can be excluded. An exception to this rule is <code class="docutils literal notranslate"><span class="pre">switch</span></code> statements, discussed
 below.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">example_term</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">example_term</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">simple_test</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">simpleCall</span><span class="p">();</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">simple_test</span><span class="p">)</span>
+<span class="w">  </span><span class="n">simpleCall</span><span class="p">();</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_works_too</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">simpleCall</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_works_too</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">simpleCall</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">condition_is_true</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">condition_is_true</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For cases where braces are excluded, there should be no other conditional statement
@@ -426,12 +426,12 @@ should only use an <code class="docutils literal notranslate"><span class="pre">
 <p>Conditional blocks should always use spaces to break up key terms. For example,
 the <code class="docutils literal notranslate"><span class="pre">if</span></code> keyword and the expression inside of the parentheses following the <code class="docutils literal notranslate"><span class="pre">if</span></code>
 keyword should be separated by a space. This likewise applies to <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code> and <code class="docutils literal notranslate"><span class="pre">else</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_is_perfect</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">this_is_perfect</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Great job!</span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wow_you_did_it</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">again</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wow_you_did_it</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">again</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -443,29 +443,29 @@ package.</p>
 please add a comment indicating fallthrough. Some tutorials might suggest the use
 of the <code class="docutils literal notranslate"><span class="pre">[[fallthrough]]</span></code> attribute, but unfortunately, this is only allowed in C++17
 and further.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
 <span class="c1">// or</span>
-<span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -475,14 +475,14 @@ and further.</p>
 loops, or they can be kept in.</p>
 <p>For loops with no bodies, either use a pair of empty braces or use the <code class="docutils literal notranslate"><span class="pre">continue</span></code>
 statement to indicate that the loop is continually running.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
-<span class="w">  </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">  </span><span class="n">sum</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">tired</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">drinkCoffee</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">tired</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">drinkCoffee</span><span class="p">();</span>
+<span class="p">}</span>
 
-<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">spin_forever</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">spin_forever</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -494,13 +494,13 @@ after the space. Keep this syntax the same throughout one file.</p>
 entirely.</p>
 <p>Never declare more than one pointer on a single line, as this expression is often
 misread.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
 
-<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">;</span><span class="w"></span>
-<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">x</span><span class="p">;</span>
 
-<span class="n">CharClass</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">example</span><span class="p">;</span><span class="w"></span>
+<span class="n">CharClass</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">example</span><span class="p">;</span>
 
 <span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w">  </span><span class="c1">// No!</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">  </span><span class="c1">// Sad face.</span>
@@ -513,12 +513,12 @@ misread.</p>
 This may appear to break up indentation - this is fine! The examination of preprocessor
 directives is important, and using significant indentation helps to show this.</p>
 <p>You can optionally use spaces after the <code class="docutils literal notranslate"><span class="pre">#</span></code> for nested preprocessor directives.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">test_condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">test_condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="cp">#if LETS_GO_CRAZY</span>
-<span class="w">  </span><span class="n">startCrazyMode</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">startCrazyMode</span><span class="p">();</span>
 <span class="w">  </span><span class="cp">#endif</span>
-<span class="w">  </span><span class="n">cleanup</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">cleanup</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -527,34 +527,34 @@ directives is important, and using significant indentation helps to show this.</
 <p>When structuring your class definition, use one space to indent the <code class="docutils literal notranslate"><span class="pre">public</span></code>, <code class="docutils literal notranslate"><span class="pre">protected</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">private</span></code> keywords. Then, use the traditional two-space indent for all other
 needed members in the class.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ExampleClass</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">BaseClass</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="n">ExampleClass</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="o">~</span><span class="n">ExampleClass</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">ExampleClass</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">BaseClass</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="n">ExampleClass</span><span class="p">();</span>
+<span class="w">  </span><span class="o">~</span><span class="n">ExampleClass</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
 
 <span class="w"> </span><span class="k">protected</span><span class="o">:</span><span class="w">  </span><span class="c1">// Do not leave a blank line after these keywords</span>
-<span class="w">  </span><span class="n">someFunction</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">someFunction</span><span class="p">();</span>
 
-<span class="w"> </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">some_var_</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">special_char_</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w"> </span><span class="k">private</span><span class="o">:</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">some_var_</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">special_char_</span><span class="p">;</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>
 <section id="id1">
 <h4>Namespaces<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
 <p>Namespaces do not add an extra level of indentation.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">cooking</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="k">class</span><span class="w"> </span><span class="nc">Pan</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">pourCupcake</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">Cupcake</span><span class="w"> </span><span class="nf">retrieveCupcake</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">cooking</span><span class="w"> </span><span class="p">{</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Pan</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="n">pourCupcake</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Cupcake</span><span class="w"> </span><span class="nf">retrieveCupcake</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">col</span><span class="p">);</span>
 
-<span class="w"> </span><span class="k">private</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="n">Cupcake</span><span class="p">[][]</span><span class="w"> </span><span class="n">cupcakes_</span><span class="p">;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="k">private</span><span class="o">:</span>
+<span class="w">  </span><span class="n">Cupcake</span><span class="p">[][]</span><span class="w"> </span><span class="n">cupcakes_</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -598,7 +598,7 @@ because of their global scope and unfriendly use.</p>
 <h4>Namespaces and <code class="docutils literal notranslate"><span class="pre">using</span></code><a class="headerlink" href="#namespaces-and-using" title="Permalink to this heading">¶</a></h4>
 <p>Namespaces are a great way to separate code. The <code class="docutils literal notranslate"><span class="pre">using</span></code> keyword allows one to use
 code from a separate namespace somewhere else. For example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">list</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>When using <code class="docutils literal notranslate"><span class="pre">using</span></code> (did you smile at that? I hope so!), try to keep the statements specific.
@@ -651,14 +651,14 @@ of <code class="docutils literal notranslate"><span class="pre">ROS_ASSERT</span
 <h4>Deprecation<a class="headerlink" href="#deprecation" title="Permalink to this heading">¶</a></h4>
 <p>To mark a function as deprecated, add the <code class="docutils literal notranslate"><span class="pre">ROS_DEPRECATED</span></code> attribute to its signature.
 To mark a class as deprecated, mark all of its functions as deprecated.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cardCount</span><span class="p">();</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cardCount</span><span class="p">();</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="k">public</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="n">MyClass</span><span class="p">();</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">public</span><span class="o">:</span>
+<span class="w">  </span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="n">MyClass</span><span class="p">();</span>
 
-<span class="w">  </span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">specialFunction</span><span class="p">();</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="n">ROS_DEPRECATED</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">specialFunction</span><span class="p">();</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </section>

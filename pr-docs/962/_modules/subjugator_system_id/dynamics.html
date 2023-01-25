@@ -85,7 +85,7 @@
 
 
 <div class="viewcode-block" id="SubjuGatorDynamics"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics">[docs]</a><span class="k">class</span> <span class="nc">SubjuGatorDynamics</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Models the dynamcis of SubjuGator, providing a shared interface for nodes using dynamics or</span>
 <span class="sd">    inverse dynamics.</span>
 
@@ -111,7 +111,7 @@
         <span class="n">air_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">G</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            mass (float): Mass of the sub (in kg).</span>
 <span class="sd">            rotational_inertia (np.ndarray): 3x3 rotational inertia matrix.</span>
@@ -139,7 +139,7 @@
 
 <div class="viewcode-block" id="SubjuGatorDynamics.from_ros_params"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.from_ros_params">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_ros_params</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize class from URDF and the ``/robot_paramters/`` ROS param set by</span>
 <span class="sd">        ``upload.launch``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -172,7 +172,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="SubjuGatorDynamics.drag"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.drag">[docs]</a>    <span class="k">def</span> <span class="nf">drag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate force/torque due to drag.</span>
 
 <span class="sd">        Args:</span>
@@ -185,7 +185,7 @@
         <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drag_coeffs</span> <span class="o">*</span> <span class="n">twist</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SubjuGatorDynamics.gravity_and_buoyancy"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.gravity_and_buoyancy">[docs]</a>    <span class="k">def</span> <span class="nf">gravity_and_buoyancy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">world_to_body</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate force/torque due to gravity and buoyancy.</span>
 
 <span class="sd">        Args:</span>
@@ -225,7 +225,7 @@
         <span class="k">return</span> <span class="n">grav_buoyancy</span></div>
 
 <div class="viewcode-block" id="SubjuGatorDynamics.newton_euler_extra_term"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.newton_euler_extra_term">[docs]</a>    <span class="k">def</span> <span class="nf">newton_euler_extra_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the &quot;extra term&quot; in the newton-euler equations for 3D acceleration.</span>
 
 <span class="sd">        Args:</span>
@@ -243,7 +243,7 @@
         <span class="n">world_to_body</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
         <span class="n">wrench</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the acceleration of the sub given a wrench, taking into account</span>
 <span class="sd">        drag, buoyancy, and gravity.</span>
 
@@ -269,7 +269,7 @@
 <div class="viewcode-block" id="SubjuGatorDynamics.inverse_dynamics_from_total_wrench"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.inverse_dynamics_from_total_wrench">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_dynamics_from_total_wrench</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">total_wrench</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the acceleration of the Sub given the total force/torque on the body.</span>
 
 <span class="sd">        Args:</span>
@@ -284,7 +284,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inertia_inv</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">total_wrench</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">newton_euler_extra_term</span><span class="p">(</span><span class="n">twist</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="SubjuGatorDynamics.dynamics"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.dynamics">[docs]</a>    <span class="k">def</span> <span class="nf">dynamics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">accel</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the net force + torque which produced a given acceleration.</span>
 
 <span class="sd">        Args:</span>
