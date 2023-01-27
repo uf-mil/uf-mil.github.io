@@ -217,7 +217,8 @@ byte length.</p>
 <td><p><a class="reference internal" href="#mil_usb_to_can.AckPacket" title="mil_usb_to_can.AckPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">mil_usb_to_can.AckPacket</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td rowspan="4"><p>0x01
-(Thrust/
+(Sub8
+Thrust/
 Kill)</p></td>
 <td><p>0x00</p></td>
 <td><p>Empty</p></td>
@@ -235,7 +236,27 @@ Kill)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub8_thrust_and_kill_board.KillReceivePacket" title="sub8_thrust_and_kill_board.KillReceivePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_thrust_and_kill_board.KillReceivePacket</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td rowspan="2"><p>0x02
+<tr class="row-even"><td rowspan="4"><p>0x02
+(Sub9
+Thrust/
+Kill)</p></td>
+<td><p>0x00</p></td>
+<td><p>Empty</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.HeartbeatPacket</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bf</span></code></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.ThrustSetPacket</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillSetPacket</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>0x03</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillReceivePacket</span></code></p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>0x03
 (Battery
 Monitor)</p></td>
 <td><p>0x00</p></td>
@@ -246,7 +267,7 @@ Monitor)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ffff</span></code></p></td>
 <td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_battery_monitor_board.BatteryPollResponsePacket</span></code></p></td>
 </tr>
-<tr class="row-even"><td rowspan="3"><p>0x03
+<tr class="row-even"><td rowspan="3"><p>0x04
 (Actuator
 Board)</p></td>
 <td><p>0x00</p></td>
@@ -261,12 +282,12 @@ Board)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub_actuator_board.ActuatorPollResponsePacket" title="sub_actuator_board.ActuatorPollResponsePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_actuator_board.ActuatorPollResponsePacket</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>0x04
+<tr class="row-odd"><td><p>0x05
 (System
 Status)</p></td>
 <td><p>0x00</p></td>
 <td><p>Empty</p></td>
-<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_system_status_board.SetLedRequestPacket</span></code></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_system_status_board.SetLedRequestPacket</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -399,6 +420,9 @@ values into a <a class="reference external" href="https://docs.python.org/3.8/li
 that this class supports three subclass arguments to assign unique message IDs,
 subclass IDs, and payload formats. Note that all subclasses must be decorated
 with <code class="xref py py-meth docutils literal notranslate"><span class="pre">dataclasses.dataclass()</span></code>.</p>
+<p>If any class members are annotated with a subclass of <a class="reference external" href="https://docs.python.org/3.8/library/enum.html#enum.Enum" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a>,
+the class will always make an attempt to convert the raw data value to an
+instance of the enum before constructing the rest of the values in the class.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>

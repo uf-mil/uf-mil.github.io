@@ -82,12 +82,19 @@
 
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">get_type_hints</span>
 
 <span class="n">SYNC_CHAR_1</span> <span class="o">=</span> <span class="mh">0x37</span>
 <span class="n">SYNC_CHAR_2</span> <span class="o">=</span> <span class="mh">0x01</span>
 
 <span class="n">_packet_registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">Packet</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_cache_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_type_hints</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.Packet">[docs]</a><span class="nd">@dataclass</span>
@@ -101,6 +108,10 @@
 <span class="sd">    that this class supports three subclass arguments to assign unique message IDs,</span>
 <span class="sd">    subclass IDs, and payload formats. Note that all subclasses must be decorated</span>
 <span class="sd">    with :meth:`dataclasses.dataclass`.</span>
+
+<span class="sd">    If any class members are annotated with a subclass of :class:`enum.Enum`,</span>
+<span class="sd">    the class will always make an attempt to convert the raw data value to an</span>
+<span class="sd">    instance of the enum before constructing the rest of the values in the class.</span>
 
 <span class="sd">    .. code-block:: python</span>
 
@@ -144,6 +155,20 @@
                     <span class="sa">f</span><span class="s2">&quot;Cannot reuse msg_id 0x</span><span class="si">{</span><span class="n">msg_id</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2"> and subclass_id 0x</span><span class="si">{</span><span class="n">subclass_id</span><span class="si">}</span><span class="s2">, already used by </span><span class="si">{</span><span class="n">packet</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
         <span class="n">_packet_registry</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span> <span class="p">{})[</span><span class="n">subclass_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">field_type</span><span class="p">)</span> <span class="ow">in</span> <span class="n">get_cache_hints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">name</span>
+                <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="s2">&quot;msg_id&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;subclass_id&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;payload_format&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">field_type</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">field_type</span><span class="p">,</span> <span class="n">Enum</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">field_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="nf">_calculate_checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
