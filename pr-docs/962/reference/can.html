@@ -236,53 +236,57 @@ Kill)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub8_thrust_and_kill_board.KillReceivePacket" title="sub8_thrust_and_kill_board.KillReceivePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_thrust_and_kill_board.KillReceivePacket</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td rowspan="4"><p>0x02
+<tr class="row-even"><td rowspan="5"><p>0x02
 (Sub9
 Thrust/
 Kill)</p></td>
 <td><p>0x00</p></td>
 <td><p>Empty</p></td>
-<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.HeartbeatPacket</span></code></p></td>
+<td><p><a class="reference internal" href="../subjugator/reference.html#sub9_thrust_and_kill_board.HeartbeatSetPacket" title="sub9_thrust_and_kill_board.HeartbeatSetPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.HeartbeatSetPacket</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>0x01</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Bf</span></code></p></td>
-<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.ThrustSetPacket</span></code></p></td>
+<td><p>Empty</p></td>
+<td><p><a class="reference internal" href="../subjugator/reference.html#sub9_thrust_and_kill_board.HeartbeatReceivePacket" title="sub9_thrust_and_kill_board.HeartbeatReceivePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.HeartbeatReceivePacket</span></code></a></p></td>
 </tr>
 <tr class="row-even"><td><p>0x02</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
-<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillSetPacket</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Bf</span></code></p></td>
+<td><p><a class="reference internal" href="../subjugator/reference.html#sub9_thrust_and_kill_board.ThrustSetPacket" title="sub9_thrust_and_kill_board.ThrustSetPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.ThrustSetPacket</span></code></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>0x03</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
-<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillReceivePacket</span></code></p></td>
+<td><p><a class="reference internal" href="../subjugator/reference.html#sub9_thrust_and_kill_board.KillSetPacket" title="sub9_thrust_and_kill_board.KillSetPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillSetPacket</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td rowspan="2"><p>0x03
+<tr class="row-even"><td><p>0x04</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
+<td><p><a class="reference internal" href="../subjugator/reference.html#sub9_thrust_and_kill_board.KillReceivePacket" title="sub9_thrust_and_kill_board.KillReceivePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub9_thrust_and_kill_board.KillReceivePacket</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>0x03
 (Battery
 Monitor)</p></td>
 <td><p>0x00</p></td>
 <td><p>Empty</p></td>
 <td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_battery_monitor_board.BatteryPollRequestPacket</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>0x01</p></td>
+<tr class="row-even"><td><p>0x01</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ffff</span></code></p></td>
 <td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sub8_battery_monitor_board.BatteryPollResponsePacket</span></code></p></td>
 </tr>
-<tr class="row-even"><td rowspan="3"><p>0x04
+<tr class="row-odd"><td rowspan="3"><p>0x04
 (Actuator
 Board)</p></td>
 <td><p>0x00</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">BB</span></code></p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub_actuator_board.ActuatorSetPacket" title="sub_actuator_board.ActuatorSetPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_actuator_board.ActuatorSetPacket</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>0x01</p></td>
+<tr class="row-even"><td><p>0x01</p></td>
 <td><p>Empty</p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub_actuator_board.ActuatorPollRequestPacket" title="sub_actuator_board.ActuatorPollRequestPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_actuator_board.ActuatorPollRequestPacket</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td><p>0x02</p></td>
+<tr class="row-odd"><td><p>0x02</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
 <td><p><a class="reference internal" href="../subjugator/reference.html#sub_actuator_board.ActuatorPollResponsePacket" title="sub_actuator_board.ActuatorPollResponsePacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_actuator_board.ActuatorPollResponsePacket</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>0x05
+<tr class="row-even"><td><p>0x05
 (System
 Status)</p></td>
 <td><p>0x00</p></td>
