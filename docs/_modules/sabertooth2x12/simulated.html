@@ -86,7 +86,7 @@
 
 
 <div class="viewcode-block" id="SimulatedSabertooth2x12"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.SimulatedSabertooth2x12">[docs]</a><span class="k">class</span> <span class="nc">SimulatedSabertooth2x12</span><span class="p">(</span><span class="n">SimulatedSerial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a simulated serial device representing the Sabertooth 2x12 regenerative</span>
 <span class="sd">    motor driver.</span>
 
@@ -97,7 +97,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SimulatedSabertooth2x12.write"><a class="viewcode-back" href="../../reference/sabertooth.html#sabertooth2x12.SimulatedSabertooth2x12.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles byte data received by the simulated device. Verifies the checksum</span>
 <span class="sd">        of the data received, and logs changes in the motor speeds set by the device.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -112,13 +112,13 @@
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid checksum. Is </span><span class="si">{</span><span class="n">checksum</span><span class="si">}</span><span class="s2"> should be </span><span class="si">{</span><span class="n">checksum_verify</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor1 to </span><span class="si">{</span><span class="n">data</span> <span class="o">/</span> <span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor1 to </span><span class="si">{</span><span class="n">data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor1 to </span><span class="si">{</span><span class="o">-</span><span class="n">data</span> <span class="o">/</span> <span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor1 to </span><span class="si">{</span><span class="o">-</span><span class="n">data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor2 to </span><span class="si">{</span><span class="n">data</span> <span class="o">/</span> <span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor2 to </span><span class="si">{</span><span class="n">data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor2 to </span><span class="si">{</span><span class="o">-</span><span class="n">data</span> <span class="o">/</span> <span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting motor2 to </span><span class="si">{</span><span class="o">-</span><span class="n">data</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">127.0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized command </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div></div>
 </pre></div>

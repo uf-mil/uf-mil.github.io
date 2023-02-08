@@ -117,7 +117,7 @@
 
 
 <div class="viewcode-block" id="Tree"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Tree">[docs]</a><span class="k">class</span> <span class="nc">Tree</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To initialize, provide...</span>
 
 <span class="sd">    seed_state: An array of the state of the seed node.</span>
@@ -159,7 +159,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Tree.add_node"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Tree.add_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pID</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">lqr</span><span class="p">,</span> <span class="n">x_seq</span><span class="p">,</span> <span class="n">u_seq</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a node to the tree with the given features.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -182,7 +182,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Tree.climb"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Tree.climb">[docs]</a>    <span class="k">def</span> <span class="nf">climb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ID</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of node IDs that connect the seed</span>
 <span class="sd">        to the node with the given ID. The first element</span>
 <span class="sd">        in the list is always 0 (seed) and the last is</span>
@@ -203,7 +203,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Tree.trajectory"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Tree.trajectory">[docs]</a>    <span class="k">def</span> <span class="nf">trajectory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IDs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given a list of node IDs, the full sequence of</span>
 <span class="sd">        states and efforts to go from IDs[0] to IDs[-1]</span>
 <span class="sd">        are returned as a tuple (x_seq_full, u_seq_full).</span>
@@ -219,7 +219,7 @@
     <span class="c1">#################################################</span>
 
 <div class="viewcode-block" id="Tree.visualize"><a class="viewcode-back" href="../../reference/pathplanning.html#lqrrt.Tree.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">node_seq</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plots the (dx,dy)-cross-section of the current tree,</span>
 <span class="sd">        and highlights the path given by the list, node_seq.</span>
 <span class="sd">        For example, dx=0, dy=1 plots the states #0 and #1.</span>

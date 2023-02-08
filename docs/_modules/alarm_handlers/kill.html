@@ -89,7 +89,7 @@
 
 
 <div class="viewcode-block" id="Kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill">[docs]</a><span class="k">class</span> <span class="nc">Kill</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic kill used to represent the state of an alarm. Uses a threading condition</span>
 <span class="sd">    to manage access</span>
 
@@ -127,7 +127,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Tell HW that we started off as killed</span>
 
 <div class="viewcode-block" id="Kill.set_mobo_kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.set_mobo_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobo_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a motherboard kill.</span>
 
 <span class="sd">        Raises:</span>
@@ -140,7 +140,7 @@
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Kill.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the alarm is raised. Sets the motherboard kill and attempts to</span>
 <span class="sd">        dump the related logging info to a bag file, using the :attr:`~.condition`.</span>
 <span class="sd">        At the end of the use of the condition, the condition is notified.</span>
@@ -158,7 +158,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Kill.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the alarm is cleared. Attempts to use `~.condition` to unset</span>
 <span class="sd">        the motherboard kill. If the motherboard kill can&#39;t be deactivated, then</span>
 <span class="sd">        it is reinstated and a warning is logged.</span>
@@ -187,7 +187,7 @@
             <span class="p">)</span>
 
 <div class="viewcode-block" id="Kill.bagger_dump"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.bagger_dump">[docs]</a>    <span class="k">def</span> <span class="nf">bagger_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Bags the related log information to a list of relevant topics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="p">:</span>

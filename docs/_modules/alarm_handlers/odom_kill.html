@@ -87,7 +87,7 @@
 
 
 <div class="viewcode-block" id="OdomKill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill">[docs]</a><span class="k">class</span> <span class="nc">OdomKill</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Will kill the sub when it stops hearing odometry messages or when there is a large</span>
 <span class="sd">    discontinuity in state estimation. Only meant to run on the sub as a safety measure.</span>
 
@@ -124,7 +124,7 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">check</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OdomKill.check"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.check">[docs]</a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks to see if an alarm needs to be raised. Raises either an alarm describing</span>
 <span class="sd">        that state estimation is not available (if the sub was just started) or</span>
 <span class="sd">        that a significant amount of state estimation was lost since the sub was started.</span>
@@ -155,7 +155,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 
 <div class="viewcode-block" id="OdomKill.check_continuity"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.check_continuity">[docs]</a>    <span class="k">def</span> <span class="nf">check_continuity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_odom_msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">):</span>  <span class="c1"># True if &#39;continuous&#39;</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the continuity of the odom system. Calculates the difference (in meters)</span>
 <span class="sd">        between the current odom message and the previous message. If the sub moved</span>
 <span class="sd">        more than ``0.5 meters``, a discontinuity is reported.</span>
@@ -186,7 +186,7 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="OdomKill.need_kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.need_kill">[docs]</a>    <span class="k">def</span> <span class="nf">need_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determine if a kill is needed. Checks to see if the odom was lost for a continuous</span>
 <span class="sd">        amount of time or if there was a discontinuity in odom measurements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -209,7 +209,7 @@
         <span class="k">return</span> <span class="n">odom_loss</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">odom_discontinuity</span></div>
 
 <div class="viewcode-block" id="OdomKill.clear_kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.clear_kill">[docs]</a>    <span class="k">def</span> <span class="nf">clear_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clears the kill imposed on the class.</span>
 
 <span class="sd">        Args:</span>
@@ -227,13 +227,13 @@
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="OdomKill.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs when an alarm is raised. Sets the class&#39; killed state to ``True``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="OdomKill.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.OdomKill.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs when an alarm is raised. Sets the class&#39; killed state to ``False``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">False</span></div></div>

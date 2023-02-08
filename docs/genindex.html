@@ -494,10 +494,10 @@
 </li>
       <li><a href="reference/services.html#navigator_msgs.srv.CameraToLidarTransformResponse.CLOUD_NOT_FOUND">CLOUD_NOT_FOUND (navigator_msgs.srv.CameraToLidarTransformResponse attribute)</a>
 </li>
-      <li><a href="reference/services.html#navigator_msgs.srv.ObjectDBQueryRequest.cmd">cmd (navigator_msgs.srv.ObjectDBQueryRequest attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/services.html#navigator_msgs.srv.ObjectDBQueryRequest.cmd">cmd (navigator_msgs.srv.ObjectDBQueryRequest attribute)</a>
+</li>
       <li><a href="reference/vision.html#mil_vision_tools.ImageProc.COLOR">COLOR (mil_vision_tools.ImageProc attribute)</a>
 </li>
       <li><a href="reference/vision.html#mil_vision_tools.ImageSet.color">color (mil_vision_tools.ImageSet attribute)</a>
@@ -591,8 +591,6 @@
       <li><a href="reference/pneumatic.html#mil_pneumatic_actuator.Constants.create_checksum">create_checksum() (mil_pneumatic_actuator.Constants class method)</a>
 </li>
       <li><a href="subjugator/reference.html#sub8_actuator_board.CommandMessage.create_command_message">create_command_message() (sub8_actuator_board.CommandMessage class method)</a>
-</li>
-      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.create_command_packet">create_command_packet() (mil_usb_to_can.CommandPacket class method)</a>
 </li>
       <li><a href="subjugator/reference.html#sub8_actuator_board.FeedbackMessage.create_feedback_message">create_feedback_message() (sub8_actuator_board.FeedbackMessage class method)</a>
 </li>
@@ -736,9 +734,13 @@
 </li>
       <li><a href="reference/services.html#navigator_msgs.srv.CoordinateConversionRequest.ENU">ENU (navigator_msgs.srv.CoordinateConversionRequest attribute)</a>
 </li>
+      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.EOF">EOF (mil_usb_to_can.CommandPacket attribute)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/can.html#mil_usb_to_can.Packet.EOF">EOF (mil_usb_to_can.Packet attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.ReceivePacket.EOF">EOF (mil_usb_to_can.ReceivePacket attribute)</a>
 </li>
       <li><a href="reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.erf">erf() (navigator_path_planner.nodes.path_planner.LQRRT_Node method)</a>
 </li>
@@ -761,6 +763,8 @@
       <li><a href="reference/mission/core.html#mil_missions_core.SubmissionException.exception">exception (mil_missions_core.SubmissionException attribute)</a>
 </li>
       <li><a href="navigator/reference.html#navigator_msgs.srv.MessageEntranceExitGateRequest.exit_gate">exit_gate (navigator_msgs.srv.MessageEntranceExitGateRequest attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException.expected">expected (mil_usb_to_can.ApplicationPacketWrongIdentifierException attribute)</a>
 </li>
       <li><a href="reference/vision.html#mil_vision_tools.ObjectsTracker.expiration_seconds">expiration_seconds (mil_vision_tools.ObjectsTracker attribute)</a>
 </li>
@@ -1438,9 +1442,11 @@
 </li>
       <li><a href="reference/rviz.html#mil_ros_tools.vector_to_marker.VectorToMarker.length">length (mil_ros_tools.vector_to_marker.VectorToMarker attribute)</a>
 </li>
+      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.length">length (mil_usb_to_can.CommandPacket property)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.length">length (mil_usb_to_can.CommandPacket property)</a>
+      <li><a href="reference/can.html#mil_usb_to_can.ReceivePacket.length">length (mil_usb_to_can.ReceivePacket property)</a>
 </li>
       <li><a href="reference/vision.html#mil_vision_tools.RectFinder.length">length (mil_vision_tools.RectFinder attribute)</a>
 </li>
@@ -1618,6 +1624,13 @@
 </li>
       <li><a href="reference/services.html#mil_poi.srv.MovePOIResponse">mil_poi.srv.MovePOIResponse (built-in class)</a>
 </li>
+      <li>
+    mil_usb_to_can
+
+      <ul>
+        <li><a href="reference/can.html#module-mil_usb_to_can">module</a>
+</li>
+      </ul></li>
       <li><a href="reference/vision.html#_CPPv4N10mil_vision13ActiveContourE">mil_vision::ActiveContour (C++ class)</a>
 </li>
       <li><a href="reference/vision.html#_CPPv4N10mil_vision13ActiveContour13ActiveContourEv">mil_vision::ActiveContour::ActiveContour (C++ function)</a>
@@ -1961,6 +1974,8 @@
         <li><a href="reference/mission/core.html#module-mil_missions_core">mil_missions_core</a>
 </li>
         <li><a href="reference/poi.html#module-mil_poi">mil_poi</a>
+</li>
+        <li><a href="reference/can.html#module-mil_usb_to_can">mil_usb_to_can</a>
 </li>
         <li><a href="reference/alarms.html#module-ros_alarms">ros_alarms</a>
 </li>
@@ -2403,6 +2418,12 @@
 </li>
       <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacket.payload">payload (mil_usb_to_can.ApplicationPacket attribute)</a>
 </li>
+      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.payload">payload (mil_usb_to_can.CommandPacket attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.Packet.payload">payload (mil_usb_to_can.Packet attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.ReceivePacket.payload">payload (mil_usb_to_can.ReceivePacket attribute)</a>
+</li>
       <li><a href="reference/can.html#mil_usb_to_can.PayloadTooLargeException">PayloadTooLargeException (class in mil_usb_to_can)</a>
 </li>
       <li><a href="reference/messages.html#navigator_msgs.msg.PerceptionObject.pclInliers">pclInliers (navigator_msgs.msg.PerceptionObject attribute)</a>
@@ -2527,12 +2548,12 @@
 </li>
       <li><a href="reference/pcodar.html#_CPPv4N6pcodar21PersistentCloudFilter21PersistentCloudFilterEv">pcodar::PersistentCloudFilter::PersistentCloudFilter (C++ function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/pcodar.html#_CPPv4N6pcodar21PersistentCloudFilter13update_configERK6Config">pcodar::PersistentCloudFilter::update_config (C++ function)</a>
 </li>
       <li><a href="reference/pcodar.html#_CPPv4N6pcodar11point_cloudE">pcodar::point_cloud (C++ type)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/pcodar.html#_CPPv4N6pcodar21point_cloud_const_ptrE">pcodar::point_cloud_const_ptr (C++ type)</a>
 </li>
       <li><a href="reference/pcodar.html#_CPPv4N6pcodar15point_cloud_ptrE">pcodar::point_cloud_ptr (C++ type)</a>
@@ -2750,6 +2771,8 @@
       <li><a href="reference/can.html#mil_usb_to_can.USBtoCANDriver.read_packet">read_packet() (mil_usb_to_can.USBtoCANDriver method)</a>
 </li>
       <li><a href="reference/pneumatic.html#mil_pneumatic_actuator.Constants.READ_REQUEST_BASE">READ_REQUEST_BASE (mil_pneumatic_actuator.Constants attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException.received">received (mil_usb_to_can.ApplicationPacketWrongIdentifierException attribute)</a>
 </li>
       <li><a href="reference/can.html#mil_usb_to_can.ReceivePacket">ReceivePacket (class in mil_usb_to_can)</a>
 </li>
@@ -3222,8 +3245,6 @@
 </li>
       <li><a href="reference/rc.html#remote_control_lib.RemoteControl.shooter_reset">shooter_reset() (remote_control_lib.RemoteControl method)</a>
 </li>
-      <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException.should_be">should_be (mil_usb_to_can.ApplicationPacketWrongIdentifierException attribute)</a>
-</li>
       <li><a href="reference/axros/api.html#axros.ActionClient.shutdown">shutdown() (axros.ActionClient method)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.NodeHandle.shutdown">shutdown() (axros.NodeHandle method)</a>
@@ -3278,7 +3299,11 @@
 </li>
       <li><a href="navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.socket_connection">socket_connection (navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient attribute)</a>
 </li>
+      <li><a href="reference/can.html#mil_usb_to_can.CommandPacket.SOF">SOF (mil_usb_to_can.CommandPacket attribute)</a>
+</li>
       <li><a href="reference/can.html#mil_usb_to_can.Packet.SOF">SOF (mil_usb_to_can.Packet attribute)</a>
+</li>
+      <li><a href="reference/can.html#mil_usb_to_can.ReceivePacket.SOF">SOF (mil_usb_to_can.ReceivePacket attribute)</a>
 </li>
       <li><a href="subjugator/reference.html#sub8_thrust_and_kill_board.KillMessage.SOFT">SOFT (sub8_thrust_and_kill_board.KillMessage attribute)</a>
 </li>
@@ -3320,10 +3345,10 @@
 </li>
       <li><a href="reference/actions.html#navigator_path_planner.msg.MoveActionFeedback.status">status (navigator_path_planner.msg.MoveActionFeedback attribute)</a>
 </li>
-      <li><a href="reference/actions.html#navigator_path_planner.msg.MoveActionResult.status">status (navigator_path_planner.msg.MoveActionResult attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/actions.html#navigator_path_planner.msg.MoveActionResult.status">status (navigator_path_planner.msg.MoveActionResult attribute)</a>
+</li>
       <li><a href="reference/messages.html#roboteq_msgs.msg.Status.status">status (roboteq_msgs.msg.Status attribute)</a>
 </li>
       <li><a href="subjugator/reference.html#sub8_actuator_board.ActuatorBoardSimulation.status">status (sub8_actuator_board.ActuatorBoardSimulation attribute)</a>
@@ -3682,10 +3707,6 @@
 </li>
       <li><a href="reference/can.html#mil_usb_to_can.USBtoCANDriver.timer">timer (mil_usb_to_can.USBtoCANDriver attribute)</a>
 </li>
-      <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacket.to_bytes">to_bytes() (mil_usb_to_can.ApplicationPacket method)</a>
-</li>
-      <li><a href="reference/can.html#mil_usb_to_can.Packet.to_bytes">to_bytes() (mil_usb_to_can.Packet method)</a>
-</li>
       <li><a href="reference/services.html#navigator_msgs.srv.CoordinateConversionRequest.to_frame">to_frame (navigator_msgs.srv.CoordinateConversionRequest attribute)</a>
 </li>
       <li><a href="reference/vision.html#mil_vision_tools.RectFinder.to_polygon">to_polygon() (mil_vision_tools.RectFinder method)</a>
@@ -3710,10 +3731,10 @@
 </li>
       <li><a href="reference/rc.html#remote_control_lib.RemoteControl.toggle_kill">toggle_kill() (remote_control_lib.RemoteControl method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/services.html#navigator_msgs.srv.CameraToLidarTransformRequest.tolerance">tolerance (navigator_msgs.srv.CameraToLidarTransformRequest attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/services.html#navigator_msgs.srv.GetDockShapeResponse.TOO_SMALL_SAMPLE">TOO_SMALL_SAMPLE (navigator_msgs.srv.GetDockShapeResponse attribute)</a>
 </li>
       <li><a href="reference/services.html#navigator_msgs.srv.GetDockShapesResponse.TOO_SMALL_SAMPLE">TOO_SMALL_SAMPLE (navigator_msgs.srv.GetDockShapesResponse attribute)</a>
@@ -3828,8 +3849,6 @@
 </li>
       <li><a href="reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.unpack_odom">unpack_odom() (navigator_path_planner.nodes.path_planner.LQRRT_Node method)</a>
 </li>
-      <li><a href="reference/can.html#mil_usb_to_can.Packet.unpack_payload">unpack_payload() (mil_usb_to_can.Packet class method)</a>
-</li>
       <li><a href="reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.unpack_pose">unpack_pose() (navigator_path_planner.nodes.path_planner.LQRRT_Node method)</a>
 </li>
       <li><a href="reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.unreachable">unreachable (navigator_path_planner.nodes.path_planner.LQRRT_Node attribute)</a>
@@ -3925,8 +3944,6 @@
       <li><a href="reference/resources.html#mil_tools.wait_for_subscriber">wait_for_subscriber() (in module mil_tools)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.wall_sleep">wall_sleep() (in module axros)</a>
-</li>
-      <li><a href="reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException.was">was (mil_usb_to_can.ApplicationPacketWrongIdentifierException attribute)</a>
 </li>
       <li><a href="subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.water_density">water_density (subjugator_system_id.SubjuGatorDynamics attribute)</a>
 </li>

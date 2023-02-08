@@ -88,7 +88,7 @@
 
 
 <div class="viewcode-block" id="TxHydrophonesClient"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient">[docs]</a><span class="k">class</span> <span class="nc">TxHydrophonesClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TxROS abstraction for interacting with the nodes in this package.</span>
 
 <span class="sd">    Attributes:</span>
@@ -97,7 +97,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nh</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construct a client.</span>
 
 <span class="sd">        Args:</span>
@@ -112,7 +112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dir_callback</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="TxHydrophonesClient.get_direction"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the next processed direction to the pinger.</span>
 
 <span class="sd">        Returns:</span>
@@ -122,7 +122,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.get_position"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the next processed position of the pinger.</span>
 
 <span class="sd">        Returns:</span>
@@ -132,7 +132,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position_sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.get_last_position"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_last_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PointStamped</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the last processed position of the pinger.</span>
 
 <span class="sd">        Returns:</span>
@@ -141,25 +141,25 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_position_sub</span><span class="o">.</span><span class="n">get_last_message</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.enable"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable listening to pings for position estimation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_srv</span><span class="p">(</span><span class="n">SetBoolRequest</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.reset"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reset the position estimation of the pinger.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_srv</span><span class="p">(</span><span class="n">TriggerRequest</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.disable"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable listening to pings for position estimation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_srv</span><span class="p">(</span><span class="n">SetBoolRequest</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.heading_cb"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.heading_cb">[docs]</a>    <span class="k">def</span> <span class="nf">heading_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading_msg</span><span class="p">:</span> <span class="n">Vector3Stamped</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback for pings received.</span>
 
 <span class="sd">        Args:</span>
@@ -170,7 +170,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">dir_callback</span><span class="p">(</span><span class="n">heading_msg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TxHydrophonesClient.set_callback"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.set_callback">[docs]</a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set a callback for when a ping is received.</span>
 
 <span class="sd">        Args:</span>

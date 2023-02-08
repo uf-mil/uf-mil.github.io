@@ -126,7 +126,7 @@
 
 
 <span class="k">class</span> <span class="nc">_XMLRPCSlave</span><span class="p">(</span><span class="n">xmlrpc_handler</span><span class="o">.</span><span class="n">XMLRPCView</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class implements the ROS slave API for a node handle created with axros.</span>
 <span class="sd">    Each method beginning with &quot;rpc_&quot; can be called by another process, such as</span>
 <span class="sd">    another ROS node or ROS itself, through XMLRPC. The name following &quot;rpc_&quot; is</span>
@@ -233,7 +233,7 @@
 
 
 <div class="viewcode-block" id="NodeHandle"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle">[docs]</a><span class="k">class</span> <span class="nc">NodeHandle</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class representing a Pythonic handle for a ROS node, similar to the C++</span>
 <span class="sd">    concept of a node handle. This class provides asynchronous communication with</span>
 <span class="sd">    several ROS features, including publishers, subscribers, and services through</span>
@@ -313,7 +313,7 @@
         <span class="o">*</span><span class="p">,</span>
         <span class="n">always_default_name</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NodeHandle</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a handle from an argument vector. Attempts to find any missing</span>
 <span class="sd">        values for node constructionf from environment variables and the argument</span>
 <span class="sd">        vector.</span>
@@ -377,7 +377,7 @@
 
 <div class="viewcode-block" id="NodeHandle.from_argv"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.from_argv">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_argv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NodeHandle</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Equivalent to :meth:`~.from_argv_with_remaining`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">from_argv_with_remaining</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span></div>
@@ -390,7 +390,7 @@
         <span class="n">master_uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">remappings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            namespace (str): The namespace to put the node under. The namespace should</span>
 <span class="sd">                not end with a `/`. For example, `nsexample/test`.</span>
@@ -414,14 +414,14 @@
             <span class="sa">f</span><span class="s2">&quot;&lt;axros.NodeHandle at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;running=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">()</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;tcpros_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_tcpros_server_uri&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;xmlrpc_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;xmlrpc_server_uri&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;tcpros_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_tcpros_server_uri&#39;</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;xmlrpc_uri=</span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;xmlrpc_server_uri&#39;</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
         <span class="p">)</span>
 
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_setup_xmlrpc_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the XMLRPC server for the node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xmlrpc_handlers</span> <span class="o">=</span> <span class="p">{}</span>
@@ -460,7 +460,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tcpros_server_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;rosrpc://</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_addr</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">tcpros_server_port</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="NodeHandle.setup"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the node handle. This must be called before the node is used.</span>
 
 <span class="sd">        Raises:</span>
@@ -581,7 +581,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
 
 <div class="viewcode-block" id="NodeHandle.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">shutdown_servers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts down all active connections. This should always be called before</span>
 <span class="sd">        the loop is closed, or else multiple instances of :class:`ResourceWarning`</span>
 <span class="sd">        will be emitted.</span>
@@ -626,14 +626,14 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown_servers</span><span class="p">()</span>
 
 <div class="viewcode-block" id="NodeHandle.get_name"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            str: The name of the node handle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 
 <div class="viewcode-block" id="NodeHandle.get_time"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.get_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the time used by the node handle. If simulated time is requested</span>
 <span class="sd">        to be used, then the current simulated time is returned. Otherwise, the current</span>
 <span class="sd">        real time is returned.</span>
@@ -647,7 +647,7 @@
             <span class="k">return</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="NodeHandle.sleep_until"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.sleep_until">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">sleep_until</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sleeps for a specified amount of time.</span>
 
 <span class="sd">        Args:</span>
@@ -675,7 +675,7 @@
                 <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">((</span><span class="n">future_time</span> <span class="o">-</span> <span class="n">current_time</span><span class="p">)</span><span class="o">.</span><span class="n">to_sec</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="NodeHandle.sleep"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.sleep">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sleeps for a specified duration of time.</span>
 
 <span class="sd">        Args:</span>
@@ -696,7 +696,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">sleep_until</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.resolve_name_without_remapping"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.resolve_name_without_remapping">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_name_without_remapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resolves the true name of a given node path.</span>
 
 <span class="sd">        Args:</span>
@@ -712,7 +712,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ns</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">name</span></div>
 
 <div class="viewcode-block" id="NodeHandle.resolve_name"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.resolve_name">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resolves the name of the node handle and updates the name attribute with this</span>
 <span class="sd">        resolved name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -725,7 +725,7 @@
         <span class="k">return</span> <span class="n">name</span></div>
 
 <div class="viewcode-block" id="NodeHandle.is_running"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the node handle is running. This is ``True`` after the</span>
 <span class="sd">            node is :meth:`~.setup` and becomes ``False`` when the node is :meth:`~.shutdown`.</span>
@@ -734,7 +734,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
 
 <div class="viewcode-block" id="NodeHandle.is_shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.is_shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">is_shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the node handle is not running. This is ``True`` by default,</span>
 <span class="sd">            calling :meth:`~.setup` on the node will make this ``False``. Will always</span>
@@ -748,7 +748,7 @@
         <span class="n">service_message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ServiceMessage</span><span class="p">[</span><span class="n">Request</span><span class="p">,</span> <span class="n">Reply</span><span class="p">],</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Request</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Reply</span><span class="p">]],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">service</span><span class="o">.</span><span class="n">Service</span><span class="p">[</span><span class="n">Request</span><span class="p">,</span> <span class="n">Reply</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a service using this node handle. The arguments and keyword</span>
 <span class="sd">        arguments passed to this method are passed into the constructor of the service;</span>
 <span class="sd">        check there for information on what arguments can be passed in.</span>
@@ -777,7 +777,7 @@
 <div class="viewcode-block" id="NodeHandle.get_service_client"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.get_service_client">[docs]</a>    <span class="k">def</span> <span class="nf">get_service_client</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_type</span><span class="p">:</span> <span class="n">S</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">serviceclient</span><span class="o">.</span><span class="n">ServiceClient</span><span class="p">[</span><span class="n">S</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a service client using this node handle. This class can interface</span>
 <span class="sd">        with services by calling them with a particular request message and receiving</span>
 <span class="sd">        a response message.</span>
@@ -808,7 +808,7 @@
         <span class="n">message_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">subscriber</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">[</span><span class="n">M</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a subscriber using this node handle. The arguments and keyword</span>
 <span class="sd">        arguments passed to this method are passed into the constructor of the subscriber;</span>
 <span class="sd">        check there for information on what arguments can be passed in.</span>
@@ -836,7 +836,7 @@
 <div class="viewcode-block" id="NodeHandle.advertise"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.advertise">[docs]</a>    <span class="k">def</span> <span class="nf">advertise</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">latching</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">publisher</span><span class="o">.</span><span class="n">Publisher</span><span class="p">[</span><span class="n">M</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a publisher using this node handle. The arguments and keyword</span>
 <span class="sd">        arguments passed to this method are passed into the constructor of the publisher;</span>
 <span class="sd">        check there for information on what arguments should be passed in.</span>
@@ -863,7 +863,7 @@
         <span class="k">return</span> <span class="n">publisher</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">message_type</span><span class="p">,</span> <span class="n">latching</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.get_param"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.get_param">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">XMLRPCLegalType</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a parameter value from the ROS parameter server. If the key requested</span>
 <span class="sd">        is a namespace, then a dictionary representing all keys below the given</span>
 <span class="sd">        namespace is returned.</span>
@@ -891,7 +891,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">getParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.has_param"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.has_param">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">has_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks whether the ROS parameter server has a parameter with the specified</span>
 <span class="sd">        name.</span>
 
@@ -916,7 +916,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">hasParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.delete_param"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.delete_param">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes the specified parameter from the parameter server.</span>
 
 <span class="sd">        Args:</span>
@@ -942,7 +942,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">deleteParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.set_param"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.set_param">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">XMLRPCLegalType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a parameter and value in the ROS parameter server.</span>
 
 <span class="sd">        .. note::</span>
@@ -973,7 +973,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">setParam</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.search_param"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.search_param">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">search_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Searches for a parameter on the ROS parameter server, and returns the first</span>
 <span class="sd">        key found that matches the search term.</span>
 
@@ -1001,7 +1001,7 @@
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">searchParam</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NodeHandle.get_param_names"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.get_param_names">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_param_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the names of all parameters in the ROS parameter server.</span>
 
 <span class="sd">        Raises:</span>

@@ -98,7 +98,7 @@
 
 
 <div class="viewcode-block" id="Subscriber"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber">[docs]</a><span class="k">class</span> <span class="nc">Subscriber</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">M</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A subscriber in the txROS suite. This class should usually be made through</span>
 <span class="sd">    :meth:`axros.NodeHandle.subscribe`.</span>
 
@@ -121,7 +121,7 @@
         <span class="n">message_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">M</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">message</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            node_handle (NodeHandle): The node handle used to communicate with the</span>
 <span class="sd">                ROS master server.</span>
@@ -163,7 +163,7 @@
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
 <div class="viewcode-block" id="Subscriber.setup"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the subscriber by registering the subscriber with ROS and listing</span>
 <span class="sd">        handlers supported by the topic.</span>
 
@@ -208,14 +208,14 @@
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Subscriber.is_running"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the subscriber is running.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span></div>
 
 <div class="viewcode-block" id="Subscriber.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts the subscriber down. All operations scheduled by the subscriber</span>
 <span class="sd">        are immediately cancelled.</span>
 
@@ -253,7 +253,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Subscriber.get_last_message"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.get_last_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">M</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the last received message. This may be ``None`` if no message has been</span>
 <span class="sd">        received.</span>
 
@@ -263,7 +263,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_message</span></div>
 
 <div class="viewcode-block" id="Subscriber.get_last_message_time"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.get_last_message_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_message_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Time</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the time associated with the last received message. May be ``None`` if</span>
 <span class="sd">        no message has been received yet.</span>
 
@@ -273,7 +273,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_message_time</span></div>
 
 <div class="viewcode-block" id="Subscriber.get_next_message"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.get_next_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">M</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`~asyncio.Future` which will contain the next message</span>
 <span class="sd">        received by the subscriber.</span>
 
@@ -302,7 +302,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="Subscriber.get_connections"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.get_connections">[docs]</a>    <span class="k">def</span> <span class="nf">get_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the ``callerid`` of each connected client. If a connection does</span>
 <span class="sd">        not provide an ID, then the value may be None.</span>
 
@@ -313,7 +313,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connections</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Subscriber.recently_read"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Subscriber.recently_read">[docs]</a>    <span class="k">def</span> <span class="nf">recently_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">seconds</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the subscriber has recently read messages.</span>
 
 <span class="sd">        Using this method is helpful when the subscriber may not be fast enough</span>

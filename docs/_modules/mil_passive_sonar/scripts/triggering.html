@@ -101,7 +101,7 @@
 
 
 <div class="viewcode-block" id="HydrophoneTrigger"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.triggering.HydrophoneTrigger">[docs]</a><span class="k">class</span> <span class="nc">HydrophoneTrigger</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ROS Node meant to trigger only when a ping happens in our target frequency range.</span>
 
 <span class="sd">    Subscribes to raw hydrophone samples on ``/samples``.</span>
@@ -131,7 +131,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="c1"># Attributes about our general frequency range (all pinger live here)</span>
         <span class="c1">#  Frequency range garunteed to be relatively quiet except for the pingers (in Hz)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">general_lower</span> <span class="o">=</span> <span class="mi">15000</span>  <span class="c1"># lowest frequency pinger - 10 kHz</span>
@@ -206,7 +205,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_past</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_h</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_sound</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HydrophoneTrigger.reset"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.triggering.HydrophoneTrigger.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriggerResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the system using the :meth`.get_params` method.</span>
 
 <span class="sd">        Args:</span>
@@ -221,7 +220,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="HydrophoneTrigger.enable"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.triggering.HydrophoneTrigger.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enables the system; can be called through a :class:`SetBoolRequest` request.</span>
 
 <span class="sd">        Args:</span>
@@ -236,7 +235,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="HydrophoneTrigger.filter_response"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.triggering.HydrophoneTrigger.filter_response">[docs]</a>    <span class="k">def</span> <span class="nf">filter_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriggerResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filters the debug service. Serves as a callback to the service.</span>
 
 <span class="sd">        Args:</span>
@@ -260,7 +259,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="HydrophoneTrigger.hydrophones_cb"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.triggering.HydrophoneTrigger.hydrophones_cb">[docs]</a>    <span class="k">def</span> <span class="nf">hydrophones_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Ping</span><span class="p">,</span> <span class="n">HydrophoneSamplesStamped</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The callback to the hydrophone samples topic. Can receive either a :class:`~mil_passive_sonar.msg._Ping.Ping`</span>
 <span class="sd">        or :class:`~mil_passive_sonar.msg._HydrophoneSamplesStamped.HydrophoneSamplesStamped` message.</span>
 
@@ -321,14 +320,12 @@
         <span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">max_convolves</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">gradients</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
-
             <span class="n">triggered_at_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gradients</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">triggered_at_idx</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trigger_offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
             <span class="n">trigger_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="n">triggered_at_idx</span><span class="p">]</span>
 
             <span class="c1"># if we have triggered very recently, do not trigger (echo protection)</span>
             <span class="k">if</span> <span class="n">trigger_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_trigger_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time_between_pings</span><span class="p">:</span>
-
                 <span class="bp">self</span><span class="o">.</span><span class="n">prev_trigger_time</span> <span class="o">=</span> <span class="n">trigger_time</span>
 
                 <span class="n">start</span> <span class="o">=</span> <span class="n">triggered_at_idx</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_past</span><span class="p">)</span>

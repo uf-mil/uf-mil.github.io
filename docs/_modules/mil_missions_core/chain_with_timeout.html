@@ -88,7 +88,7 @@
 
 
 <div class="viewcode-block" id="MakeChainWithTimeout"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.MakeChainWithTimeout">[docs]</a><span class="k">def</span> <span class="nf">MakeChainWithTimeout</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">Type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generate a ``ChainWithTimeout`` mission with the BaseMission specified. Used by</span>
 <span class="sd">    individual robotics platforms to reuse this example mission.</span>
 
@@ -103,7 +103,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">class</span> <span class="nc">ChainWithTimeout</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Example of a mission which runs an arbitrary number of other missions in a linear order. This</span>
 <span class="sd">        is the mission used by the rqt plugin under the &quot;Chained Missions&quot; section.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -111,7 +111,7 @@
         <span class="k">async</span> <span class="k">def</span> <span class="nf">run_submission_with_timeout</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">mission</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span>
         <span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Runs a child mission, throwing an exception if more time than specified in timeout</span>
 <span class="sd">            passes before the mission finishes executing.</span>
 
@@ -145,7 +145,7 @@
 
         <span class="nd">@classmethod</span>
         <span class="k">def</span> <span class="nf">decode_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Goes through list of missions to chain and fills in missing attributes,</span>
 <span class="sd">            like timeout with defaults. If something is invalid, raise an exception.</span>
 
@@ -196,7 +196,7 @@
             <span class="k">return</span> <span class="n">parameters</span>
 
         <span class="k">async</span> <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">]):</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Runs a list of child missions specified in the parameters with optional timeouts.</span>
 
 <span class="sd">            Args:</span>
@@ -207,7 +207,7 @@
             <span class="k">for</span> <span class="n">mission</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;missions&quot;</span><span class="p">]:</span>  <span class="c1"># Run each child mission linearly</span>
 
                 <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">final</span><span class="p">):</span>
-                    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">                    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                    Called when a submission finishes. If it succeeded, print the result in feedback.</span>
 <span class="sd">                    If it failed or timedout, print the failure and stop the whole chain if that</span>
 <span class="sd">                    mission is required.</span>

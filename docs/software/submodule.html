@@ -119,19 +119,19 @@
 <section id="adding-a-new-submodule">
 <h2>Adding a new submodule<a class="headerlink" href="#adding-a-new-submodule" title="Permalink to this heading">¶</a></h2>
 <p>To add a new submodule into a repository, you can use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">add</span> <span class="pre">&lt;url&gt;</span></code>!</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule add https://github.com/chaconinc/DbConnector
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>add<span class="w"> </span>https://github.com/chaconinc/DbConnector
 </pre></div>
 </div>
 <p>When you do this, a new directory called <code class="docutils literal notranslate"><span class="pre">DbConnector</span></code> will appear, and the <code class="docutils literal notranslate"><span class="pre">.gitmodules</span></code> file (which keeps track of your submodules) will be updated. Now, you’ll need to actually commit it to the repository, like any other folder you add:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git commit -am <span class="s1">&#39;Add DbConnector module&#39;</span>
-$ git push
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s1">&#39;Add DbConnector module&#39;</span>
+$<span class="w"> </span>git<span class="w"> </span>push
 </pre></div>
 </div>
 </section>
 <section id="cloning-a-repository-with-submodules">
 <h2>Cloning a repository with submodules<a class="headerlink" href="#cloning-a-repository-with-submodules" title="Permalink to this heading">¶</a></h2>
 <p>When you clone a repository with nested submodules, you must run some commands to get your submodules up and running:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --init --recursive
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </pre></div>
 </div>
 <p>In this command, <code class="docutils literal notranslate"><span class="pre">--init</span></code> initializes your submodule configuration file, while <code class="docutils literal notranslate"><span class="pre">--recursive</span></code> does this for all nested submodules in the project.</p>
@@ -141,22 +141,22 @@ $ git push
 <section id="through-the-submodule-remote">
 <h3>Through the submodule remote<a class="headerlink" href="#through-the-submodule-remote" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes, submodules can be updated by another user, and you’ll need to pull these changes into your own copy. If you would like to do this for one submodule, <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the submodule, and then update the specific submodule yourself:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> DbConnector
-$ git fetch
-$ git merge origin/master
-$ <span class="nb">cd</span> ..
-$ git commit -am <span class="s1">&#39;Pulled in new submodule code&#39;</span>
-$ git push
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>DbConnector
+$<span class="w"> </span>git<span class="w"> </span>fetch
+$<span class="w"> </span>git<span class="w"> </span>merge<span class="w"> </span>origin/master
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s1">&#39;Pulled in new submodule code&#39;</span>
+$<span class="w"> </span>git<span class="w"> </span>push
 </pre></div>
 </div>
 <p>Because you committed with the new submodule code, whenever others fetch new changes, they will also get the update submodule changes.</p>
 <p>While the above is great for small, independent submodule changes where you want more customizability in how the submodule is updated, repeatedly doing multiple commands to update the submodule can get annoying! Thankfully, git helps to fix that with:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote
 </pre></div>
 </div>
 <p>This command will update all submodules from their <code class="docutils literal notranslate"><span class="pre">remote</span></code> repositories. If you want to update a submodule from another branch its on, you can change your Git config.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git config .gitmodules submodule.DbConnector.branch stable
-$ git submodule update --remote DbConnector
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>.gitmodules<span class="w"> </span>submodule.DbConnector.branch<span class="w"> </span>stable
+$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>DbConnector
 </pre></div>
 </div>
 <p>Now, when you update the <code class="docutils literal notranslate"><span class="pre">DbConnector</span></code> repository, it will pull from the <code class="docutils literal notranslate"><span class="pre">stable</span></code> branch. You can then <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> as normal.</p>
@@ -165,15 +165,15 @@ $ git submodule update --remote DbConnector
 <h3>Through the main project remote<a class="headerlink" href="#through-the-main-project-remote" title="Permalink to this heading">¶</a></h3>
 <p>Normally, to update the project, you would run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code>. However, when working with submodules, this won’t be enough to create effective changes. This will get the relevant changes that occurred in the submodules, but it won’t actually <em>update</em> the submodules.</p>
 <p>Instead, you will also need to run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --init --recursive
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
 </pre></div>
 </div>
 <p>These two commands can be simplified into one through:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git pull --recurse-submodules
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>--recurse-submodules
 </pre></div>
 </div>
 <p>Sounds like a lot to type? Let’s make <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> default!</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git config submodule.recurse <span class="nb">true</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>submodule.recurse<span class="w"> </span><span class="nb">true</span>
 </pre></div>
 </div>
 </section>
@@ -182,23 +182,23 @@ $ git submodule update --remote DbConnector
 <h2>Working on a submodule<a class="headerlink" href="#working-on-a-submodule" title="Permalink to this heading">¶</a></h2>
 <p>Eventually, you may want to make some changes to the submodule to help improve the code!</p>
 <p>Before working, let’s merge in any changes from the upstream:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote --merge
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>--merge
 </pre></div>
 </div>
 <p>Now, we can make some changes:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> DbConnector/
-$ vim src/example.cpp
-$ git commit -am <span class="s2">&quot;Add example test&quot;</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>DbConnector/
+$<span class="w"> </span>vim<span class="w"> </span>src/example.cpp
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Add example test&quot;</span>
 </pre></div>
 </div>
 <p>You’ve now made a commit to the submodule. If it’s been a while and you want to rebase changes from the upstream:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git submodule update --remote --rebase
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>--rebase
 <span class="c1"># OR</span>
-$ git submodule update --remote --merge
+$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--remote<span class="w"> </span>--merge
 </pre></div>
 </div>
 <p>But, we still haven’t actually pushed the changes!</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git push --recurse-submodules<span class="o">=</span>on-demand
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>--recurse-submodules<span class="o">=</span>on-demand
 </pre></div>
 </div>
 <p>Note that this will push any commits for <strong>every</strong> submodule. If you want to push some commits for one submodule, then <code class="docutils literal notranslate"><span class="pre">cd</span></code> into the submodule directory and use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>.</p>

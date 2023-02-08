@@ -86,7 +86,7 @@
 
 
 <div class="viewcode-block" id="SimulatedPnuematicActuatorBoard"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard">[docs]</a><span class="k">class</span> <span class="nc">SimulatedPnuematicActuatorBoard</span><span class="p">(</span><span class="n">SimulatedSerial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A simulation of the pneumatic actuator board&#39;s serial protocol</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -94,7 +94,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SimulatedPnuematicActuatorBoard.write"><a class="viewcode-back" href="../../reference/pneumatic.html#mil_pneumatic_actuator.SimulatedPnuematicActuatorBoard.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Writes a series of bytes and completes the necessary actions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">deserialize_packet</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -103,10 +103,10 @@
             <span class="c1"># rospy.loginfo(&quot;Ping received&quot;)</span>
             <span class="n">byte</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">PING_RESPONSE</span>
         <span class="k">elif</span> <span class="n">request</span> <span class="o">&gt;</span> <span class="mh">0x20</span> <span class="ow">and</span> <span class="n">request</span> <span class="o">&lt;</span> <span class="mh">0x30</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Open port </span><span class="si">{</span><span class="n">request</span> <span class="o">-</span> <span class="mh">0x20</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Open port </span><span class="si">{</span><span class="n">request</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">0x20</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">byte</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">OPEN_RESPONSE</span>
         <span class="k">elif</span> <span class="n">request</span> <span class="o">&gt;</span> <span class="mh">0x30</span> <span class="ow">and</span> <span class="n">request</span> <span class="o">&lt;</span> <span class="mh">0x40</span><span class="p">:</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Close port </span><span class="si">{</span><span class="n">request</span> <span class="o">-</span> <span class="mh">0x30</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Close port </span><span class="si">{</span><span class="n">request</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">0x30</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">byte</span> <span class="o">=</span> <span class="n">Constants</span><span class="o">.</span><span class="n">CLOSE_RESPONSE</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Default&quot;</span><span class="p">)</span>

@@ -192,8 +192,8 @@ achieve the same purpose.</p>
 <p>(To access the Terminal on Ubuntu, click the 9 dots in the bottom left corner
 and find the Terminal app. You can later install a different terminal emulator,
 if you’d like.)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt update
-$ sudo apt upgrade
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade
 </pre></div>
 </div>
 <div class="admonition note">
@@ -211,7 +211,7 @@ it’s ran in the REPL.</p>
 <h2>Install git<a class="headerlink" href="#install-git" title="Permalink to this heading">¶</a></h2>
 <p>To contribute changes, you will need to have <a class="reference external" href="https://www.git-scm.com">git</a> installed.
 This program will be used to track and upload any changes that you make to the repository.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt install git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>git
 </pre></div>
 </div>
 </section>
@@ -222,19 +222,19 @@ can make changes.</p>
 <p>First clone the upstream (MIL’s fork) version of the repo. It is recommended
 that you first create a catkin workspace and clone it into the <code class="docutils literal notranslate"><span class="pre">src</span></code> or that
 workspace.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir -p ~/catkin_ws/src <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ~/catkin_ws/src
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/catkin_ws/src<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src
 </pre></div>
 </div>
 <p>Then, clone the repository (the <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> is essential, as that is
 what pulls the submodules, <code class="docutils literal notranslate"><span class="pre">-j8</span></code> is a speed optimization that downloads up to 8
 submodules at a time). Cloning the repository allows you to have a local copy
 of the code on your computer.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone --recurse-submodules -j8 https://github.com/uf-mil/mil.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>-j8<span class="w"> </span>https://github.com/uf-mil/mil.git
 </pre></div>
 </div>
 <p>Navigate to the root of the repository now. If you have followed the
 instructions exactly, you can get there through:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/catkin_ws/src/mil
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/catkin_ws/src/mil
 </pre></div>
 </div>
 </section>
@@ -246,15 +246,15 @@ the root of the repository.</p>
 <p>If you’re wondering what these scripts do, they install all of the tools needed
 for you to work in MIL (<code class="docutils literal notranslate"><span class="pre">git</span></code>, ROS, Python dependencies, etc.). Feel free
 to open up the file in an editor if you’re more curious.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/install.sh
-$ <span class="nb">exec</span> bash <span class="c1"># or exec zsh if you have set up zsh</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./scripts/install.sh
+$<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>bash<span class="w"> </span><span class="c1"># or exec zsh if you have set up zsh</span>
 </pre></div>
 </div>
 <p>Exit the terminal and enter it again.</p>
 <p>To build our tools, we use a tool that ROS provides us named <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code>. This
 searches through all of our packages and compiles them together. You can use an
 alias, <code class="docutils literal notranslate"><span class="pre">cm</span></code> to call <code class="docutils literal notranslate"><span class="pre">catkin_make</span></code> quickly, from wherever you are in the MIL directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cm
 </pre></div>
 </div>
 <p>If something goes wrong, try the suggestions in <a class="reference internal" href="help.html"><span class="doc std std-doc">Getting Help</span></a>. It’s common
@@ -268,7 +268,7 @@ to the instance.</p>
 you can use the script below to set up your Git configuration! It will help you
 register your name and email with Git and authenticate so that you can push to
 the repository.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/store_git.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./scripts/store_git.sh
 </pre></div>
 </div>
 </section>
@@ -280,11 +280,11 @@ up a simulation of our submarine.</p>
 <p>For this, you will need multiple terminal windows! To create a new window in the
 default terminal, use <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">t</span></code>.</p>
 <p>In window one, write:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch subjugator_launch gazebo.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>roslaunch<span class="w"> </span>subjugator_launch<span class="w"> </span>gazebo.launch
 </pre></div>
 </div>
 <p>In window two, write:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gazebogui
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>gazebogui
 </pre></div>
 </div>
 <p>The first command launches the necessary subsystems for Gazebo, while the second command

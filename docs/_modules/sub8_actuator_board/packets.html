@@ -87,7 +87,7 @@
 
 
 <div class="viewcode-block" id="CommandMessage"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.CommandMessage">[docs]</a><span class="k">class</span> <span class="nc">CommandMessage</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a packet sent from the motherboard to the actuator board. Being a packet,</span>
 <span class="sd">    inherits from :class:`ApplicationPacket`.</span>
 
@@ -101,7 +101,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The integer address of this command.</span>
 
 <span class="sd">        :rtype: int</span>
@@ -110,7 +110,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, this message sets the valve open or closed. If False, this</span>
 <span class="sd">        message requests the status of a valve.</span>
 
@@ -120,7 +120,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, this message commanded the valve to be open. Else, the valve</span>
 <span class="sd">        is commanded to be closed.</span>
 
@@ -132,7 +132,7 @@
 
 <div class="viewcode-block" id="CommandMessage.create_command_message"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.CommandMessage.create_command_message">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_command_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">write</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">on</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new command message.</span>
 
 <span class="sd">        Args:</span>
@@ -159,7 +159,7 @@
 
 
 <div class="viewcode-block" id="InvalidAddressException"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.InvalidAddressException">[docs]</a><span class="k">class</span> <span class="nc">InvalidAddressException</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception noting that the requested valve address is outside of the range available</span>
 <span class="sd">    on the sub. Inherits from :class:`RuntimeError`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -173,7 +173,7 @@
 
 
 <div class="viewcode-block" id="FeedbackMessage"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.FeedbackMessage">[docs]</a><span class="k">class</span> <span class="nc">FeedbackMessage</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a message received from the actuator board sent to the motherboard</span>
 
 <span class="sd">    Attributes:</span>
@@ -184,7 +184,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The address of valve referenced by this command. Should be between 0-11.</span>
 
 <span class="sd">        :rtype: int</span>
@@ -193,7 +193,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">on</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, valve is currently open. If False, valve is currently closed.</span>
 
 <span class="sd">        :rtype: bool</span>
@@ -202,7 +202,7 @@
 
 <div class="viewcode-block" id="FeedbackMessage.create_feedback_message"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.FeedbackMessage.create_feedback_message">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_feedback_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">on</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a feedback message.</span>
 
 <span class="sd">        Args:</span>
