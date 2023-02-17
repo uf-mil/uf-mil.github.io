@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>subjugator_vision_tools.marker_occ_grid</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for subjugator_vision_tools.marker_occ_grid</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Pose</span><span class="p">,</span> <span class="n">Pose2D</span><span class="p">,</span> <span class="n">Quaternion</span>
+<span class="kn">from</span> <span class="nn">image_geometry</span> <span class="kn">import</span> <span class="n">PinholeCameraModel</span>
+<span class="kn">from</span> <span class="nn">mil_ros_tools</span> <span class="kn">import</span> <span class="n">msg_helpers</span>
+<span class="kn">from</span> <span class="nn">nav_msgs.msg</span> <span class="kn">import</span> <span class="n">MapMetaData</span><span class="p">,</span> <span class="n">OccupancyGrid</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Header</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Empty</span><span class="p">,</span> <span class="n">EmptyResponse</span>
+<span class="kn">from</span> <span class="nn">subjugator_msgs.srv</span> <span class="kn">import</span> <span class="n">SearchPose</span>
+
+
+<span class="k">def</span> <span class="nf">unit_vector</span><span class="p">(</span><span class="n">vect</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">vect</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vect</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_2D_rotation</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span>
+    <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OccGridUtils"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.OccGridUtils">[docs]</a><span class="k">class</span> <span class="nc">OccGridUtils</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains functions for dealing with occupancy grids as well as storing and publishing them.</span>
+
+<span class="sd">    All distance measured in meters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">starting_pose</span><span class="p">,</span> <span class="n">topic_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/search_grid&quot;</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="n">MapMetaData</span><span class="p">()</span>
+        <span class="c1"># Resolution is m/cell. Width is X, height is Y.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="n">res</span>  <span class="c1"># rospy.get_param(&quot;map_resolution&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>  <span class="c1"># rospy.get_param(&quot;map_width&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>  <span class="c1"># rospy.get_param(&quot;map_height&quot;)</span>
+
+        <span class="c1"># Starting Position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span> <span class="o">=</span> <span class="o">-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span> <span class="o">=</span> <span class="o">-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_euler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">starting_pose</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="n">q</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/reset_occ_grid&quot;</span><span class="p">,</span> <span class="n">Empty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reset_grid</span><span class="p">)</span>
+
+        <span class="c1"># Create array of -1&#39;s of the correct size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">occ_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">occ_grid_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">OccupancyGrid</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span> <span class="o">=</span> <span class="n">Searcher</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searched</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">])</span>
+
+<div class="viewcode-block" id="OccGridUtils.add_circle"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.OccGridUtils.add_circle">[docs]</a>    <span class="k">def</span> <span class="nf">add_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a circle to the grid.</span>
+<span class="sd">        Also used to project the camera&#39;s view onto the grid because it is rotationally intolerant.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">center_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">center</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">radius</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">radius</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searched</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">center_offset</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)),</span> <span class="n">radius</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OccGridUtils.found_marker"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.OccGridUtils.found_marker">[docs]</a>    <span class="k">def</span> <span class="nf">found_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pose_2d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to mark found markers.</span>
+<span class="sd">        It doesn&#39;t matter that this isn&#39;t perfect, we just need to know that something is there.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">TRENCH_LENGTH</span> <span class="o">=</span> <span class="mf">1.22</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span>  <span class="c1"># cells (4 ft)</span>
+        <span class="n">TRENCH_WIDTH</span> <span class="o">=</span> <span class="mf">0.1524</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span>  <span class="c1"># cells (6 inches)</span>
+
+        <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">pose_2d</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pose_2d</span><span class="o">.</span><span class="n">y</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># The negative all depends on how the center is returned</span>
+        <span class="n">rotation</span> <span class="o">=</span> <span class="o">-</span><span class="n">pose_2d</span><span class="o">.</span><span class="n">theta</span>
+
+        <span class="n">center_offset</span> <span class="o">=</span> <span class="n">center</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">rot_top_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">rot_bottom_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+        <span class="n">pos_top_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int0</span><span class="p">(</span><span class="n">rot_top_point</span> <span class="o">+</span> <span class="n">center_offset</span><span class="p">)</span>
+        <span class="n">pos_bottom_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int0</span><span class="p">(</span><span class="n">rot_bottom_point</span> <span class="o">+</span> <span class="n">center_offset</span><span class="p">)</span>
+
+        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">markers</span><span class="p">,</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="n">pos_top_point</span><span class="p">),</span>
+            <span class="nb">tuple</span><span class="p">(</span><span class="n">pos_bottom_point</span><span class="p">),</span>
+            <span class="mi">101</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">TRENCH_WIDTH</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OccGridUtils.publish_grid"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.OccGridUtils.publish_grid">[docs]</a>    <span class="k">def</span> <span class="nf">publish_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Take the occupancy grid and send it out over ros with timestamps and whatnot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">Header</span><span class="p">(</span><span class="n">stamp</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">frame_id</span><span class="o">=</span><span class="s2">&quot;map&quot;</span><span class="p">)</span>
+        <span class="c1"># Populate occ grid msg</span>
+        <span class="n">occ_msg</span> <span class="o">=</span> <span class="n">OccupancyGrid</span><span class="p">()</span>
+        <span class="n">occ_msg</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+        <span class="n">occ_msg</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span>
+        <span class="c1"># Make sure values don&#39;t go out of range</span>
+        <span class="n">occ_grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">searched</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">markers</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">occ_msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">occ_grid</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">occ_grid_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">occ_msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OccGridUtils.reset_grid"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.OccGridUtils.reset_grid">[docs]</a>    <span class="k">def</span> <span class="nf">reset_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">srv</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets occupancy grid. I&#39;m using a random service since I don&#39;t</span>
+<span class="sd">        really care about getting or returning information here.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create array of -1&#39;s of the correct size</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Resetting Grid.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">occ_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">markers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">EmptyResponse</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Searcher"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.Searcher">[docs]</a><span class="k">class</span> <span class="nc">Searcher</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Intended to provide a service that will return a pose to go to in order to</span>
+<span class="sd">    search for a missing marker.</span>
+
+<span class="sd">    Not sure how this will be implemented in its entirety.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searched_area</span><span class="p">,</span> <span class="n">grid_res</span><span class="p">,</span> <span class="n">position_offset</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched_area</span> <span class="o">=</span> <span class="n">searched_area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_res</span> <span class="o">=</span> <span class="n">grid_res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position_offset</span> <span class="o">=</span> <span class="n">position_offset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">polygon_generator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_searches</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_search</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/next_search_pose&quot;</span><span class="p">,</span> <span class="n">SearchPose</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_pose</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Searcher.return_pose"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.Searcher.return_pose">[docs]</a>    <span class="k">def</span> <span class="nf">return_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">srv</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the next pose to go to in order to try and find the marker.</span>
+<span class="sd">        Only searches in a circle around our current location (could be extended to searching farther if we need to).</span>
+<span class="sd">        This will skip points that have already been searched.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">srv</span><span class="o">.</span><span class="n">reset_search</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_search</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">polygon_generator</span><span class="p">()</span>
+            <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">srv</span><span class="o">.</span><span class="n">intial_position</span><span class="p">]</span>
+
+        <span class="c1"># We search at 1.5 * r so that there is some overlay in the search feilds.</span>
+        <span class="n">np_pose</span> <span class="o">=</span> <span class="n">msg_helpers</span><span class="o">.</span><span class="n">pose_to_numpy</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">intial_position</span><span class="p">)</span>
+        <span class="n">rot_mat</span> <span class="o">=</span> <span class="n">make_2D_rotation</span><span class="p">(</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">np_pose</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">coor</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rot_mat</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span><span class="p">))</span> <span class="o">*</span> <span class="n">srv</span><span class="o">.</span><span class="n">search_radius</span> <span class="o">*</span> <span class="mf">1.75</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="p">)</span>
+            <span class="o">+</span> <span class="n">np_pose</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># if self.current_search &gt; self.max_searches:</span>
+        <span class="c1">#     rospy.logwarn(&quot;Searched {} times. Marker not found.&quot;.format(self.max_searches))</span>
+        <span class="c1">#     return [0, False, srv.intial_position]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_search</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Search number: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_search</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Should be variable based on height maybe?</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">msg_helpers</span><span class="o">.</span><span class="n">numpy_quat_pair_to_pose</span><span class="p">(</span><span class="n">coor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">check_searched</span><span class="p">(</span><span class="n">coor</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">srv</span><span class="o">.</span><span class="n">search_radius</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">pose</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Searcher.check_searched"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.Searcher.check_searched">[docs]</a>    <span class="k">def</span> <span class="nf">check_searched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_center</span><span class="p">,</span> <span class="n">search_radius</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mask out a circle of the searched area around the point, then find the area of the grid in that mask. If</span>
+<span class="sd">        the area is above some threshold assume we have searched this area and do not need to search it again.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">center_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">search_center</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_res</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_offset</span>
+
+        <span class="c1"># Create mask</span>
+        <span class="n">circle_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searched_area</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">search_radius</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_res</span><span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">circle_mask</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">center_offset</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)),</span> <span class="n">radius</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">masked_search</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">searched_area</span> <span class="o">*</span> <span class="n">circle_mask</span>
+
+        <span class="c1"># If there has already been a marker found on the grid in our search area go there.</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">masked_search</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="c1"># If the center is off of the grid, skip that spot.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">circle_mask</span><span class="p">[</span><span class="n">circle_mask</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">masked_search</span><span class="p">[</span><span class="n">masked_search</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">circle_mask</span><span class="p">[</span><span class="n">circle_mask</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Searcher.polygon_generator"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.Searcher.polygon_generator">[docs]</a>    <span class="k">def</span> <span class="nf">polygon_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Using a generator here to allow for easy expansion in the future.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Add difference search patterns.</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">360</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">rot_mat</span> <span class="o">=</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="c1"># Start by going directly right</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">yield</span> <span class="n">point</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rot_mat</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">yield</span> <span class="n">point</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">MarkerOccGrid</span><span class="p">(</span><span class="n">OccGridUtils</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles updating occupancy grid when new data comes in.</span>
+<span class="sd">    TODO: Upon call can return some path to go to in order to find them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">image_sub</span><span class="p">,</span> <span class="n">grid_res</span><span class="p">,</span> <span class="n">grid_width</span><span class="p">,</span> <span class="n">grid_height</span><span class="p">,</span> <span class="n">grid_starting_pose</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">res</span><span class="o">=</span><span class="n">grid_res</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">grid_width</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="n">grid_height</span><span class="p">,</span>
+            <span class="n">starting_pose</span><span class="o">=</span><span class="n">grid_starting_pose</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cam</span> <span class="o">=</span> <span class="n">PinholeCameraModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_info</span> <span class="o">=</span> <span class="n">image_sub</span><span class="o">.</span><span class="n">wait_for_camera_info</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Maybe raise an alarm here.</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;I don&#39;t know what to do without my camera info.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">fromCameraInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">camera_info</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes marker information to update occupacy grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_y_position</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tf</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_circle</span><span class="p">(</span><span class="n">x_y_position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_visual_radius</span><span class="p">(</span><span class="n">height</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_grid</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">add_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the actual 3d pose of the marker and fill in the occupancy grid for that pose.</span>
+<span class="sd">        This works by:</span>
+<span class="sd">            1. Calculate unit vector between marker point and the image center in the image frame.</span>
+<span class="sd">            2. Use height measurement to find real life distance (m) between center point and marker center.</span>
+<span class="sd">            3. Use unit vec and magnitude to find dx and dy in meters.</span>
+<span class="sd">            3. Pass info to OccGridUtils.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">x_y_position</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tf</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">marker</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_marker_area</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">:</span>
+            <span class="c1"># If the detected region isn&#39;t big enough dont add it.</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Marker found but it is too small, not adding marker.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Calculate position of marker accounting for camera rotation.</span>
+        <span class="n">dir_vector</span> <span class="o">=</span> <span class="n">unit_vector</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()]</span> <span class="o">-</span> <span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">cam_rotation</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">rot</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">dir_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dir_vector</span><span class="p">,</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">cam_rotation</span><span class="p">))</span>
+        <span class="n">marker_rotation</span> <span class="o">=</span> <span class="n">cam_rotation</span> <span class="o">+</span> <span class="n">marker</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">trans</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/base_link&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rot</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">0.005</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;We&#39;re at a weird angle, not adding marker.&quot;</span><span class="p">)</span>
+
+        <span class="n">magnitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_visual_radius</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">second_point</span><span class="o">=</span><span class="n">marker</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">local_position</span> <span class="o">=</span> <span class="n">dir_vector</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">magnitude</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">local_position</span> <span class="o">+</span> <span class="n">x_y_position</span>
+
+        <span class="c1"># print local_position</span>
+
+        <span class="c1"># Pose on ground plane from center</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose2D</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">theta</span><span class="o">=</span><span class="n">marker_rotation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">found_marker</span><span class="p">(</span><span class="n">pose</span><span class="p">)</span>
+
+        <span class="c1"># The image coordinate pose and real life pose are different.</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose2D</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">theta</span><span class="o">=</span><span class="n">marker_rotation</span><span class="p">)</span>
+        <span class="c1"># In meters with initial point at (0,0)</span>
+        <span class="k">return</span> <span class="n">pose</span>
+
+    <span class="k">def</span> <span class="nf">get_tf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        x_y position and height in meters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span>
+            <span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">x_y_position</span> <span class="o">=</span> <span class="n">trans</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span>
+            <span class="s2">&quot;/ground&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;/ground&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">x_y_position</span><span class="p">,</span> <span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">correct_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measured_height</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adjust the measured height from the seafloor using our orientation relative to it.</span>
+<span class="sd">        We assume the floor is flat (should be valid for transdec but maybe not for pool).</span>
+<span class="sd">        All the math is just solving triangles.</span>
+
+<span class="sd">        Note: If the roll or pitch is too far off, the range could be to a point that is not</span>
+<span class="sd">            planar to the floor directly under us - in which case this will fail.</span>
+
+<span class="sd">        TODO: See if this actually can produce better results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trans</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/base_link&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">euler_rotation</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+
+        <span class="n">roll_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">euler_rotation</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">measured_height</span><span class="p">)</span>
+        <span class="n">pitch_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">euler_rotation</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">measured_height</span><span class="p">)</span>
+
+        <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">measured_height</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">roll_offset</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">pitch_offset</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">calculate_marker_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate what the area of the marker should be so we don&#39;t add incorrect markers to the occupancy grid.</span>
+<span class="sd">        What we really don&#39;t want is to add markers to the grid that are on the edge since the direction and center of</span>
+<span class="sd">            the marker are off.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">MARKER_LENGTH</span> <span class="o">=</span> <span class="mf">1.22</span>  <span class="c1"># m</span>
+        <span class="n">MARKER_WIDTH</span> <span class="o">=</span> <span class="mf">0.1524</span>  <span class="c1"># m</span>
+
+        <span class="c1"># Get m/px on the ground floor.</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_visual_radius</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">():</span>
+            <span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">()</span>
+
+        <span class="n">m_px</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="n">px</span>
+        <span class="n">marker_area_m</span> <span class="o">=</span> <span class="n">MARKER_WIDTH</span> <span class="o">*</span> <span class="n">MARKER_LENGTH</span>
+        <span class="n">marker_area_px</span> <span class="o">=</span> <span class="n">marker_area_m</span> <span class="o">/</span> <span class="p">(</span><span class="n">m_px</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">marker_area_px</span>
+
+    <span class="k">def</span> <span class="nf">calculate_visual_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">second_point</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draws rays to find the radius of the FOV of the camera in meters.</span>
+<span class="sd">        It also can work to find the distance between two planar points some distance from the camera.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">mid_ray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">second_point</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">():</span>
+                <span class="n">second_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">(),</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">second_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()])</span>
+
+        <span class="n">edge_ray</span> <span class="o">=</span> <span class="n">unit_vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">projectPixelTo3dRay</span><span class="p">(</span><span class="n">second_point</span><span class="p">))</span>
+
+        <span class="c1"># Calculate angle between vectors and use that to find r</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">mid_ray</span><span class="p">,</span> <span class="n">edge_ray</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;searcher&quot;</span><span class="p">)</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">MarkerOccGrid</span><span class="p">(</span>
+        <span class="n">res</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">starting_pose</span><span class="o">=</span><span class="n">Pose2D</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
