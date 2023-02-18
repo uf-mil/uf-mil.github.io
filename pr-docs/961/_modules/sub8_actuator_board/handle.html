@@ -89,7 +89,7 @@
 
 
 <div class="viewcode-block" id="ActuatorBoard"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.ActuatorBoard">[docs]</a><span class="k">class</span> <span class="nc">ActuatorBoard</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Device handle for the actuator board. Because this class implements a CAN device,</span>
 <span class="sd">    it inherits from the :class:`CANDeviceHandle` class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -99,7 +99,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/set_valve&quot;</span><span class="p">,</span> <span class="n">SetValve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_valve</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActuatorBoard.set_valve"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.ActuatorBoard.set_valve">[docs]</a>    <span class="k">def</span> <span class="nf">set_valve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetValveRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the ``/set_valve`` service is requested. Creates a message to</span>
 <span class="sd">        control the valve and sends it through the inherited device handle.</span>
 
@@ -132,7 +132,7 @@
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="ActuatorBoard.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.ActuatorBoard.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process data received from board.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Ensure packet contains correct identifier byte</span>

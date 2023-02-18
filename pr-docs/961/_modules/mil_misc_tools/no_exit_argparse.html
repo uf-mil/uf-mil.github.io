@@ -90,7 +90,7 @@
 
 
 <span class="k">class</span> <span class="nc">ThrowingArgumentParser</span><span class="p">(</span><span class="n">ArgumentParser</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extension of standard :class:`argparse.ArgumentParser` that will throw an exception</span>
 <span class="sd">    if a parse error is encountered so programs can handle this error</span>
 <span class="sd">    in custom ways besides just printing the help screen and exiting.</span>
@@ -101,7 +101,7 @@
 
     <span class="c1"># From: https://stackoverflow.com/questions/14728376/i-want-python-argparse-to-throw-an-exception-rather-than-usage</span>
     <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles errors in the ArgumentParser. Only raises the :class:`ArgumentParserException`</span>
 <span class="sd">        and does nothing else.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

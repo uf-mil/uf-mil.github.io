@@ -94,7 +94,7 @@
 
 
 <div class="viewcode-block" id="USBtoCANDriver"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANDriver">[docs]</a><span class="k">class</span> <span class="nc">USBtoCANDriver</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ROS Driver which implements the USB to CAN board. Allow users to specify a dictionary of</span>
 <span class="sd">    device handle classes to be loaded at runtime to handle communication with</span>
 <span class="sd">    specific devices.</span>
@@ -144,7 +144,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">20.0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_in_buffer</span><span class="p">)</span>
 
 <div class="viewcode-block" id="USBtoCANDriver.read_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANDriver.read_packet">[docs]</a>    <span class="k">def</span> <span class="nf">read_packet</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempt to read a packet from the board. If the packet has an appropriate device</span>
 <span class="sd">        handler, then the packet is passed to the ``on_data`` method of that handler.</span>
 
@@ -169,14 +169,14 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="USBtoCANDriver.process_in_buffer"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANDriver.process_in_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">process_in_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read all available packets in the board&#39;s in-buffer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_packet</span><span class="p">():</span>
             <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="USBtoCANDriver.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANDriver.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data using the :meth:`USBtoCANBoard.send_data` method.</span>
 
 <span class="sd">        Returns:</span>
@@ -194,7 +194,7 @@
     <span class="k">def</span> <span class="nf">parse_module_dictionary</span><span class="p">(</span>
         <span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generator to load classes from module strings specified in a dictionary.</span>
 <span class="sd">        Imports all found classes.</span>
 

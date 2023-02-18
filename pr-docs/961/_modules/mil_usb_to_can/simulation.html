@@ -90,7 +90,7 @@
 
 
 <div class="viewcode-block" id="SimulatedCANDevice"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDevice">[docs]</a><span class="k">class</span> <span class="nc">SimulatedCANDevice</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simulates a CAN device, with functions to be overridden to handle data requests</span>
 <span class="sd">    and sends from motherboard.</span>
 
@@ -102,14 +102,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_can_id</span> <span class="o">=</span> <span class="n">can_id</span>
 
 <div class="viewcode-block" id="SimulatedCANDevice.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDevice.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send data onto the bus, delivering it to other simulated devices and to</span>
 <span class="sd">        the driver node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sim_board</span><span class="o">.</span><span class="n">send_to_bus</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_can_id</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimulatedCANDevice.on_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedCANDevice.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the motherboard or another simulated device sends data onto the bus.</span>
 
 <span class="sd">        .. note::</span>
@@ -123,7 +123,7 @@
 
 
 <span class="k">class</span> <span class="nc">ExampleSimulatedEchoDevice</span><span class="p">(</span><span class="n">SimulatedCANDevice</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Example implementation of a SimulatedCANDevice.</span>
 <span class="sd">    On sends, stores the transmitted data in a buffer.</span>
 <span class="sd">    When data is requested, it echos this data back.</span>
@@ -140,7 +140,7 @@
 
 
 <span class="k">class</span> <span class="nc">ExampleSimulatedAdderDevice</span><span class="p">(</span><span class="n">SimulatedCANDevice</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Example implementation of a SimulatedCANDevice.</span>
 <span class="sd">    On sends, stores the transmitted data in a buffer.</span>
 <span class="sd">    When data is requested, it echos this data back.</span>
@@ -159,7 +159,7 @@
 
 
 <div class="viewcode-block" id="SimulatedUSBtoCAN"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedUSBtoCAN">[docs]</a><span class="k">class</span> <span class="nc">SimulatedUSBtoCAN</span><span class="p">(</span><span class="n">SimulatedSerial</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simulates the USB to CAN board. Is supplied with a dictionary of simulated</span>
 <span class="sd">    CAN devices to simulate the behavior of the whole CAN network.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -167,7 +167,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">devices</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">SimulatedCANDevice</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">can_id</span><span class="o">=-</span><span class="mi">1</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            devices (Dict[:class:`int`, Any]): Dictionary containing CAN IDs and</span>
 <span class="sd">                their associated simulated classes inheriting from :class:`SimulatedCANDevice`.</span>
@@ -183,7 +183,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
 <div class="viewcode-block" id="SimulatedUSBtoCAN.send_to_bus"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedUSBtoCAN.send_to_bus">[docs]</a>    <span class="k">def</span> <span class="nf">send_to_bus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">from_mobo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data onto the simulated bus from a simulated device.</span>
 
 <span class="sd">        Args:</span>
@@ -201,7 +201,7 @@
                 <span class="n">device</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">can_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimulatedUSBtoCAN.write"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.SimulatedUSBtoCAN.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse incoming data as a command packet from the motherboard.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">CommandPacket</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>

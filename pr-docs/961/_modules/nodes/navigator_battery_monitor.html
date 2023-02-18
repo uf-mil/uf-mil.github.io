@@ -101,7 +101,7 @@
 
 
 <div class="viewcode-block" id="BatteryMonitor"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor">[docs]</a><span class="k">class</span> <span class="nc">BatteryMonitor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Monitors the battery voltage measured by the 4 motors on Navigator,</span>
 <span class="sd">    publishing a moving average of these measurements to /battery_monitor</span>
 <span class="sd">    at a regular interval.</span>
@@ -153,7 +153,7 @@
         <span class="p">]</span>
 
 <div class="viewcode-block" id="BatteryMonitor.hw_kill_cb"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.hw_kill_cb">[docs]</a>    <span class="k">def</span> <span class="nf">hw_kill_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serves as a callback when a hardware kill is activated.</span>
 
 <span class="sd">        Args:</span>
@@ -163,7 +163,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hw_kill_raised</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">raised</span></div>
 
 <div class="viewcode-block" id="BatteryMonitor.add_voltage"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.add_voltage">[docs]</a>    <span class="k">def</span> <span class="nf">add_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">Feedback</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">Status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is the callback function for feedback from all four motors.</span>
 
 <span class="sd">        It appends the new readings to the end of the list and</span>
@@ -184,7 +184,7 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="BatteryMonitor.publish_voltage"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.publish_voltage">[docs]</a>    <span class="k">def</span> <span class="nf">publish_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Publishes the average voltage across all four thrusters to the ``battery_voltage`` node</span>
 <span class="sd">        as a standard Float32 message and runs the voltage_check.</span>
 

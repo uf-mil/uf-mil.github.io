@@ -158,12 +158,12 @@ before you commit.</p>
 <p>If you ran <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>, it will have suggested some changes to you, indcated
 by <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> signs. It may look something like this:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w">RefactoringTool: Refactored old.py</span>
-<span class="gd">--- old.py	(original)</span><span class="w"></span>
-<span class="gi">+++ old.py	(refactored)</span><span class="w"></span>
-<span class="gu">@@ -1 +1,2 @@</span><span class="w"></span>
-<span class="gd">-print &#39;this is an example&#39;</span><span class="w"></span>
-<span class="gi">+from __future__ import print_function</span><span class="w"></span>
-<span class="gi">+print(&#39;this is an example&#39;)</span><span class="w"></span>
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gd">-print &#39;this is an example&#39;</span>
+<span class="gi">+from __future__ import print_function</span>
+<span class="gi">+print(&#39;this is an example&#39;)</span>
 <span class="w">RefactoringTool: Files that need to be modified:</span>
 </pre></div>
 </div>
@@ -199,12 +199,12 @@ languages by providing some helper functions and methods that work in both langu
 up our code on these crutches. But, we are MIL, and we don’t need any crutches!
 Instead of using <code class="docutils literal notranslate"><span class="pre">six</span></code>, try fixing the root problem. For example:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w">RefactoringTool: Refactored old.py</span>
-<span class="gd">--- old.py	(original)</span><span class="w"></span>
-<span class="gi">+++ old.py	(refactored)</span><span class="w"></span>
-<span class="gu">@@ -1 +1,2 @@</span><span class="w"></span>
-<span class="gd">-test = range(2)</span><span class="w"></span>
-<span class="gi">+from six.moves import range</span><span class="w"></span>
-<span class="gi">+test = list(range(2))</span><span class="w"></span>
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gd">-test = range(2)</span>
+<span class="gi">+from six.moves import range</span>
+<span class="gi">+test = list(range(2))</span>
 <span class="w">RefactoringTool: Files that need to be modified:</span>
 <span class="w">RefactoringTool: old.py</span>
 </pre></div>
@@ -217,11 +217,11 @@ that it wants us to wrap the <code class="docutils literal notranslate"><span cl
 Because we want the same functionality as we had in Python 2, we’ll need to manually
 convert the <code class="docutils literal notranslate"><span class="pre">range</span></code> object to a <code class="docutils literal notranslate"><span class="pre">list</span></code>. Once that’s done:</p>
 <div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w">RefactoringTool: Refactored old.py</span>
-<span class="gd">--- old.py	(original)</span><span class="w"></span>
-<span class="gi">+++ old.py	(refactored)</span><span class="w"></span>
-<span class="gu">@@ -1 +1,2 @@</span><span class="w"></span>
-<span class="gi">+from six.moves import range</span><span class="w"></span>
-<span class="w"> </span>test = list(range(2))<span class="w"></span>
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gi">+from six.moves import range</span>
+<span class="w"> </span>test = list(range(2))
 <span class="w">RefactoringTool: Files that need to be modified:</span>
 <span class="w">RefactoringTool: old.py</span>
 </pre></div>
@@ -259,7 +259,7 @@ type and an explanation for each argument and what the method returns.</p>
 <p>to</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From https://stackoverflow.com/a/11832677</span>
 <span class="k">def</span> <span class="nf">postal_valid</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns whether a postal code is valid.</span>
 
 <span class="sd">    Args:</span>
@@ -280,8 +280,8 @@ type and an explanation for each argument and what the method returns.</p>
 </pre></div>
 </div>
 <p>Now that you’ve added new documentation, let’s see it built:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mil
-$ ./scripts/build_docs
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
+$<span class="w"> </span>./scripts/build_docs
 </pre></div>
 </div>
 <p>That last command should build the documentation on your computer and provide you

@@ -137,24 +137,24 @@ from a launch file, you can additionally provide information for the embedded
 <a class="reference internal" href="#mil_usb_to_can.USBtoCANBoard" title="mil_usb_to_can.USBtoCANBoard"><code class="xref py py-class docutils literal notranslate"><span class="pre">USBtoCANBoard</span></code></a> class, which handles connecting to the board. This information
 can be provided through local ROS parameters:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
-  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;mil_usb_to_can&quot;</span> <span class="na">type=</span><span class="s">&quot;driver.py&quot;</span> <span class="na">name=</span><span class="s">&quot;usb_to_can_driver&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;rosparam</span> <span class="na">command=</span><span class="s">&quot;delete&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;rosparam&gt;</span>
-    # Path of serial device (default: &quot;/dev/tty0&quot;)
-    port: /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A800GHCF-if00-port0
-    # Baudrate of device (default: 115200)
-    baudrate: 115200
-    # The CAN device id of the board (default: 0)
-    can_id: 0
-    # List of python device handle classes (list of device id: python class implementation)
-    device_handles:
-      &quot;18&quot;: sub8_thrust_and_kill_board.ThrusterAndKillBoard
-      &quot;83&quot;: sub8_actuator_board.ActuatorBoard
-    simulated_devices:
-      &quot;18&quot;: sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation
-      &quot;83&quot;: sub8_actuator_board.ActuatorBoardSimulation
-    <span class="nt">&lt;/rosparam&gt;</span>
-  <span class="nt">&lt;/node&gt;</span>
+<span class="w">  </span><span class="nt">&lt;node</span><span class="w"> </span><span class="na">pkg=</span><span class="s">&quot;mil_usb_to_can&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;driver.py&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;usb_to_can_driver&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;rosparam</span><span class="w"> </span><span class="na">command=</span><span class="s">&quot;delete&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;rosparam&gt;</span>
+<span class="w">    </span>#<span class="w"> </span>Path<span class="w"> </span>of<span class="w"> </span>serial<span class="w"> </span>device<span class="w"> </span>(default:<span class="w"> </span>&quot;/dev/tty0&quot;)
+<span class="w">    </span>port:<span class="w"> </span>/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_A800GHCF-if00-port0
+<span class="w">    </span>#<span class="w"> </span>Baudrate<span class="w"> </span>of<span class="w"> </span>device<span class="w"> </span>(default:<span class="w"> </span>115200)
+<span class="w">    </span>baudrate:<span class="w"> </span>115200
+<span class="w">    </span>#<span class="w"> </span>The<span class="w"> </span>CAN<span class="w"> </span>device<span class="w"> </span>id<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>board<span class="w"> </span>(default:<span class="w"> </span>0)
+<span class="w">    </span>can_id:<span class="w"> </span>0
+<span class="w">    </span>#<span class="w"> </span>List<span class="w"> </span>of<span class="w"> </span>python<span class="w"> </span>device<span class="w"> </span>handle<span class="w"> </span>classes<span class="w"> </span>(list<span class="w"> </span>of<span class="w"> </span>device<span class="w"> </span>id:<span class="w"> </span>python<span class="w"> </span>class<span class="w"> </span>implementation)
+<span class="w">    </span>device_handles:
+<span class="w">      </span>&quot;18&quot;:<span class="w"> </span>sub8_thrust_and_kill_board.ThrusterAndKillBoard
+<span class="w">      </span>&quot;83&quot;:<span class="w"> </span>sub8_actuator_board.ActuatorBoard
+<span class="w">    </span>simulated_devices:
+<span class="w">      </span>&quot;18&quot;:<span class="w"> </span>sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation
+<span class="w">      </span>&quot;83&quot;:<span class="w"> </span>sub8_actuator_board.ActuatorBoardSimulation
+<span class="w">    </span><span class="nt">&lt;/rosparam&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/node&gt;</span>
 <span class="nt">&lt;/launch&gt;</span>
 </pre></div>
 </div>

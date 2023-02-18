@@ -93,13 +93,13 @@
 
 
 <div class="viewcode-block" id="USB2CANException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USB2CANException">[docs]</a><span class="k">class</span> <span class="nc">USB2CANException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class for exception in USB2CAN board functionality. Inherits from :class:`Exception`.</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ChecksumException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ChecksumException">[docs]</a><span class="k">class</span> <span class="nc">ChecksumException</span><span class="p">(</span><span class="n">USB2CANException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when the checksum between motherboard and CANtoUSB board is invalid.</span>
 <span class="sd">    Inherits from :class:`USB2CANException`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -113,7 +113,7 @@
 
 
 <div class="viewcode-block" id="PayloadTooLargeException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.PayloadTooLargeException">[docs]</a><span class="k">class</span> <span class="nc">PayloadTooLargeException</span><span class="p">(</span><span class="n">USB2CANException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when payload of data sent/received from CAN2USB is too large.</span>
 <span class="sd">    Inherits from :class:`USB2CANException`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -125,7 +125,7 @@
 
 
 <div class="viewcode-block" id="InvalidFlagException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.InvalidFlagException">[docs]</a><span class="k">class</span> <span class="nc">InvalidFlagException</span><span class="p">(</span><span class="n">USB2CANException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when a constant flag in the CAN2USB protocol is invalid. Inherits</span>
 <span class="sd">    from :class:`USB2CANException`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -135,7 +135,7 @@
 
 
 <div class="viewcode-block" id="InvalidStartFlagException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.InvalidStartFlagException">[docs]</a><span class="k">class</span> <span class="nc">InvalidStartFlagException</span><span class="p">(</span><span class="n">InvalidFlagException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when the SOF flag is invalid. Inherits from :class:`InvalidFlagException`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -144,7 +144,7 @@
 
 
 <div class="viewcode-block" id="InvalidEndFlagException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.InvalidEndFlagException">[docs]</a><span class="k">class</span> <span class="nc">InvalidEndFlagException</span><span class="p">(</span><span class="n">InvalidFlagException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when the EOF flag is invalid. Inherits from :class:`InvalidFlagException`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -153,7 +153,7 @@
 
 
 <div class="viewcode-block" id="Packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.Packet">[docs]</a><span class="k">class</span> <span class="nc">Packet</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a packet to or from the CAN to USB board. This class is inherited</span>
 <span class="sd">    by :class:`~mil_usb_to_can.ReceivePacket` (for receiving data from the bus)</span>
 <span class="sd">    and :class:`~mil_usb_to_can.CommandPacket` (for sending commands). Those child</span>
@@ -184,7 +184,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span>
 
     <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assembles the packet into a form suitable for sending through a data</span>
 <span class="sd">        stream. For this base packet class, :attr:`~.SOF`, :attr:`~.payload`,</span>
 <span class="sd">        and :attr:`~.EOF` are assembled into one byte string.</span>
@@ -206,7 +206,7 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_unpack_payload</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempts to obtain the raw data from a packed payload.</span>
 
 <span class="sd">        Raises:</span>
@@ -231,7 +231,7 @@
 
 <div class="viewcode-block" id="Packet.from_bytes"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.Packet.from_bytes">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parses a packet from a packed bytes string into a Packet instance.</span>
 
 <span class="sd">        Args:</span>
@@ -253,7 +253,7 @@
     <span class="k">def</span> <span class="nf">read_packet</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">stream</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span> <span class="o">|</span> <span class="n">SimulatedUSBtoCAN</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read a packet with a known size from a serial device</span>
 
 <span class="sd">        Args:</span>
@@ -301,7 +301,7 @@
 
 
 <div class="viewcode-block" id="ReceivePacket"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ReceivePacket">[docs]</a><span class="k">class</span> <span class="nc">ReceivePacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet used to request data from the USB to CAN board.</span>
 
 <span class="sd">    Attributes:</span>
@@ -312,21 +312,21 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The device ID associated with the packet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The data inside the packet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The length of the data to receive.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
@@ -340,7 +340,7 @@
 
 <div class="viewcode-block" id="ReceivePacket.create_receive_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ReceivePacket.create_receive_packet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_receive_packet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReceivePacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet to request data from a CAN device.</span>
 
 <span class="sd">        Args:</span>
@@ -360,7 +360,7 @@
 
 <div class="viewcode-block" id="ReceivePacket.from_bytes"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ReceivePacket.from_bytes">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReceivePacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a receive packet from packed bytes. This strips the checksum from</span>
 <span class="sd">        the bytes and then unpacks the data to gain the raw payload.</span>
 
@@ -389,7 +389,7 @@
 
 
 <div class="viewcode-block" id="CommandPacket"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CommandPacket">[docs]</a><span class="k">class</span> <span class="nc">CommandPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a packet to the CAN board from the motherboard. This packet can</span>
 <span class="sd">    either request data from a device or send data to a device.</span>
 
@@ -408,7 +408,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">length_byte</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The first header byte which encodes the length and the receive flag.</span>
 
 <span class="sd">        Returns:</span>
@@ -418,7 +418,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_receive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        True if this CommandPacket is requesting data.</span>
 
 <span class="sd">        Returns:</span>
@@ -428,7 +428,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The number of bytes of data sent or requested.</span>
 
 <span class="sd">        Returns:</span>
@@ -438,7 +438,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">filter_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        An integer representing the CAN device ID specified by this packet.</span>
 
 <span class="sd">        Returns:</span>
@@ -450,7 +450,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bytes: The data to be sent.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -460,7 +460,7 @@
     <span class="k">def</span> <span class="nf">_create_command_packet</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">length_byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommandPacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet.</span>
 
 <span class="sd">        .. warning::</span>
@@ -484,7 +484,7 @@
 
 <div class="viewcode-block" id="CommandPacket.create_send_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CommandPacket.create_send_packet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_send_packet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommandPacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet to send data to the CAN bus from the motherboard.</span>
 
 <span class="sd">        Args:</span>
@@ -505,7 +505,7 @@
     <span class="k">def</span> <span class="nf">create_request_packet</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">receive_length</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommandPacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet to request data from a CAN device.</span>
 
 <span class="sd">        Args:</span>

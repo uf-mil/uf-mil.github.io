@@ -137,7 +137,7 @@
 
 
 <span class="k">class</span> <span class="nc">SystemModes</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enumerates constants of friendly system mode names to ints</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -147,7 +147,7 @@
 
 
 <div class="viewcode-block" id="RobotXStartServices"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices">[docs]</a><span class="k">class</span> <span class="nc">RobotXStartServices</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initializes services and subscribes to necessary publishers in order to facilitate</span>
 <span class="sd">    the transmission of messages between the robot client and the Technical Director</span>
 <span class="sd">    server.</span>
@@ -254,7 +254,7 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_heartbeat_message</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RobotXStartServices.update_system_mode"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.update_system_mode">[docs]</a>    <span class="k">def</span> <span class="nf">update_system_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets :attr:`.system_mode` according to whether the kill is ``True`` and the mode</span>
 <span class="sd">        of the boat.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -266,46 +266,46 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">system_mode</span> <span class="o">=</span> <span class="n">SystemModes</span><span class="o">.</span><span class="n">REMOTE_CONTROLLED</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.wrench_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.wrench_callback">[docs]</a>    <span class="k">def</span> <span class="nf">wrench_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wrench</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the :attr:`.wrench` attribute with the most recent wrench value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wrench</span> <span class="o">=</span> <span class="n">wrench</span><span class="o">.</span><span class="n">data</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.kill_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.kill_callback">[docs]</a>    <span class="k">def</span> <span class="nf">kill_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the :attr:`.kill` attribute depending on whether the most recent</span>
 <span class="sd">        alarm received by the boat was raised or not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kill</span> <span class="o">=</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.gps_coord_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_coord_callback">[docs]</a>    <span class="k">def</span> <span class="nf">gps_coord_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lla</span><span class="p">:</span> <span class="n">PointStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the :attr:`.gps_array` attribute with the most recent :class:`PointStamped`</span>
 <span class="sd">        message received.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gps_array</span> <span class="o">=</span> <span class="n">lla</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.gps_odom_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.gps_odom_callback">[docs]</a>    <span class="k">def</span> <span class="nf">gps_odom_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">odom</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stores the most recent :class:`Odometry` message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">odom</span> <span class="o">=</span> <span class="n">odom</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.uav_status_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.uav_status_callback">[docs]</a>    <span class="k">def</span> <span class="nf">uav_status_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uav_status</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stores the most recent AUV status experienced by the boat.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uav_status</span> <span class="o">=</span> <span class="n">uav_status</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.system_mode_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.system_mode_callback">[docs]</a>    <span class="k">def</span> <span class="nf">system_mode_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system_mode</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the class&#39; :attr:`system_mode` attribute when given the most recent</span>
 <span class="sd">        system mode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system_mode</span> <span class="o">=</span> <span class="n">system_mode</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.scan_the_code_callback"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.scan_the_code_callback">[docs]</a>    <span class="k">def</span> <span class="nf">scan_the_code_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scan_the_code</span><span class="p">:</span> <span class="n">ScanTheCode</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles the ScanTheCode message requests by calling :meth:`.handle_scan_code_message`</span>
 <span class="sd">        with the color pattern specified in the message.</span>
 
@@ -316,7 +316,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handle_scan_code_message</span><span class="p">(</span><span class="n">scan_the_code</span><span class="o">.</span><span class="n">color_pattern</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_heartbeat_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_heartbeat_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_heartbeat_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a heartbeat message according to a timer and sends the formatted</span>
 <span class="sd">        message to the AUVSI Technical Director station.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -338,7 +338,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_entrance_exit_gate_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_entrance_exit_gate_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_entrance_exit_gate_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageEntranceExitGateRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageEntranceExitGateResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Entrance and Exit Gate</span>
 <span class="sd">        mission.</span>
 
@@ -365,7 +365,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_follow_path_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_follow_path_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_follow_path_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageFollowPathRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageFollowPathResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Follow Path Mission</span>
 
 <span class="sd">        Args:</span>
@@ -391,7 +391,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_react_report_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_react_report_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_react_report_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageReactReportRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageReactReportResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the React Report Mission</span>
 
 <span class="sd">        Args:</span>
@@ -415,7 +415,7 @@
         <span class="k">return</span> <span class="n">MessageReactReportResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_scan_code_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_scan_code_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_scan_code_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles the color pattern reported over the topic dedicated to the Scan the Code</span>
 <span class="sd">        mission.</span>
 
@@ -440,7 +440,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_detect_dock_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_detect_dock_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_detect_dock_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageDetectDockRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageDetectDockResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Detect Dock Mission</span>
 
 <span class="sd">        Args:</span>
@@ -466,7 +466,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_find_fling_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_find_fling_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_find_fling_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageFindFlingRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageFindFlingResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Find Fling Mission</span>
 
 <span class="sd">        Args:</span>
@@ -492,7 +492,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_uav_replenishment_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_uav_replenishment_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_uav_replenishment_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVReplenishmentRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageUAVReplenishmentResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the UAV Replenishment Mission</span>
 
 <span class="sd">        Args:</span>
@@ -518,7 +518,7 @@
 <div class="viewcode-block" id="RobotXStartServices.handle_uav_search_report_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_uav_search_report_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_uav_search_report_message</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVSearchReportRequest</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageUAVSearchReportResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the UAV Search Report Mission</span>
 
 <span class="sd">        Args:</span>
@@ -542,7 +542,7 @@
         <span class="k">return</span> <span class="n">MessageUAVSearchReportResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.get_aedt_date_time"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.get_aedt_date_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_aedt_date_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the current time in AEDT in the format of ``%d%m%y{self.delim}%H%M%S``.</span>
 <span class="sd">        This is the format specified by AUVSI to use in messages.</span>
 
@@ -557,7 +557,7 @@
 
 
 <div class="viewcode-block" id="RobotXClient"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient">[docs]</a><span class="k">class</span> <span class="nc">RobotXClient</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles communication with Technical Director server at the AUVSI RobotX competition.</span>
 
 <span class="sd">    This class is generally handled by :class:`RobotXStartServices`.</span>
@@ -572,7 +572,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tcp_ip</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tcp_port</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            tcp_ip (str): The IP address used by the Technical Director server to connect to.</span>
 <span class="sd">            tcp_port (int): The port used by the Technical Director server that MIL</span>
@@ -591,7 +591,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">socket_connection</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="RobotXClient.connect"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXClient.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempts to establish a socket connection at the given IP and port number</span>
 <span class="sd">        if no connection has already been established.</span>
 
@@ -617,7 +617,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a message over the established socket connection. This method is thread-locked.</span>
 
 <span class="sd">        If any error occurs in the transmission of the packet, then :attr:`.connection`</span>

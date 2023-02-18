@@ -93,7 +93,7 @@
 
 
 <div class="viewcode-block" id="USBtoCANBoard"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANBoard">[docs]</a><span class="k">class</span> <span class="nc">USBtoCANBoard</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ROS-independent wrapper which provides an interface to connect to the USB to CAN board</span>
 <span class="sd">    via a serial (or simulated serial) device. Provides thread-safe functionality.</span>
 
@@ -103,7 +103,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">baud</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">simulated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">                port (str): Path to serial device, such as ``/dev/ttyUSB0``.</span>
 <span class="sd">                baud (int): Baud rate of serial device to connect to. Defaults to 9600.</span>
@@ -118,7 +118,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">flushInput</span><span class="p">()</span>
 
 <div class="viewcode-block" id="USBtoCANBoard.read_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANBoard.read_packet">[docs]</a>    <span class="k">def</span> <span class="nf">read_packet</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ReceivePacket</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read a packet from the board, if available. Returns a :class:`ReceivePacket`</span>
 <span class="sd">        instance if one was succefully read, or ``None`` if the in buffer is empty.</span>
 
@@ -133,7 +133,7 @@
             <span class="k">return</span> <span class="n">ReceivePacket</span><span class="o">.</span><span class="n">read_packet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="USBtoCANBoard.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANBoard.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data to a CAN device using the thread lock. Writes using the :meth:`write`</span>
 <span class="sd">        method of the :attr:`.ser` attribute.</span>
 

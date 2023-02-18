@@ -84,7 +84,7 @@
 
 
 <div class="viewcode-block" id="ThrusterOut"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.ThrusterOut">[docs]</a><span class="k">class</span> <span class="nc">ThrusterOut</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Alarm class to indicate that some of the thrusters in the thruster layout are</span>
 <span class="sd">    offline.</span>
 
@@ -108,7 +108,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ThrusterOut.update_layout"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.ThrusterOut.update_layout">[docs]</a>    <span class="k">def</span> <span class="nf">update_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempts to update the thruster layout with the name of any offline thrusters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -117,14 +117,14 @@
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error updating thruster layout: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterOut.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.ThrusterOut.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the alarm is raised. Attempts to update the thruster layout with</span>
 <span class="sd">        :meth:`~.update_layout`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;offline_thruster_names&quot;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ThrusterOut.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.ThrusterOut.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the alarm is cleared. Attempts to update the thruster layout with</span>
 <span class="sd">        :meth:`~.update_layout`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

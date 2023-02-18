@@ -92,7 +92,7 @@
 
 
 <div class="viewcode-block" id="BagCrawler"><a class="viewcode-back" href="../../reference/images.html#mil_ros_tools.BagCrawler">[docs]</a><span class="k">class</span> <span class="nc">BagCrawler</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Crawls a bag file and displays each image message of a camera through</span>
 <span class="sd">    OpenCV.</span>
 
@@ -107,7 +107,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
 
 <div class="viewcode-block" id="BagCrawler.convert"><a class="viewcode-back" href="../../reference/images.html#mil_ros_tools.BagCrawler.convert">[docs]</a>    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts an Image message to a cv2 compatible image.</span>
 
 <span class="sd">        Args:</span>
@@ -122,7 +122,7 @@
         <span class="n">is_image</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">max_msgs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Crawls a bag file and returns a generator yielding each message in the</span>
 <span class="sd">        file. Additionally, a tqdm progress bar is displayed.</span>
 
@@ -152,7 +152,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">image_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        .. warning::</span>
 
 <span class="sd">            This function may not function properly. If the method works,</span>
@@ -180,7 +180,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">image_info_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        .. warning::</span>
 
 <span class="sd">            This function may not function properly. If the method works,</span>

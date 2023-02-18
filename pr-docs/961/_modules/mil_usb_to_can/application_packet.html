@@ -88,7 +88,7 @@
 
 
 <div class="viewcode-block" id="ApplicationPacketWrongIdentifierException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException">[docs]</a><span class="k">class</span> <span class="nc">ApplicationPacketWrongIdentifierException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when the identifier for a MIL application level CAN packet</span>
 <span class="sd">    had a different identifier from what was expected.</span>
 
@@ -96,7 +96,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">received</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attributes:</span>
 <span class="sd">            received (int): A value representing what received found.</span>
 <span class="sd">            expected (int): What the found value should have been.</span>
@@ -105,7 +105,7 @@
 
 
 <div class="viewcode-block" id="ApplicationPacket"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacket">[docs]</a><span class="k">class</span> <span class="nc">ApplicationPacket</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an application-specific packet structure used by a CAN device. This</span>
 <span class="sd">    class does not implement the entire packet that will be sent over the CAN bus;</span>
 <span class="sd">    the packet only includes the identifier and payload in the packet.</span>
@@ -151,7 +151,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span>
 
     <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Packs the packet into a series of bytes using :meth:`struct.Struct.pack`.</span>
 <span class="sd">        The identifier is packed as an unsigned integer, while the payload of bytes</span>
 <span class="sd">        is packed as a sequence of bytes equal to the length of the payload.</span>
@@ -165,7 +165,7 @@
     <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">expected_identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unpacks a series of packed bytes representing an application packet using</span>
 <span class="sd">        :meth:`struct.Struct.unpack`, which produces the packet identifier and array of data.</span>
 <span class="sd">        These values are then used to produce the new instance of the class.</span>

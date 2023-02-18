@@ -92,7 +92,7 @@
 
 
 <div class="viewcode-block" id="PingLocator"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.ping_locator.PingLocator">[docs]</a><span class="k">class</span> <span class="nc">PingLocator</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subscribers to ``/pings``, and publishes vector to the pinger on ``/direction``.</span>
 <span class="sd">    Creates a node named ``ping_locator``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -113,7 +113,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">v_sound</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;v_sound&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PingLocator.enable"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.ping_locator.PingLocator.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the locator to enabled. Doesn&#39;t immediately do anything.</span>
 
 <span class="sd">        Args:</span>
@@ -128,7 +128,7 @@
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="PingLocator.ping_cb"><a class="viewcode-back" href="../../../reference/passivesonar.html#mil_passive_sonar.scripts.ping_locator.PingLocator.ping_cb">[docs]</a>    <span class="k">def</span> <span class="nf">ping_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback called with each new ping. With each call, creates a</span>
 <span class="sd">        :class:`~geometry_msgs.msg._Vector3Stamped.Vector3Stamped` message containing</span>
 <span class="sd">        the direction of the pinger.</span>

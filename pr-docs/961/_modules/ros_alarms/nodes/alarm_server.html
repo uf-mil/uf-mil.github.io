@@ -95,7 +95,7 @@
 
 
 <div class="viewcode-block" id="AlarmServer"><a class="viewcode-back" href="../../../reference/alarms.html#ros_alarms.nodes.alarm_server.AlarmServer">[docs]</a><span class="k">class</span> <span class="nc">AlarmServer</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Server responsible for maintaining the status of alarms between all processes.</span>
 
 <span class="sd">    Attributes:</span>
@@ -130,7 +130,7 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/alarm/get&quot;</span><span class="p">,</span> <span class="n">AlarmGet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_get_alarm</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AlarmServer.set_alarm"><a class="viewcode-back" href="../../../reference/alarms.html#ros_alarms.nodes.alarm_server.AlarmServer.set_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">set_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Alarm</span><span class="p">,</span> <span class="n">AlarmMsg</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets or updates the alarm.</span>
 
 <span class="sd">        Updating the alarm triggers all of the alarms callbacks, if any are set.</span>
@@ -165,7 +165,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_on_get_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">srv</span><span class="p">:</span> <span class="n">AlarmGetRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlarmGetResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Either returns the alarm request if it exists or a blank alarm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got request for alarm: </span><span class="si">{</span><span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -174,7 +174,7 @@
         <span class="p">)</span><span class="o">.</span><span class="n">as_srv_resp</span><span class="p">()</span>
 
 <div class="viewcode-block" id="AlarmServer.make_tagged_alarm"><a class="viewcode-back" href="../../../reference/alarms.html#ros_alarms.nodes.alarm_server.AlarmServer.make_tagged_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">make_tagged_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alarm</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes a blank alarm with the node_name of the alarm_server so that users</span>
 <span class="sd">        know it is the initial state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -183,7 +183,7 @@
         <span class="k">return</span> <span class="n">alarm</span></div>
 
     <span class="k">def</span> <span class="nf">_handle_meta_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_alarm</span><span class="p">,</span> <span class="n">sub_alarms</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls the meta_predicate callback for an alarm handler when one of its metal alarms has changed.</span>
 <span class="sd">        Then, updates the status of the parent alarm, if necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -218,7 +218,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_alarm</span><span class="p">(</span><span class="n">alarm</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_create_alarm_handlers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Alarm handlers are classes imported by the alarm server and run code upon a change of state</span>
 <span class="sd">        of their respective alarms.</span>
 
@@ -274,7 +274,7 @@
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded handler: </span><span class="si">{</span><span class="n">h</span><span class="o">.</span><span class="n">alarm_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_create_meta_alarms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s2">&quot;meta_alarms/&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Adds meta alarms to the alarm server</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds meta alarms to the alarm server</span>
 <span class="sd">        Meta alarms are special in that they are not directly raised or cleared but are instead triggered</span>
 <span class="sd">        by a change of state of their child alarms.</span>
 
@@ -292,7 +292,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="p">[</span><span class="n">meta</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_tagged_alarm</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="n">meta</span><span class="p">,</span> <span class="n">alarms</span><span class="p">):</span>
-                <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                If no predicate for a meta-alarm is provided, then the meta-alarm will be raised</span>
 <span class="sd">                if any of the child alarms are raised</span>
 <span class="sd">                &quot;&quot;&quot;</span>

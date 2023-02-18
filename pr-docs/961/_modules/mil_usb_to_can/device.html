@@ -93,7 +93,7 @@
 
 
 <div class="viewcode-block" id="CANDeviceHandle"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle">[docs]</a><span class="k">class</span> <span class="nc">CANDeviceHandle</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class to allow developers to write handles for communication with a</span>
 <span class="sd">    particular CAN device. The two methods of the handle allow the handle to listen</span>
 <span class="sd">    to incoming data, as well as send data.</span>
@@ -123,7 +123,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">:</span> <span class="n">USBtoCANBoard</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">                driver (USBtoCANBoard): Driver that is used to communicate with the board.</span>
 <span class="sd">                device_id (int): The CAN ID of the device this class will handle. Not currently used.</span>
@@ -132,7 +132,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_device_id</span> <span class="o">=</span> <span class="n">device_id</span>
 
 <div class="viewcode-block" id="CANDeviceHandle.on_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when data is received from the device this handle is registered for.</span>
 
 <span class="sd">        Args:</span>
@@ -141,7 +141,7 @@
         <span class="k">del</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="CANDeviceHandle.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data to the device.</span>
 
 <span class="sd">        Args:</span>
@@ -155,7 +155,7 @@
 
 
 <span class="k">class</span> <span class="nc">ExampleEchoDeviceHandle</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An example implementation of a CANDeviceHandle which will handle</span>
 <span class="sd">    a device that echos back any data sent to it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -204,7 +204,7 @@
 
 
 <span class="k">class</span> <span class="nc">ExampleAdderDeviceHandle</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An example implementation of a CANDeviceHandle which will handle</span>
 <span class="sd">    a device that echos back any data sent to it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
