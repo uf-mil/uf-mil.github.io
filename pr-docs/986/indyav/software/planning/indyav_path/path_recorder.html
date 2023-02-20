@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Path Recorder</title>
+        <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../searchindex.js" defer></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/custom.js"></script>
+        <script src="../../../../_static/sidebar.js"></script>
+        <script src="../../../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../../../genindex.html" />
+        <link rel="search" title="Search" href="../../../../search.html" />
+        <link rel="next" title="Path Player" href="path_player.html" />
+        <link rel="prev" title="Path Package" href="path.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../branding.html">Branding</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="path-recorder">
+<h1>Path Recorder<a class="headerlink" href="#path-recorder" title="Permalink to this heading">¶</a></h1>
+<p>This is a Utility we use to save a human generated path in the global frame: <code class="docutils literal notranslate"><span class="pre">/ecef</span></code>.</p>
+<p>Indyav Path Recorder inherits from the <code class="docutils literal notranslate"><span class="pre">mil_tools</span> <span class="pre">TopicRecorder</span></code>. We override the CallBack function to record odometry messages at a fixed rate.</p>
+<section id="basic-usage-example">
+<h2>Basic Usage Example<a class="headerlink" href="#basic-usage-example" title="Permalink to this heading">¶</a></h2>
+<ul>
+<li><p>Launch <a class="reference external" href="../../../../subjugator/index.html">SubjuGator</a> in gazebo, clear the kill, and bring up subviz.</p></li>
+<li><p>In a new panel, launch the recorder on odom topic:
+<code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">indyav_launch</span> <span class="pre">path_recorder.launch</span> <span class="pre">record_topic:=/odom</span></code></p>
+<p><em>NOTE: This will start to spew the warning :</em> <code class="docutils literal notranslate"><span class="pre">path_recorder</span> <span class="pre">frame</span> <span class="pre">id</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">ECEF</span></code> <em>. you can safely ignore this warning for this example.</em></p>
+</li>
+<li><p>In a new panel, start recording:
+<code class="docutils literal notranslate"><span class="pre">service</span> <span class="pre">call</span> <span class="pre">/path/path_recorder/enable</span> <span class="pre">&quot;data:</span> <span class="pre">true&quot;</span></code></p></li>
+<li><p>In a new panel, command a move forward:
+<code class="docutils literal notranslate"><span class="pre">submove</span> <span class="pre">f</span> <span class="pre">5</span></code></p></li>
+<li><p>Watch the sub move forward 5m in the rviz window</p></li>
+<li><p>Stop recording in the same panel as you enabled (doesn’t actually matter where this command is issued):
+<code class="docutils literal notranslate"><span class="pre">service</span> <span class="pre">call</span> <span class="pre">/path/path_recorder/enable</span> <span class="pre">&quot;data:</span> <span class="pre">false&quot;</span></code></p></li>
+<li><p>If you like, you can now kill the path recorder by going to the terminal where it was launch and pressing:
+<code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">c</span></code></p></li>
+<li><p>Play back the recording as a normal rosbag on a different topic and visualize it:
+<code class="docutils literal notranslate"><span class="pre">rosbag</span> <span class="pre">play</span> <span class="pre">~/test.bag</span>&#160; <span class="pre">/odom:=/odom2</span> <span class="pre">-l</span></code></p></li>
+<li><p>Visualize this new topic in rviz by clicking <cite>Add</cite> and then <cite>/odom2 -&gt; Odometry</cite></p></li>
+<li><p>Watch the red arrow advance from where the sub started to where the sub stopped updting approximately 10 times a second.</p></li>
+</ul>
+</section>
+<section id="source-files">
+<h2>Source Files<a class="headerlink" href="#source-files" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt>indyav_path PathRecorder:</dt><dd><dl class="simple">
+<dt>header:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">indyav_path</span> <span class="pre">path_recorder.hpp</span></code></p>
+</dd>
+<dt>source:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">indyav_path</span> <span class="pre">path_recorder.cpp</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt>mil_tools TopicRecorder:</dt><dd><dl class="simple">
+<dt>header:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">mil_tools</span> <span class="pre">topic_recorder.hpp</span></code></p>
+</dd>
+<dt>source:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">mil_tools</span> <span class="pre">topic_recorder.cpp</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt>launch file:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">indyav_launch</span> <span class="pre">path_recorder.launch</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
