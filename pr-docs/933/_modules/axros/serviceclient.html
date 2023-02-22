@@ -102,7 +102,7 @@
 
 
 <div class="viewcode-block" id="ServiceError"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ServiceError">[docs]</a><span class="k">class</span> <span class="nc">ServiceError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an error with a service client in txROS.</span>
 
 <span class="sd">    Inherits from :class:`Exception`.</span>
@@ -129,7 +129,7 @@
 
 
 <div class="viewcode-block" id="ServiceClient"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ServiceClient">[docs]</a><span class="k">class</span> <span class="nc">ServiceClient</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">S</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A client connected to a service in txROS. This is the client class of the</span>
 <span class="sd">    client-server relationship in ROS; the server is the :class:`axros.Service`</span>
 <span class="sd">    class.</span>
@@ -145,7 +145,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">service_type</span><span class="p">:</span> <span class="n">S</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            node_handle (NodeHandle): The node handle serving as the client to the service.</span>
 <span class="sd">            name (str): The name of the service to connect to.</span>
@@ -212,7 +212,7 @@
             <span class="k">await</span> <span class="n">writer</span><span class="o">.</span><span class="n">wait_closed</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ServiceClient.wait_for_service"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ServiceClient.wait_for_service">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">wait_for_service</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Waits for the service to appear. Checks to see if the service has appeared</span>
 <span class="sd">        10 times per second.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

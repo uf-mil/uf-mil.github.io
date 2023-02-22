@@ -152,19 +152,19 @@ highly recommended to install the tool to save yourself some time in the long ru
 <h3>Installing<a class="headerlink" href="#installing" title="Permalink to this heading">¶</a></h3>
 <p>To install <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>, use <code class="docutils literal notranslate"><span class="pre">pip</span></code>! We specify the version of <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> in
 a requirements file, which is why you reference it in the command below.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pip3 install -r requirements.txt
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
 <p>After doing this step, you should be able to run the <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> command. Now,
 we will install the hooks specified in our config file. This command will also
 install a git hook into your git configuration. This allows the tool to run right
 before you attempt to commit a piece of code.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pre-commit install
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
 <p>Now, try to run it against all of our files! It should show that all tests have
 passed. Some may have been skipped.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pre-commit run --all-files
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
 </pre></div>
 </div>
 <p>If you have any trouble with this tool, feel free to check out
@@ -202,7 +202,7 @@ to help you out as well!</p>
 project adds more functionality to Vim, allowing for more flexibility in
 extensions and modifications.</p>
 <p>You can install Neovim through:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install neovim
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>neovim
 </pre></div>
 </div>
 </section>
@@ -255,10 +255,10 @@ A quick reference sheet can be found at <a class="reference external" href="http
 <p>Managing Tmux sessions manually can be exteremly time consuming, so we use
 tmuxinator to provide a version controlled interface for our robots and
 simulators. Basic commands are:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ tx list <span class="c1"># show configs available to start</span>
-$ tx start &lt;config&gt; <span class="c1"># start (or join if already started) a tmuxinator session</span>
-$ tmux ls <span class="c1"># Show active all tmux sessions ( not only ones started by tmuxinator )</span>
-$ tx stop &lt;config&gt; <span class="c1"># stop a session that is running</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>tx<span class="w"> </span>list<span class="w"> </span><span class="c1"># show configs available to start</span>
+$<span class="w"> </span>tx<span class="w"> </span>start<span class="w"> </span>&lt;config&gt;<span class="w"> </span><span class="c1"># start (or join if already started) a tmuxinator session</span>
+$<span class="w"> </span>tmux<span class="w"> </span>ls<span class="w"> </span><span class="c1"># Show active all tmux sessions ( not only ones started by tmuxinator )</span>
+$<span class="w"> </span>tx<span class="w"> </span>stop<span class="w"> </span>&lt;config&gt;<span class="w"> </span><span class="c1"># stop a session that is running</span>
 </pre></div>
 </div>
 <p>The MIL configs for tmuxinator are hard linked from

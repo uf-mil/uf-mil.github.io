@@ -103,7 +103,7 @@
 <section id="launch-gazebo-server">
 <h2>Launch Gazebo Server<a class="headerlink" href="#launch-gazebo-server" title="Permalink to this heading">¶</a></h2>
 <p>In one panel, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch sub8_launch gazebo.launch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>roslaunch<span class="w"> </span>subjugator_launch<span class="w"> </span>gazebo.launch
 </pre></div>
 </div>
 <p>This will launch the server side of the gazebo simulator. The gazebo server (a.k.a. <code class="docutils literal notranslate"><span class="pre">gzserver</span></code>)
@@ -120,7 +120,7 @@ This half of the simulator really only does image rendering of the simulated env
 </div>
 <p>We have a custom <a class="reference external" href="https://alvinalexander.com/blog/post/linux-unix/create-aliases">alias</a> setup
 to run the gazebogui with special parameters:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gazebogui
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>gazebogui
 </pre></div>
 </div>
 <p>This will show you ground truth of the simulated environment. However, when debuggin robot behavior, it is usually more usful to have an idea of exactly what the robot knows, which is why there is also Rviz.</p>
@@ -129,7 +129,7 @@ to run the gazebogui with special parameters:</p>
 <h2>Run RVIZ<a class="headerlink" href="#run-rviz" title="Permalink to this heading">¶</a></h2>
 <p>You can visualize what the robot knows by running the sub visualization alias in
 a new terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ subviz
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>subviz
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">subviz</span></code> is an <a class="reference external" href="https://alvinalexander.com/blog/post/linux-unix/create-aliases">alias</a>
@@ -144,7 +144,7 @@ safety. While in the kill state, the sub will not actuate in any way so
 it is safe for people the physically handle it. The sub must be put into
 a state of “unkill” to actually do anything. To unkill the sub, go to a
 new panel and run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ amonitor <span class="nb">kill</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>amonitor<span class="w"> </span><span class="nb">kill</span>
 </pre></div>
 </div>
 <p>and then hold <code class="docutils literal notranslate"><span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">C</span></code> until the terminal turns green.</p>
@@ -154,7 +154,7 @@ you unkilled.</p>
 <section id="give-a-move-command">
 <h2>Give a move command<a class="headerlink" href="#give-a-move-command" title="Permalink to this heading">¶</a></h2>
 <p>Give SubjuGator a move command with <code class="docutils literal notranslate"><span class="pre">submove</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ submove forward 5m
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>submove<span class="w"> </span>forward<span class="w"> </span>5m
 </pre></div>
 </div>
 <p>The sub should move forward by 5 meters.</p>
@@ -162,7 +162,7 @@ you unkilled.</p>
 <section id="see-the-current-odometry">
 <h2>See the current odometry<a class="headerlink" href="#see-the-current-odometry" title="Permalink to this heading">¶</a></h2>
 <p>Try streaming the content of a rostopic in a new panel by running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rostopic <span class="nb">echo</span> /odom
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>rostopic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/odom
 </pre></div>
 </div>
 </section>

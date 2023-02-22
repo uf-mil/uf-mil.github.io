@@ -85,7 +85,7 @@
 
 
 <div class="viewcode-block" id="ActuatorBoardSimulation"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.ActuatorBoardSimulation">[docs]</a><span class="k">class</span> <span class="nc">ActuatorBoardSimulation</span><span class="p">(</span><span class="n">SimulatedCANDevice</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simulator for the communication of the actuator board.</span>
 
 <span class="sd">    Attributes:</span>
@@ -99,7 +99,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActuatorBoardSimulation.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_actuator_board.ActuatorBoardSimulation.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">can_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes data received from motherboard / other devices. For each message received,</span>
 <span class="sd">        the class&#39; status attribute is updated if the message is asking to write, otherwise</span>
 <span class="sd">        a feedback message is constructed and sent back.</span>
@@ -123,7 +123,7 @@
             <span class="n">response</span> <span class="o">=</span> <span class="n">FeedbackMessage</span><span class="o">.</span><span class="n">create_feedback_message</span><span class="p">(</span>
                 <span class="n">address</span><span class="o">=</span><span class="n">message</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="n">message</span><span class="o">.</span><span class="n">address</span><span class="p">]</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">response</span><span class="p">))</span></div></div>
 </pre></div>
 
             </main>

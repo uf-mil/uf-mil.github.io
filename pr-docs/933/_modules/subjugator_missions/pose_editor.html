@@ -5,7 +5,7 @@
         <!-- HTML meta -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-        <title>sub8_missions.pose_editor</title>
+        <title>subjugator_missions.pose_editor</title>
         <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
         <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -77,7 +77,7 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <h1>Source code for sub8_missions.pose_editor</h1><div class="highlight"><pre>
+  <h1>Source code for subjugator_missions.pose_editor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -201,9 +201,9 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="s2">&quot;wait_for_message timed out!&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="PoseEditor"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor">[docs]</a><span class="k">class</span> <span class="nc">PoseEditor</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Helper class used to create poses for the movement of SubjuGator.</span>
+<div class="viewcode-block" id="PoseEditor"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor">[docs]</a><span class="k">class</span> <span class="nc">PoseEditor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class used to create poses for the movement of SubjuGatorMission.</span>
 
 <span class="sd">    Frequently the methods from this class can be tied together in order to</span>
 <span class="sd">    orchestrate multiple movements.</span>
@@ -215,39 +215,39 @@
 <span class="sd">            Pretty prints the position and orientation associated with the sub.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="PoseEditor.from_Odometry_topic"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.from_Odometry_topic">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PoseEditor.from_Odometry_topic"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_Odometry_topic">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Odometry_topic</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/odom&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a message from a topic sending Odometry messages, and uses the</span>
 <span class="sd">        message to construct an editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_Odometry</span><span class="p">(</span><span class="n">safe_wait_for_message</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">Odometry</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.from_Odometry"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.from_Odometry">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PoseEditor.from_Odometry"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_Odometry">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Odometry</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose editor from an Odometry message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_Pose</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">pose</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.from_PoseTwistStamped_topic"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.from_PoseTwistStamped_topic">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PoseEditor.from_PoseTwistStamped_topic"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_PoseTwistStamped_topic">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_PoseTwistStamped_topic</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a message from a topic sending PoseTwistStamped messages, and uses the</span>
 <span class="sd">        message to construct an editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_PoseTwistStamped</span><span class="p">(</span><span class="n">safe_wait_for_message</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">PoseTwistStamped</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.from_PoseTwistStamped"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.from_PoseTwistStamped">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PoseEditor.from_PoseTwistStamped"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_PoseTwistStamped">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_PoseTwistStamped</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">PoseTwistStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose editor from a PoseTwistStamped message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_Pose</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">posetwist</span><span class="o">.</span><span class="n">pose</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.from_Pose"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.from_Pose">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="PoseEditor.from_Pose"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_Pose">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Pose</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">frame_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose editor from a Pose message. Because a pose message</span>
 <span class="sd">        does not contain a frame ID, you will need to provide it yourself alongside</span>
 <span class="sd">        the message.</span>
@@ -281,8 +281,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rot</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">UP</span><span class="p">)</span>
 
     <span class="c1"># Position</span>
-<div class="viewcode-block" id="PoseEditor.set_position"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.set_position"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a new pose editor with the same orientation, but a new position.</span>
 
 <span class="sd">        Args:</span>
@@ -291,8 +291,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.depth"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.depth">[docs]</a>    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.depth"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.depth">[docs]</a>    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns an adjusted pose editor with a set depth, relative to ``z = 0``.</span>
 
 <span class="sd">        Args:</span>
@@ -300,8 +300,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_position</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">depth</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.relative"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.relative">[docs]</a>    <span class="k">def</span> <span class="nf">relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rel_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.relative"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.relative">[docs]</a>    <span class="k">def</span> <span class="nf">relative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rel_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a new pose editor with a position relevant to the current</span>
 <span class="sd">        rotation of the sub.</span>
 
@@ -319,8 +319,8 @@
         <span class="n">rel_pos_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rel_pos_2d</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rot</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rel_pos_3d</span><span class="p">))</span>
 
-<div class="viewcode-block" id="PoseEditor.relative_depth"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.relative_depth">[docs]</a>    <span class="k">def</span> <span class="nf">relative_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rel_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.relative_depth"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.relative_depth">[docs]</a>    <span class="k">def</span> <span class="nf">relative_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rel_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a new pose editor using a position relevant to the sub&#39;s current</span>
 <span class="sd">        orientation. However, unlike :meth:`~.relative`, depth is preserved.</span>
 
@@ -332,8 +332,8 @@
         <span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_z</span>
         <span class="k">return</span> <span class="n">pose</span></div>
 
-<div class="viewcode-block" id="PoseEditor.forward"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.forward"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that moves the sub forward by some amount.</span>
 
 <span class="sd">        Args:</span>
@@ -341,8 +341,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative</span><span class="p">([</span><span class="o">+</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.backward"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.backward"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that moves the sub backward by some amount.</span>
 
 <span class="sd">        Args:</span>
@@ -350,8 +350,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative</span><span class="p">([</span><span class="o">-</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.left"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.left">[docs]</a>    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.left"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.left">[docs]</a>    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that moves the sub left by some amount.</span>
 
 <span class="sd">        Args:</span>
@@ -374,8 +374,8 @@
     <span class="k">def</span> <span class="nf">strafe_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative_depth</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 
-<div class="viewcode-block" id="PoseEditor.body_up"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.body_up">[docs]</a>    <span class="k">def</span> <span class="nf">body_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.body_up"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.body_up">[docs]</a>    <span class="k">def</span> <span class="nf">body_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose directly vertically up of the current pose with the same orientation.</span>
 
 <span class="sd">        Args:</span>
@@ -383,8 +383,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="n">distance</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.body_down"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.body_down">[docs]</a>    <span class="k">def</span> <span class="nf">body_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.body_down"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.body_down">[docs]</a>    <span class="k">def</span> <span class="nf">body_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose directly vertically down of the current pose with the same orientation.</span>
 
 <span class="sd">        Args:</span>
@@ -392,8 +392,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relative</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">distance</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.absolute"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.absolute">[docs]</a>    <span class="k">def</span> <span class="nf">absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abs_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.absolute"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.absolute">[docs]</a>    <span class="k">def</span> <span class="nf">absolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abs_pos</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose editor with an adjusted absolute position. While the</span>
 <span class="sd">        orientation of the submarine will be kept, the supplied position is</span>
 <span class="sd">        not relative to the sub&#39;s orientation; rather, it is an absolute position,</span>
@@ -404,8 +404,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">abs_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.east"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.east">[docs]</a>    <span class="k">def</span> <span class="nf">east</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.east"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.east">[docs]</a>    <span class="k">def</span> <span class="nf">east</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that has been adjusted by some distance in the</span>
 <span class="sd">        absolute east direction.</span>
 
@@ -416,8 +416,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="o">+</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.west"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.west">[docs]</a>    <span class="k">def</span> <span class="nf">west</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.west"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.west">[docs]</a>    <span class="k">def</span> <span class="nf">west</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that has been adjusted by some distance in the</span>
 <span class="sd">        absolute west direction.</span>
 
@@ -428,8 +428,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="o">-</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.north"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.north">[docs]</a>    <span class="k">def</span> <span class="nf">north</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.north"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.north">[docs]</a>    <span class="k">def</span> <span class="nf">north</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that has been adjusted by some distance in the</span>
 <span class="sd">        absolute north direction.</span>
 
@@ -440,8 +440,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.south"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.south">[docs]</a>    <span class="k">def</span> <span class="nf">south</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.south"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.south">[docs]</a>    <span class="k">def</span> <span class="nf">south</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor that has been adjusted by some distance in the</span>
 <span class="sd">        absolute south direction.</span>
 
@@ -452,8 +452,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.up"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.up">[docs]</a>    <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.up"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.up">[docs]</a>    <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose directly vertically up of the current pose with the same orientation.</span>
 
 <span class="sd">        Args:</span>
@@ -461,8 +461,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="n">distance</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="PoseEditor.down"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.down">[docs]</a>    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.down"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.down">[docs]</a>    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a pose directly vertically down of the current pose with the same orientation.</span>
 
 <span class="sd">        Args:</span>
@@ -471,8 +471,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">distance</span><span class="p">])</span></div>
 
     <span class="c1"># Orientation</span>
-<div class="viewcode-block" id="PoseEditor.set_orientation"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.set_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.set_orientation"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.set_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orientation</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Completely overwrites the orientation of the pose editor with a new</span>
 <span class="sd">        orientation</span>
 
@@ -506,8 +506,8 @@
     <span class="k">def</span> <span class="nf">turn_vec_towards_rel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body_vec</span><span class="p">,</span> <span class="n">towards_rel_point</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span><span class="n">triad</span><span class="p">((</span><span class="n">UP</span><span class="p">,</span> <span class="n">towards_rel_point</span><span class="p">),</span> <span class="p">(</span><span class="n">UP</span><span class="p">,</span> <span class="n">body_vec</span><span class="p">)))</span>
 
-<div class="viewcode-block" id="PoseEditor.yaw_left"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.yaw_left">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.yaw_left"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.yaw_left">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with the orientation yawed to the left by some</span>
 <span class="sd">        radian amount.</span>
 
@@ -521,8 +521,8 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.yaw_right"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.yaw_right">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.yaw_right"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.yaw_right">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with the orientation yawed to the right by some</span>
 <span class="sd">        radian amount.</span>
 
@@ -531,8 +531,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaw_left</span><span class="p">(</span><span class="o">-</span><span class="n">angle</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.yaw_left_deg"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.yaw_left_deg">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_left_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.yaw_left_deg"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.yaw_left_deg">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_left_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with the orientation yawed to the left by some</span>
 <span class="sd">        degree amount.</span>
 
@@ -541,8 +541,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">yaw_left</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_degrees</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.yaw_right_deg"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.yaw_right_deg">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_right_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.yaw_right_deg"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.yaw_right_deg">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_right_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with the orientation yawed to the right by some</span>
 <span class="sd">        degree amount.</span>
 
@@ -556,8 +556,8 @@
     <span class="n">turn_left_deg</span> <span class="o">=</span> <span class="n">yaw_left_deg</span>
     <span class="n">turn_right_deg</span> <span class="o">=</span> <span class="n">yaw_right_deg</span>
 
-<div class="viewcode-block" id="PoseEditor.heading"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.heading">[docs]</a>    <span class="k">def</span> <span class="nf">heading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.heading"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.heading">[docs]</a>    <span class="k">def</span> <span class="nf">heading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with a heading pointing to a specific direction.</span>
 
 <span class="sd">        Args:</span>
@@ -565,8 +565,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">heading</span><span class="p">,</span> <span class="n">UP</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.heading_deg"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.heading_deg">[docs]</a>    <span class="k">def</span> <span class="nf">heading_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.heading_deg"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.heading_deg">[docs]</a>    <span class="k">def</span> <span class="nf">heading_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heading_deg</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with a heading pointing to a specific direction.</span>
 
 <span class="sd">        Args:</span>
@@ -574,8 +574,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">heading_deg</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.roll_right"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.roll_right">[docs]</a>    <span class="k">def</span> <span class="nf">roll_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.roll_right"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.roll_right">[docs]</a>    <span class="k">def</span> <span class="nf">roll_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor rolled to the right by a specific radian amount.</span>
 
 <span class="sd">        Args:</span>
@@ -588,8 +588,8 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.roll_left"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.roll_left">[docs]</a>    <span class="k">def</span> <span class="nf">roll_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.roll_left"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.roll_left">[docs]</a>    <span class="k">def</span> <span class="nf">roll_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor rolled to the left by a specific radian amount.</span>
 
 <span class="sd">        Args:</span>
@@ -597,8 +597,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll_right</span><span class="p">(</span><span class="o">-</span><span class="n">angle</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.roll_right_deg"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.roll_right_deg">[docs]</a>    <span class="k">def</span> <span class="nf">roll_right_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.roll_right_deg"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.roll_right_deg">[docs]</a>    <span class="k">def</span> <span class="nf">roll_right_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor rolled to the right by a specific degree amount.</span>
 
 <span class="sd">        Args:</span>
@@ -606,8 +606,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll_right</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_degrees</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.roll_left_deg"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.roll_left_deg">[docs]</a>    <span class="k">def</span> <span class="nf">roll_left_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.roll_left_deg"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.roll_left_deg">[docs]</a>    <span class="k">def</span> <span class="nf">roll_left_deg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle_degrees</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor rolled to the left by a specific degree amount.</span>
 
 <span class="sd">        Args:</span>
@@ -615,8 +615,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roll_left</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_degrees</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PoseEditor.zero_roll"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.zero_roll">[docs]</a>    <span class="k">def</span> <span class="nf">zero_roll</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.zero_roll"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.zero_roll">[docs]</a>    <span class="k">def</span> <span class="nf">zero_roll</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a pose editor with zero roll.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span><span class="n">look_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward_vector</span><span class="p">))</span></div>
@@ -643,8 +643,8 @@
     <span class="k">def</span> <span class="nf">zero_roll_and_pitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span><span class="n">look_at_without_pitching</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward_vector</span><span class="p">))</span>
 
-<div class="viewcode-block" id="PoseEditor.as_Pose"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.as_Pose">[docs]</a>    <span class="k">def</span> <span class="nf">as_Pose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pose</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PoseEditor.as_Pose"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.as_Pose">[docs]</a>    <span class="k">def</span> <span class="nf">as_Pose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pose</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a :class:`~geometry_msgs.msg.Pose` message class from the</span>
 <span class="sd">        pose editor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -653,10 +653,10 @@
             <span class="n">orientation</span><span class="o">=</span><span class="n">Quaternion</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.as_PoseTwist"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.as_PoseTwist">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwist</span><span class="p">(</span>
+<div class="viewcode-block" id="PoseEditor.as_PoseTwist"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.as_PoseTwist">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwist</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`~mil_msgs.msg.PoseTwist` message class with the pose</span>
 <span class="sd">        supplied from the current pose editor. The linear and angular twist</span>
 <span class="sd">        are supplied as parameters.</span>
@@ -673,10 +673,10 @@
             <span class="p">),</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="PoseEditor.as_PoseTwistStamped"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_missions.PoseEditor.as_PoseTwistStamped">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwistStamped</span><span class="p">(</span>
+<div class="viewcode-block" id="PoseEditor.as_PoseTwistStamped"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.as_PoseTwistStamped">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwistStamped</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseTwistStamped</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`~mil_msgs.msg.PoseTwist` message class with the pose</span>
 <span class="sd">        supplied from the current pose editor. The linear and angular twist</span>
 <span class="sd">        are supplied as parameters. The header includes the frame ID specified</span>

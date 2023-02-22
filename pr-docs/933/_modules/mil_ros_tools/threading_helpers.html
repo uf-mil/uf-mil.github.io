@@ -83,7 +83,7 @@
 
 
 <div class="viewcode-block" id="thread_lock"><a class="viewcode-back" href="../../reference/resources.html#mil_tools.thread_lock">[docs]</a><span class="k">def</span> <span class="nf">thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">:</span> <span class="n">Lock</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A decortor for using an existing thread lock to thread-lock a function.</span>
 <span class="sd">    This prevents the function from being executed by multiple threads at once.</span>
 
@@ -98,7 +98,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">lock_thread</span><span class="p">(</span><span class="n">function_to_lock</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        thread_lock(function) -&gt; locked function</span>
 <span class="sd">        Thread locking decorator</span>
 <span class="sd">            If you use this as a decorator for a function, it will apply a threading lock during</span>

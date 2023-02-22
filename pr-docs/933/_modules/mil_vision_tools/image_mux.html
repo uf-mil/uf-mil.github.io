@@ -89,7 +89,7 @@
 
 
 <div class="viewcode-block" id="ImageMux"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ImageMux">[docs]</a><span class="k">class</span> <span class="nc">ImageMux</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Utility to create a customizable square grid of images, with labels and borders,</span>
 <span class="sd">    which will generate a single image from the grid at any time. Useful for</span>
 <span class="sd">    combining several debug images into one.</span>
@@ -140,7 +140,7 @@
         <span class="n">text_scale</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">text_thickness</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            size (Tuple[int, int]): Tuple representing the size of the grid image,</span>
 <span class="sd">                in pixels.</span>
@@ -180,14 +180,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_index_to_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal helper function, returns row, col index</span>
 <span class="sd">        from a single index integer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">index</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="k">def</span> <span class="nf">_apply_decorations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal helper function, adds border lines and label text to internal image.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Add border if thickness &gt; 0</span>
@@ -237,7 +237,7 @@
             <span class="p">)</span>
 
 <div class="viewcode-block" id="ImageMux.set_image"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ImageMux.set_image">[docs]</a>    <span class="k">def</span> <span class="nf">set_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the content of one pane in the image grid.</span>
 
 <span class="sd">        Args:</span>
@@ -285,7 +285,7 @@
     <span class="fm">__setitem__</span> <span class="o">=</span> <span class="n">set_image</span>  <span class="c1"># Overload index [] operator to set image</span>
 
 <div class="viewcode-block" id="ImageMux.get_image"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ImageMux.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the image grid, with labels and borders.</span>
 
 <span class="sd">        Returns:</span>
@@ -298,7 +298,7 @@
     <span class="k">def</span> <span class="nf">image</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the decorated grid image. Equivalent to calling :meth:`.get_image`.</span>
 
 <span class="sd">        Returns:</span>
@@ -310,7 +310,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ImageMux is intended to be used as a class, not an executable.</span>
 <span class="sd">    The following is an example of how to use it in a python program.</span>
 <span class="sd">    Creates a 2x2 grid of Racoon images with labels, using some custom parameters.</span>

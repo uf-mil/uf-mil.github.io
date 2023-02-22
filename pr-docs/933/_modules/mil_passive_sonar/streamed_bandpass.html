@@ -86,7 +86,7 @@
 
 
 <div class="viewcode-block" id="StreamedBandpass"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass">[docs]</a><span class="k">class</span> <span class="nc">StreamedBandpass</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class for bandpass filtering sequential batches of data. Takes care of the</span>
 <span class="sd">        overlap-adding that needs to be done when filtering sequential batches</span>
 <span class="sd">        of data individually.</span>
@@ -110,7 +110,7 @@
         <span class="n">order</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs the class using the variables provided. Checks if the class is</span>
 <span class="sd">        ready to make a filter, and if so, the filter is constructed.</span>
 
@@ -134,7 +134,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">make_filter</span><span class="p">()</span>
 
 <div class="viewcode-block" id="StreamedBandpass.is_ready_to_make_filter"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.is_ready_to_make_filter">[docs]</a>    <span class="k">def</span> <span class="nf">is_ready_to_make_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks whether the filter is ready to be made. Checks that the :attr:`.lower`</span>
 <span class="sd">        variable is not ``None``.</span>
 
@@ -150,7 +150,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="StreamedBandpass.make_filter"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.make_filter">[docs]</a>    <span class="k">def</span> <span class="nf">make_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes the data filter.</span>
 
 <span class="sd">        Raises:</span>
@@ -175,7 +175,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="StreamedBandpass.convolve"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.convolve">[docs]</a>    <span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the filtering.</span>
 
 <span class="sd">        Args:</span>

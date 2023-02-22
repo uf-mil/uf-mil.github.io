@@ -209,7 +209,7 @@ guess as to what it’s doing - but this isn’t ideal. Without a docstring, thi
 how you (and all of the other software MILers) have to understand this code! Let’s
 fix that by adding a docstring.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">download_and_unzip</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Downloads a zip file at a particular URL and unzips it to a directory.</span>
 
 <span class="sd">    Args:</span>
@@ -262,7 +262,7 @@ declaration. You can use JavaDoc-like syntax to add annotations.</p>
 <span class="cm"> * false.</span>
 <span class="cm"> *</span>
 <span class="cm"> * @return Whether a connection was established in time.</span>
-<span class="cm"> */</span><span class="w"></span>
+<span class="cm"> */</span>
 <span class="kt">bool</span><span class="w"> </span><span class="nf">waitForConnection</span><span class="p">(</span><span class="n">ros</span><span class="o">::</span><span class="n">Duration</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">-1.0</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w">  </span><span class="c1">// waits forever by default</span>
 </pre></div>
 </div>

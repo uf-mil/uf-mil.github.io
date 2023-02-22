@@ -80,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="api.html">API Reference</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
@@ -93,7 +94,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
@@ -125,7 +125,7 @@ after initializing the class. Then, you must either shut down the publisher usin
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Publisher.shutdown()</span></code> or shut down the entire node handle using <code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeHandle.shutdown()</span></code> - this
 will shutdown all publishers spawned by the node.</p>
 <p>Furthermore, attempting to shut down a resource more than once will result in an
-instance of <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> being raised.</p>
+instance of <a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#RuntimeError" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> being raised.</p>
 </section>
 
 

@@ -85,22 +85,45 @@
 
 <span class="kn">import</span> <span class="nn">rospy</span>
 <span class="kn">from</span> <span class="nn">rospy_tutorials.srv</span> <span class="kn">import</span> <span class="n">AddTwoInts</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Trigger</span><span class="p">,</span> <span class="n">TriggerRequest</span><span class="p">,</span> <span class="n">TriggerResponse</span>
 
 <span class="kn">from</span> <span class="nn">.application_packet</span> <span class="kn">import</span> <span class="n">ApplicationPacket</span>
 <span class="kn">from</span> <span class="nn">.board</span> <span class="kn">import</span> <span class="n">USBtoCANBoard</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">PayloadTooLargeException</span>
 
 
 <div class="viewcode-block" id="CANDeviceHandle"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle">[docs]</a><span class="k">class</span> <span class="nc">CANDeviceHandle</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class to allow developers to write handles for communication with a</span>
-<span class="sd">    particular CAN device.</span>
+<span class="sd">    particular CAN device. The two methods of the handle allow the handle to listen</span>
+<span class="sd">    to incoming data, as well as send data.</span>
 
-<span class="sd">    For examples of child classes of this class, see the ``device.py`` file in the</span>
-<span class="sd">    ``mil_usb_to_can`` package.</span>
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class ExampleEchoDeviceHandle(CANDeviceHandle):</span>
+<span class="sd">            def __init__(self, driver, device_id):</span>
+<span class="sd">                self.last_sent = None</span>
+<span class="sd">                self.send_new_string()</span>
+<span class="sd">                super().__init__(driver, device_id)</span>
+
+<span class="sd">            def on_data(self, data: bytes):</span>
+<span class="sd">                if self.last_sent is not None and data == self.last_sent[0]:</span>
+<span class="sd">                    print(</span>
+<span class="sd">                        &quot;SUCCESSFULLY echoed {} in {}seconds&quot;.format(</span>
+<span class="sd">                            self.last_sent[0], (rospy.Time.now() - self.last_sent[1]).to_sec()</span>
+<span class="sd">                        )</span>
+<span class="sd">                    )</span>
+<span class="sd">                    rospy.sleep(0.15)</span>
+<span class="sd">                    self.send_new_string()</span>
+
+<span class="sd">            def send_new_string(self):</span>
+<span class="sd">                test = &quot;&quot;.join([random.choice(string.ascii_letters) for _ in range(4)])</span>
+<span class="sd">                self.last_sent = (test, rospy.Time.now())</span>
+<span class="sd">                self.send_data(test.encode())</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">:</span> <span class="n">USBtoCANBoard</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">                driver (USBtoCANBoard): Driver that is used to communicate with the board.</span>
 <span class="sd">                device_id (int): The CAN ID of the device this class will handle. Not currently used.</span>
@@ -109,26 +132,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_device_id</span> <span class="o">=</span> <span class="n">device_id</span>
 
 <div class="viewcode-block" id="CANDeviceHandle.on_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when data is received from the device this handle is registered for.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data (bytes): The data received.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="CANDeviceHandle.send_data"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CANDeviceHandle.send_data">[docs]</a>    <span class="k">def</span> <span class="nf">send_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data to the device.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            data (bytes): The data payload to send to the device.</span>
 <span class="sd">            can_id (int): The CAN device ID to send data to. Defaults to 0.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            PayloadTooLargeException: The payload is larger than 8 bytes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_driver</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">can_id</span><span class="o">=</span><span class="n">can_id</span><span class="p">)</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">ExampleEchoDeviceHandle</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An example implementation of a CANDeviceHandle which will handle</span>
 <span class="sd">    a device that echos back any data sent to it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -136,47 +163,61 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_new_string</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;start_echo&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">srv_req</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">srv_req</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_new_string</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">TriggerResponse</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Unable to send string of length four.&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_new_string</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">PayloadTooLargeException</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TriggerResponse</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Testing large strings failed.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TriggerResponse</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Complete!&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">ApplicationPacket</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">expected_identifier</span><span class="o">=</span><span class="mi">37</span><span class="p">)</span><span class="o">.</span><span class="n">payload</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> but have not yet sent anything&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">data</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR! Reveived </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> but last sent </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;SUCCESSFULLY echoed </span><span class="si">{}</span><span class="s2"> in </span><span class="si">{}</span><span class="s2">seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
-                <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> but have not yet sent anything&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;ERROR! Received </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2"> but last sent </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.15</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">send_new_string</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">send_new_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">send_new_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
         <span class="c1"># Example string to test with</span>
-        <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_sent</span> <span class="o">=</span> <span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SENDING </span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="n">test</span><span class="o">.</span><span class="n">encode</span><span class="p">())))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">count_now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="n">count_now</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
 
 <span class="k">class</span> <span class="nc">ExampleAdderDeviceHandle</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An example implementation of a CANDeviceHandle which will handle</span>
 <span class="sd">    a device that echos back any data sent to it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">correct_response</span> <span class="o">=</span> <span class="mi">37</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">response_received</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;add_two_ints&quot;</span><span class="p">,</span> <span class="n">AddTwoInts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_service_req</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_service_req</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;hh&quot;</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">correct_response</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">req</span><span class="o">.</span><span class="n">b</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">response_received</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">(</span><span class="mi">37</span><span class="p">,</span> <span class="n">payload</span><span class="p">)))</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_received</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>

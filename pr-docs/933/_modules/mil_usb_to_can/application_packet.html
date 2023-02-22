@@ -82,32 +82,67 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;ApplicationPacket&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ApplicationPacketWrongIdentifierException"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacketWrongIdentifierException">[docs]</a><span class="k">class</span> <span class="nc">ApplicationPacketWrongIdentifierException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception thrown when the identifier for a MIL application level CAN packet</span>
 <span class="sd">    had a different identifier from what was expected.</span>
 
 <span class="sd">    Inherits from :class:`Exception`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">was</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">should_be</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">received</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attributes:</span>
-<span class="sd">            was (Any): A value representing what was found.</span>
-<span class="sd">            should_be (Any): What the found value should have been.</span>
+<span class="sd">            received (int): A value representing what received found.</span>
+<span class="sd">            expected (int): What the found value should have been.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected identified &#39;</span><span class="si">{</span><span class="n">should_be</span><span class="si">}</span><span class="s2">&#39;, got &#39;</span><span class="si">{</span><span class="n">was</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected identified </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">received</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ApplicationPacket"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacket">[docs]</a><span class="k">class</span> <span class="nc">ApplicationPacket</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    One packet of data that is used to communicate with CAN devices.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents an application-specific packet structure used by a CAN device. This</span>
+<span class="sd">    class does not implement the entire packet that will be sent over the CAN bus;</span>
+<span class="sd">    the packet only includes the identifier and payload in the packet.</span>
+
+<span class="sd">    This class should be used to generate packets to send to the board. This packet</span>
+<span class="sd">    does not handle communication with the board; this is instead handled by other</span>
+<span class="sd">    packet classes.</span>
+
+<span class="sd">    This class can be inherited from to implement packet structures for specific</span>
+<span class="sd">    applications.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class SendALetterMessage(ApplicationPacket):</span>
+
+<span class="sd">            IDENTIFIER = 0xAA</span>
+<span class="sd">            STRUCT_FORMAT = &quot;B&quot;</span>
+
+<span class="sd">            def __init__(self, letter: str):</span>
+<span class="sd">                self.letter = letter</span>
+<span class="sd">                super().__init__(self.IDENTIFIER, struct.pack(self.STRUCT_FORMAT, ord(letter)))</span>
+
+<span class="sd">            @classmethod</span>
+<span class="sd">            def from_bytes(cls, data: bytes) -&gt; SendALetterMessage:</span>
+<span class="sd">                return cls(*struct.unpack(self.STRUCT_FORMAT, data))</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: bytes(x)</span>
+
+<span class="sd">            Assembles the packet into a form suitable for sending through a data</span>
+<span class="sd">            stream. Packs :attr:`~.identifier` and :attr:`~.payload` into a single</span>
+<span class="sd">            :class:`bytes` object.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        identifier (int): The identifier for the packet.</span>
+<span class="sd">        identifier (int): The identifier for the packet. Allowed range is between 0</span>
+<span class="sd">            and 255.</span>
 <span class="sd">        payload (bytes): The payload of bytes to be sent in the packet.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -115,22 +150,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span>
 
-<div class="viewcode-block" id="ApplicationPacket.to_bytes"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacket.to_bytes">[docs]</a>    <span class="k">def</span> <span class="nf">to_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Packs the packet into a series of bytes using :meth:`struct.Struct.pack`. The identifier</span>
-<span class="sd">        is packed as an unsigned integer, while the payload of bytes is packed as</span>
-<span class="sd">        a sequence of bytes equal to the length of the payload.</span>
+    <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Packs the packet into a series of bytes using :meth:`struct.Struct.pack`.</span>
+<span class="sd">        The identifier is packed as an unsigned integer, while the payload of bytes</span>
+<span class="sd">        is packed as a sequence of bytes equal to the length of the payload.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bytes: The packed bytes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;B</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ApplicationPacket.from_bytes"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.ApplicationPacket.from_bytes">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">expected_identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ApplicationPacket</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">expected_identifier</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unpacks a series of packed bytes representing an application packet using</span>
 <span class="sd">        :meth:`struct.Struct.unpack`, which produces the packet identifier and array of data.</span>
 <span class="sd">        These values are then used to produce the new instance of the class.</span>
@@ -143,7 +178,7 @@
 <span class="sd">              error is thrown.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ApplicationPacketWrongIdentifierException: If the ```expected_identifier``</span>
+<span class="sd">            ApplicationPacketWrongIdentifierException: If the ``expected_identifier``</span>
 <span class="sd">              does not match the identifier found in the packet, then this is raised.</span>
 
 <span class="sd">        Returns:</span>
@@ -157,10 +192,15 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">packet</span></div>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;MilApplicationPacket(identifier=</span><span class="si">{}</span><span class="s2">, payload=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span>
-        <span class="p">)</span></div>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(identifier=</span><span class="si">{}</span><span class="s2">, payload=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ApplicationPacket</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">payload</span></div>
 </pre></div>
 
             </main>

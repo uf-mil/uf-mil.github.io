@@ -89,7 +89,7 @@
 
 
 <div class="viewcode-block" id="rotate_vect_by_quat"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.rotate_vect_by_quat">[docs]</a><span class="k">def</span> <span class="nf">rotate_vect_by_quat</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">q</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rotates a vector by a quaterion using ``v&#39; = q*vq``. Both ``v`` and ``q``</span>
 <span class="sd">    should be a list of 4 floats representing [x, y, z, w].</span>
 
@@ -112,7 +112,7 @@
 
 
 <div class="viewcode-block" id="make_rotation"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.make_rotation">[docs]</a><span class="k">def</span> <span class="nf">make_rotation</span><span class="p">(</span><span class="n">vector_a</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">vector_b</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Determine a 3D rotation that rotates A onto B. In other words, we want a</span>
 <span class="sd">    matrix R that aligns A with B.</span>
 
@@ -159,7 +159,7 @@
 
 
 <div class="viewcode-block" id="skew_symmetric_cross"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.skew_symmetric_cross">[docs]</a><span class="k">def</span> <span class="nf">skew_symmetric_cross</span><span class="p">(</span><span class="n">vector</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the skew symmetric matrix representation of a vector.</span>
 
 <span class="sd">    Args:</span>
@@ -183,7 +183,7 @@
 
 
 <div class="viewcode-block" id="deskew"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.deskew">[docs]</a><span class="k">def</span> <span class="nf">deskew</span><span class="p">(</span><span class="n">matrix</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Finds the original vector from its skew-symmetric cross product. Finds the</span>
 <span class="sd">    reverse of :meth:`mil_tools.skew_symmetric_cross`.</span>
 
@@ -197,7 +197,7 @@
 
 
 <div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Normalizes a vector by dividing a non-zero vector by the vector norm.</span>
 
 <span class="sd">    Args:</span>
@@ -212,7 +212,7 @@
 <div class="viewcode-block" id="compose_transformation"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.compose_transformation">[docs]</a><span class="k">def</span> <span class="nf">compose_transformation</span><span class="p">(</span>
     <span class="n">rotation</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">,</span> <span class="n">translation</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compose a transformation from a rotation matrix and a translation matrix.</span>
 
 <span class="sd">    Args:</span>
@@ -231,7 +231,7 @@
 
 
 <span class="k">def</span> <span class="nf">project_pt_to_plane</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">plane_normal</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Not currently used anywhere throughout repository.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane_normal</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
@@ -240,7 +240,7 @@
 
 
 <span class="k">def</span> <span class="nf">clip_norm</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Not currently used anywhere throughout repository.</span>
 
 <span class="sd">    Return a vector pointing the same direction as $vector,</span>
@@ -265,7 +265,7 @@
 
 
 <span class="k">def</span> <span class="nf">quat_to_euler</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Approximate a quaternion as a euler rotation vector</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">euler_rot_vec</span> <span class="o">=</span> <span class="n">trans</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">([</span><span class="n">q</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">w</span><span class="p">])</span>
@@ -274,7 +274,7 @@
 
 
 <div class="viewcode-block" id="quat_to_rotvec"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.quat_to_rotvec">[docs]</a><span class="k">def</span> <span class="nf">quat_to_rotvec</span><span class="p">(</span><span class="n">quat</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a quaternion to a rotation vector.</span>
 
 <span class="sd">    Args:</span>
@@ -296,7 +296,7 @@
 
 
 <div class="viewcode-block" id="euler_to_quat"><a class="viewcode-back" href="../../reference/mathematics.html#mil_tools.euler_to_quat">[docs]</a><span class="k">def</span> <span class="nf">euler_to_quat</span><span class="p">(</span><span class="n">rotvec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Quaternion</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a euler rotation vector into a ROS Quaternion message.</span>
 
 <span class="sd">    Args:</span>
@@ -311,7 +311,7 @@
 
 
 <span class="k">def</span> <span class="nf">random_pose</span><span class="p">(</span><span class="n">_min</span><span class="p">,</span> <span class="n">_max</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gives a random pose in the xyz range `_min` to `_max`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">_min</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">_max</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>

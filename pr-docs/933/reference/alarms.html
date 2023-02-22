@@ -73,7 +73,8 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
@@ -116,7 +117,6 @@
 <li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
@@ -229,7 +229,7 @@ def</span><a class="reference internal" href="#ros_alarms.Alarm.as_srv_resp">as_
 def</span><a class="reference internal" href="#ros_alarms.Alarm.update">update</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="ros_alarms.Alarm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">Alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'unknown'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">Alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'unknown'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pythonic representation of a ROS alarm.</p>
 <p>This class should not be constructed by clients (excluding internal <code class="docutils literal notranslate"><span class="pre">ros_alarms</span></code>
 code, of course). This class is primarily used by the alarm server node to
@@ -255,7 +255,7 @@ into callbacks registered to particular alarms.</p>
 <dd><p>The name of this specific alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -266,7 +266,7 @@ into callbacks registered to particular alarms.</p>
 <dd><p>Whether the alarm has been raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -278,7 +278,7 @@ into callbacks registered to particular alarms.</p>
 <code class="docutils literal notranslate"><span class="pre">unknown</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -290,7 +290,7 @@ into callbacks registered to particular alarms.</p>
 Defaults to an empty string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,7 +302,7 @@ Defaults to an empty string.</p>
 to an empty dict.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,7 +313,7 @@ to an empty dict.</p>
 <dd><p>The severity associated with a raised alarm. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,7 +338,7 @@ when the alarm is raised. Each callback should be associated with
 the severity required to execute the callback through a tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>, Callable]</p>
+<dd class="field-odd"><p>List[Tuple[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>, Callable]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -351,14 +351,14 @@ when the alarm is cleared. Each callback should be associated with
 the severity required to execute the callback through a tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>, Callable]</p>
+<dd class="field-odd"><p>List[Tuple[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>, Callable]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.Alarm.add_callback">
-<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_cleared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm.add_callback" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_cleared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#tuple" title="(in Python v3.8)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm.add_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a callback function to the alarm.</p>
 <p>If the callback is set to be called when the alarm has been raised, and
 the alarm is already raised, then the callback is immediately called.
@@ -371,11 +371,11 @@ rospy logging statement.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>funct</strong> (<em>Callable</em>) – The callback to add.</p></li>
-<li><p><strong>call_when_raised</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to call the callback when the alarm
+<li><p><strong>call_when_raised</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to call the callback when the alarm
 is raised. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>call_when_cleared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to call the callback when the alarm
+<li><p><strong>call_when_cleared</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to call the callback when the alarm
 is cleared. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>severity_required</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – The severity required to run the
+<li><p><strong>severity_required</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>]</em>) – The severity required to run the
 callback. The tuple represents the minimum and maximum severities
 under which to execute the callback. Defaults to <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">5)</span></code>.</p></li>
 </ul>
@@ -413,11 +413,11 @@ under which to execute the callback. Defaults to <code class="docutils literal n
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.Alarm.blank">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm.blank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm.blank" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">blank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#Alarm.blank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.Alarm.blank" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a general blank alarm that is cleared with a low severity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name for the blank alarm.</p>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name for the blank alarm.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The constructed alarm.</p>
@@ -487,7 +487,7 @@ def</span><a class="reference internal" href="#ros_alarms.nodes.alarm_server.Ala
 <dd><p>A map from the alarm names to to the Alarm objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -499,7 +499,7 @@ def</span><a class="reference internal" href="#ros_alarms.nodes.alarm_server.Ala
 handlers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference internal" href="#ros_alarms.HandlerBase" title="ros_alarms.HandlerBase">HandlerBase</a>]</p>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>, <a class="reference internal" href="#ros_alarms.HandlerBase" title="ros_alarms.HandlerBase">HandlerBase</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -511,21 +511,21 @@ handlers.</p>
 objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.nodes.alarm_server.AlarmServer.make_tagged_alarm">
-<span class="sig-name descname"><span class="pre">make_tagged_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/nodes/alarm_server.html#AlarmServer.make_tagged_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.nodes.alarm_server.AlarmServer.make_tagged_alarm" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">make_tagged_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/nodes/alarm_server.html#AlarmServer.make_tagged_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.nodes.alarm_server.AlarmServer.make_tagged_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a blank alarm with the node_name of the alarm_server so that users
 know it is the initial state.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.nodes.alarm_server.AlarmServer.set_alarm">
-<span class="sig-name descname"><span class="pre">set_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Alarm</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/nodes/alarm_server.html#AlarmServer.set_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.nodes.alarm_server.AlarmServer.set_alarm" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Union" title="(in Python v3.8)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Alarm</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/nodes/alarm_server.html#AlarmServer.set_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.nodes.alarm_server.AlarmServer.set_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets or updates the alarm.</p>
 <p>Updating the alarm triggers all of the alarms callbacks, if any are set.
 The alarm becomes registered within the server and a message representing
@@ -539,7 +539,7 @@ set in the server.</p>
 <dd class="field-even"><p>Whether the operation succeeded.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -561,15 +561,15 @@ def</span><a class="reference internal" href="#ros_alarms.AlarmBroadcaster.raise
 def</span><a class="reference internal" href="#ros_alarms.AlarmBroadcaster.wait_for_server">wait_for_server</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="ros_alarms.AlarmBroadcaster">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">AlarmBroadcaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmBroadcaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmBroadcaster" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">AlarmBroadcaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmBroadcaster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmBroadcaster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Broadcasts information about an alarm, and allows for the raising and clearing
 of the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the related alarm.</p></li>
-<li><p><strong>node_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – The name of the node alarm.</p></li>
-<li><p><strong>nowarn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to disable warning for the class’ operations.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The name of the related alarm.</p></li>
+<li><p><strong>node_name</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>]</em>) – The name of the node alarm.</p></li>
+<li><p><strong>nowarn</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to disable warning for the class’ operations.</p></li>
 </ul>
 </dd>
 </dl>
@@ -583,13 +583,13 @@ of the alarm.</p>
 </dd>
 <dt class="field-even">Keyword Arguments</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>node_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – String that holds the name of the node making the
+<li><p><strong>node_name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String that holds the name of the node making the
 request.</p></li>
-<li><p><strong>problem_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – String with a description of the problem
+<li><p><strong>problem_description</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String with a description of the problem
 (defaults to empty string).</p></li>
-<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – JSON dumpable dictionary with optional parameters
+<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – JSON dumpable dictionary with optional parameters
 that describe the alarm.</p></li>
-<li><p><strong>severity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Integer in [0, 5] that indicates the severity of
+<li><p><strong>severity</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Integer in [0, 5] that indicates the severity of
 the alarm. (5 is most severe)</p></li>
 </ul>
 </dd>
@@ -597,7 +597,7 @@ the alarm. (5 is most severe)</p></li>
 <dd class="field-odd"><p>Whether the alarm was successfully cleared.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -612,13 +612,13 @@ the alarm. (5 is most severe)</p></li>
 </dd>
 <dt class="field-even">Keyword Arguments</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>node_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – String that holds the name of the node making the
+<li><p><strong>node_name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String that holds the name of the node making the
 request.</p></li>
-<li><p><strong>problem_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – String with a description of the problem
+<li><p><strong>problem_description</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – String with a description of the problem
 (defaults to empty string).</p></li>
-<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – JSON dumpable dictionary with optional parameters
+<li><p><strong>parameters</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – JSON dumpable dictionary with optional parameters
 that describe the alarm.</p></li>
-<li><p><strong>severity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Integer in [0, 5] that indicates the severity of
+<li><p><strong>severity</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Integer in [0, 5] that indicates the severity of
 the alarm. (5 is most severe)</p></li>
 </ul>
 </dd>
@@ -626,7 +626,7 @@ the alarm. (5 is most severe)</p></li>
 <dd class="field-odd"><p>Whether the alarm was successfully raised.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -645,7 +645,7 @@ and calls callbacks as needed.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – The amount of seconds to wait before timing
+<dd class="field-odd"><p><strong>timeout</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em>) – The amount of seconds to wait before timing
 out.</p>
 </dd>
 </dl>
@@ -674,30 +674,30 @@ def</span><a class="reference internal" href="#ros_alarms.AlarmListener.is_raise
 def</span><a class="reference internal" href="#ros_alarms.AlarmListener.wait_for_server">wait_for_server</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">AlarmListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">AlarmListener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback_funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener" title="Permalink to this definition">¶</a></dt>
 <dd><p>Listens to an alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The alarm name.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The alarm name.</p></li>
 <li><p><strong>callback_funct</strong> (<em>Optional</em><em>[</em><em>Callable</em><em>]</em>) – The callback function.</p></li>
-<li><p><strong>nowarn</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to enable warnings about the class. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>nowarn</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to enable warnings about the class. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.add_callback">
-<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_cleared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.add_callback" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">funct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_raised</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">call_when_cleared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity_required</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#tuple" title="(in Python v3.8)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">5)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.add_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a callback function to the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>funct</strong> (<em>Callable</em>) – The callback to add.</p></li>
-<li><p><strong>call_when_raised</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to call the callback when the alarm
+<li><p><strong>call_when_raised</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to call the callback when the alarm
 is raised. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>call_when_cleared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to call the callback when the alarm
+<li><p><strong>call_when_cleared</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to call the callback when the alarm
 is cleared. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
-<li><p><strong>severity_required</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – The severity required to run the
+<li><p><strong>severity_required</strong> (<em>Tuple</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>]</em>) – The severity required to run the
 callback. The tuple represents the minimum and maximum severities
 under which to execute the callback. Defaults to <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">5)</span></code>.</p></li>
 </ul>
@@ -713,7 +713,7 @@ under which to execute the callback. Defaults to <code class="docutils literal n
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.get_alarm">
-<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="services.html#ros_alarms.srv.AlarmGetResponse" title="ros_alarms.srv.AlarmGetResponse"><span class="pre">AlarmGetResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.get_alarm" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="services.html#ros_alarms.srv.AlarmGetResponse" title="ros_alarms.srv.AlarmGetResponse"><span class="pre">AlarmGetResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.get_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the alarm message.</p>
 <dl class="simple">
 <dt>Also worth noting, the alarm this method returns has it’s <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field</dt><dd><p>converted to a dictionary.</p>
@@ -721,7 +721,7 @@ under which to execute the callback. Defaults to <code class="docutils literal n
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 then uses the most recently cached alarm. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -735,43 +735,43 @@ then uses the most recently cached alarm. Defaults to <code class="docutils lite
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.is_cleared">
-<span class="sig-name descname"><span class="pre">is_cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.is_cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.is_cleared" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.is_cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.is_cleared" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether this alarm is cleared or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 then uses the most recently cached alarm. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether the alarm is cleared.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.is_raised">
-<span class="sig-name descname"><span class="pre">is_raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.is_raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.is_raised" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.is_raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.is_raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether this alarm is raised or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+<dd class="field-odd"><p><strong>fetch</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fetch the alarm from the server. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 then uses the most recently cached alarm. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Whether the alarm is raised.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.wait_for_server">
-<span class="sig-name descname"><span class="pre">wait_for_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.wait_for_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.wait_for_server" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">wait_for_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.wait_for_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.wait_for_server" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Wait for node to connect to alarm server. Waits timeout seconds (or forever</dt><dd><p>if <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>) to connect then fetches the current alarm
 and calls callbacks as needed.</p>
@@ -783,7 +783,7 @@ and calls callbacks as needed.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>]</em>) – The amount of seconds to wait before timing
+<dd class="field-odd"><p><strong>timeout</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em>) – The amount of seconds to wait before timing
 out.</p>
 </dd>
 </dl>
@@ -796,7 +796,7 @@ out.</p>
 <h3>HeartbeatMonitor<a class="headerlink" href="#heartbeatmonitor" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="ros_alarms.HeartbeatMonitor"></div><dl class="py class">
 <dt class="sig sig-object py" id="ros_alarms.HeartbeatMonitor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">HeartbeatMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#HeartbeatMonitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HeartbeatMonitor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ros_alarms.</span></span><span class="sig-name descname"><span class="pre">HeartbeatMonitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nowarn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#HeartbeatMonitor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HeartbeatMonitor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used to trigger an alarm if a message on the topic <code class="docutils literal notranslate"><span class="pre">topic_name</span></code> isn’t published
 at least every <code class="docutils literal notranslate"><span class="pre">prd</span></code> seconds.</p>
 <p>An alarm won’t be triggered if no messages are initially received.</p>
@@ -847,7 +847,7 @@ current with.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="ros_alarms.HandlerBase.current_alarm">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_alarm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ros_alarms.HandlerBase.current_alarm" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_alarm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Optional" title="(in Python v3.8)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ros_alarms.HandlerBase.current_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the status of the alarm this handler is registered for.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -861,7 +861,7 @@ current with.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.HandlerBase.get_alarm">
-<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.get_alarm" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Optional" title="(in Python v3.8)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.get_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the current status of an alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -875,14 +875,14 @@ current with.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.HandlerBase.meta_predicate">
-<span class="sig-name descname"><span class="pre">meta_predicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alarms</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.meta_predicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.meta_predicate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">meta_predicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alarms</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Union" title="(in Python v3.8)"><span class="pre">Union</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.meta_predicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.meta_predicate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called on an update to one of this alarms’s meta alarms, if there are any.
 By default, returns True if any meta alarms are raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>meta_alarm</strong> (<a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm"><em>ros_alarms.Alarm</em></a>) – The alarm object of the meta alarm.</p></li>
-<li><p><strong>alarms</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm"><em>ros_alarms.Alarm</em></a><em>]</em>) – A dictionary mapping the name
+<li><p><strong>alarms</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm"><em>ros_alarms.Alarm</em></a><em>]</em>) – A dictionary mapping the name
 of each child alarm to its Alarm object.</p></li>
 </ul>
 </dd>
@@ -892,14 +892,14 @@ should be raised, or a new Alarm object which the calling alarm
 should update itself to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a>, <a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm">ros_alarms.Alarm</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.HandlerBase.on_set">
-<span class="sig-name descname"><span class="pre">on_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.on_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.on_set" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Optional" title="(in Python v3.8)"><span class="pre">Optional</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/ros_alarms/handler_template.html#HandlerBase.on_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.HandlerBase.on_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called whenever a service request is made to the alarm server to the
 alarm this handler is registered for. Can be used to trigger actions
 before other nodes are notified of the change or to reject the change.
@@ -914,7 +914,7 @@ requested to have this alarm change to.</p>
 in which case the alarm remains the same and the service request fails.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a>]</p>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1723,20 +1723,20 @@ def</span><a class="reference internal" href="#alarm_handlers.BusVoltage.raised"
 is set equal to <code class="docutils literal notranslate"><span class="pre">bus-voltage</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.BusVoltage.cleared">
-<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/bus_voltage.html#BusVoltage.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.BusVoltage.cleared" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/bus_voltage.html#BusVoltage.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.BusVoltage.cleared" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the alarm is cleared. Does nothing.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.BusVoltage.raised">
-<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/bus_voltage.html#BusVoltage.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.BusVoltage.raised" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/bus_voltage.html#BusVoltage.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.BusVoltage.raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the severity of the raised alarm is 3, then an indication is raised to
 all logged-in users about a low bus voltage. If the raised alarm severity is
 5, then a message is displayed to all logged-in users about the bus being
@@ -1780,14 +1780,14 @@ above the limit again, the alarm is cleared.</p>
 <dd><p>The name of the alarm. Set to <code class="docutils literal notranslate"><span class="pre">height-over-bottom</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.HeightOverBottom.cleared">
-<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/height_over_bottom.html#HeightOverBottom.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.HeightOverBottom.cleared" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/height_over_bottom.html#HeightOverBottom.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.HeightOverBottom.cleared" title="Permalink to this definition">¶</a></dt>
 <dd><p>Triggers when the alarm is cleared. Sets the state of the alarm monitor to</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1798,7 +1798,7 @@ above the limit again, the alarm is cleared.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.HeightOverBottom.raised">
-<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/height_over_bottom.html#HeightOverBottom.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.HeightOverBottom.raised" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/height_over_bottom.html#HeightOverBottom.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.HeightOverBottom.raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>Triggers when the alarm is raised. Sets the state of the alarm monitor to
 represent that the alarm was killed.</p>
 <dl class="field-list simple">
@@ -1829,7 +1829,7 @@ a hardware kill.</p>
 <dd><p>The name of the alarm. Equal to <code class="docutils literal notranslate"><span class="pre">hw-kill</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1869,7 +1869,7 @@ to manage access</p>
 <dd><p>The name of the alarm. Set to <code class="docutils literal notranslate"><span class="pre">kill</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1881,7 +1881,7 @@ to manage access</p>
 the shared access to the motherboard.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Condition" title="(in Python v3.11)">threading.Condition</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/threading.html#threading.Condition" title="(in Python v3.8)">threading.Condition</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1895,7 +1895,7 @@ If the kill has not been removed within this amount of time, the motherboard
 kill is reinstated. Set to <code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">seconds</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1921,7 +1921,7 @@ it is reinstated and a warning is logged.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.Kill.raised">
-<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/kill.html#Kill.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.Kill.raised" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.alarms.Alarm"><span class="pre">Alarm</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/kill.html#Kill.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.Kill.raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the alarm is raised. Sets the motherboard kill and attempts to
 dump the related logging info to a bag file, using the <a class="reference internal" href="#alarm_handlers.Kill.condition" title="alarm_handlers.Kill.condition"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condition</span></code></a>.
 At the end of the use of the condition, the condition is notified.</p>
@@ -1972,7 +1972,7 @@ def</span><a class="reference internal" href="#alarm_handlers.NetworkLoss.raised
 <dd><p>The name of the alarm. Set to <code class="docutils literal notranslate"><span class="pre">network-loss</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1991,13 +1991,13 @@ network.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.NetworkLoss.cleared">
-<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/network_loss.html#NetworkLoss.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.NetworkLoss.cleared" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cleared</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/network_loss.html#NetworkLoss.cleared"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.NetworkLoss.cleared" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the alarm is cleared. Does nothing.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="alarm_handlers.NetworkLoss.raised">
-<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/network_loss.html#NetworkLoss.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.NetworkLoss.raised" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">raised</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alarm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/alarm_handlers/network_loss.html#NetworkLoss.raised"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#alarm_handlers.NetworkLoss.raised" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the alarm is raised. Does nothing.</p>
 </dd></dl>
 
@@ -2068,7 +2068,7 @@ Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</sp
 before an error is logged. Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span> <span class="pre">meters</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2181,7 +2181,7 @@ offline.</p>
 <dd><p>The name of the alarm. Set to <code class="docutils literal notranslate"><span class="pre">thruster-out</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>

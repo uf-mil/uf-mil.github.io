@@ -27,7 +27,7 @@
         <link rel="index" title="Index" href="../genindex.html" />
         <link rel="search" title="Search" href="../search.html" />
         <link rel="next" title="Software Reference" href="../reference/index.html" />
-        <link rel="prev" title="Networking with Navigator" href="networking.html" />
+        <link rel="prev" title="Lessons from RobotX 2022" href="lessons22.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -63,6 +63,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">NaviGator</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="index.html#current-projects">Current Projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#procedures">Procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lessons-learned-reflections">Lessons Learned + Reflections</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html#past-projects">Past Projects</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">VRX (April 2022)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#verifying-that-the-vrx-environment-is-functional-playing-around-in-vrx">Verifying that the VRX Environment is Functional / Playing Around in VRX</a><ul>
@@ -121,14 +122,14 @@ a simulated competition based on the real-life RobotX challenge.</p>
 <section id="launch-vrx">
 <h3>Launch VRX<a class="headerlink" href="#launch-vrx" title="Permalink to this heading">¶</a></h3>
 <p>In one panel, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch navigator_launch vrx.launch --screen
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>roslaunch<span class="w"> </span>navigator_launch<span class="w"> </span>vrx.launch<span class="w"> </span>--screen
 </pre></div>
 </div>
 <p>This will launch the NaviGator Code and the VRX code in the same container.</p>
 <section id="run-rviz">
 <h4>Run RVIZ<a class="headerlink" href="#run-rviz" title="Permalink to this heading">¶</a></h4>
 <p>You can visualize things by running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ vrxviz
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>vrxviz
 </pre></div>
 </div>
 </section>
@@ -136,14 +137,14 @@ a simulated competition based on the real-life RobotX challenge.</p>
 <section id="give-a-move-command">
 <h3>Give a move command<a class="headerlink" href="#give-a-move-command" title="Permalink to this heading">¶</a></h3>
 <p>Give NaviGator a move command with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ nmove forward 5m
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>nmove<span class="w"> </span>forward<span class="w"> </span>5m
 </pre></div>
 </div>
 </section>
 <section id="see-the-current-odometry">
 <h3>See the current odometry<a class="headerlink" href="#see-the-current-odometry" title="Permalink to this heading">¶</a></h3>
 <p>Try streaming the content of a rostopic:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rostopic <span class="nb">echo</span> /odom
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>rostopic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/odom
 </pre></div>
 </div>
 </section>
@@ -153,12 +154,12 @@ a simulated competition based on the real-life RobotX challenge.</p>
 <p>The official VRX system runs our code and the simulator in separated, isolated containers to prevent cheating.
 However, for normal development in can be helpful to simply run both in the same container.
 To do this, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch navigator_launch vrx.launch run_task:<span class="o">=</span>True world:<span class="o">=</span>&lt;worldfile&gt; --screen
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>roslaunch<span class="w"> </span>navigator_launch<span class="w"> </span>vrx.launch<span class="w"> </span>run_task:<span class="o">=</span>True<span class="w"> </span>world:<span class="o">=</span>&lt;worldfile&gt;<span class="w"> </span>--screen
 </pre></div>
 </div>
 <p>Where <cite>&lt;worldfile&gt;</cite> is the name of a world under <code class="docutils literal notranslate"><span class="pre">~/catkin_ws/src/mil/NaviGator/simulation/VRX/vrx/vrx_gazebo/worlds</span></code>.</p>
 <p>For example, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ roslaunch navigator_launch vrx.launch run_task:<span class="o">=</span>True world:<span class="o">=</span>stationkeeping_task --screen
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>roslaunch<span class="w"> </span>navigator_launch<span class="w"> </span>vrx.launch<span class="w"> </span>run_task:<span class="o">=</span>True<span class="w"> </span>world:<span class="o">=</span>stationkeeping_task<span class="w"> </span>--screen
 </pre></div>
 </div>
 <p>to test out the station keeping scenario.</p>
@@ -169,7 +170,7 @@ To do this, run:</p>
 <h2>Preparing submission<a class="headerlink" href="#preparing-submission" title="Permalink to this heading">¶</a></h2>
 <p>The recommended workflow for submitting our code to vrx is:</p>
 <p>Run the dev container:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/run_development_container
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./scripts/run_development_container
 </pre></div>
 </div>
 <ol class="arabic">
@@ -183,19 +184,19 @@ To do this, run:</p>
 <li><p>Navigate to the root of the repo:</p></li>
 </ol>
 </div></blockquote>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mil
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    $ ./scripts/build_vrx_trial_container my_branch https://github.com/ME/mil.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">    </span>$<span class="w"> </span>./scripts/build_vrx_trial_container<span class="w"> </span>my_branch<span class="w"> </span>https://github.com/ME/mil.git
 
-If you pushed to the uf-mil github, run:
+If<span class="w"> </span>you<span class="w"> </span>pushed<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>uf-mil<span class="w"> </span>github,<span class="w"> </span>run:
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    $ ./scripts/build_vrx_trial_container my_branch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">    </span>$<span class="w"> </span>./scripts/build_vrx_trial_container<span class="w"> </span>my_branch
 
-.. note::
+..<span class="w"> </span>note::
 
-Make sure when building your trial container, that the code actually compiles.
+Make<span class="w"> </span>sure<span class="w"> </span>when<span class="w"> </span>building<span class="w"> </span>your<span class="w"> </span>trial<span class="w"> </span>container,<span class="w"> </span>that<span class="w"> </span>the<span class="w"> </span>code<span class="w"> </span>actually<span class="w"> </span>compiles.
 </pre></div>
 </div>
 </div></blockquote>
@@ -203,7 +204,7 @@ Make sure when building your trial container, that the code actually compiles.
 </ol>
 <p>Run your container with a terminal for sanity check. Make sure your container
 actually does what you want when it starts up:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./scripts/run_vrx_trial_container my_branch
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./scripts/run_vrx_trial_container<span class="w"> </span>my_branch
 </pre></div>
 </div>
 <p>Now you should have a trial container! Follow the instructions at <cite>https://bitbucket.org/osrf/vrx-docker/src/default/</cite> to run this container against the vrx server.</p>
@@ -212,33 +213,33 @@ actually does what you want when it starts up:</p>
 <h2>How to Download and Replay logs from Phase 3 of VRX (2019)<a class="headerlink" href="#how-to-download-and-replay-logs-from-phase-3-of-vrx-2019" title="Permalink to this heading">¶</a></h2>
 <section id="to-download-the-logs">
 <h3>To Download the Logs<a class="headerlink" href="#to-download-the-logs" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./NaviGator/simulation/VRX/vrx_logs/2019/download_logs.bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./NaviGator/simulation/VRX/vrx_logs/2019/download_logs.bash
 </pre></div>
 </div>
 </section>
 <section id="to-play-a-log">
 <h3>To Play a Log<a class="headerlink" href="#to-play-a-log" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./NaviGator/simulation/VRX/vrx_logs/play_log.bash &lt;year&gt; &lt;task&gt; &lt;run&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./NaviGator/simulation/VRX/vrx_logs/play_log.bash<span class="w"> </span>&lt;year&gt;<span class="w"> </span>&lt;task&gt;<span class="w"> </span>&lt;run&gt;
 </pre></div>
 </div>
 <p>i.e. to play the 2019 docking task run 0:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./NaviGator/simulation/VRX/vrx_logs/play_log.bash <span class="m">2019</span> dock <span class="m">0</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./NaviGator/simulation/VRX/vrx_logs/play_log.bash<span class="w"> </span><span class="m">2019</span><span class="w"> </span>dock<span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 </section>
 <section id="to-download-the-videos">
 <h3>To Download the Videos:<a class="headerlink" href="#to-download-the-videos" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./NaviGator/simulation/VRX/vrx_logs/2019/download_videos.bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./NaviGator/simulation/VRX/vrx_logs/2019/download_videos.bash
 </pre></div>
 </div>
 </section>
 <section id="to-play-a-video">
 <h3>To Play a Video:<a class="headerlink" href="#to-play-a-video" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mplayer NaviGator/simulation/VRX/vrx_logs/2019/vrx_2019_videos/&lt;task&gt;&lt;run&gt;.mp4
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mplayer<span class="w"> </span>NaviGator/simulation/VRX/vrx_logs/2019/vrx_2019_videos/&lt;task&gt;&lt;run&gt;.mp4
 </pre></div>
 </div>
 <p>i.e. to play the 2019 docking task run 1:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mplayer NaviGator/simulation/VRX/vrx_logs/2019/vrx_2019_videos/dock1.mp4
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mplayer<span class="w"> </span>NaviGator/simulation/VRX/vrx_logs/2019/vrx_2019_videos/dock1.mp4
 </pre></div>
 </div>
 <div class="admonition warning">

@@ -114,7 +114,7 @@
 
 
 <div class="viewcode-block" id="POIServer"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer">[docs]</a><span class="k">class</span> <span class="nc">POIServer</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Node to act as a server to hold a list of points of interest which</span>
 <span class="sd">    can be modified by services or interactive markers.</span>
 
@@ -169,7 +169,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="POIServer.transform_position"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.transform_position">[docs]</a>    <span class="k">def</span> <span class="nf">transform_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps</span><span class="p">:</span> <span class="n">PointStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Attempt to transform a PointStamped message into the global frame, returning</span>
 <span class="sd">        the position of the transformed point or None if transform failed.</span>
 
@@ -198,7 +198,7 @@
             <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="POIServer.process_feedback"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.process_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">process_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">InteractiveMarkerFeedback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process interactive marker feedback, moving markers internally</span>
 <span class="sd">        in response to markers moved in Rviz.</span>
 
@@ -222,7 +222,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">save_to_param_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriggerResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves the internal parameters into the parameter server. Returns whether</span>
 <span class="sd">        the operation was successful.</span>
 
@@ -245,7 +245,7 @@
         <span class="k">return</span> <span class="n">TriggerResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="POIServer.add_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.add_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">add_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">AddPOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AddPOIResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback for the AddPOI service.</span>
 
 <span class="sd">        Args:</span>
@@ -275,7 +275,7 @@
         <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="POIServer.delete_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.delete_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">delete_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">DeletePOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeletePOIResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback for DeletePOI service. Equivalent to calling :meth:`.remove_poi`.</span>
 
 <span class="sd">        Args:</span>
@@ -292,7 +292,7 @@
         <span class="k">return</span> <span class="n">DeletePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="POIServer.move_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.move_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">move_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">MovePOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MovePOIResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Callback for MovePOI service.</span>
 
 <span class="sd">        Args:</span>
@@ -313,7 +313,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a POI, updating clients and Rviz when done.</span>
 
 <span class="sd">        Args:</span>
@@ -330,7 +330,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">remove_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove a POI, updating clients and Rviz when done.</span>
 
 <span class="sd">        Args:</span>
@@ -346,7 +346,7 @@
 
     <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the position of a POI, updating clients and Rviz when done.</span>
 
 <span class="sd">        Args:</span>
@@ -363,7 +363,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="POIServer.update"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update interactive markers server and POI publish of changes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
@@ -371,7 +371,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">applyChanges</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal implementation of update_position, which is NOT thread safe</span>
 <span class="sd">        and does NOT update clients of change.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -386,7 +386,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_remove_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal implementation of remove_poi, which is NOT thread safe and</span>
 <span class="sd">        does NOT update clients of change.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -401,7 +401,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal implementation of add_poi, which is NOT thread safe and does</span>
 <span class="sd">        NOT update clients of change.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

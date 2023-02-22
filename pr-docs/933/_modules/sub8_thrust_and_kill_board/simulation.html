@@ -94,7 +94,7 @@
 
 
 <div class="viewcode-block" id="ThrusterAndKillBoardSimulation"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation">[docs]</a><span class="k">class</span> <span class="nc">ThrusterAndKillBoardSimulation</span><span class="p">(</span><span class="n">SimulatedCANDevice</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Serial simulator for the thruster and kill board,</span>
 <span class="sd">    providing services to simulate physical plug connections/disconnections.</span>
 
@@ -131,7 +131,7 @@
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
 <div class="viewcode-block" id="ThrusterAndKillBoardSimulation.set_soft_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.set_soft_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_soft_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called by the `/simulate_soft_kill` service to set the soft kill state of the</span>
 <span class="sd">        simluated device.</span>
 
@@ -145,7 +145,7 @@
         <span class="k">return</span> <span class="n">SetBoolResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoardSimulation.set_hard_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.set_hard_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_hard_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called by the `/simulate_hard_kill` service to set the hard kill state of the</span>
 <span class="sd">        simluated device.</span>
 
@@ -160,7 +160,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hard_killed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the board was hard killed.</span>
 
 <span class="sd">        Returns:</span>
@@ -170,7 +170,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">heartbeat_timedout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the heartbeat timed out.</span>
 
 <span class="sd">        Returns:</span>
@@ -184,7 +184,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">soft_killed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether the board was soft killed.</span>
 
 <span class="sd">        Returns:</span>
@@ -195,7 +195,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ThrusterAndKillBoardSimulation.send_updates"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.send_updates">[docs]</a>    <span class="k">def</span> <span class="nf">send_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends data about the class in a new status message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">StatusMessage</span><span class="p">(</span>
@@ -209,10 +209,10 @@
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">soft_kill_plug_pulled</span><span class="p">,</span>
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hard_kill_plug_pulled</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">())</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">status</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoardSimulation.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">can_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Serves as the data handler for the device. Handles :class:`KillMessage`,</span>
 <span class="sd">        :class:`ThrustPacket`, and :class:`HeartbeatMessage` types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -85,7 +85,7 @@
 <span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span>
 <span class="kn">from</span> <span class="nn">rospy.timer</span> <span class="kn">import</span> <span class="n">TimerEvent</span>
 <span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">SetBoolRequest</span><span class="p">,</span> <span class="n">SetBoolResponse</span>
-<span class="kn">from</span> <span class="nn">sub8_msgs.msg</span> <span class="kn">import</span> <span class="n">Thrust</span>
+<span class="kn">from</span> <span class="nn">subjugator_msgs.msg</span> <span class="kn">import</span> <span class="n">Thrust</span>
 
 <span class="kn">from</span> <span class="nn">.packets</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">KILL_SEND_ID</span><span class="p">,</span>
@@ -99,7 +99,7 @@
 
 
 <div class="viewcode-block" id="ThrusterAndKillBoard"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard">[docs]</a><span class="k">class</span> <span class="nc">ThrusterAndKillBoard</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Device handle for the thrust and kill board.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -133,7 +133,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.set_mobo_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.set_mobo_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobo_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called on service calls to ``/set_mobo_kill``, sending the appropriate</span>
 <span class="sd">        packet to the board to unassert or assert to motherboard-origin kill.</span>
 
@@ -144,22 +144,24 @@
 <span class="sd">            SetBoolResponse: The service response.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span>
-            <span class="n">KillMessage</span><span class="o">.</span><span class="n">create_kill_message</span><span class="p">(</span>
-                <span class="n">command</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">asserted</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),</span>
+            <span class="nb">bytes</span><span class="p">(</span>
+                <span class="n">KillMessage</span><span class="o">.</span><span class="n">create_kill_message</span><span class="p">(</span>
+                    <span class="n">command</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">asserted</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
             <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">SetBoolResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.send_heartbeat"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.send_heartbeat">[docs]</a>    <span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">TimerEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a special heartbeat packet. Called by a recurring timer set upon</span>
 <span class="sd">        initialization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">HeartbeatMessage</span><span class="o">.</span><span class="n">create</span><span class="p">()</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">HeartbeatMessage</span><span class="o">.</span><span class="n">create</span><span class="p">()),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.on_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">on_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the classes&#39; hw-kill alarm to the latest update.</span>
 
 <span class="sd">        Args:</span>
@@ -168,7 +170,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span> <span class="o">=</span> <span class="n">alarm</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.on_command"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_command">[docs]</a>    <span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Thrust</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When a thrust command message is received from the Subscriber, send the appropriate packet</span>
 <span class="sd">        to the board.</span>
 
@@ -190,10 +192,10 @@
             <span class="n">packet</span> <span class="o">=</span> <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">create_thrust_packet</span><span class="p">(</span>
                 <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">ID_MAPPING</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">effort</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">packet</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">THRUST_SEND_ID</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">packet</span><span class="p">),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">THRUST_SEND_ID</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.update_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.update_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">update_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">StatusMessage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If needed, update the hw-kill alarm so it reflects the latest status from the board.</span>
 
 <span class="sd">        Args:</span>
@@ -232,7 +234,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">(</span><span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse the two bytes and raise kills according to a set of specifications</span>
 <span class="sd">        listed below.</span>
 

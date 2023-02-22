@@ -84,7 +84,7 @@
 
 
 <div class="viewcode-block" id="BusVoltage"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.BusVoltage">[docs]</a><span class="k">class</span> <span class="nc">BusVoltage</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Alarm used to monitor the voltage of the bus.</span>
 
 <span class="sd">    Attributes:</span>
@@ -99,7 +99,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_alarm</span> <span class="o">=</span> <span class="n">Alarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">node_name</span><span class="o">=</span><span class="s2">&quot;alarm_server&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BusVoltage.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.BusVoltage.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the severity of the raised alarm is 3, then an indication is raised to</span>
 <span class="sd">        all logged-in users about a low bus voltage. If the raised alarm severity is</span>
 <span class="sd">        5, then a message is displayed to all logged-in users about the bus being</span>
@@ -127,7 +127,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">previous_severity</span> <span class="o">=</span> <span class="mi">5</span></div>
 
 <div class="viewcode-block" id="BusVoltage.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.BusVoltage.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when the alarm is cleared. Does nothing.</span>
 <span class="sd">        &quot;&quot;&quot;</span></div></div>
 </pre></div>

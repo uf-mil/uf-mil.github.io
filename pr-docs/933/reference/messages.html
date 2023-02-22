@@ -147,7 +147,8 @@
 <li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="txros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">txros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
@@ -161,7 +162,6 @@
 <li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
@@ -199,7 +199,7 @@ Attributes</span><ul>
 <dt class="sig sig-object py" id="actionlib_msgs.msg.GoalStatus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">actionlib_msgs.msg.</span></span><span class="sig-name descname"><span class="pre">GoalStatus</span></span><a class="headerlink" href="#actionlib_msgs.msg.GoalStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Message type indicating the status of a goal in an actions server. Used by
-the SimpleActionClient implemented by ROS and txros’ layer over it.</p>
+the SimpleActionClient implemented by ROS and axros’ layer over it.</p>
 <p>The specific attributes of the message are also used in order to indicate
 a specific type of status.</p>
 <dl class="py attribute">
@@ -258,7 +258,7 @@ Attributes</span><ul>
 <dd><p>The name of the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -269,7 +269,7 @@ Attributes</span><ul>
 <dd><p>Whether the alarm was raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -280,7 +280,7 @@ Attributes</span><ul>
 <dd><p>The node name associated with the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -291,7 +291,7 @@ Attributes</span><ul>
 <dd><p>The problem description associated with the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,7 +302,7 @@ Attributes</span><ul>
 <dd><p>The JSON parameters associated with the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,7 +313,7 @@ Attributes</span><ul>
 <dd><p>The severity of the alarm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,7 +344,7 @@ Attributes</span><ul>
 <dd><p>The first element of the quaternion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -355,7 +355,7 @@ Attributes</span><ul>
 <dd><p>The second element of the quaternion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -366,7 +366,7 @@ Attributes</span><ul>
 <dd><p>The third element of the quaternion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -377,7 +377,7 @@ Attributes</span><ul>
 <dd><p>The fourth element of the quaternion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -404,7 +404,7 @@ Attributes</span><ul>
 <dd><p>The x-value of the point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -415,7 +415,7 @@ Attributes</span><ul>
 <dd><p>The y-value of the point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,7 +426,7 @@ Attributes</span><ul>
 <dd><p>The z-value of the point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -441,7 +441,7 @@ Attributes</span><ul>
 Attributes</span><ul>
 <li class="attribute-table-entry">
 <a class="reference internal" href="#geometry_msgs.msg.PointStamped.header">header</a></li><li class="attribute-table-entry">
-<a class="reference internal" href="#geometry_msgs.msg.PointStamped.position">position</a></li></ul>
+<a class="reference internal" href="#geometry_msgs.msg.PointStamped.point">point</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="geometry_msgs.msg.PointStamped">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geometry_msgs.msg.</span></span><span class="sig-name descname"><span class="pre">PointStamped</span></span><a class="headerlink" href="#geometry_msgs.msg.PointStamped" title="Permalink to this definition">¶</a></dt>
@@ -458,8 +458,8 @@ Attributes</span><ul>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="geometry_msgs.msg.PointStamped.position">
-<span class="sig-name descname"><span class="pre">position</span></span><a class="headerlink" href="#geometry_msgs.msg.PointStamped.position" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="geometry_msgs.msg.PointStamped.point">
+<span class="sig-name descname"><span class="pre">point</span></span><a class="headerlink" href="#geometry_msgs.msg.PointStamped.point" title="Permalink to this definition">¶</a></dt>
 <dd><p>The position associated with the point</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -490,7 +490,7 @@ Attributes</span><ul>
 <dd><p>The x-value of the vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -501,7 +501,7 @@ Attributes</span><ul>
 <dd><p>The y-value of the vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -512,7 +512,7 @@ Attributes</span><ul>
 <dd><p>The z-value of the vector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -576,7 +576,7 @@ Attributes</span><ul>
 <dd><p>The x-value of the pose.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -587,7 +587,7 @@ Attributes</span><ul>
 <dd><p>The y-value of the pose.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -598,7 +598,7 @@ Attributes</span><ul>
 <dd><p>The theta value of the pose.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -635,7 +635,7 @@ Attributes</span><ul>
 <dd><p>The object’s covariance. Consists of a list of 36 values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -710,7 +710,7 @@ Attributes</span><ul>
 <dd><p>The ID of the child frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -832,7 +832,7 @@ Attributes</span><ul>
 <dd><p>The object’s covariance. Consists of a list of 36 values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1011,7 +1011,7 @@ Attributes</span><ul>
 <dd><p>The name of the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1033,7 +1033,7 @@ Attributes</span><ul>
 <dd><p>The confidence of the object’s position, ranging between 0 and 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1044,7 +1044,7 @@ Attributes</span><ul>
 <dd><p>???</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1070,7 +1070,7 @@ Attributes</span><ul>
 <dd><p>The x-position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1081,7 +1081,7 @@ Attributes</span><ul>
 <dd><p>The y-position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1212,7 +1212,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">overall</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.overall" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1222,7 +1222,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">pf</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.pf" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1232,7 +1232,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">pa</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.pa" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1242,7 +1242,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">sf</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.sf" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1252,7 +1252,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">sa</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.sa" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1262,7 +1262,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">remote</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.remote" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1272,7 +1272,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">computer</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.computer" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1282,7 +1282,7 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">remote_conn</span></span><a class="headerlink" href="#navigator_msgs.msg.KillStatus.remote_conn" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1348,7 +1348,7 @@ system.</p>
 <dd><p>The name of the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1360,7 +1360,7 @@ system.</p>
 Actual string value is <code class="docutils literal notranslate"><span class="pre">shooter</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1372,7 +1372,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">dock</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1384,7 +1384,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 string value is <code class="docutils literal notranslate"><span class="pre">scan_the_code</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1396,7 +1396,7 @@ string value is <code class="docutils literal notranslate"><span class="pre">sca
 Actual string value is <code class="docutils literal notranslate"><span class="pre">totem</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1408,7 +1408,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">start_gate</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1420,7 +1420,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">buoy</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1432,7 +1432,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">unknown</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1444,7 +1444,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">all</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1456,7 +1456,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Shooter</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1468,7 +1468,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Dock</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1480,7 +1480,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Scan the Code mission. Actual string value is <code class="docutils literal notranslate"><span class="pre">Dock</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1492,7 +1492,7 @@ Scan the Code mission. Actual string value is <code class="docutils literal notr
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_1</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1504,7 +1504,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_2</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1516,7 +1516,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">Gate_3</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1528,7 +1528,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">BuoyField</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1540,7 +1540,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">FindBreak</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1552,7 +1552,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">CoralSurvey</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1564,7 +1564,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">AcousticPinger</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1576,7 +1576,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 Actual string value is <code class="docutils literal notranslate"><span class="pre">EmptySpace</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1598,7 +1598,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The ID of the object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1609,7 +1609,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The confidence of the object detection, from 0 to 255.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1642,7 +1642,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The intensity of each point in the ENU frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1653,7 +1653,7 @@ Actual string value is <code class="docutils literal notranslate"><span class="p
 <dd><p>The inliners for the PCL plane fitting algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1731,7 +1731,7 @@ address with a status.</p>
 <dd><p>The name of the host.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1742,7 +1742,7 @@ address with a status.</p>
 <dd><p>The IP address of the host.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1753,7 +1753,7 @@ address with a status.</p>
 <dd><p>The status of the host.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1783,7 +1783,7 @@ equal to:</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1825,7 +1825,7 @@ Attributes</span><ul>
 <dd><p>The number of channels supported by the hydrophones.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1836,7 +1836,7 @@ Attributes</span><ul>
 <dd><p>The number of samples on each channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1848,7 +1848,7 @@ Attributes</span><ul>
 of samples per second.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1860,7 +1860,7 @@ of samples per second.</p>
 of data from one hydrophone, such as <code class="docutils literal notranslate"><span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">H2</span> <span class="pre">H3</span> <span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">...</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1945,7 +1945,7 @@ although it may be removed in the future.</p>
 <dd><p>The number of channels supported by the hydrophones.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1956,7 +1956,7 @@ although it may be removed in the future.</p>
 <dd><p>The number of samples on each channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1968,7 +1968,7 @@ although it may be removed in the future.</p>
 of samples per second.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1980,7 +1980,7 @@ of samples per second.</p>
 of data from one hydrophone, such as <code class="docutils literal notranslate"><span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">H2</span> <span class="pre">H3</span> <span class="pre">H0</span> <span class="pre">H1</span> <span class="pre">...</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2031,7 +2031,7 @@ Attributes</span><ul>
 <dd><p>The frequency of the processed ping.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2042,7 +2042,7 @@ Attributes</span><ul>
 <dd><p>The amplitude of the processed ping.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2053,7 +2053,7 @@ Attributes</span><ul>
 <dd><p>Whether the processed ping is valid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2102,7 +2102,7 @@ Attributes</span><ul>
 <dd><p>The time at which the ping was detected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2133,7 +2133,7 @@ variety of messages.</p>
 <dd><p>The sequence ID of the header. A consecutively increasing ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2155,7 +2155,7 @@ variety of messages.</p>
 <dd><p>The frame that this object is associated with.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2183,7 +2183,7 @@ Attributes</span><ul>
 <dd><p>The red value of the color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2194,7 +2194,7 @@ Attributes</span><ul>
 <dd><p>The green value of the color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2205,7 +2205,7 @@ Attributes</span><ul>
 <dd><p>The blue value of the color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2216,7 +2216,7 @@ Attributes</span><ul>
 <dd><p>The alpha value of the color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2261,7 +2261,7 @@ Attributes</span><ul>
 <dd><p>The height of the image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2272,7 +2272,7 @@ Attributes</span><ul>
 <dd><p>The width of the image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2283,7 +2283,7 @@ Attributes</span><ul>
 <dd><p>The encoding of the image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2294,7 +2294,7 @@ Attributes</span><ul>
 <dd><p>Whether the image uses the big-endian format to store values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2305,7 +2305,7 @@ Attributes</span><ul>
 <dd><p>Full length of a row, in bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2317,7 +2317,7 @@ Attributes</span><ul>
 by the number of rows.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2354,7 +2354,7 @@ Attributes</span><ul>
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">1</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2366,7 +2366,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">2</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2378,7 +2378,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">3</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2390,7 +2390,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">4</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2402,7 +2402,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">5</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2414,7 +2414,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">6</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2426,7 +2426,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">7</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2438,7 +2438,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 value in the field. Set to <code class="docutils literal notranslate"><span class="pre">8</span></code> in the message definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2449,7 +2449,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>The name of the field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2460,7 +2460,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>The offset from the start of the point struct.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2471,7 +2471,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>The datatype, represented by using one of the attributes above.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2482,7 +2482,7 @@ value in the field. Set to <code class="docutils literal notranslate"><span clas
 <dd><p>The number of elements in the field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2526,7 +2526,7 @@ Attributes</span><ul>
 <dd><p>The height of the point cloud. If the cloud is unordered, then <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2538,7 +2538,7 @@ Attributes</span><ul>
 is set to the length of the point cloud.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2560,7 +2560,7 @@ is set to the length of the point cloud.</p>
 <dd><p>Whether the field is big endian.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2571,7 +2571,7 @@ is set to the length of the point cloud.</p>
 <dd><p>The length of a point in bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2582,7 +2582,7 @@ is set to the length of the point cloud.</p>
 <dd><p>The length of a row in bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2594,7 +2594,7 @@ is set to the length of the point cloud.</p>
 multiplied by <a class="reference internal" href="#sensor_msgs.msg.PointCloud2.height" title="sensor_msgs.msg.PointCloud2.height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">height</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2605,7 +2605,7 @@ multiplied by <a class="reference internal" href="#sensor_msgs.msg.PointCloud2.h
 <dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if there are no invalid points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2650,7 +2650,7 @@ Attributes</span><ul>
 <dd><p>Current flowing through the motors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2662,7 +2662,7 @@ Attributes</span><ul>
 Lives in a range from -1 to 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2673,7 +2673,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The velocity commanded of the motor. Output is in <code class="docutils literal notranslate"><span class="pre">rad/s</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2684,7 +2684,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The true velocity of the motor. Output is in <code class="docutils literal notranslate"><span class="pre">rad/s</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2695,7 +2695,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The position of the motor, in <code class="docutils literal notranslate"><span class="pre">rad</span></code>. Wraps around -6/6M.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2706,7 +2706,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The voltage supplied to the motor, in volts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2717,7 +2717,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The current supplied to the motor, in amps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2728,7 +2728,7 @@ Lives in a range from -1 to 1.</p>
 <dd><p>The temperature of the motor, in Celsius.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2740,7 +2740,7 @@ Lives in a range from -1 to 1.</p>
 Celsius.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2797,7 +2797,7 @@ Attributes</span><ul>
 enumerated fault types of this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2809,7 +2809,7 @@ enumerated fault types of this class.</p>
 as a result of overheating.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>1</p>
@@ -2824,7 +2824,7 @@ as a result of overheating.</p>
 as a result of too much voltage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>2</p>
@@ -2839,7 +2839,7 @@ as a result of too much voltage.</p>
 as a result of too little voltage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>4</p>
@@ -2854,7 +2854,7 @@ as a result of too little voltage.</p>
 as a result of a short circuit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>8</p>
@@ -2869,7 +2869,7 @@ as a result of a short circuit.</p>
 as a result of an emergency stop.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>16</p>
@@ -2884,7 +2884,7 @@ as a result of an emergency stop.</p>
 as a result of an excitation error.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>32</p>
@@ -2899,7 +2899,7 @@ as a result of an excitation error.</p>
 as a result of a failure in the MOSFET system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>64</p>
@@ -2914,7 +2914,7 @@ as a result of a failure in the MOSFET system.</p>
 as a result of a failure in the startup configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>128</p>
@@ -2929,7 +2929,7 @@ as a result of a failure in the startup configuration.</p>
 types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2940,7 +2940,7 @@ types.</p>
 <dd><p>Constant attribute used to represent that the motor is in serial mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>1</p>
@@ -2954,7 +2954,7 @@ types.</p>
 <dd><p>Constant attribute used to represent that the motor is in pulse mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>2</p>
@@ -2968,7 +2968,7 @@ types.</p>
 <dd><p>Constant attribute used to represent that the motor is in analog mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>4</p>
@@ -2983,7 +2983,7 @@ types.</p>
 off.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>8</p>
@@ -2997,7 +2997,7 @@ off.</p>
 <dd><p>Constant attribute used to represent that a stall was detected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>16</p>
@@ -3011,7 +3011,7 @@ off.</p>
 <dd><p>Constant attribute used to represent that the motor is at its limit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>32</p>
@@ -3025,7 +3025,7 @@ off.</p>
 <dd><p>Constant attribute used to represent that the microbasic script is running.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 <dt class="field-even">Value</dt>
 <dd class="field-even"><p>128</p>
@@ -3039,7 +3039,7 @@ off.</p>
 <dd><p>The temperature of the main logic chip, in Celsius.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3050,7 +3050,7 @@ off.</p>
 <dd><p>The internal voltage, in volts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3061,7 +3061,7 @@ off.</p>
 <dd><p>The voltage of the analog-to-digital converter, in volts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3102,7 +3102,7 @@ Attributes</span><ul>
 or <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.TRIANGLE</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3113,7 +3113,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock holds the cross shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3124,7 +3124,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock holds the circle shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3135,7 +3135,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock holds the triangle shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3147,7 +3147,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 or <code class="xref py py-attr docutils literal notranslate"><span class="pre">DockShape.GREEN</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3158,7 +3158,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock shape is red.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3169,7 +3169,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock shape is blue.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3180,7 +3180,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The dock shape is green.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3191,7 +3191,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The x-dimension of the center of the dock shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3202,7 +3202,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The y-dimension of the center of the dock shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3235,7 +3235,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The relative confidence that the color prediction is correct.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3246,7 +3246,7 @@ or <code class="xref py py-attr docutils literal notranslate"><span class="pre">
 <dd><p>The relative confidence that the shape prediction is correct.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3299,7 +3299,7 @@ Code totem.</p>
 stands for green.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>

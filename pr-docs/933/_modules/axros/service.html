@@ -97,7 +97,7 @@
 
 
 <div class="viewcode-block" id="Service"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Service">[docs]</a><span class="k">class</span> <span class="nc">Service</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">Request</span><span class="p">,</span> <span class="n">Reply</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A service in the txROS suite. Handles incoming requests through a user-supplied</span>
 <span class="sd">    asynchronous callback function, which is expected to return a response message.</span>
 
@@ -120,7 +120,7 @@
         <span class="n">service_type</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ServiceMessage</span><span class="p">[</span><span class="n">Request</span><span class="p">,</span> <span class="n">Reply</span><span class="p">],</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Request</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Reply</span><span class="p">]],</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            node_handle (NodeHandle): The node handle to use in conjunction with</span>
 <span class="sd">                the service.</span>
@@ -153,7 +153,7 @@
     <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
 <div class="viewcode-block" id="Service.setup"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Service.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the service to be able to receive incoming connections.</span>
 
 <span class="sd">        This must be called before the service can be used.</span>
@@ -173,7 +173,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="Service.is_running"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Service.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the service is running; ie, able to accept requests.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -198,7 +198,7 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="ne">ResourceWarning</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Service.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Service.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts the service down. Cancels all operations currently scheduled to be</span>
 <span class="sd">        completed by the service.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

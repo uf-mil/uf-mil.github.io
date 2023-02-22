@@ -84,7 +84,7 @@
 
 
 <div class="viewcode-block" id="HeightOverBottom"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.HeightOverBottom">[docs]</a><span class="k">class</span> <span class="nc">HeightOverBottom</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Alarm (inheriting from :class:`ros_alarms.HandlerBase`) which monitors the height of the</span>
 <span class="sd">    sub in the water. If too low, then an alarm is triggered. When the sub rises</span>
 <span class="sd">    above the limit again, the alarm is cleared.</span>
@@ -131,7 +131,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_height_to_kill</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/height_over_bottom&quot;</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HeightOverBottom.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.HeightOverBottom.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers when the alarm is raised. Sets the state of the alarm monitor to</span>
 <span class="sd">        represent that the alarm was killed.</span>
 
@@ -141,7 +141,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="HeightOverBottom.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.HeightOverBottom.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Triggers when the alarm is cleared. Sets the state of the alarm monitor to</span>
 
 <span class="sd">        Parameters:</span>

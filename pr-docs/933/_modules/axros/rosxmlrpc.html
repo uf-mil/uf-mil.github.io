@@ -107,7 +107,7 @@
 
 
 <span class="k">class</span> <span class="nc">XMLRPCMethod</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper class to represent a specific method called on an XMLRPC server.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -124,7 +124,7 @@
 
 
 <span class="k">class</span> <span class="nc">AsyncioTransport</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">Transport</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transport class used by :class:`AsyncServerProxy` used to implement an XMLRPC-style</span>
 <span class="sd">    communication framework over HTTP.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -164,7 +164,7 @@
 
 
 <div class="viewcode-block" id="AsyncServerProxy"><a class="viewcode-back" href="../../reference/axros/api.html#axros.AsyncServerProxy">[docs]</a><span class="k">class</span> <span class="nc">AsyncServerProxy</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ServerProxy</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Asynchronous server proxy to a specific server URI using :class:`aiohttp.ClientSession`.</span>
 <span class="sd">    This class is used in conjunction with :class:`axros.ROSMasterProxy`.</span>
 
@@ -182,7 +182,7 @@
         <span class="n">headers</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">context</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            uri (str): The URI used to connect to ROS Master. This can often be</span>
 <span class="sd">                obtained through ``os.environ[&quot;ROS_MASTER_URI&quot;]``.</span>
@@ -237,7 +237,7 @@
 
 
 <div class="viewcode-block" id="XMLRPCException"><a class="viewcode-back" href="../../reference/axros/api.html#axros.XMLRPCException">[docs]</a><span class="k">class</span> <span class="nc">XMLRPCException</span><span class="p">(</span><span class="n">AxrosException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an error that occurred in the XMLRPC communication. Inherits</span>
 <span class="sd">    from :class:`~.AxrosException`.</span>
 
@@ -287,7 +287,7 @@
 
 
 <div class="viewcode-block" id="ROSMasterError"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ROSMasterError">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterError</span><span class="p">(</span><span class="n">AxrosException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents an exception that occurred when attempting to communicate with the</span>
 <span class="sd">    ROS Master Server. Unlike :class:`~.ROSMasterFailure`, this indicates that the</span>
 <span class="sd">    request completed, but the returned value is not usable. Similar to a bad request</span>
@@ -306,7 +306,7 @@
 
 
 <div class="viewcode-block" id="ROSMasterFailure"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ROSMasterFailure">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterFailure</span><span class="p">(</span><span class="n">AxrosException</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a failure that occurred after a node sent an outgoing XMLRPC request</span>
 <span class="sd">    to ROS Master. Unlike :class:`~.ROSMasterError`, this indicates that the request</span>
 <span class="sd">    failed in progress, and did not complete. This may cause side effects visible</span>
@@ -328,7 +328,7 @@
 
 
 <div class="viewcode-block" id="ROSMasterProxy"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ROSMasterProxy">[docs]</a><span class="k">class</span> <span class="nc">ROSMasterProxy</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The txROS proxy to the ROS master server. This class does not provide a general</span>
 <span class="sd">    suite of discrete methods for contracting with the master server, rather all</span>
 <span class="sd">    method requests are forwarded to the server through the class&#39; ``__getattr__``</span>
@@ -377,7 +377,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="p">:</span> <span class="n">AsyncServerProxy</span><span class="p">,</span> <span class="n">caller_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            proxy (axros.AsyncServerProxy): The proxy representing an XMLRPC connection to the ROS</span>
 <span class="sd">                master server.</span>

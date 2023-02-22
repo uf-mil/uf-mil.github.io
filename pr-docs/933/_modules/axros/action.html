@@ -99,7 +99,7 @@
 
 
 <div class="viewcode-block" id="GoalManager"><a class="viewcode-back" href="../../reference/axros/api.html#axros.GoalManager">[docs]</a><span class="k">class</span> <span class="nc">GoalManager</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Manages the interactions between a specific goal and an action client.</span>
 
 <span class="sd">    This class is not meant to be constructed by client objects; rather it is instantiated</span>
@@ -116,7 +116,7 @@
         <span class="n">action_client</span><span class="p">:</span> <span class="n">ActionClient</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">],</span>
         <span class="n">goal</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            action_client (ActionClient): The txROS action client to use to manage</span>
 <span class="sd">                the goal.</span>
@@ -177,7 +177,7 @@
             <span class="n">fut</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GoalManager.get_result"><a class="viewcode-back" href="../../reference/axros/api.html#axros.GoalManager.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionResult</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the result of the goal from the manager.</span>
 
 <span class="sd">        Returns:</span>
@@ -186,7 +186,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result_fut</span></div>
 
 <div class="viewcode-block" id="GoalManager.get_feedback"><a class="viewcode-back" href="../../reference/axros/api.html#axros.GoalManager.get_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">get_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">ActionFeedback</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the feedback from all feedback :class:`asyncio.Future` objects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fut</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
@@ -194,7 +194,7 @@
         <span class="k">return</span> <span class="n">fut</span></div>
 
 <div class="viewcode-block" id="GoalManager.cancel"><a class="viewcode-back" href="../../reference/axros/api.html#axros.GoalManager.cancel">[docs]</a>    <span class="k">def</span> <span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Publishes a message to the action client requesting the goal to be cancelled.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_action_client</span><span class="o">.</span><span class="n">_cancel_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
@@ -205,7 +205,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="GoalManager.forget"><a class="viewcode-back" href="../../reference/axros/api.html#axros.GoalManager.forget">[docs]</a>    <span class="k">def</span> <span class="nf">forget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Leaves the manager running, but requests for the action client to stop</span>
 <span class="sd">        work on the specific goal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -214,7 +214,7 @@
 
 
 <div class="viewcode-block" id="Goal"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Goal">[docs]</a><span class="k">class</span> <span class="nc">Goal</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implementation of a goal object in the axros adaptation of the Simple Action</span>
 <span class="sd">    Server.</span>
 
@@ -260,7 +260,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;axros.Goal at 0x</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">:</span><span class="s2">0x</span><span class="si">}</span><span class="s2">, goal=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="si">}</span><span class="s2"> status=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2"> status_text=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status_text</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
 
 <div class="viewcode-block" id="Goal.status_msg"><a class="viewcode-back" href="../../reference/axros/api.html#axros.Goal.status_msg">[docs]</a>    <span class="k">def</span> <span class="nf">status_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GoalStatus</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs a GoalStatus message from the Goal class.</span>
 
 <span class="sd">        Returns:</span>
@@ -279,7 +279,7 @@
 
 
 <div class="viewcode-block" id="SimpleActionServer"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer">[docs]</a><span class="k">class</span> <span class="nc">SimpleActionServer</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A simplified implementation of an action server. At a given time, can only at most</span>
 <span class="sd">    have a current goal and a next goal. If new goals arrive with one already queued</span>
 <span class="sd">    to be next, the goal with the greater timestamp will bump to other.</span>
@@ -366,7 +366,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="SimpleActionServer.setup"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the action server. This must be called before the action server</span>
 <span class="sd">        can be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -383,7 +383,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts the action server down. This must be called before the program is</span>
 <span class="sd">        ended.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -397,7 +397,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_running"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the simple action server is running. Set to ``True``</span>
 <span class="sd">            when :meth:`~.setup` is called; set to ``False`` when :meth:`~.shutdown`</span>
@@ -452,7 +452,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">preempt_cb</span> <span class="o">=</span> <span class="n">func</span>
 
 <div class="viewcode-block" id="SimpleActionServer.start"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Starts the status loop for the server.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">():</span>
@@ -462,7 +462,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_status_loop_future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_loop</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.stop"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stops the status loop for the server, and clears all running goals and all</span>
 <span class="sd">        goals scheduled to be run.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -498,7 +498,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal</span><span class="o">.</span><span class="n">goal</span>
 
 <div class="viewcode-block" id="SimpleActionServer.is_new_goal_available"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.is_new_goal_available">[docs]</a>    <span class="k">def</span> <span class="nf">is_new_goal_available</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the next goal is defined, or not ``None``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -508,7 +508,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_preempt_requested"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.is_preempt_requested">[docs]</a>    <span class="k">def</span> <span class="nf">is_preempt_requested</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether the goal has been requested to be cancelled, and there is both</span>
 <span class="sd">            a goal currently running and a goal scheduled to be run shortly.</span>
@@ -519,7 +519,7 @@
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_goal</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cancel_requested</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_cancel_requested"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.is_cancel_requested">[docs]</a>    <span class="k">def</span> <span class="nf">is_cancel_requested</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Whether a goal is currently active and a cancel has been requested.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -529,7 +529,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cancel_requested</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.is_active"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.is_active">[docs]</a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Returns whether there is an active goal running.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -561,7 +561,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="SimpleActionServer.set_succeeded"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.set_succeeded">[docs]</a>    <span class="k">def</span> <span class="nf">set_succeeded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the status of the current goal to be succeeded.</span>
 
 <span class="sd">        Args:</span>
@@ -574,7 +574,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_result</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">GoalStatus</span><span class="o">.</span><span class="n">SUCCEEDED</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.set_aborted"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.set_aborted">[docs]</a>    <span class="k">def</span> <span class="nf">set_aborted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the status of the current goal to aborted.</span>
 
 <span class="sd">        Args:</span>
@@ -587,7 +587,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_result</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">GoalStatus</span><span class="o">.</span><span class="n">ABORTED</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.set_preempted"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.set_preempted">[docs]</a>    <span class="k">def</span> <span class="nf">set_preempted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the status of the current goal to preempted.</span>
 
 <span class="sd">        Args:</span>
@@ -600,7 +600,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_result</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="n">GoalStatus</span><span class="o">.</span><span class="n">PREEMPTED</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SimpleActionServer.publish_feedback"><a class="viewcode-back" href="../../reference/axros/api.html#axros.SimpleActionServer.publish_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">publish_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Publishes a feedback message onto the feedback topic.</span>
 
 <span class="sd">        Args:</span>
@@ -713,7 +713,7 @@
 
 
 <div class="viewcode-block" id="ActionClient"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient">[docs]</a><span class="k">class</span> <span class="nc">ActionClient</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Result</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">Feedback</span><span class="p">]):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Representation of an action client in axros. This works in conjunction with</span>
 <span class="sd">    the :class:`~.SimpleActionServer` by sending the servers goals to execute.</span>
 <span class="sd">    In response, the client receives feedback updates and the final result of the goal,</span>
@@ -723,7 +723,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">node_handle</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">action_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">types</span><span class="o">.</span><span class="n">Action</span><span class="p">]</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            node_handle (axros.NodeHandle): Node handle used to power the action client.</span>
 <span class="sd">            name (str): The name of the action client.</span>
@@ -755,7 +755,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="ActionClient.setup"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.setup">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the action client. This must be called before the action client</span>
 <span class="sd">        can be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -772,7 +772,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="ActionClient.shutdown"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.shutdown">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shuts down the action client. This should always be called when the action</span>
 <span class="sd">        client is no longer needed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -808,7 +808,7 @@
             <span class="n">manager</span><span class="o">.</span><span class="n">_feedback_callback</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">feedback</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActionClient.send_goal"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.send_goal">[docs]</a>    <span class="k">def</span> <span class="nf">send_goal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Goal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GoalManager</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a goal to a goal manager. The goal manager is responsible for the</span>
 <span class="sd">        communication between the action client and server; it assists in this process</span>
 <span class="sd">        by maintaining individual :class:`asyncio.Future` objects.</span>
@@ -826,7 +826,7 @@
         <span class="k">return</span> <span class="n">GoalManager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">goal</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActionClient.cancel_all_goals"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.cancel_all_goals">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_all_goals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends a message to the mission cancellation topic requesting all goals to</span>
 <span class="sd">        be cancelled.</span>
 
@@ -845,7 +845,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActionClient.cancel_goals_at_and_before_time"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.cancel_goals_at_and_before_time">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_goals_at_and_before_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">rostime</span><span class="o">.</span><span class="n">Time</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Cancel all goals scheduled at and before a specific time.</span>
 
 <span class="sd">        Args:</span>
@@ -862,7 +862,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActionClient.wait_for_server"><a class="viewcode-back" href="../../reference/axros/api.html#axros.ActionClient.wait_for_server">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">wait_for_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Waits for a server connection. When at least one connection is received,</span>
 <span class="sd">        the function terminates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
