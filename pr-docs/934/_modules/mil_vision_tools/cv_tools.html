@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_vision_tools.cv_tools</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_vision_tools.cv_tools</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">tf.transformations</span> <span class="k">as</span> <span class="nn">trns</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Kevin Allen&quot;</span>
+
+
+<div class="viewcode-block" id="Threshold"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.Threshold">[docs]</a><span class="k">class</span> <span class="nc">Threshold</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class to represent the upper and lower bounds of a color threshold in</span>
+<span class="sd">    OpenCV-related processes. This class could be used to only locate parts of an</span>
+<span class="sd">    image between two color ranges, a lower range and an upper range.</span>
+
+<span class="sd">    For example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        Threshold((0, 0, 0), (255, 255, 255)) # Thresholds BGR image in BGR colorpace</span>
+<span class="sd">        Threshold([25, 180 180], np.array([50, 190, 200]), thresh_space=&#39;LAB&#39;)  # Thresholds BGR image in LAB</span>
+<span class="sd">        Threshold((50, 50, 50), [200, 200, 200], in_space=&#39;HSV&#39;, thresh_space=&#39;LAB&#39;) # Threshold HSV image in LAB</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        low (Union[List[int], Tuple[int], np.ndarray]): The lower range of the threshold.</span>
+<span class="sd">        high (Union[List[int], Tuple[int], np.ndarray]): The higher range of the threshold.</span>
+<span class="sd">        conversion_code (Optional[Union[str, int]]): The conversion code describing how to convert</span>
+<span class="sd">          the image between two different colorspaces. This could be a string, such as</span>
+<span class="sd">          `COLOR_RGB2GRAY` (if a string is passed in initialization) or an integer (if</span>
+<span class="sd">          ``None`` is passed in its place and :attr:`.in_space` and :attr:`.thresh_space`</span>
+<span class="sd">          are relied upon to determine the color conversion). ``None`` if no conversion</span>
+<span class="sd">          is supplied and the in and threshold space are the same.</span>
+<span class="sd">        in_space (str): The OpenCV colorspace to use for the image source.</span>
+<span class="sd">        thresh_space (str): The OpenCV colorspace to use for the threshold.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">conversion_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">low</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">high</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">conversion_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">in_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BGR&quot;</span><span class="p">,</span>
+        <span class="n">thresh_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BGR&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            AttributeError: No conversion code could be determined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">low</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="p">),</span> <span class="s2">&quot;param lower must be a tuple/list/np.ndarray&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">high</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="p">),</span> <span class="s2">&quot;param upper must be a tuple/list/np.ndarray&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">low</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">high</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_space</span> <span class="o">=</span> <span class="n">in_space</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thresh_space</span> <span class="o">=</span> <span class="n">thresh_space</span>
+        <span class="c1"># If conversion code not specified, try to form it from other params</span>
+        <span class="k">if</span> <span class="n">conversion_code</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">in_space</span> <span class="o">!=</span> <span class="n">thresh_space</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cv2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;COLOR_</span><span class="si">{</span><span class="n">in_space</span><span class="si">}</span><span class="s2">2</span><span class="si">{</span><span class="n">thresh_space</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Could not determine conversion code from params.</span><span class="se">\</span>
+<span class="s2">                                 Are [</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">] valid OpenCV colorspaces?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">in_space</span><span class="p">,</span> <span class="n">thresh_space</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span> <span class="o">=</span> <span class="n">conversion_code</span>
+
+<div class="viewcode-block" id="Threshold.from_dict"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.Threshold.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">in_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BGR&quot;</span><span class="p">,</span> <span class="n">thresh_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads thresholds from a dictionary. See examples for valid dictionaries.</span>
+
+<span class="sd">        For example, to load a threshold from a dictionary:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            &gt;&gt;&gt; a = {&#39;HSV&#39;: {&#39;low&#39;: [0, 20, 50], &#39;high&#39;: [255, 255, 255]} }</span>
+<span class="sd">            &gt;&gt;&gt; Threshold.from_dict(a)</span>
+<span class="sd">            Threshold([0, 20, 50], [255, 255, 255], thresh_space=&#39;HSV&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; b = {&#39;LAB&#39;: {&#39;low&#39;: [0, 66, 66], &#39;high&#39;: [255, 180, 180]} }</span>
+<span class="sd">            Threshold([0, 66, 66], [255, 180, 180], thresh_space=&#39;LAB&#39;)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: A variety of checks failed.</span>
+<span class="sd">            AttributeError: No valid colorspace was found in the dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d (Dict[str, Dict[str, List[int]]]): The dictionary containing the relevant</span>
+<span class="sd">            colorspace information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="s2">&quot;d is not a dictionary&quot;</span>
+        <span class="k">if</span> <span class="n">thresh_space</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Dictionary is empty&quot;</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>  <span class="c1"># Try each key for valid threshold</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">in_space</span><span class="o">=</span><span class="n">in_space</span><span class="p">,</span> <span class="n">thresh_space</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;No valid colorspace found in dictionary. Are </span><span class="si">{}</span><span class="s2"> valid OpenCV colorspaces?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">thresh_space</span> <span class="ow">in</span> <span class="n">d</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> color space not in dictionary&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">thresh_space</span>
+        <span class="p">)</span>
+        <span class="n">inner</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">thresh_space</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;low&quot;</span> <span class="ow">in</span> <span class="n">inner</span> <span class="ow">and</span> <span class="s2">&quot;high&quot;</span> <span class="ow">in</span> <span class="n">inner</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+                <span class="n">inner</span><span class="p">[</span><span class="s2">&quot;low&quot;</span><span class="p">],</span>
+                <span class="n">inner</span><span class="p">[</span><span class="s2">&quot;high&quot;</span><span class="p">],</span>
+                <span class="n">in_space</span><span class="o">=</span><span class="n">in_space</span><span class="p">,</span>
+                <span class="n">thresh_space</span><span class="o">=</span><span class="n">thresh_space</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Cannot get low and high bounds from dictionary&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">inner</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">inner</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">in_space</span><span class="o">=</span><span class="n">in_space</span><span class="p">,</span> <span class="n">thresh_space</span><span class="o">=</span><span class="n">thresh_space</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Threshold.from_param"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.Threshold.from_param">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_param</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">in_space</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BGR&quot;</span><span class="p">,</span> <span class="n">thresh_space</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads thresholds from a ROS parameter name. The value of the parameter is</span>
+<span class="sd">        excepted to be a proper dictionary, on which :meth:`.from_dict` is called.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            param (str): The name of the parameter.</span>
+<span class="sd">            in_space (str): The colorspace of the source image. Defaults to ``BGR``.</span>
+<span class="sd">            thresh_space (Optional[str]): The colorspace of the threshold space. Defaults</span>
+<span class="sd">                to ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="n">in_space</span><span class="o">=</span><span class="n">in_space</span><span class="p">,</span> <span class="n">thresh_space</span><span class="o">=</span><span class="n">thresh_space</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">converted</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">inRange</span><span class="p">(</span><span class="n">converted</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">inRange</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">)</span>
+
+    <span class="fm">__call__</span> <span class="o">=</span> <span class="n">threshold</span>  <span class="c1"># Calling this will threshold an image</span>
+
+<div class="viewcode-block" id="Threshold.create_trackbars"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.Threshold.create_trackbars">[docs]</a>    <span class="k">def</span> <span class="nf">create_trackbars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create OpenCV GUI trackbars to adjust the threshold values live.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            window (Optional[str]): Name of OpenCV window to put trackbars in.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="s2">&quot;threshold&quot;</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">set_thresh</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;low&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;high&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">)):</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">createTrackbar</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;low </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">window</span><span class="p">,</span>
+                <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                <span class="mi">255</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_self</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">_i</span><span class="o">=</span><span class="n">i</span><span class="p">:</span> <span class="n">set_thresh</span><span class="p">(</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="n">_i</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">)):</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">createTrackbar</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;high </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">window</span><span class="p">,</span>
+                <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+                <span class="mi">255</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_self</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">_i</span><span class="o">=</span><span class="n">i</span><span class="p">:</span> <span class="n">set_thresh</span><span class="p">(</span><span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="n">_i</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+            <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Threshold from </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2"> using conversion code </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;Threshold </span><span class="si">{}</span><span class="s2"> images in </span><span class="si">{}</span><span class="s2"> colorspace from </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_space</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">thresh_space</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion_code</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="auto_canny"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.auto_canny">[docs]</a><span class="k">def</span> <span class="nf">auto_canny</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.33</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a binary image of the edges in an image. Uses the median of the</span>
+<span class="sd">    image to pick good low and upper threshold values for Canny, which makes</span>
+<span class="sd">    it both adaptive and require less tuning.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        image (np.ndarray): Grayscale image to find edges in.</span>
+<span class="sd">        sigma (float): Number ranging from zero to one, rating how aggressively to</span>
+<span class="sd">            find edges in an image, where 1 will produce the most edges but also</span>
+<span class="sd">            the most noise.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: An image with the canny algorithm applied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Credit Adrian Rosebrock</span>
+    <span class="c1"># http://www.pyimagesearch.com/2015/04/06/zero-parameter-automatic-canny-edge-detection-with-python-and-opencv/</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">lower</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span>
+    <span class="n">upper</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="contour_centroid"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.contour_centroid">[docs]</a><span class="k">def</span> <span class="nf">contour_centroid</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">M</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the centroid of the contour. If you have already calculated the</span>
+<span class="sd">    moments for this contour, pass it in as the second parameter so it not recalculated.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        contour (np.ndarray): The array of ``(x, y)`` representing a single contour.</span>
+<span class="sd">        M (Optional[Any]): ???</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[int, int]: The centroid of the contour.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># source: https://docs.opencv.org/3.1.0/dd/d49/tutorial_py_contour_features.html</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="k">if</span> <span class="n">M</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">M</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m10&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="s2">&quot;m01&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">M</span><span class="p">[</span><span class="s2">&quot;m00&quot;</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="contour_mask"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.contour_mask">[docs]</a><span class="k">def</span> <span class="nf">contour_mask</span><span class="p">(</span>
+    <span class="n">contour</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">img_shape</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">mask</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns an image with the mask of a filled in contour given a image shape.</span>
+
+<span class="sd">    One of ``img_shape`` or ``mask`` MUST not be None. If ``img_shape`` is set,</span>
+<span class="sd">    a new mask image is created with that size. If ``mask`` is set, zero it out</span>
+<span class="sd">    then draw mask.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        contour (np.ndarray): An array representing the ``(x, y)`` position of a contour point.</span>
+<span class="sd">        img_shape (Optional[List[int]]): An array representing the shape of the image. The first</span>
+<span class="sd">            value represents the number of rows, while the second value represents the number</span>
+<span class="sd">            of columns.</span>
+<span class="sd">        mask ()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">img_shape</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">img_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">mask</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="p">[</span><span class="n">contour</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mask</span></div>
+
+
+<div class="viewcode-block" id="putText_ul"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.putText_ul">[docs]</a><span class="k">def</span> <span class="nf">putText_ul</span><span class="p">(</span>
+    <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">org</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">fontFace</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_COMPLEX_SMALL</span><span class="p">,</span>
+    <span class="n">fontScale</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">255</span><span class="p">,</span>
+    <span class="n">thickness</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">lineType</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">bottomLeftOrigin</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Puts text on image like cv2.putText but shifts it such that the origin is</span>
+<span class="sd">    the upper left corner of where the text is placed, instead of the bottom left</span>
+<span class="sd">    as OpenCV does by default.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        img (np.ndarray): The source image to add text to.</span>
+<span class="sd">        text (str): The text to add to the image.</span>
+<span class="sd">        org (np.ndarray): An array representing the origin of the image as ``[x, y]``.</span>
+<span class="sd">        fontFace (int): The font to use. Defaults to ``cv2.FONT_HERSHEY_COMPLEX_SMALL``.</span>
+<span class="sd">        fontScale (int): The scale of the font. Defaults to 1.</span>
+<span class="sd">        color (int): The color of the font. Defaults to 255.</span>
+<span class="sd">        thickness (int): The thickness of the text. Defaults to 2.</span>
+<span class="sd">        lineType (int): The type of line to draw in the image. Defaults to 8.</span>
+<span class="sd">        bottomLeftOrigin (bool): Whether to use the bottom left corner as the origin.</span>
+<span class="sd">            If False, then the top left corner is used instead. Defaults to ``False``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">text_width</span><span class="p">,</span> <span class="n">text_height</span><span class="p">),</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getTextSize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">fontFace</span><span class="p">,</span> <span class="n">fontScale</span><span class="p">,</span> <span class="n">thickness</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">org</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">text_height</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span>
+        <span class="n">img</span><span class="p">,</span>
+        <span class="n">text</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+        <span class="n">fontFace</span><span class="p">,</span>
+        <span class="n">fontScale</span><span class="p">,</span>
+        <span class="n">color</span><span class="p">,</span>
+        <span class="n">thickness</span><span class="p">,</span>
+        <span class="n">lineType</span><span class="p">,</span>
+        <span class="n">bottomLeftOrigin</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="points_in_image"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.points_in_image">[docs]</a><span class="k">def</span> <span class="nf">points_in_image</span><span class="p">(</span><span class="n">camera</span><span class="p">:</span> <span class="s2">&quot;PinholeCameraModel&quot;</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns Mx2 np array of image points from projecting given 3D points. Only</span>
+<span class="sd">    points within image resolution are included in output points, ignoring any</span>
+<span class="sd">    outside the resolution of the camera.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        camera_mode (PinholeCameraModel): PinholeCameraModel instance of camera.</span>
+<span class="sd">        points (np.ndarray): Nx3 np array of 3 points in camera frame.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Mx2 of projected image points which are within camera resolution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">img_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">fullResolution</span><span class="p">()</span>
+    <span class="n">used</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">img_pt</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">project3dToPixel</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">img_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="ow">or</span> <span class="n">img_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="ow">or</span> <span class="n">img_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="ow">or</span> <span class="n">img_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">img_points</span><span class="p">[</span><span class="n">used</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">img_pt</span>
+        <span class="n">used</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">img_points</span> <span class="o">=</span> <span class="n">img_points</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">used</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">img_points</span></div>
+
+
+<div class="viewcode-block" id="roi_enclosing_points"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.roi_enclosing_points">[docs]</a><span class="k">def</span> <span class="nf">roi_enclosing_points</span><span class="p">(</span>
+    <span class="n">camera</span><span class="p">:</span> <span class="s2">&quot;PinholeCameraModel&quot;</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">border</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets region of interest in image which encloses the projected 3D points. Output</span>
+<span class="sd">    is given in slice format, so user can easily slice image.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">       &gt;&gt;&gt; roi = roi_enclosing_points(camera_model, object_points)</span>
+<span class="sd">       &gt;&gt;&gt; img_object = img[roi]</span>
+<span class="sd">       &gt;&gt;&gt; cv2.imshow(&#39;Object&#39;, img_object)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        camera_model (PinholeCameraModel): The model representing the pinhole camera.</span>
+<span class="sd">        points (np.ndarray): Nx3 np array of 3 points in camera frame.</span>
+<span class="sd">        border (Tuple[int, int]): Extra pixels to add around region of interest.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Optional[Tuple[slice, slice]]: Region of interest tuple that can be used</span>
+<span class="sd">        to slice image in format ``(slice(ymin, ymax), slice(xmin, xmax))``</span>
+<span class="sd">        or ``None`` if none of the points can be seen in the image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_points</span> <span class="o">=</span> <span class="n">points_in_image</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">img_points</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">fullResolution</span><span class="p">()</span>
+    <span class="n">xmin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">img_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">border</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">img_points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">border</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">img_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">border</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">img_points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">border</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rect_from_roi"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.rect_from_roi">[docs]</a><span class="k">def</span> <span class="nf">rect_from_roi</span><span class="p">(</span><span class="n">roi</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return rectangle style tuple from a roi slice tuple, like the one from roi_enclosing_points.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        &gt;&gt;&gt; roi = roi_enclosing_points(camera_model, object_points)</span>
+<span class="sd">        &gt;&gt;&gt; rectangle = tuple_from_slice(roi)</span>
+<span class="sd">        &gt;&gt;&gt; cv2.rectangle(img, rectangle[0], rectangle[1], (0, 255, 0), 3)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        roi (Tuple[slice, slice]): Region of interest slice tuple in form ``(slice(ymin, ymax), slice(xmin, xmax))``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Rectangle tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">),</span> <span class="p">(</span><span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="quaternion_from_rvec"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.quaternion_from_rvec">[docs]</a><span class="k">def</span> <span class="nf">quaternion_from_rvec</span><span class="p">(</span><span class="n">rvec</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a rotation vector (like from cv2.SolvePnP) into a quaternion.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rvec (np.ndarray): The source rotation vector.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: The resulting quaternion matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">mat</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Rodrigues</span><span class="p">(</span><span class="n">rvec</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">trns</span><span class="o">.</span><span class="n">quaternion_from_matrix</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
