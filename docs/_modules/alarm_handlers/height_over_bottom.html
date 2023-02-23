@@ -106,7 +106,10 @@
 
         <span class="c1"># Keep track of the current height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_height</span> <span class="o">=</span> <span class="mi">100</span>
-        <span class="n">set_last_height</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_last_height&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">set_last_height</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_last_height&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+
         <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/dvl/range&quot;</span><span class="p">,</span> <span class="n">RangeStamped</span><span class="p">,</span> <span class="n">set_last_height</span><span class="p">)</span>
 
         <span class="c1"># Every 5 seconds, check for an updated height param. A pseudo dynamic reconfig thing.</span>

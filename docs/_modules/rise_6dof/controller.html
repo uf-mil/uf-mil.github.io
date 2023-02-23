@@ -223,10 +223,11 @@
         <span class="p">)</span>
 
         <span class="c1"># Permitting lambda assignment b/c legacy</span>
-        <span class="n">wrench_from_vec</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">output</span><span class="p">:</span> <span class="p">(</span>
-            <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span>
-            <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]),</span>
-        <span class="p">)</span>  <span class="c1"># noqa</span>
+        <span class="k">def</span> <span class="nf">wrench_from_vec</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span> <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                <span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+            <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:6}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;PD:&quot;</span><span class="p">,</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">pd_output</span><span class="p">)))</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:6}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;PID(R):&quot;</span><span class="p">,</span> <span class="n">wrench_from_vec</span><span class="p">(</span><span class="n">output</span><span class="p">)))</span>

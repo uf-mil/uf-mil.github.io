@@ -122,7 +122,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_mobo_kill</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_mobo_kill</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSException</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Could not contact kill board! Kills will only be software&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Tell HW that we started off as killed</span>
 

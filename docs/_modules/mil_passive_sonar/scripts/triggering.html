@@ -155,7 +155,7 @@
                 <span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">HydrophoneSamplesStamped</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hydrophones_cb</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">ROS_FATAL</span><span class="p">(</span><span class="s2">&quot;sample_msg_type not supported&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logfatal</span><span class="p">(</span><span class="s2">&quot;sample_msg_type not supported&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;pings&quot;</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">Triggered</span><span class="p">),</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~filter_debug_trigger&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_response</span><span class="p">)</span>
@@ -270,13 +270,11 @@
         <span class="c1"># Record start time of cb to make sure we are running in real time</span>
         <span class="n">start_cb</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_rostime</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">Ping</span><span class="p">)):</span>
-            <span class="n">msg_header</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span>
             <span class="n">msg_channels</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">channels</span>
             <span class="n">msg_samples</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">samples</span>
             <span class="n">msg_sample_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">sample_rate</span>
             <span class="n">msg_data</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">HydrophoneSamplesStamped</span><span class="p">)):</span>
-            <span class="n">msg_header</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span>
             <span class="n">msg_channels</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">channels</span>
             <span class="n">msg_samples</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">samples</span>
             <span class="n">msg_sample_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">sample_rate</span>
