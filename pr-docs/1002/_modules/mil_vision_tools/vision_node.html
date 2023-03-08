@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_vision_tools.vision_node</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_vision_tools.vision_node</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">image_geometry</span> <span class="kn">import</span> <span class="n">PinholeCameraModel</span>
+<span class="kn">from</span> <span class="nn">mil_msgs.msg</span> <span class="kn">import</span> <span class="n">ObjectInImage</span><span class="p">,</span> <span class="n">ObjectsInImage</span>
+<span class="kn">from</span> <span class="nn">mil_ros_tools</span> <span class="kn">import</span> <span class="n">Image_Subscriber</span><span class="p">,</span> <span class="n">numpy_to_point2d</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Kevin Allen&quot;</span>
+
+
+<div class="viewcode-block" id="create_object_msg"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.create_object_msg">[docs]</a><span class="k">def</span> <span class="nf">create_object_msg</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">center</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">contour</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rect</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">attributes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to create a ``mil_msgs/ObjectInImage`` message.</span>
+
+<span class="sd">    Only one of center, contour, or rect should be set, depending on what information</span>
+<span class="sd">    is needed/available in your application.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the identifed object.</span>
+<span class="sd">        attributes (str): Attributes to attach to message, the purpose and value</span>
+<span class="sd">            of this attribute will vary by application. Defaults to an empty string.</span>
+<span class="sd">        confidence (Optional[float]): Float between 0 and 1 describing the confidence</span>
+<span class="sd">            that name is correct for this object. Leave as ``None`` if confidence</span>
+<span class="sd">            is not known (will be set to -1).</span>
+<span class="sd">        center (Optional[np.ndarray]): ``[x, y]`` of the center point of the object.</span>
+<span class="sd">        contour (Optional[np.ndarray]): Nx1x2 or Nx2 numpy array of pixels making up the contour</span>
+<span class="sd">            around the object.</span>
+<span class="sd">        rect (Optional[np.ndarray]): A 4 wide tuple/array-like representing the</span>
+<span class="sd">            bounding box around the object as ``(X, Y, width, height)``,</span>
+<span class="sd">            which is the representation returned by cv2.boundingRect.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ObjectInImage: Message object filled as described above.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create message</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">ObjectInImage</span><span class="p">()</span>
+
+    <span class="c1"># Fill name and attributes from argument</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">attributes</span>
+
+    <span class="c1"># Fill confidence from argument if given, otherwise use -1</span>
+    <span class="k">if</span> <span class="n">confidence</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">confidence</span> <span class="o">=</span> <span class="n">confidence</span>
+
+    <span class="c1"># Fill points with contour, rect, or center depending on which is set</span>
+    <span class="k">if</span> <span class="n">contour</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Reshape to Nx2 in case input was given in cv&#39;s native Nx1x2 shape</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">contour</span> <span class="o">=</span> <span class="n">contour</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">contour</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">contour</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">contour</span><span class="p">:</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy_to_point2d</span><span class="p">(</span><span class="n">point</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">rect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Add rectangle as upper left and bottom right points</span>
+        <span class="n">ul</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rect</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">br</span> <span class="o">=</span> <span class="n">ul</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rect</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy_to_point2d</span><span class="p">(</span><span class="n">ul</span><span class="p">))</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy_to_point2d</span><span class="p">(</span><span class="n">br</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">center</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Add center tuple as single point</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy_to_point2d</span><span class="p">(</span><span class="n">center</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="VisionNode"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.VisionNode">[docs]</a><span class="k">class</span> <span class="nc">VisionNode</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ABC class to be used unify the interfacing for MIL&#39;s computer vision scripts.</span>
+<span class="sd">    Handles the bootstrap of image subscription, enable/disable, etc.</span>
+<span class="sd">    Provides a callback for new images which is expected to return.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        camera_model (Optional[:class:`PinholeCameraModel`]): Camera model used throughout the</span>
+<span class="sd">            class. Initially set to ``None``, but later set to an instance of the pinhole</span>
+<span class="sd">            camera model when enabled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_objects_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;~identified_objects&quot;</span><span class="p">,</span> <span class="n">ObjectsInImage</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_sub</span> <span class="o">=</span> <span class="n">Image_Subscriber</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_img_cb</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~autostart&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enable</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_disable</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_srv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~enable&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_cb</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_enable_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enable</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_disable</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_sub</span><span class="o">.</span><span class="n">wait_for_camera_info</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">camera_model</span> <span class="o">=</span> <span class="n">PinholeCameraModel</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">camera_model</span><span class="o">.</span><span class="n">fromCameraInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_camera_info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Enabled.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_disable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Disabled.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_img_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ObjectsInImage</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_sub</span><span class="o">.</span><span class="n">last_image_header</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_objects</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">objects</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ObjectInImage</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;find_objects did not return a list of mil_msgs/ObjectInImage message. Ignoring.&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_objects_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="VisionNode.find_objects"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.VisionNode.find_objects">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">find_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ObjectInImage</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given an image as a source, this abstract method should be overridden to return</span>
+<span class="sd">        a list of :class:`ObjectInImage`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            img (np.ndarray): The source image.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[ObjectInImage]: A list of the objects found in the image.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When this library is run as an executable, run a demo class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">cv2</span>
+    <span class="kn">from</span> <span class="nn">cv_tools</span> <span class="kn">import</span> <span class="n">contour_centroid</span>
+
+    <span class="k">class</span> <span class="nc">VisionNodeExample</span><span class="p">(</span><span class="n">VisionNode</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Example implementation of a VisionNode, useful only for reference in real applications</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># Call base class&#39;s init. Important to do this if you override __init__ in child class.</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">find_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+            <span class="c1"># Get a list of contours in image</span>
+            <span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
+                <span class="n">edges</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+            <span class="p">)</span>
+            <span class="n">contours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
+            <span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># Add each contour, randomly choosing center, contour, or rect to demonstrate all three</span>
+            <span class="c1"># In real application, only one of the three methods will be used depending on the algorithm</span>
+            <span class="c1"># and what information is needed.</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">contour</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">contours</span><span class="p">):</span>
+                <span class="c1"># Demonstration of adding an object where only the center point can be identified</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">center</span> <span class="o">=</span> <span class="n">contour_centroid</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="c1"># Demonstration of adding an object where the entire contour outline can be identified</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="n">contour</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="c1"># Demonstration of adding an object where a bounding rectangle can be identified</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">create_object_msg</span><span class="p">(</span>
+                            <span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">),</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.8</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Log that an image has been received for debugging this demo</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Image&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">objects</span>
+
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;vision_node_example&quot;</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">VisionNodeExample</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
