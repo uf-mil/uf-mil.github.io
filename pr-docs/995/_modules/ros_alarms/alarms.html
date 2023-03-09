@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>ros_alarms.alarms</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for ros_alarms.alarms</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span> <span class="k">as</span> <span class="n">AlarmMsg</span>
+<span class="kn">from</span> <span class="nn">ros_alarms.srv</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AlarmGet</span><span class="p">,</span>
+    <span class="n">AlarmGetRequest</span><span class="p">,</span>
+    <span class="n">AlarmGetResponse</span><span class="p">,</span>
+    <span class="n">AlarmSet</span><span class="p">,</span>
+    <span class="n">AlarmSetRequest</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">parse_json_str</span><span class="p">(</span><span class="n">json_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">json_str</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="c1"># User passed in a non JSON string</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_str</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parameters</span>
+
+
+<span class="k">def</span> <span class="nf">_check_for_alarm</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="ow">not</span> <span class="n">nowarn</span>
+        <span class="ow">and</span> <span class="n">rospy</span><span class="o">.</span><span class="n">has_param</span><span class="p">(</span><span class="s2">&quot;/known_alarms&quot;</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="n">alarm_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/known_alarms&quot;</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">{}</span><span class="s2">&#39; is not in the list of known alarms (as defined in the /known_alarms rosparam)&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_check_for_valid_name</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">nowarn</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">alarm_name</span><span class="o">.</span><span class="n">isalnum</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;_&quot;</span> <span class="ow">in</span> <span class="n">alarm_name</span> <span class="ow">or</span> <span class="s2">&quot;-&quot;</span> <span class="ow">in</span> <span class="n">alarm_name</span>
+    <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Alarm name &#39;</span><span class="si">{</span><span class="n">alarm_name</span><span class="si">}</span><span class="s2">&#39; is not valid!&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_make_callback_error_string</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">backtrace</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a string with the name of the alarm, the stacktrace, and an exception&quot;&quot;&quot;</span>
+    <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;A callback for the alarm: </span><span class="si">{}</span><span class="s2"> threw an error!</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">err_msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">backtrace</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">wait_for_service</span><span class="p">(</span>
+    <span class="n">service</span><span class="p">,</span> <span class="n">warn_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">warn_msg</span><span class="o">=</span><span class="s2">&quot;Waiting for service..&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A fancy extension of wait for service that will warn with a message if it is taking a while.</span>
+
+<span class="sd">    @param warn_time: float in seconds, how long to wait before logging warn_msg</span>
+<span class="sd">    @param warn_msg: msg logged with rospy.logwarn if warn_time passes without service connected</span>
+<span class="sd">    @param timeout: overall timeout. If None, does nothing. If a float, will raise exception</span>
+<span class="sd">                    if many TOTAL seconds has passed without connecting</span>
+
+<span class="sd">    Copied from https://github.com/uf-mil/mil_common/blob/master/utils/mil_tools/mil_ros_tools/init_helpers.py</span>
+<span class="sd">    to avoid dependency</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">warn_time</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSException</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="o">-</span> <span class="n">warn_time</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="n">warn_msg</span><span class="p">)</span>
+        <span class="n">service</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Alarm"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm">[docs]</a><span class="k">class</span> <span class="nc">Alarm</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pythonic representation of a ROS alarm.</span>
+
+<span class="sd">    This class should not be constructed by clients (excluding internal ``ros_alarms``</span>
+<span class="sd">    code, of course). This class is primarily used by the alarm server node to</span>
+<span class="sd">    manage data about a series of alarms. However, this class may be passed</span>
+<span class="sd">    into callbacks registered to particular alarms.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty prints the contents of the alarm. Equivalent to ``repr(x)``.</span>
+
+<span class="sd">        .. describe:: repr(x)</span>
+
+<span class="sd">            Pretty prints the contents of the alarm. Equivalent to ``str(x)``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        alarm_name (str): The name of this specific alarm.</span>
+<span class="sd">        raised (bool): Whether the alarm has been raised.</span>
+<span class="sd">        node_name (str): The name of the node attached to the alarm. Defaults to</span>
+<span class="sd">            ``unknown``.</span>
+<span class="sd">        problem_description (str): A description of the problem related to the alarm.</span>
+<span class="sd">            Defaults to an empty string.</span>
+<span class="sd">        parameters (dict): The JSON parameters associated with the alarm. Defaults</span>
+<span class="sd">            to an empty dict.</span>
+<span class="sd">        severity (int): The severity associated with a raised alarm. Defaults to ``0``.</span>
+<span class="sd">        stamp (rospy.Time): The time of the most recent update. Defaults to now if</span>
+<span class="sd">            ROS has been initialized, otherwise zero.</span>
+<span class="sd">        raised_cbs (List[Tuple[int, Callable]): A list of callbacks to execute</span>
+<span class="sd">            when the alarm is raised. Each callback should be associated with</span>
+<span class="sd">            the severity required to execute the callback through a tuple.</span>
+<span class="sd">        cleared_cbs (List[Tuple[int, Callable]): A list of callbacks to execute</span>
+<span class="sd">            when the alarm is cleared. Each callback should be associated with</span>
+<span class="sd">            the severity required to execute the callback through a tuple.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alarm_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">raised</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">node_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+        <span class="n">problem_description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">severity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">=</span> <span class="n">alarm_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="o">=</span> <span class="n">raised</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="n">node_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_description</span> <span class="o">=</span> <span class="n">problem_description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">severity</span> <span class="o">=</span> <span class="n">severity</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInitException</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Callbacks to run if the alarm is cleared or raised formatted as follows:</span>
+        <span class="c1">#   [(severity_required, cb1), (severity_required, cb2), ...]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raised_cbs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cleared_cbs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_msg</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="fm">__str__</span> <span class="o">=</span> <span class="fm">__repr__</span>
+
+<div class="viewcode-block" id="Alarm.blank"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.blank">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">blank</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alarm</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a general blank alarm that is cleared with a low severity.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name for the blank alarm.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ros_alarms.Alarm: The constructed alarm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">raised</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Alarm.from_msg"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.from_msg">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_msg</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">AlarmMsg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alarm</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate an alarm object from an Alarm message.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (AlarmMsg): The message to generate the object from.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Alarm: The constructed alarm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span> <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">node_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">msg</span><span class="o">.</span><span class="n">node_name</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">raised</span><span class="p">,</span>
+            <span class="n">node_name</span><span class="p">,</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">problem_description</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">,</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">severity</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_severity_cb_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">severity</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">severity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="n">severity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Not a tuple, just an int. The severities should match</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="n">severity</span>
+
+<div class="viewcode-block" id="Alarm.add_callback"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.add_callback">[docs]</a>    <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">funct</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">call_when_raised</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">call_when_cleared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">severity_required</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a callback function to the alarm.</span>
+
+<span class="sd">        If the callback is set to be called when the alarm has been raised, and</span>
+<span class="sd">        the alarm is already raised, then the callback is immediately called.</span>
+<span class="sd">        Similarly, if the callback is set to run when the alarm is cleared, and</span>
+<span class="sd">        the alarm is already cleared, then the callback is immediately ran. In</span>
+<span class="sd">        both cases, the callback is registered like any other callback.</span>
+
+<span class="sd">        Exceptions in callbacks are swallowed and are printed out through a</span>
+<span class="sd">        rospy logging statement.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            funct (Callable): The callback to add.</span>
+<span class="sd">            call_when_raised (bool): Whether to call the callback when the alarm</span>
+<span class="sd">                is raised. Defaults to ``True``.</span>
+<span class="sd">            call_when_cleared (bool): Whether to call the callback when the alarm</span>
+<span class="sd">                is cleared. Defaults to ``True``.</span>
+<span class="sd">            severity_required (Tuple[int, int]): The severity required to run the</span>
+<span class="sd">                callback. The tuple represents the minimum and maximum severities</span>
+<span class="sd">                under which to execute the callback. Defaults to ``(0, 5)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">call_when_raised</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raised_cbs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">severity_required</span><span class="p">,</span> <span class="n">funct</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_severity_cb_check</span><span class="p">(</span><span class="n">severity_required</span><span class="p">):</span>
+                <span class="c1"># Try to run the callback, absorbing any errors</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">funct</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">call_when_cleared</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cleared_cbs</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">funct</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_severity_cb_check</span><span class="p">(</span><span class="n">severity_required</span><span class="p">):</span>
+                <span class="c1"># Try to run the callback, absorbing any errors</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">funct</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Alarm.update"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">srv</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates this alarm with a new AlarmSet request. Also will call any</span>
+<span class="sd">        required callbacks.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            srv (ros_alarms.Alarm): The request to set the alarm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span> <span class="k">if</span> <span class="n">srv</span><span class="o">.</span><span class="n">node_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">srv</span><span class="o">.</span><span class="n">node_name</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="c1"># Update all possible parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="o">=</span> <span class="n">srv</span><span class="o">.</span><span class="n">raised</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="n">node_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_description</span> <span class="o">=</span> <span class="n">srv</span><span class="o">.</span><span class="n">problem_description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">severity</span> <span class="o">=</span> <span class="n">srv</span><span class="o">.</span><span class="n">severity</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Updating alarm: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="s2">&quot;raised&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="s2">&quot;cleared&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># Run the callbacks for that alarm</span>
+        <span class="n">cb_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised_cbs</span> <span class="k">if</span> <span class="n">srv</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleared_cbs</span>
+        <span class="k">for</span> <span class="n">severity</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">cb_list</span><span class="p">:</span>
+            <span class="c1"># If the cb severity is not valid for this alarm&#39;s severity, skip it</span>
+            <span class="k">if</span> <span class="n">srv</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_severity_cb_check</span><span class="p">(</span><span class="n">severity</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Try to run the callback, absorbing any errors</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="n">_make_callback_error_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Alarm.as_msg"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.as_msg">[docs]</a>    <span class="k">def</span> <span class="nf">as_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlarmMsg</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get this alarm as an Alarm message.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AlarmMsg: The constructed message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alarm</span> <span class="o">=</span> <span class="n">AlarmMsg</span><span class="p">()</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_name</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">problem_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_description</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">severity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">severity</span>
+        <span class="k">return</span> <span class="n">alarm</span></div>
+
+<div class="viewcode-block" id="Alarm.as_srv_resp"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.as_srv_resp">[docs]</a>    <span class="k">def</span> <span class="nf">as_srv_resp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlarmGetResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get this alarm as an AlarmGet response.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AlarmGetResponse: The constructed service response.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">AlarmGetResponse</span><span class="p">()</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stamp</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">alarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_msg</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">resp</span></div></div>
+
+
+<div class="viewcode-block" id="AlarmBroadcaster"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmBroadcaster">[docs]</a><span class="k">class</span> <span class="nc">AlarmBroadcaster</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Broadcasts information about an alarm, and allows for the raising and clearing</span>
+<span class="sd">    of the alarm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">nowarn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the related alarm.</span>
+<span class="sd">            node_name (Optional[str]): The name of the node alarm.</span>
+<span class="sd">            nowarn (bool): Whether to disable warning for the class&#39; operations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">_check_for_valid_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="p">)</span>
+        <span class="n">_check_for_alarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_name</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">if</span> <span class="n">node_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">node_name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_set</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/alarm/set&quot;</span><span class="p">,</span> <span class="n">AlarmSet</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AlarmBroadcaster.wait_for_server"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmBroadcaster.wait_for_server">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for node to connect to alarm server. Waits timeout seconds (or forever</span>
+<span class="sd">            if ``timeout`` is ``None``) to connect then fetches the current alarm</span>
+<span class="sd">            and calls callbacks as needed.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            User should always call this method before calling other methods.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (Optional[float]): The amount of seconds to wait before timing</span>
+<span class="sd">                out.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">timeout</span> <span class="o">&lt;</span> <span class="mf">1.5</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_set</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wait_for_service</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_set</span><span class="p">,</span>
+                <span class="n">warn_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                <span class="n">warn_msg</span><span class="o">=</span><span class="s2">&quot;Waiting for alarm server..&quot;</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;alarm server connected&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_generate_request</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">raised</span><span class="p">,</span> <span class="n">node_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{},</span> <span class="n">severity</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">AlarmSetRequest</span><span class="p">()</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span>
+
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">node_name</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">node_name</span> <span class="k">if</span> <span class="n">node_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_name</span>
+        <span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">raised</span> <span class="o">=</span> <span class="n">raised</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">problem_description</span> <span class="o">=</span> <span class="n">problem_description</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">severity</span> <span class="o">=</span> <span class="n">severity</span>
+
+        <span class="k">return</span> <span class="n">request</span>
+
+<div class="viewcode-block" id="AlarmBroadcaster.raise_alarm"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmBroadcaster.raise_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">raise_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises the alarm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kwargs: The associated keyword arguments, as described below.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            node_name (str): String that holds the name of the node making the</span>
+<span class="sd">                request.</span>
+<span class="sd">            problem_description (str): String with a description of the problem</span>
+<span class="sd">                (defaults to empty string).</span>
+<span class="sd">            parameters (dict): JSON dumpable dictionary with optional parameters</span>
+<span class="sd">                that describe the alarm.</span>
+<span class="sd">            severity (int): Integer in [0, 5] that indicates the severity of</span>
+<span class="sd">                the alarm. (5 is most severe)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the alarm was successfully raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_generate_request</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span><span class="o">.</span><span class="n">succeed</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;No alarm sever found! Can&#39;t raise alarm.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="AlarmBroadcaster.clear_alarm"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmBroadcaster.clear_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">clear_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears the alarm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kwargs: The associated keyword arguments, as described below.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            node_name (str): String that holds the name of the node making the</span>
+<span class="sd">                request.</span>
+<span class="sd">            problem_description (str): String with a description of the problem</span>
+<span class="sd">                (defaults to empty string).</span>
+<span class="sd">            parameters (dict): JSON dumpable dictionary with optional parameters</span>
+<span class="sd">                that describe the alarm.</span>
+<span class="sd">            severity (int): Integer in [0, 5] that indicates the severity of</span>
+<span class="sd">                the alarm. (5 is most severe)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the alarm was successfully cleared.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_generate_request</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span><span class="o">.</span><span class="n">succeed</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;No alarm sever found! Can&#39;t clear alarm.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+
+
+<div class="viewcode-block" id="AlarmListener"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener">[docs]</a><span class="k">class</span> <span class="nc">AlarmListener</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Listens to an alarm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">callback_funct</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nowarn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The alarm name.</span>
+<span class="sd">            callback_funct (Optional[Callable]): The callback function.</span>
+<span class="sd">            nowarn (bool): Whether to enable warnings about the class. Defaults to ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">_check_for_valid_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="p">)</span>
+        <span class="n">_check_for_alarm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_get</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/alarm/get&quot;</span><span class="p">,</span> <span class="n">AlarmGet</span><span class="p">)</span>
+
+        <span class="c1"># Data used to trigger callbacks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raised_cbs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># [(severity_for_cb1, cb1), (severity_for_cb2, cb2), ...]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cleared_cbs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;/alarm/updates&quot;</span><span class="p">,</span> <span class="n">AlarmMsg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_update</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">callback_funct</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">callback_funct</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AlarmListener.wait_for_server"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.wait_for_server">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait for node to connect to alarm server. Waits timeout seconds (or forever</span>
+<span class="sd">            if ``timeout`` is ``None``) to connect then fetches the current alarm</span>
+<span class="sd">            and calls callbacks as needed.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            User should always call this method before calling other methods.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout (Optional[float]): The amount of seconds to wait before timing</span>
+<span class="sd">                out.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">timeout</span> <span class="o">&lt;</span> <span class="mf">1.5</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_get</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wait_for_service</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_get</span><span class="p">,</span>
+                <span class="n">warn_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                <span class="n">warn_msg</span><span class="o">=</span><span class="s2">&quot;Waiting for alarm server..&quot;</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;alarm server connected&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_alarm</span><span class="p">()</span>  <span class="c1"># Now that we have service, update callbacks</span></div>
+
+<div class="viewcode-block" id="AlarmListener.is_raised"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.is_raised">[docs]</a>    <span class="k">def</span> <span class="nf">is_raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns whether this alarm is raised or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fetch (bool): Whether to fetch the alarm from the server. If ``False``,</span>
+<span class="sd">                then uses the most recently cached alarm. Defaults to ``True``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the alarm is raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_alarm</span><span class="p">(</span><span class="n">fetch</span><span class="o">=</span><span class="n">fetch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alarm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span></div>
+
+<div class="viewcode-block" id="AlarmListener.is_cleared"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.is_cleared">[docs]</a>    <span class="k">def</span> <span class="nf">is_cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns whether this alarm is cleared or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fetch (bool): Whether to fetch the alarm from the server. If ``False``,</span>
+<span class="sd">                then uses the most recently cached alarm. Defaults to ``True``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether the alarm is cleared.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_raised</span><span class="p">(</span><span class="n">fetch</span><span class="o">=</span><span class="n">fetch</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AlarmListener.get_alarm"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.get_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">get_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fetch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlarmGetResponse</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the alarm message.</span>
+
+<span class="sd">        Also worth noting, the alarm this method returns has it&#39;s ``parameters`` field</span>
+<span class="sd">            converted to a dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fetch (bool): Whether to fetch the alarm from the server. If ``False``,</span>
+<span class="sd">                then uses the most recently cached alarm. Defaults to ``True``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AlarmGetResponse: The response message, with its updated ``parameters`` field.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fetch</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_get</span><span class="p">(</span><span class="n">AlarmGetRequest</span><span class="p">(</span><span class="n">alarm_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;No alarm sever found!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_update</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">alarm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span></div>
+
+    <span class="k">def</span> <span class="nf">_severity_cb_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">severity</span><span class="p">):</span>
+        <span class="c1"># In case _last alarm hasn&#39;t been declared yet</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">severity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="n">severity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Not a tuple or list, just an int. The severities should match</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="n">severity</span>
+
+<div class="viewcode-block" id="AlarmListener.add_callback"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.add_callback">[docs]</a>    <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">funct</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+        <span class="n">call_when_raised</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">call_when_cleared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">severity_required</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a callback function to the alarm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            funct (Callable): The callback to add.</span>
+<span class="sd">            call_when_raised (bool): Whether to call the callback when the alarm</span>
+<span class="sd">                is raised. Defaults to ``True``.</span>
+<span class="sd">            call_when_cleared (bool): Whether to call the callback when the alarm</span>
+<span class="sd">                is cleared. Defaults to ``True``.</span>
+<span class="sd">            severity_required (Tuple[int, int]): The severity required to run the</span>
+<span class="sd">                callback. The tuple represents the minimum and maximum severities</span>
+<span class="sd">                under which to execute the callback. Defaults to ``(0, 5)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">alarm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span>
+        <span class="k">if</span> <span class="n">call_when_raised</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_raised_cbs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">severity_required</span><span class="p">,</span> <span class="n">funct</span><span class="p">))</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">alarm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_severity_cb_check</span><span class="p">(</span><span class="n">severity_required</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="c1"># Try to run the callback, absorbing any errors</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+                    <span class="n">funct</span><span class="p">(</span><span class="n">alarm</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">call_when_cleared</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cleared_cbs</span><span class="o">.</span><span class="n">append</span><span class="p">(((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">funct</span><span class="p">))</span>  <span class="c1"># Clear callbacks always run</span>
+            <span class="k">if</span> <span class="n">alarm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>
+                <span class="c1"># Try to run the callback, absorbing any errors</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+                    <span class="n">funct</span><span class="p">(</span><span class="n">alarm</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                        <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AlarmListener.clear_callbacks"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.clear_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">clear_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears all callbacks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_raised_cbs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cleared_cbs</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+    <span class="k">def</span> <span class="nf">_alarm_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">AlarmMsg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">alarm</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parse_json_str</span><span class="p">(</span><span class="n">alarm</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span> <span class="o">=</span> <span class="n">alarm</span>
+        <span class="n">cb_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raised_cbs</span> <span class="k">if</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cleared_cbs</span>
+        <span class="k">for</span> <span class="n">severity</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">cb_list</span><span class="p">:</span>
+            <span class="c1"># If the cb severity is not valid for this alarm&#39;s severity, skip it</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_severity_cb_check</span><span class="p">(</span><span class="n">severity</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Try to run the callback, absorbing any errors</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cb</span><span class="p">(</span><span class="n">alarm</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
+                    <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                    <span class="p">)</span>
+                <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HeartbeatMonitor"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.HeartbeatMonitor">[docs]</a><span class="k">class</span> <span class="nc">HeartbeatMonitor</span><span class="p">(</span><span class="n">AlarmBroadcaster</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used to trigger an alarm if a message on the topic ``topic_name`` isn&#39;t published</span>
+<span class="sd">    at least every ``prd`` seconds.</span>
+
+<span class="sd">    An alarm won&#39;t be triggered if no messages are initially received.</span>
+
+<span class="sd">    All of this class&#39; methods and attributes are internal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alarm_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">topic_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">msg_class</span><span class="p">,</span>
+        <span class="n">prd</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">predicate</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nowarn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_predicate</span> <span class="o">=</span> <span class="n">predicate</span> <span class="k">if</span> <span class="n">predicate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_msg_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prd</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">prd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dropped</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">nowarn</span><span class="o">=</span><span class="n">nowarn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="n">topic_name</span><span class="p">,</span> <span class="n">msg_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_got_msg</span><span class="p">)</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">prd</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_for_message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_got_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="c1"># If the predicate passes, store the message time</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predicate</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_msg_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+            <span class="c1"># If it&#39;s dropped, clear the alarm and reset the dropped status</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dropped</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dropped</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_check_for_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_msg_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_msg_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prd</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dropped</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dropped</span> <span class="o">=</span> <span class="kc">True</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
