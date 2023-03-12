@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>nodes.navigator_battery_monitor</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for nodes.navigator_battery_monitor</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Battery Monitor: A simple script that approximates the battery voltage by</span>
+<span class="sd">averaging the supply voltage to each of the four thrusters.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">message_filters</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">roboteq_msgs.msg</span> <span class="kn">import</span> <span class="n">Feedback</span><span class="p">,</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">ros_alarms</span> <span class="kn">import</span> <span class="n">AlarmListener</span>
+<span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Float32</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Anthony Olive&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Kevin Allen&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;kma1660@gmail.com&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2016, MIL&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+
+
+<div class="viewcode-block" id="BatteryMonitor"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor">[docs]</a><span class="k">class</span> <span class="nc">BatteryMonitor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Monitors the battery voltage measured by the 4 motors on Navigator,</span>
+<span class="sd">    publishing a moving average of these measurements to /battery_monitor</span>
+<span class="sd">    at a regular interval.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        voltage (Optional[float]): The average voltage across all of the four motors.</span>
+<span class="sd">            ``None`` if no reading has occurred yet.</span>
+<span class="sd">        supply_voltages (List[float]): The most recent 1000 voltage readings.</span>
+<span class="sd">            Each reading is from a separate motor.</span>
+<span class="sd">        hw_kill_raised (bool): Whether a hardware kill was raised.</span>
+<span class="sd">        pub_voltage (rospy.Publisher): A publisher to the ``/battery_monitor``</span>
+<span class="sd">            topic. Published by the :meth:`.publish_voltage` method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Initialize the average voltage to none for the case of no feedback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Initialize a list to hold the 1000 most recent supply voltage readings</span>
+        <span class="c1"># Holding 1000 values ensures that changes in the average are gradual rather than sharp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hw_kill_raised</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hw_kill_listener</span> <span class="o">=</span> <span class="n">AlarmListener</span><span class="p">(</span><span class="s2">&quot;hw-kill&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hw_kill_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hw_kill_listener</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+
+        <span class="c1"># The publisher for the averaged voltage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub_voltage</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;/battery_monitor&quot;</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Subscribes to the feedback from each of the four thrusters</span>
+        <span class="n">motor_topics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;/FL_motor&quot;</span><span class="p">,</span> <span class="s2">&quot;/FR_motor&quot;</span><span class="p">,</span> <span class="s2">&quot;/BL_motor&quot;</span><span class="p">,</span> <span class="s2">&quot;/BR_motor&quot;</span><span class="p">]</span>
+
+        <span class="n">feedback_sub</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">message_filters</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="n">topic</span> <span class="o">+</span> <span class="s2">&quot;/feedback&quot;</span><span class="p">,</span> <span class="n">Feedback</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">motor_topics</span>
+        <span class="p">]</span>
+
+        <span class="n">status_sub</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">message_filters</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="n">topic</span> <span class="o">+</span> <span class="s2">&quot;/status&quot;</span><span class="p">,</span> <span class="n">Status</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">motor_topics</span>
+        <span class="p">]</span>
+
+        <span class="p">[</span>
+            <span class="n">message_filters</span><span class="o">.</span><span class="n">ApproximateTimeSynchronizer</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">feedback</span><span class="p">,</span> <span class="n">status</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">registerCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_voltage</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">feedback</span><span class="p">,</span> <span class="n">status</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feedback_sub</span><span class="p">,</span> <span class="n">status_sub</span><span class="p">)</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="BatteryMonitor.hw_kill_cb"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.hw_kill_cb">[docs]</a>    <span class="k">def</span> <span class="nf">hw_kill_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Serves as a callback when a hardware kill is activated.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (~ros_alarms.msg._Alarm.Alarm): The alarm message that activated</span>
+<span class="sd">                the hardware kill.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hw_kill_raised</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">raised</span></div>
+
+<div class="viewcode-block" id="BatteryMonitor.add_voltage"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.add_voltage">[docs]</a>    <span class="k">def</span> <span class="nf">add_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">Feedback</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">Status</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is the callback function for feedback from all four motors.</span>
+
+<span class="sd">        It appends the new readings to the end of the list and</span>
+<span class="sd">        ensures that the list stays under 1000 entries.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            feedback (~roboteq_msgs.msg._Feedback.Feedback): The feedback from</span>
+<span class="sd">                one of the motors.</span>
+<span class="sd">            status (~roboteq_msgs.msg._Status.Status): The status of the motor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if 3rd bit is raised</span>
+        <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">fault</span> <span class="o">&amp;</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">hw_kill_raised</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feedback</span><span class="o">.</span><span class="n">supply_voltage</span><span class="p">)</span>
+
+        <span class="c1"># Limits the list by removing the oldest readings when it contains more then 1000 readings</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BatteryMonitor.publish_voltage"><a class="viewcode-back" href="../../reference/battery.html#nodes.navigator_battery_monitor.BatteryMonitor.publish_voltage">[docs]</a>    <span class="k">def</span> <span class="nf">publish_voltage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Publishes the average voltage across all four thrusters to the ``battery_voltage`` node</span>
+<span class="sd">        as a standard Float32 message and runs the voltage_check.</span>
+
+<span class="sd">        Currently runs every second.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">supply_voltages</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pub_voltage</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">voltage</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;battery_monitor&quot;</span><span class="p">)</span>
+    <span class="n">monitor</span> <span class="o">=</span> <span class="n">BatteryMonitor</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">monitor</span><span class="o">.</span><span class="n">publish_voltage</span><span class="p">,</span> <span class="n">oneshot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
