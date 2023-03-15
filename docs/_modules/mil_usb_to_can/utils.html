@@ -107,8 +107,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calculated</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="s2">&quot;Checksum was calculated as </span><span class="si">{}</span><span class="s2"> but reported as </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">calculated</span><span class="p">,</span> <span class="n">expected</span>
-            <span class="p">)</span>
+                <span class="n">calculated</span><span class="p">,</span>
+                <span class="n">expected</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 
@@ -120,7 +121,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Payload is </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2"> bytes, which is greater than the maximum of 8&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Payload is </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2"> bytes, which is greater than the maximum of 8&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -251,7 +252,8 @@
 
 <div class="viewcode-block" id="Packet.read_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.Packet.read_packet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read_packet</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">stream</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span> <span class="o">|</span> <span class="n">SimulatedUSBtoCAN</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+        <span class="n">stream</span><span class="p">:</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span> <span class="o">|</span> <span class="n">SimulatedUSBtoCAN</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Read a packet with a known size from a serial device</span>
@@ -354,7 +356,11 @@
             <span class="k">raise</span> <span class="n">PayloadTooLargeException</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
         <span class="n">checksum</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_calculate_checksum</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;BB</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">sB&quot;</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span> <span class="n">payload</span><span class="p">,</span> <span class="n">checksum</span>
+            <span class="sa">f</span><span class="s2">&quot;BB</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">sB&quot;</span><span class="p">,</span>
+            <span class="n">device_id</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span>
+            <span class="n">payload</span><span class="p">,</span>
+            <span class="n">checksum</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
@@ -458,7 +464,10 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_create_command_packet</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">length_byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">length_byte</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommandPacket</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet.</span>
@@ -503,7 +512,9 @@
 
 <div class="viewcode-block" id="CommandPacket.create_request_packet"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.CommandPacket.create_request_packet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_request_packet</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">receive_length</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">filter_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">receive_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommandPacket</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a command packet to request data from a CAN device.</span>
@@ -563,7 +574,9 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CommandPacket(filter_id=</span><span class="si">{}</span><span class="s2">, is_receive=</span><span class="si">{}</span><span class="s2">, receive_length=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">filter_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_receive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_receive</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
         <span class="p">)</span></div>
 </pre></div>
 

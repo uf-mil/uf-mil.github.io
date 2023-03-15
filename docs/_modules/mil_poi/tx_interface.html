@@ -85,8 +85,9 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">axros</span> <span class="kn">import</span> <span class="n">NodeHandle</span>
-<span class="kn">from</span> <span class="nn">mil_poi.msg</span> <span class="kn">import</span> <span class="n">POIArray</span>
 <span class="kn">from</span> <span class="nn">mil_ros_tools.msg_helpers</span> <span class="kn">import</span> <span class="n">rosmsg_to_numpy</span>
+
+<span class="kn">from</span> <span class="nn">mil_poi.msg</span> <span class="kn">import</span> <span class="n">POIArray</span>
 
 
 <div class="viewcode-block" id="TxPOIClient"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.TxPOIClient">[docs]</a><span class="k">class</span> <span class="nc">TxPOIClient</span><span class="p">:</span>
@@ -126,14 +127,16 @@
             <span class="k">if</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">futures</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">position</span><span class="p">,</span> <span class="n">orientation</span> <span class="o">=</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">),</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span>
-                <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span>
+                <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">futures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
             <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
                 <span class="n">futures</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span><span class="o">.</span><span class="n">set_result</span><span class="p">((</span><span class="n">position</span><span class="p">,</span> <span class="n">orientation</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TxPOIClient.get"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.TxPOIClient.get">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">only_fresh</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">only_fresh</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the position of POI in the global frame as a 3x1 numpy array.</span>
@@ -147,7 +150,7 @@
             <span class="k">for</span> <span class="n">poi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_msg</span><span class="o">.</span><span class="n">pois</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
                     <span class="n">position</span><span class="p">,</span> <span class="n">orientation</span> <span class="o">=</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span>
-                        <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
+                        <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
                     <span class="p">),</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span>
                     <span class="k">return</span> <span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">orientation</span><span class="p">)</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>

@@ -152,7 +152,9 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Publishes a rviz marker&quot;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;vector_topic&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Topic of vector to subscribe to&quot;</span>
+        <span class="s2">&quot;vector_topic&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Topic of vector to subscribe to&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;marker_topic&quot;</span><span class="p">,</span>
@@ -180,7 +182,10 @@
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
     <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;vector_to_marker&quot;</span><span class="p">)</span>
     <span class="n">VectorToMarker</span><span class="p">(</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">vector_topic</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">marker_topic</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">color</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">vector_topic</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">marker_topic</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">length</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">color</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
 </pre></div>

@@ -336,7 +336,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_entrance_exit_gate_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_entrance_exit_gate_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_entrance_exit_gate_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageEntranceExitGateRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageEntranceExitGateRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageEntranceExitGateResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Entrance and Exit Gate</span>
@@ -356,14 +357,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_entrance_exit</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_entrance_exit_gate_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageEntranceExitGateResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_follow_path_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_follow_path_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_follow_path_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageFollowPathRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageFollowPathRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageFollowPathResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Follow Path Mission</span>
@@ -382,14 +388,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_follow_path</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_follow_path_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageFollowPathResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_react_report_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_react_report_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_react_report_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageReactReportRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageReactReportRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageReactReportResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the React Report Mission</span>
@@ -408,7 +419,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_react_report</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_react_report_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -433,12 +448,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_scan_code</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_scan_code_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">color_pattern</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">color_pattern</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_detect_dock_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_detect_dock_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_detect_dock_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageDetectDockRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageDetectDockRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageDetectDockResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Detect Dock Mission</span>
@@ -457,14 +477,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_detect_dock</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_detect_dock_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageDetectDockResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_find_fling_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_find_fling_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_find_fling_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageFindFlingRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageFindFlingRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageFindFlingResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the Find Fling Mission</span>
@@ -483,14 +508,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_find_fling</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_find_fling_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageFindFlingResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_uav_replenishment_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_uav_replenishment_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_uav_replenishment_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVReplenishmentRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVReplenishmentRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageUAVReplenishmentResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the UAV Replenishment Mission</span>
@@ -509,14 +539,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_uav_replenishment</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_uav_replenishment_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageUAVReplenishmentResponse</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RobotXStartServices.handle_uav_search_report_message"><a class="viewcode-back" href="../../../navigator/reference.html#navigator_robotx_comms.nodes.robotx_comms_client.RobotXStartServices.handle_uav_search_report_message">[docs]</a>    <span class="k">def</span> <span class="nf">handle_uav_search_report_message</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVSearchReportRequest</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">MessageUAVSearchReportRequest</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MessageUAVSearchReportResponse</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles requests to make messages to use in the UAV Search Report Mission</span>
@@ -535,7 +570,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_last_uav_search_report</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
         <span class="n">aedt_date_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_aedt_date_time</span><span class="p">()</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">robotx_uav_search_report_message</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span> <span class="n">aedt_date_time</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">team_id</span><span class="p">,</span>
+            <span class="n">aedt_date_time</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">use_test_data</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">robotx_client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -601,8 +640,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
                 <span class="s2">&quot;Attempting Connection to TD Server at </span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">tcp_ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tcp_port</span>
-                <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tcp_ip</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tcp_port</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
             <span class="c1"># recreate socket</span>
