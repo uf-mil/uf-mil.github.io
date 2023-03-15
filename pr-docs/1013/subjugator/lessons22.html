@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Lessons from RoboSub 2022</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Lessons from RoboSub 2019" href="lessons19.html" />
+        <link rel="prev" title="RoboSub competition" href="robosub.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SubjuGator</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#subjugator-8">SubjuGator 8</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#robosub">RoboSub</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="robosub.html">RoboSub</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Lessons from 2022</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overall-process">Overall Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shipping">Shipping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#electrical">Electrical</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#hydrophones">Hydrophones</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#mechanical">Mechanical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#software">Software</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lessons19.html">Lessons from 2019</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="lessons-from-robosub-2022">
+<h1>Lessons from RoboSub 2022<a class="headerlink" href="#lessons-from-robosub-2022" title="Permalink to this heading">¶</a></h1>
+<section id="overall-process">
+<h2>Overall Process<a class="headerlink" href="#overall-process" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>TEST BEFORE, A LOT.</strong> - At least a semester prior to the summer of the competition, a testing
+schedule needs to be designed which involves pretty much testing biweekly in spring and weekly
+during the summer. Test first single tasks in the smaller and more accessible pools but also,
+test in a full course at least at a big pool such as Florida pool as much as possible when the
+single tasks have been mastered. As soon as you arrive to the competition, dedicate the first
+few tests to check the behavior of the sub in tasks that might have changed between Gainesville
+and the new pool. We made the mistake of not taking this too seriously.</p></li>
+<li><p><strong>We need to implement an automated check system for all systems.</strong> - For example,
+the battery system should report it’s voltage and the thrusters should be verified
+to ensure that the proper thrusters spin when asked. Other examples include having
+a check that cameras and sensors such as DVL, gyroscope, depth, output reasonable values.
+This should be automated and required (and hopefully quick) so that we can avoid having
+busted batteries or accidentally loose connections. At the competition, we needed to
+take out the robot multiple times because of things which could have been verified
+<em>before</em> the sub was put in the water.</p></li>
+<li><p><strong>We need to practice the logistic of testing in water more.</strong> - The process for
+going to, working at, and packing up from the pool at the competition needs to be
+practiced. We need to have comprehensive list of equipment needed for any testing.
+The lists <em>must</em> include only things that are brought with us to all testing, and
+it <em>must</em> include all of the things that we need for any reasonably possible challenge.
+We should aim to be fully ready to test 10 minutes before when we actually plan
+to enter the water, as practice.</p></li>
+<li><p><strong>We need a dedicated testing leader.</strong> - One person needs to be fully responsible
+for assuring that these procedures are followed every time we do anything in or
+near the water. This assures that bystander effect doesn’t lead to avoidable
+mistakes causing large setbacks. This does not mean that everyone else is unresponsible
+for ensuring proper testing techniques, rather, having a dedicated member helps
+to ensure that the practices will always be followed.</p></li>
+<li><p><strong>We need to rest responsibly.</strong> - Several nights during the competition we
+would not fall asleep until 1-2AM, and then be up before 6AM for the mandatory
+testing time drawing. This lack of sleep caused us to make mistakes we may
+not have made had we been more well-rested.</p></li>
+<li><p><strong>We should have interacted more with other teams.</strong> - One of the most notable
+things we missed out on was getting to interact with and learn from the other
+teams at the event, as we were always chasing our own issues. Had we been more
+stable at the competition, we likely would have had the time to interact with more
+teams.</p></li>
+<li><p><strong>We should have had more of a social media presence.</strong> - There is a lot of
+opportunities for recruiting, outreach, connection with mentor-ship and sponsorship
+opportunities, and interaction with other teams over the internet. Be it Instagram,
+Band, the mysterious data sharing platform, or old fashioned email, we are missing
+lots of support, motivation, opportunity, and experience that can be found through
+these platforms.</p></li>
+<li><p><strong>We should have a designated person that signs up for testing slots.</strong> - Two days
+of competition we missed chances to test in the pool because none of our team members
+woke up early to sign up for the slots. A way to solve this is to have a designated
+person sign up for the slots or at least a rotation where a person is responsible to
+sign up per day.</p></li>
+<li><p><strong>We need to pack a replacement for everything in the sub.</strong> - We forgot the radiator,
+spare thrusters and spare motherboards. The process of packing should not be done in a rush
+and on it we should think about what could break in the sub, and bring a replacement for
+every part of the sub.</p></li>
+</ul>
+</section>
+<section id="shipping">
+<h2>Shipping<a class="headerlink" href="#shipping" title="Permalink to this heading">¶</a></h2>
+<p>Total items shipped for the team was:</p>
+<div class="table-wrapper"><table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Shipped Via</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Large Pelicans</p></td>
+<td><p>FedEx Ground</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Medium Pelicans</p></td>
+<td><p>FedEx Ground</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Small Pelicans</p></td>
+<td><p>FedEx Ground</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Sub Shipping Container</p></td>
+<td><p>FedEx Freight</p></td>
+</tr>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Battery Box</p></td>
+<td><p>UPS</p></td>
+</tr>
+</tbody>
+</table>
+</div><p>Shipping was extremely painful to arrange this year. There were several primary reasons:</p>
+<ul class="simple">
+<li><p>Our shipping was arranged the week that we needed to ship, and the process of
+loading wasn’t completed until the day we were shipping the items.</p></li>
+<li><p>The items that were loaded were mostly cataloged, but not all of them were enumerated.</p></li>
+<li><p>The cataloguing wasn’t for each box, it ended up being for the set of items each team was packing.</p></li>
+<li><p>We didn’t know how many pelicans we would need, and ended up having to go get
+more from <a class="reference internal" href="../infrastructure/solar_park.html"><span class="doc std std-doc">Solar Park</span></a>.</p></li>
+<li><p>Arranging the shipping pickup at the event ended up taking another day after
+a FedEx Express Shipment truck attempted to pick up our packages instead of
+a FedEx Ground Shipment truck.</p>
+<ul>
+<li><p>FedEx didn’t ask or specify when Dr. Schwartz scheduled the pickup, and they
+sent us a FedEx express truck who couldn’t take our packages because they
+were labeled for FedEx Ground.</p></li>
+<li><p><strong>Takeaway:</strong> Make sure to check what label you got, and arrange shipping
+to include the return label when getting it in the first place</p></li>
+</ul>
+</li>
+<li><p>We should have taken more Pelican cases, as packing materials for the return trip
+is more difficult because of time crunches, missing foam, and tiredness.</p></li>
+<li><p>The shipping paperwork, labels, return shipping, pick-up and drop-off times
+and locations, and shipping manifests need to be completed several weeks
+before the competition. Arranging them last minute is a recipe for failure.</p></li>
+</ul>
+</section>
+<section id="electrical">
+<h2>Electrical<a class="headerlink" href="#electrical" title="Permalink to this heading">¶</a></h2>
+<p>Many issues faced by the electrical team during the competition were preventable.
+Lack of documentation and effective ways to debug costed us a lot of time. The
+following will need to be worked and improved on:</p>
+<ul class="simple">
+<li><p><strong>We need more extensive electrical documentation.</strong></p>
+<ul>
+<li><p>Lack of documentation made debugging harder, as we had to quickly learn how
+certain systems operated at the competition site.</p></li>
+<li><p>Documentation for each individual board and the higher level system will be
+beneficial for understanding the submarine and help make onboarding easier.</p></li>
+<li><p>Have consistent format and include information such as purpose, bill of
+material (BOM), and a description.</p></li>
+</ul>
+</li>
+<li><p><strong>We need to add more electrical redundancy.</strong></p>
+<ul>
+<li><p>We need to add a circuit which reports battery voltage and cuts off the batteries
+if their voltage drops too low.</p>
+<ul>
+<li><p>Many batteries were lost due to running the sub too long and forgetting to
+remove certain cables. There is a need for a board to warn and cut the power
+once the battery goes under a certain percentage.</p></li>
+</ul>
+</li>
+<li><p>We need to add locking connectors. These would have prevented cables from
+accidentally coming loose while the sub was on the move.</p></li>
+</ul>
+</li>
+</ul>
+<section id="hydrophones">
+<h3>Hydrophones<a class="headerlink" href="#hydrophones" title="Permalink to this heading">¶</a></h3>
+<p>We talked with Forrest during the 2022 competition and he warned us that the
+Sylphase hydrophone board was very sensitive to moisture. While it initially had
+a desiccant pack placed inside during shipping, we failed to pack more to replace
+it after it was saturated.</p>
+<p>The moisture causes the board to misbehave. We experienced an issue where a self
+check (reading and writing a value from a place called <code class="docutils literal notranslate"><span class="pre">&quot;ADDR15&quot;</span></code>) failed repeatedly.</p>
+<p>The connector in the hydrophone vessel was also problematic. We started getting an
+inconsistent “device not found” error after arriving at the competition.
+For some unknown reason, the connector used was a reversible USB micro B cable
+that none of us had ever seen used for anything else. Needless to say, it was
+rather janky. We ended up swapping it out for a standard USB micro B cable.</p>
+</section>
+</section>
+<section id="mechanical">
+<h2>Mechanical<a class="headerlink" href="#mechanical" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>The weight of the sub is a detriment to testing and transport.</p>
+<ul>
+<li><p>We implemented a <a class="reference external" href="https://en.wikipedia.org/wiki/Litter_(vehicle)">litter</a>
+style carrier that allowed us to carry the sub with relative ease.</p>
+<ul>
+<li><p>This comprised of two ~8’ round wooden 1.5” diameter rods. These rods were
+then tied ~6” apart in two places in their middles to prevent them from
+opening too wide. After that, a rope with a loop in each end can be passed
+through the sub’s frame, above it’s center of mass, and all loops are passed
+over opposing ends of the rods. Two people can then crouch under the pair
+of rods, placing one on each shoulder, and then they can stand and lift
+the sub.</p></li>
+<li><p>This system would be much improved by adding some kind of formed shoulder
+pads to spread the weight and add stability.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>If we are going to continue using SubjuGator 8, the mechanical team will need
+to find a way to transport the bot around efficiently.</p></li>
+<li><p>Several mechanical and electrical systems were damaged by transport (either from
+shipping or moving the sub around from the team village to the pool) and had to
+be fixed multiple times. This involved opening up the main computer vessel,
+the nav tube, the valve box, and hydrophone enclosure multiple times each. Most
+of this damage came down to loose, non-locking connectors. (Mechanically this
+was mostly represented as parts moving around inside of their respective vessels
+and bumping wires and connectors loose.)</p></li>
+</ul>
+</section>
+<section id="software">
+<h2>Software<a class="headerlink" href="#software" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>We need to add Vim plugins on the sub’s computer for all of our code so we can
+quickly put together tests and missions as needed. We had lots of time loss
+from not understanding what specific modules, classes, and functions did, and
+from syntax errors that could have been avoided by a checker.</p></li>
+<li><p>We need to practice quickly putting together missions in order to be ready to
+adapt as situations and capabilities change on the day.</p>
+<ul>
+<li><p>This could be helped by improving our knowledge of prebuilt, generalized
+functions that handle more complex behaviors. (Align in front of vision
+target, move until target is seen, orbit position, etc…)</p></li>
+</ul>
+</li>
+<li><p>We should be able to write and test code without the sub being on.</p>
+<ul>
+<li><p>Multiple times during the competition we had 5-10 minutes waiting to get
+in to the water, and that time ended up being dead time because we weren’t
+confident that we could move our code on to the sub once it was tethered.</p></li>
+<li><p>Not implementing a gazebo sim exacerbated these issues, as we couldn’t do
+even basic sanity checks until the sub was hooked up.</p></li>
+<li><p>We need to come up with a way to move code from the developer’s computer
+to the sub’s computer that hopefully prevents mistakes when migrating.</p></li>
+</ul>
+</li>
+<li><p>Everyone working on the sub should be running the same version of the sub’s
+current OS if at all possible. This lowers the amount of churn and multiple
+configurations that we need to keep a working knowledge of, and makes using
+tools like <code class="docutils literal notranslate"><span class="pre">ROS_MASTER_URI</span></code> forwarding quicker and easier.</p></li>
+</ul>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
