@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_ros_tools.bag_crawler</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_ros_tools.bag_crawler</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file wis written by the team at UF MIL for the 2016 robosub competition.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">rosbag</span>
+<span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">from</span> <span class="nn">cv_bridge</span> <span class="kn">import</span> <span class="n">CvBridge</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">Image</span>
+
+
+<div class="viewcode-block" id="BagCrawler"><a class="viewcode-back" href="../../reference/images.html#mil_ros_tools.BagCrawler">[docs]</a><span class="k">class</span> <span class="nc">BagCrawler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crawls a bag file and displays each image message of a camera through</span>
+<span class="sd">    OpenCV.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        bag_path (str): The path to the bag file.</span>
+<span class="sd">        bag (rosbag.Bag): The bag object representing a bag file at the file location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bag_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bag_path</span> <span class="o">=</span> <span class="n">bag_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bag</span> <span class="o">=</span> <span class="n">rosbag</span><span class="o">.</span><span class="n">Bag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span> <span class="o">=</span> <span class="n">CvBridge</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BagCrawler.convert"><a class="viewcode-back" href="../../reference/images.html#mil_ros_tools.BagCrawler.convert">[docs]</a>    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an Image message to a cv2 compatible image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (sensor_msgs.msg.Image): The Image message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">imgmsg_to_cv2</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">desired_encoding</span><span class="o">=</span><span class="s2">&quot;bgr8&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">img</span></div>
+
+<div class="viewcode-block" id="BagCrawler.crawl"><a class="viewcode-back" href="../../reference/images.html#mil_ros_tools.BagCrawler.crawl">[docs]</a>    <span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">topic</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_image</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">max_msgs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crawls a bag file and returns a generator yielding each message in the</span>
+<span class="sd">        file. Additionally, a tqdm progress bar is displayed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topic (Optional[str]): ???</span>
+<span class="sd">            is_image (bool): ???</span>
+<span class="sd">            max_msgs (float): The maximum number of messages to return.</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            genpy.Message: A message in the bag file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_seen</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_msgs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">get_message_count</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">is_image</span><span class="p">:</span>
+            <span class="n">topic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_topics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">msg_topic</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">read_messages</span><span class="p">():</span>
+            <span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">num_msgs</span><span class="p">)</span>
+            <span class="n">num_msgs</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">msg_topic</span> <span class="o">!=</span> <span class="n">topic</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">num_seen</span> <span class="o">&gt;</span> <span class="n">max_msgs</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">num_seen</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">yield</span> <span class="n">msg</span>
+        <span class="n">progress_bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This function may not function properly. If the method works,</span>
+<span class="sd">            please remove this message.</span>
+
+<span class="sd">        Finds all topics that use the sensor_msgs/Image type and exist on a</span>
+<span class="sd">        specific camera.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cam (str): The camera to find image topics on. Should either be</span>
+<span class="sd">                &#39;left&#39; or &#39;right&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_topics</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">get_type_and_topic_info</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">all_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">get_type_and_topic_info</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">all_topics</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_topics</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">all_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;sensor_msgs/Image&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">cam</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+            <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;right&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cam</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+            <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;left&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">topics</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image_info_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This function may not function properly. If the method works,</span>
+<span class="sd">            please remove this message.</span>
+
+<span class="sd">        Finds all topics that use the sensor_msgs/CameraInfo type and exist on a</span>
+<span class="sd">        specific camera.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cam (str): The camera to find image topics on. Should either be</span>
+<span class="sd">                &#39;left&#39; or &#39;right&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_topics</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">get_type_and_topic_info</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">all_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bag</span><span class="o">.</span><span class="n">get_type_and_topic_info</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">all_topics</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_topics</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">all_types</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;sensor_msgs/CameraInfo&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">cam</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+            <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;right&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cam</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
+            <span class="n">topics</span> <span class="o">=</span> <span class="p">[</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;left&quot;</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">topics</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">bag</span> <span class="o">=</span> <span class="s2">&quot;test.bag&quot;</span>
+    <span class="n">bc</span> <span class="o">=</span> <span class="n">BagCrawler</span><span class="p">(</span><span class="n">bag</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">bc</span><span class="o">.</span><span class="n">crawl</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">bc</span><span class="o">.</span><span class="n">image_topics</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;current_image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
