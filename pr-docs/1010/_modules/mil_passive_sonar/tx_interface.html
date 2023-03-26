@@ -104,7 +104,9 @@
 <span class="sd">            nh (NodeHandle): The TxROS node handler.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_direction_sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span>
-            <span class="s2">&quot;/hydrophones/direction&quot;</span><span class="p">,</span> <span class="n">Vector3Stamped</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">heading_cb</span>
+            <span class="s2">&quot;/hydrophones/direction&quot;</span><span class="p">,</span>
+            <span class="n">Vector3Stamped</span><span class="p">,</span>
+            <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">heading_cb</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enable_srv</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_service_client</span><span class="p">(</span><span class="s2">&quot;/multilateration/enable&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_srv</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_service_client</span><span class="p">(</span><span class="s2">&quot;/multilateration/reset&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">)</span>

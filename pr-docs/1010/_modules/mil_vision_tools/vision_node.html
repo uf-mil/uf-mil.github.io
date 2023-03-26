@@ -170,7 +170,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_objects_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="s2">&quot;~identified_objects&quot;</span><span class="p">,</span> <span class="n">ObjectsInImage</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span>
+            <span class="s2">&quot;~identified_objects&quot;</span><span class="p">,</span>
+            <span class="n">ObjectsInImage</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_camera_info</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">camera_model</span> <span class="o">=</span> <span class="kc">None</span>
@@ -211,7 +213,7 @@
             <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ObjectInImage</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
-                <span class="s2">&quot;find_objects did not return a list of mil_msgs/ObjectInImage message. Ignoring.&quot;</span>
+                <span class="s2">&quot;find_objects did not return a list of mil_msgs/ObjectInImage message. Ignoring.&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_objects_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
@@ -250,7 +252,9 @@
             <span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
             <span class="n">edges</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
-                <span class="n">edges</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+                <span class="n">edges</span><span class="p">,</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">contours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">contours</span><span class="p">)</span>
             <span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>
@@ -266,19 +270,21 @@
                     <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">),</span>
                     <span class="p">)</span>
                 <span class="c1"># Demonstration of adding an object where the entire contour outline can be identified</span>
                 <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="n">contour</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+                        <span class="n">create_object_msg</span><span class="p">(</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="n">contour</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
                     <span class="p">)</span>
                 <span class="c1"># Demonstration of adding an object where a bounding rectangle can be identified</span>
                 <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                         <span class="n">create_object_msg</span><span class="p">(</span>
-                            <span class="s2">&quot;contour&quot;</span><span class="p">,</span> <span class="n">rect</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">),</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.8</span>
-                        <span class="p">)</span>
+                            <span class="s2">&quot;contour&quot;</span><span class="p">,</span>
+                            <span class="n">rect</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">),</span>
+                            <span class="n">confidence</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+                        <span class="p">),</span>
                     <span class="p">)</span>
 
             <span class="c1"># Log that an image has been received for debugging this demo</span>

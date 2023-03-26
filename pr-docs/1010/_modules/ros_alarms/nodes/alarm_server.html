@@ -118,7 +118,10 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/known_alarms&quot;</span><span class="p">,</span> <span class="p">[])))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="s2">&quot;/alarm/updates&quot;</span><span class="p">,</span> <span class="n">AlarmMsg</span><span class="p">,</span> <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">100</span>
+            <span class="s2">&quot;/alarm/updates&quot;</span><span class="p">,</span>
+            <span class="n">AlarmMsg</span><span class="p">,</span>
+            <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_meta_alarms</span><span class="p">()</span>
@@ -170,7 +173,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got request for alarm: </span><span class="si">{</span><span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">Alarm</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">)</span>
+            <span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+            <span class="n">Alarm</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">),</span>
         <span class="p">)</span><span class="o">.</span><span class="n">as_srv_resp</span><span class="p">()</span>
 
 <div class="viewcode-block" id="AlarmServer.make_tagged_alarm"><a class="viewcode-back" href="../../../reference/alarms.html#ros_alarms.nodes.alarm_server.AlarmServer.make_tagged_alarm">[docs]</a>    <span class="k">def</span> <span class="nf">make_tagged_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alarm</span><span class="p">:</span>
@@ -211,8 +215,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                 <span class="s2">&quot;Meta alarm callback for </span><span class="si">{}</span><span class="s2"> failed to return an Alarm or boolean&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">meta_alarm</span>
-                <span class="p">)</span>
+                    <span class="n">meta_alarm</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_alarm</span><span class="p">(</span><span class="n">alarm</span><span class="p">)</span>

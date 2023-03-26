@@ -114,9 +114,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Controller.update"><a class="viewcode-back" href="../../subjugator/reference.html#rise_6dof.Controller.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">desired</span><span class="p">:</span> <span class="n">PoseTwist</span><span class="p">,</span> <span class="n">current</span><span class="p">:</span> <span class="n">PoseTwist</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">desired</span><span class="p">:</span> <span class="n">PoseTwist</span><span class="p">,</span>
+        <span class="n">current</span><span class="p">:</span> <span class="n">PoseTwist</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
-        <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+        <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">Tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
     <span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the controllers with a few values.</span>
@@ -139,7 +143,7 @@
             <span class="p">[</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p_dot</span><span class="p">),</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">o_dot</span><span class="p">),</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span>
 
         <span class="c1"># world_from_desiredbody = transformations.quaternion_matrix(desired_o)[:3, :3]</span>
@@ -147,13 +151,13 @@
             <span class="p">[</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_p_dot</span><span class="p">),</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_o_dot</span><span class="p">),</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span>
         <span class="n">desired_x_dotdot</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
             <span class="p">[</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_p_dotdot</span><span class="p">),</span>
                 <span class="n">world_from_body</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">desired_o_dotdot</span><span class="p">),</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
@@ -166,9 +170,9 @@
                     <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
                         <span class="n">desired_o</span><span class="p">,</span>
                         <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_inverse</span><span class="p">(</span><span class="n">o</span><span class="p">),</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
                 <span class="p">),</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;two_d_mode&quot;</span><span class="p">]:</span>
             <span class="n">error_position_world</span> <span class="o">=</span> <span class="n">error_position_world</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -198,11 +202,11 @@
         <span class="n">output</span> <span class="o">=</span> <span class="n">pd_output</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;use_rise&quot;</span><span class="p">]:</span>
             <span class="n">rise_term_int</span> <span class="o">=</span> <span class="n">body_gain</span><span class="p">(</span>
-                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ks&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">])</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ks&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;alpha&quot;</span><span class="p">]),</span>
             <span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">)</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span>
-                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">])</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;beta&quot;</span><span class="p">]),</span>
             <span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-                <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">)</span>
+                <span class="n">numpy</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">error_velocity_world</span><span class="p">),</span>
             <span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
@@ -216,16 +220,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rise_term_int_prev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;accel_feedforward&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-            <span class="n">desired_x_dotdot</span>
+            <span class="n">desired_x_dotdot</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="n">body_gain</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;vel_feedforward&quot;</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-            <span class="n">desired_x_dot</span>
+            <span class="n">desired_x_dot</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Permitting lambda assignment b/c legacy</span>
         <span class="k">def</span> <span class="nf">wrench_from_vec</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span> <span class="n">world_from_body</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-                <span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+                <span class="n">output</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span>
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>

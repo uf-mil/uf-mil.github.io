@@ -109,7 +109,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">async</span> <span class="k">def</span> <span class="nf">run_submission_with_timeout</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">mission</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">mission</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Runs a child mission, throwing an exception if more time than specified in timeout</span>
@@ -134,7 +137,8 @@
                 <span class="k">return</span> <span class="n">result</span>
             <span class="n">timeout_fut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
             <span class="n">result</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">submission</span><span class="p">,</span> <span class="n">timeout_fut</span><span class="p">],</span> <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span>
+                <span class="p">[</span><span class="n">submission</span><span class="p">,</span> <span class="n">timeout_fut</span><span class="p">],</span>
+                <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">timeout_fut</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
@@ -175,19 +179,20 @@
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;invalid parameters, missing attribute &quot;mission&quot;&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">has_mission</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">]):</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                        <span class="s1">&#39;mission &quot;</span><span class="si">{}</span><span class="s1">&quot; not available&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">])</span>
+                        <span class="s1">&#39;mission &quot;</span><span class="si">{}</span><span class="s1">&quot; not available&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">]),</span>
                     <span class="p">)</span>
                 <span class="k">if</span> <span class="s2">&quot;parameters&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
                     <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_mission</span><span class="p">(</span>
-                        <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">]</span>
+                        <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span>
                     <span class="p">)</span><span class="o">.</span><span class="n">decode_parameters</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">])</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ParametersException</span><span class="p">(</span>
                         <span class="s2">&quot;Invalid parameters for </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                            <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-                        <span class="p">)</span>
+                            <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span>
+                            <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+                        <span class="p">),</span>
                     <span class="p">)</span>
                 <span class="k">if</span> <span class="s2">&quot;timeout&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mission</span><span class="p">:</span>
                     <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -215,23 +220,27 @@
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final</span><span class="p">,</span> <span class="n">failure</span><span class="o">.</span><span class="n">Failure</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span>
                             <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> FAILED: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
-                            <span class="p">)</span>
+                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span>
+                                <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">(),</span>
+                            <span class="p">),</span>
                         <span class="p">)</span>
                         <span class="k">if</span> <span class="n">mission</span><span class="p">[</span>
                             <span class="s2">&quot;required&quot;</span>
                         <span class="p">]:</span>  <span class="c1"># Fail whole chain if a required mission times out or fails</span>
                             <span class="k">raise</span> <span class="n">SubmissionException</span><span class="p">(</span>
-                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+                                <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span>
+                                <span class="n">final</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">(),</span>
                             <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span>
-                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> SUCCEEDED: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="p">)</span>
+                            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> SUCCEEDED: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">final</span><span class="p">),</span>
                         <span class="p">)</span>
                         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NO FAIL BRO&quot;</span><span class="p">)</span>
 
                 <span class="n">fut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_submission_with_timeout</span><span class="p">(</span>
-                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span> <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">],</span> <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;mission&quot;</span><span class="p">],</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">],</span>
+                    <span class="n">mission</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
                 <span class="n">fut</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
                 <span class="k">await</span> <span class="n">fut</span>

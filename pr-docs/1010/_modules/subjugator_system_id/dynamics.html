@@ -152,7 +152,7 @@
         <span class="n">rotational_inertia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">inertial</span><span class="o">.</span><span class="n">inertia</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">())</span>
         <span class="n">drag_linear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_parameters/drag/linear_coeffs&quot;</span><span class="p">))</span>
         <span class="n">drag_angular</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_parameters/drag/angular_coeffs&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_parameters/drag/angular_coeffs&quot;</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">drag_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">drag_linear</span><span class="p">,</span> <span class="n">drag_angular</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
         <span class="n">volume</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/robot_parameters/volume&quot;</span><span class="p">)</span>
@@ -267,7 +267,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_dynamics_from_total_wrench</span><span class="p">(</span><span class="n">twist</span><span class="p">,</span> <span class="n">total_wrench</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SubjuGatorDynamics.inverse_dynamics_from_total_wrench"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_system_id.SubjuGatorDynamics.inverse_dynamics_from_total_wrench">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_dynamics_from_total_wrench</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">total_wrench</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">twist</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">total_wrench</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the acceleration of the Sub given the total force/torque on the body.</span>

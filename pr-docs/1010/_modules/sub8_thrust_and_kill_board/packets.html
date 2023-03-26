@@ -134,7 +134,10 @@
 
 <div class="viewcode-block" id="KillMessage.create_kill_message"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.KillMessage.create_kill_message">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_kill_message</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">hard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">asserted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">hard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">asserted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a kill message containing three bytes of information, specified</span>
@@ -152,7 +155,11 @@
         <span class="n">hard_soft_byte</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">HARD</span> <span class="k">if</span> <span class="n">hard</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SOFT</span>
         <span class="n">assert_unassert_byte</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ASSERTED</span> <span class="k">if</span> <span class="n">asserted</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">UNASSERTED</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
-            <span class="s2">&quot;BBBB&quot;</span><span class="p">,</span> <span class="n">command_byte</span><span class="p">,</span> <span class="n">hard_soft_byte</span><span class="p">,</span> <span class="n">assert_unassert_byte</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">PADDING</span>
+            <span class="s2">&quot;BBBB&quot;</span><span class="p">,</span>
+            <span class="n">command_byte</span><span class="p">,</span>
+            <span class="n">hard_soft_byte</span><span class="p">,</span>
+            <span class="n">assert_unassert_byte</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">IDENTIFIER</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></div>
 
@@ -218,7 +225,9 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;KillMessage(command=</span><span class="si">{}</span><span class="s2">, hard=</span><span class="si">{}</span><span class="s2">, asserted=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_hard</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_asserted</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_hard</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_asserted</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -240,7 +249,15 @@
 
 <span class="k">class</span> <span class="nc">StatusMessage</span><span class="p">(</span><span class="n">KillStatus</span><span class="p">):</span>
     <span class="n">BIT_MASK</span> <span class="o">=</span> <span class="n">KillStatus</span><span class="p">(</span>
-        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">14</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">14</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">STRUCT_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;=h&quot;</span>
 
@@ -383,7 +400,8 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;ThrustPacket(thruster_id=</span><span class="si">{}</span><span class="s2">, command=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">thruster_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thruster_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span>
         <span class="p">)</span></div>
 </pre></div>
 

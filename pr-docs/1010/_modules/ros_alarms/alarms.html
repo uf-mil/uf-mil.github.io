@@ -85,6 +85,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
+
 <span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span> <span class="k">as</span> <span class="n">AlarmMsg</span>
 <span class="kn">from</span> <span class="nn">ros_alarms.srv</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AlarmGet</span><span class="p">,</span>
@@ -133,7 +134,10 @@
 
 
 <span class="k">def</span> <span class="nf">wait_for_service</span><span class="p">(</span>
-    <span class="n">service</span><span class="p">,</span> <span class="n">warn_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">warn_msg</span><span class="o">=</span><span class="s2">&quot;Waiting for service..&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">service</span><span class="p">,</span>
+    <span class="n">warn_time</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">warn_msg</span><span class="o">=</span><span class="s2">&quot;Waiting for service..&quot;</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A fancy extension of wait for service that will warn with a message if it is taking a while.</span>
@@ -264,7 +268,7 @@
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_severity_cb_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">severity</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
             <span class="k">return</span> <span class="n">severity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="n">severity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># Not a tuple, just an int. The severities should match</span>
@@ -308,8 +312,9 @@
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                         <span class="n">_make_callback_error_string</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-                        <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+                            <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                        <span class="p">),</span>
                     <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">call_when_cleared</span><span class="p">:</span>
@@ -321,8 +326,9 @@
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                         <span class="n">_make_callback_error_string</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-                        <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+                            <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                        <span class="p">),</span>
                     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Alarm.update"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">srv</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
@@ -347,8 +353,9 @@
 
         <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
             <span class="s2">&quot;Updating alarm: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="s2">&quot;raised&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="s2">&quot;cleared&quot;</span>
-            <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+                <span class="s2">&quot;raised&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="s2">&quot;cleared&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span>
         <span class="c1"># Run the callbacks for that alarm</span>
         <span class="n">cb_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raised_cbs</span> <span class="k">if</span> <span class="n">srv</span><span class="o">.</span><span class="n">raised</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleared_cbs</span>
@@ -362,7 +369,10 @@
                 <span class="n">cb</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
-                    <span class="n">_make_callback_error_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+                    <span class="n">_make_callback_error_string</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                    <span class="p">),</span>
                 <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Alarm.as_msg"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.Alarm.as_msg">[docs]</a>    <span class="k">def</span> <span class="nf">as_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AlarmMsg</span><span class="p">:</span>
@@ -441,7 +451,12 @@
         <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;alarm server connected&quot;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_generate_request</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">raised</span><span class="p">,</span> <span class="n">node_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{},</span> <span class="n">severity</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">raised</span><span class="p">,</span>
+        <span class="n">node_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">severity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">AlarmSetRequest</span><span class="p">()</span>
         <span class="n">request</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">alarm_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span>
@@ -626,7 +641,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">severity</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
             <span class="k">return</span> <span class="n">severity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_alarm</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="n">severity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="c1"># Not a tuple or list, just an int. The severities should match</span>
@@ -667,8 +682,9 @@
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                         <span class="n">_make_callback_error_string</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-                        <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span>
+                            <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                        <span class="p">),</span>
                     <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">call_when_cleared</span><span class="p">:</span>
@@ -681,8 +697,9 @@
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                         <span class="n">_make_callback_error_string</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-                        <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span>
+                            <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                        <span class="p">),</span>
                     <span class="p">)</span></div>
 
 <div class="viewcode-block" id="AlarmListener.clear_callbacks"><a class="viewcode-back" href="../../reference/alarms.html#ros_alarms.AlarmListener.clear_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">clear_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -709,8 +726,9 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span>
                     <span class="n">_make_callback_error_string</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
-                    <span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_alarm_name</span><span class="p">,</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">(),</span>
+                    <span class="p">),</span>
                 <span class="p">)</span></div>
 
 
