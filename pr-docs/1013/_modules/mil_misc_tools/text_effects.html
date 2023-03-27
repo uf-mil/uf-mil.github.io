@@ -120,13 +120,13 @@
 
         <span class="c1"># Text effects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">underline</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">underline</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">underline</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bold</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">bold</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">bold</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">negative</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="n">Printer</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">negative</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_string</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">negative</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">+</span> <span class="n">Colors</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># For passing in custom formatting</span>
@@ -210,17 +210,20 @@
         <span class="n">newline</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">assert</span> <span class="n">time</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">callable</span><span class="p">(</span>
-            <span class="n">time</span>
+            <span class="n">time</span><span class="p">,</span>
         <span class="p">),</span> <span class="s2">&quot;`time` should be `None` for no printing or a function that generates a timestamp.&quot;</span>
         <span class="k">assert</span> <span class="n">msg_color</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">msg_color</span><span class="p">,</span> <span class="nb">str</span>
+            <span class="n">msg_color</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">,</span>
         <span class="p">),</span> <span class="s2">&quot;`msg_color` should be `None` for default printing or a string color.&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">auto_bold</span><span class="p">,</span> <span class="nb">bool</span>
+            <span class="n">auto_bold</span><span class="p">,</span>
+            <span class="nb">bool</span><span class="p">,</span>
         <span class="p">),</span> <span class="s2">&quot;`auto_bold` should be true or false if messages should be printed</span><span class="se">\</span>
 <span class="s2">                               as bold by default or not&quot;</span>
         <span class="k">assert</span> <span class="n">newline</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">newline</span><span class="p">,</span> <span class="nb">int</span>
+            <span class="n">newline</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">,</span>
         <span class="p">),</span> <span class="s2">&quot;`newline` should be the number of newlines after the text (default 1)&quot;</span>
 
         <span class="c1"># All these can be overwritten if not specified here</span>

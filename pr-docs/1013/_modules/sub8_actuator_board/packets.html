@@ -154,7 +154,9 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CommandMessage(address=</span><span class="si">{}</span><span class="s2">, write=</span><span class="si">{}</span><span class="s2">, on=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -167,8 +169,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="s2">&quot;Attempted to command valve </span><span class="si">{}</span><span class="s2">, but valid addresses are only [0,</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">address</span><span class="p">,</span> <span class="n">CommandMessage</span><span class="o">.</span><span class="n">NUM_VALVES</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="p">)</span>
+                <span class="n">address</span><span class="p">,</span>
+                <span class="n">CommandMessage</span><span class="o">.</span><span class="n">NUM_VALVES</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 

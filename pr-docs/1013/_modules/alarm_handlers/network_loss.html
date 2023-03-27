@@ -96,7 +96,11 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hm</span> <span class="o">=</span> <span class="n">HeartbeatMonitor</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span> <span class="s2">&quot;/network&quot;</span><span class="p">,</span> <span class="n">Header</span><span class="p">,</span> <span class="n">prd</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">node_name</span><span class="o">=</span><span class="s2">&quot;network_loss_kill&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+            <span class="s2">&quot;/network&quot;</span><span class="p">,</span>
+            <span class="n">Header</span><span class="p">,</span>
+            <span class="n">prd</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">node_name</span><span class="o">=</span><span class="s2">&quot;network_loss_kill&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="NetworkLoss.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.NetworkLoss.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

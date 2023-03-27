@@ -83,11 +83,12 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">serial</span> <span class="kn">import</span> <span class="n">SerialException</span>
+
 <span class="kn">from</span> <span class="nn">mil_usb_to_can.board</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">USBtoCANBoard</span><span class="p">,</span>  <span class="c1"># relative import causes import error with rosrun - GH-731</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">mil_usb_to_can.utils</span> <span class="kn">import</span> <span class="n">USB2CANException</span>
-<span class="kn">from</span> <span class="nn">serial</span> <span class="kn">import</span> <span class="n">SerialException</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.device</span> <span class="kn">import</span> <span class="n">CANDeviceHandle</span>
@@ -116,12 +117,12 @@
         <span class="c1"># If simulation mode, load simulated devices</span>
         <span class="k">if</span> <span class="n">simulation</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
-                <span class="s2">&quot;CAN2USB driver in simulation! Will not talk to real hardware.&quot;</span>
+                <span class="s2">&quot;CAN2USB driver in simulation! Will not talk to real hardware.&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">devices</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
                 <span class="nb">list</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parse_module_dictionary</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~simulated_devices&quot;</span><span class="p">))</span>
-                <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parse_module_dictionary</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~simulated_devices&quot;</span><span class="p">)),</span>
+                <span class="p">),</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="o">=</span> <span class="n">USBtoCANBoard</span><span class="p">(</span>
                 <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span>
@@ -137,7 +138,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">CANDeviceHandle</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">device_id</span><span class="p">:</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">device_id</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_module_dictionary</span><span class="p">(</span>
-                <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~device_handles&quot;</span><span class="p">)</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~device_handles&quot;</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="p">}</span>
 
@@ -163,8 +164,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                 <span class="s2">&quot;Message received for device </span><span class="si">{}</span><span class="s2">, but no handle registered&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">packet</span><span class="o">.</span><span class="n">device</span>
-                <span class="p">)</span>
+                    <span class="n">packet</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
@@ -192,7 +193,7 @@
 
 <div class="viewcode-block" id="USBtoCANDriver.parse_module_dictionary"><a class="viewcode-back" href="../../reference/can.html#mil_usb_to_can.USBtoCANDriver.parse_module_dictionary">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse_module_dictionary</span><span class="p">(</span>
-        <span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+        <span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generator to load classes from module strings specified in a dictionary.</span>
