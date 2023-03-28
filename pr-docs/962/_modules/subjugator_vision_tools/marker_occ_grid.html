@@ -110,7 +110,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">starting_pose</span><span class="p">,</span> <span class="n">topic_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/search_grid&quot;</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">res</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">,</span>
+        <span class="n">starting_pose</span><span class="p">,</span>
+        <span class="n">topic_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/search_grid&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span> <span class="o">=</span> <span class="n">MapMetaData</span><span class="p">()</span>
         <span class="c1"># Resolution is m/cell. Width is X, height is Y.</span>
@@ -124,7 +129,7 @@
 
         <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="n">y</span><span class="o">=-</span><span class="n">starting_pose</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">res</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">q</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span>
-            <span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_euler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">starting_pose</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+            <span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_euler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">starting_pose</span><span class="o">.</span><span class="n">theta</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="n">q</span><span class="p">)</span>
 
@@ -145,12 +150,12 @@
 <span class="sd">        Also used to project the camera&#39;s view onto the grid because it is rotationally intolerant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">center_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">center</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">]</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">],</span>
         <span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">radius</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">radius</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searched</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">center_offset</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)),</span> <span class="n">radius</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
@@ -164,19 +169,21 @@
         <span class="n">TRENCH_WIDTH</span> <span class="o">=</span> <span class="mf">0.1524</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span>  <span class="c1"># cells (6 inches)</span>
 
         <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">pose_2d</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pose_2d</span><span class="o">.</span><span class="n">y</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">pose_2d</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pose_2d</span><span class="o">.</span><span class="n">y</span><span class="p">],</span>
         <span class="p">)</span>  <span class="c1"># The negative all depends on how the center is returned</span>
         <span class="n">rotation</span> <span class="o">=</span> <span class="o">-</span><span class="n">pose_2d</span><span class="o">.</span><span class="n">theta</span>
 
         <span class="n">center_offset</span> <span class="o">=</span> <span class="n">center</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_data</span><span class="o">.</span><span class="n">resolution</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">]</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">mid_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mid_y</span><span class="p">],</span>
         <span class="p">)</span>
 
         <span class="n">rot_top_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">),</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">rot_bottom_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-            <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+            <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">TRENCH_LENGTH</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">make_2D_rotation</span><span class="p">(</span><span class="n">rotation</span><span class="p">),</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
         <span class="n">pos_top_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int0</span><span class="p">(</span><span class="n">rot_top_point</span> <span class="o">+</span> <span class="n">center_offset</span><span class="p">)</span>
@@ -250,11 +257,12 @@
         <span class="c1"># We search at 1.5 * r so that there is some overlay in the search feilds.</span>
         <span class="n">np_pose</span> <span class="o">=</span> <span class="n">msg_helpers</span><span class="o">.</span><span class="n">pose_to_numpy</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">intial_position</span><span class="p">)</span>
         <span class="n">rot_mat</span> <span class="o">=</span> <span class="n">make_2D_rotation</span><span class="p">(</span>
-            <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">np_pose</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">np_pose</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">2</span><span class="p">],</span>
         <span class="p">)</span>
         <span class="n">coor</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rot_mat</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span><span class="p">))</span> <span class="o">*</span> <span class="n">srv</span><span class="o">.</span><span class="n">search_radius</span> <span class="o">*</span> <span class="mf">1.75</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rot_mat</span><span class="p">,</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span><span class="p">))</span> <span class="o">*</span> <span class="n">srv</span><span class="o">.</span><span class="n">search_radius</span> <span class="o">*</span> <span class="mf">1.75</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="o">+</span> <span class="n">np_pose</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="p">)</span>
@@ -291,7 +299,7 @@
             <span class="k">return</span> <span class="mi">1</span>
 
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">masked_search</span><span class="p">[</span><span class="n">masked_search</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="n">circle_mask</span><span class="p">[</span><span class="n">circle_mask</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
+            <span class="n">circle_mask</span><span class="p">[</span><span class="n">circle_mask</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">],</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Searcher.polygon_generator"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_vision_tools.Searcher.polygon_generator">[docs]</a>    <span class="k">def</span> <span class="nf">polygon_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
@@ -328,7 +336,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">image_sub</span><span class="p">,</span> <span class="n">grid_res</span><span class="p">,</span> <span class="n">grid_width</span><span class="p">,</span> <span class="n">grid_height</span><span class="p">,</span> <span class="n">grid_starting_pose</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image_sub</span><span class="p">,</span>
+        <span class="n">grid_res</span><span class="p">,</span>
+        <span class="n">grid_width</span><span class="p">,</span>
+        <span class="n">grid_height</span><span class="p">,</span>
+        <span class="n">grid_starting_pose</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">res</span><span class="o">=</span><span class="n">grid_res</span><span class="p">,</span>
@@ -409,12 +422,18 @@
             <span class="n">timestamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span>
-            <span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+            <span class="s2">&quot;map&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/downward&quot;</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="p">,</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">trans</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
         <span class="n">x_y_position</span> <span class="o">=</span> <span class="n">trans</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">waitForTransform</span><span class="p">(</span>
-            <span class="s2">&quot;/ground&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+            <span class="s2">&quot;/ground&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/downward&quot;</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="p">,</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">5.0</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">trans</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span><span class="o">.</span><span class="n">lookupTransform</span><span class="p">(</span><span class="s2">&quot;/ground&quot;</span><span class="p">,</span> <span class="s2">&quot;/downward&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
         <span class="n">height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">trans</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -452,10 +471,7 @@
 
         <span class="c1"># Get m/px on the ground floor.</span>
         <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_visual_radius</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">():</span>
-            <span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">()</span>
+        <span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cy</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">()</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">cam</span><span class="o">.</span><span class="n">cx</span><span class="p">()</span>
 
         <span class="n">m_px</span> <span class="o">=</span> <span class="n">m</span> <span class="o">/</span> <span class="n">px</span>
         <span class="n">marker_area_m</span> <span class="o">=</span> <span class="n">MARKER_WIDTH</span> <span class="o">*</span> <span class="n">MARKER_LENGTH</span>
@@ -487,7 +503,10 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;searcher&quot;</span><span class="p">)</span>
     <span class="n">tr</span> <span class="o">=</span> <span class="n">MarkerOccGrid</span><span class="p">(</span>
-        <span class="n">res</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">starting_pose</span><span class="o">=</span><span class="n">Pose2D</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+        <span class="n">starting_pose</span><span class="o">=</span><span class="n">Pose2D</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
 </pre></div>

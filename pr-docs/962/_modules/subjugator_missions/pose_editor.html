@@ -81,13 +81,12 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">MutableSequence</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">rospy</span>
-<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">,</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">Vector3</span>
 <span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Pose</span> <span class="k">as</span> <span class="n">Pose</span>
-<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Quaternion</span><span class="p">,</span> <span class="n">Twist</span><span class="p">,</span> <span class="n">Vector3</span>
 <span class="kn">from</span> <span class="nn">mil_msgs.msg</span> <span class="kn">import</span> <span class="n">MoveToGoal</span><span class="p">,</span> <span class="n">PoseTwist</span><span class="p">,</span> <span class="n">PoseTwistStamped</span>
 <span class="kn">from</span> <span class="nn">mil_ros_tools</span> <span class="kn">import</span> <span class="n">rosmsg_to_numpy</span>
 <span class="kn">from</span> <span class="nn">nav_msgs.msg</span> <span class="kn">import</span> <span class="n">Odometry</span>
@@ -150,7 +149,7 @@
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">normalized</span><span class="p">(</span><span class="n">b1</span><span class="p">),</span> <span class="n">bb</span><span class="p">,</span> <span class="n">normalized</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">bb</span><span class="p">))])</span>
     <span class="n">rot</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_from_matrix</span><span class="p">(</span>
-        <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rot</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rot</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
     <span class="p">)</span>
 
 
@@ -169,8 +168,8 @@
                 <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
                     <span class="n">q</span><span class="p">,</span>
                     <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_inverse</span><span class="p">(</span><span class="n">q_</span><span class="p">),</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
         <span class="p">)</span>
         <span class="o">&lt;</span> <span class="mf">1e-6</span>
     <span class="p">)</span>
@@ -203,17 +202,43 @@
 
 <div class="viewcode-block" id="PoseEditor"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor">[docs]</a><span class="k">class</span> <span class="nc">PoseEditor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Helper class used to create poses for the movement of SubjuGatorMission.</span>
+<span class="sd">    Helper class used to create poses for the movement of SubjuGator.</span>
 
 <span class="sd">    Frequently the methods from this class can be tied together in order to</span>
 <span class="sd">    orchestrate multiple movements.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        class ExampleMission(SubjuGatorMission):</span>
+<span class="sd">            pose = self.move() # new pose editor</span>
+<span class="sd">            down = pose.down(3).left(2) # down 3m, left 2m</span>
+<span class="sd">            await self.go(down, speed = 0.7) # go to that location at 0.7m/s</span>
 
 <span class="sd">    .. container:: operations</span>
 
 <span class="sd">        .. describe:: str(x)</span>
 
-<span class="sd">            Pretty prints the position and orientation associated with the sub.</span>
+<span class="sd">            Pretty prints the position and orientation associated with the pose editor.</span>
+
+<span class="sd">        .. describe:: repr(x)</span>
+
+<span class="sd">            Pretty prints the position and orientation associated with the pose editor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">frame_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">position</span><span class="p">:</span> <span class="n">MutableSequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">orientation</span><span class="p">:</span> <span class="n">MutableSequence</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PoseEditor(frame_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_id</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">, orientation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__str__</span>
 
 <div class="viewcode-block" id="PoseEditor.from_Odometry_topic"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.from_Odometry_topic">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_Odometry_topic</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/odom&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
@@ -253,16 +278,10 @@
 <span class="sd">        the message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">frame_id</span><span class="p">,</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="p">),</span> <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span>
+            <span class="n">frame_id</span><span class="p">,</span>
+            <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="p">),</span>
+            <span class="n">rosmsg_to_numpy</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="p">),</span>
         <span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">orientation</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">orientation</span>
-
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;p: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">, q: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_rot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -281,7 +300,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rot</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">UP</span><span class="p">)</span>
 
     <span class="c1"># Position</span>
-<div class="viewcode-block" id="PoseEditor.set_position"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
+<div class="viewcode-block" id="PoseEditor.set_position"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">MutableSequence</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a new pose editor with the same orientation, but a new position.</span>
 
@@ -518,7 +537,7 @@
             <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
                 <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">UP</span><span class="p">),</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PoseEditor.yaw_right"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.yaw_right">[docs]</a>    <span class="k">def</span> <span class="nf">yaw_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
@@ -585,7 +604,7 @@
             <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">,</span>
                 <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_about_axis</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PoseEditor.roll_left"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.roll_left">[docs]</a>    <span class="k">def</span> <span class="nf">roll_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
@@ -625,10 +644,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_orientation</span><span class="p">(</span>
             <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_multiply</span><span class="p">(</span>
                 <span class="n">transformations</span><span class="o">.</span><span class="n">quaternion_about_axis</span><span class="p">(</span>
-                    <span class="n">angle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zero_roll</span><span class="p">()</span><span class="o">.</span><span class="n">left_vector</span>
+                    <span class="n">angle</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">zero_roll</span><span class="p">()</span><span class="o">.</span><span class="n">left_vector</span><span class="p">,</span>
                 <span class="p">),</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="p">),</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">pitch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseEditor</span><span class="p">:</span>
@@ -654,7 +674,9 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PoseEditor.as_PoseTwist"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.as_PoseTwist">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwist</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`~mil_msgs.msg.PoseTwist` message class with the pose</span>
@@ -674,7 +696,9 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PoseEditor.as_PoseTwistStamped"><a class="viewcode-back" href="../../subjugator/reference.html#subjugator_missions.PoseEditor.as_PoseTwistStamped">[docs]</a>    <span class="k">def</span> <span class="nf">as_PoseTwistStamped</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">linear</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">angular</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PoseTwistStamped</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a :class:`~mil_msgs.msg.PoseTwist` message class with the pose</span>

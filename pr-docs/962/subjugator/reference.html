@@ -82,21 +82,20 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sub8-thrust-and-kill-board">Sub8 Thrust and Kill Board</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#thrusterandkillboard">ThrusterAndKillBoard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#killmessage">KillMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heartbeatmessage">HeartbeatMessage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#thrustpacket">ThrustPacket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#thrusterandkillboardsimulation">ThrusterAndKillBoardSimulation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#thruster">Thruster</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#heartbeatpacket">HeartbeatPacket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#thrustsetpacket">ThrustSetPacket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#killsetpacket">KillSetPacket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#killreceivepacket">KillReceivePacket</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sub9-thrust-and-kill-board">Sub9 Thrust and Kill Board</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#heartbeatsetpacket">HeartbeatSetPacket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#heartbeatreceivepacket">HeartbeatReceivePacket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">ThrustSetPacket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#thrustsetpacket">ThrustSetPacket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#killstatus">KillStatus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">KillSetPacket</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">KillReceivePacket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#killsetpacket">KillSetPacket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#killreceivepacket">KillReceivePacket</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#object-detection">Object Detection</a><ul>
@@ -315,7 +314,7 @@ def</span><a class="reference internal" href="#sub_actuator_board.ActuatorBoard.
 it inherits from the <code class="xref py py-class docutils literal notranslate"><span class="pre">CANDeviceHandle</span></code> class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sub_actuator_board.ActuatorBoard.on_data">
-<span class="sig-name descname"><span class="pre">on_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sub_actuator_board.ActuatorPollResponsePacket" title="sub_actuator_board.ActuatorPollResponsePacket"><span class="pre">ActuatorPollResponsePacket</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../reference/can.html#mil_usb_to_can.AckPacket" title="mil_usb_to_can.AckPacket"><span class="pre">AckPacket</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sub_actuator_board/handle.html#ActuatorBoard.on_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub_actuator_board.ActuatorBoard.on_data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sub_actuator_board.ActuatorPollResponsePacket" title="sub_actuator_board.ActuatorPollResponsePacket"><span class="pre">ActuatorPollResponsePacket</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../reference/can.html#mil_usb_to_can.sub9.AckPacket" title="mil_usb_to_can.sub9.AckPacket"><span class="pre">AckPacket</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sub_actuator_board/handle.html#ActuatorBoard.on_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub_actuator_board.ActuatorBoard.on_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process data received from board.</p>
 </dd></dl>
 
@@ -635,6 +634,422 @@ packet to the board to unassert or assert to motherboard-origin kill.</p>
 </dd></dl>
 
 </section>
+<section id="killmessage">
+<h3>KillMessage<a class="headerlink" href="#killmessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.KillMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.ASSERTED">ASSERTED</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.COMMAND">COMMAND</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.HARD">HARD</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.IDENTIFIER">IDENTIFIER</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.RESPONSE">RESPONSE</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.SOFT">SOFT</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.UNASSERTED">UNASSERTED</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_asserted">is_asserted</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_command">is_command</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_hard">is_hard</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_response">is_response</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_soft">is_soft</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.is_unasserted">is_unasserted</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage.create_kill_message">KillMessage.create_kill_message</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">KillMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#KillMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a packet sent to kill/thrust board which contains
+a command or response related to kill status.</p>
+<p>Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationPacket</span></code>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty-prints the class name and each of the three packet attributes.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.IDENTIFIER">
+<span class="sig-name descname"><span class="pre">IDENTIFIER</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.IDENTIFIER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The packet’s identifier. Set equal to the ordinal value
+of “K”, or 75.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.COMMAND">
+<span class="sig-name descname"><span class="pre">COMMAND</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier representing the packet as a command packet.
+Equal to 67. This identifier should only be found in the first byte
+of the payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.RESPONSE">
+<span class="sig-name descname"><span class="pre">RESPONSE</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.RESPONSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier representing the packet as a response packet.
+Equal to 82. This identifier should only be found in the first byte of
+the payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.HARD">
+<span class="sig-name descname"><span class="pre">HARD</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.HARD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier representing the type of kill as a hard kill. Equal
+to 72. This identifier is designed to be used in the second byte of the
+payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.SOFT">
+<span class="sig-name descname"><span class="pre">SOFT</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.SOFT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier representing the type of kill as a soft kill. Equal
+to 83. This identifier is designed to be used in the second byte of the
+payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.ASSERTED">
+<span class="sig-name descname"><span class="pre">ASSERTED</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.ASSERTED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier equal to 65. This identifier is meant to be used
+in the third byte of the payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.UNASSERTED">
+<span class="sig-name descname"><span class="pre">UNASSERTED</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.UNASSERTED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier equal to 85. This identifier is meant to be used
+in the third byte of the payload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.create_kill_message">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_kill_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hard</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">asserted</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#KillMessage.create_kill_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.create_kill_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a kill message containing three bytes of information, specified
+as parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to make the kill message a command. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+then the packet will represent a response.</p></li>
+<li><p><strong>hard</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to make the packet kill type hard. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+then the packet will represent a soft kill.</p></li>
+<li><p><strong>asserted</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to make the packet asserted. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, then
+an unasserted packet is generated.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_asserted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_asserted</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_asserted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents an asserted packet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s asserteed/unasserted type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_command">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_command</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents a command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s command/response type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_hard">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_hard</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_hard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents a hard kill.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s hard/soft kill type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_response">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_response</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents a response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s command/response type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_soft">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_soft</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_soft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents a soft kill.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s hard/soft kill type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillMessage.is_unasserted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_unasserted</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillMessage.is_unasserted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the packet represents an unasserted packet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status of the packet’s asserteed/unasserted type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="heartbeatmessage">
+<h3>HeartbeatMessage<a class="headerlink" href="#heartbeatmessage" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.HeartbeatMessage"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.HeartbeatMessage.IDENTIFIER">IDENTIFIER</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#sub8_thrust_and_kill_board.HeartbeatMessage.create">HeartbeatMessage.create</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.HeartbeatMessage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">HeartbeatMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#HeartbeatMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.HeartbeatMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the special heartbeat packet send to kill and thruster board.</p>
+<p>Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationPacket</span></code>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty-prints the class name.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.HeartbeatMessage.IDENTIFIER">
+<span class="sig-name descname"><span class="pre">IDENTIFIER</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.HeartbeatMessage.IDENTIFIER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The packet identifier. Set equal to the ordinal value of
+“H,” or 72.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.HeartbeatMessage.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#HeartbeatMessage.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.HeartbeatMessage.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new heartbeat message to be sent.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="thrustpacket">
+<h3>ThrustPacket<a class="headerlink" href="#thrustpacket" title="Permalink to this heading">¶</a></h3>
+<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.ThrustPacket"><div class="attribute-table-column">
+<span>
+Attributes</span><ul>
+<li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket.IDENTIFIER">IDENTIFIER</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket.ID_MAPPING">ID_MAPPING</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket.command">command</a></li><li class="attribute-table-entry">
+<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket.thruster_id">thruster_id</a></li></ul>
+</div><div class="attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="attribute-table-entry">
+<span class="attribute-table-badge" title="classmethod">
+cls</span><a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket.create_thrust_packet">ThrustPacket.create_thrust_packet</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">ThrustPacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#ThrustPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a command send to the thrust/kill board to set the PWM of a thruster.</p>
+<p>Inherits from <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationPacket</span></code>.</p>
+<div class="operations docutils container">
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
+<dd><p>Pretty-prints the class name and each of the two packet attributes,
+the thruster ID and the command.</p>
+</dd></dl>
+
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket.IDENTIFIER">
+<span class="sig-name descname"><span class="pre">IDENTIFIER</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket.IDENTIFIER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The packet identifier, equal to the ordinal value of “T,”
+or 84.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket.ID_MAPPING">
+<span class="sig-name descname"><span class="pre">ID_MAPPING</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket.ID_MAPPING" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary mapping 3-letter thruster codes
+to their respective IDs:</p>
+<div class="table-wrapper"><table class="docutils align-default">
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>ID</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FLH</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>FRH</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>FLV</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>FRV</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>BLH</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>BRH</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p>BLV</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>BRV</p></td>
+<td><p>7</p></td>
+</tr>
+</tbody>
+</table>
+</div><dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Dict[<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>, <a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket.command">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">command</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket.command" title="Permalink to this definition">¶</a></dt>
+<dd><p>The command associated with the packet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The associated command.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket.create_thrust_packet">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_thrust_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thruster_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#ThrustPacket.create_thrust_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket.create_thrust_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a thruster packet given an ID and command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thruster_id</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The ID of the thruster to create a packet for.</p></li>
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The command to associate with the packet.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustPacket.thruster_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">thruster_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></em><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustPacket.thruster_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The thruster ID associated with the packet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The ID.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="thrusterandkillboardsimulation">
 <h3>ThrusterAndKillBoardSimulation<a class="headerlink" href="#thrusterandkillboardsimulation" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation"><div class="attribute-table-column">
@@ -741,8 +1156,8 @@ providing services to simulate physical plug connections/disconnections.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.on_data">
 <span class="sig-name descname"><span class="pre">on_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#bytes" title="(in Python v3.8)"><span class="pre">bytes</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/simulation.html#ThrusterAndKillBoardSimulation.on_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrusterAndKillBoardSimulation.on_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Serves as the data handler for the device. Handles <code class="xref py py-class docutils literal notranslate"><span class="pre">KillMessage</span></code>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustPacket</span></code>, and <code class="xref py py-class docutils literal notranslate"><span class="pre">HeartbeatMessage</span></code> types.</p>
+<dd><p>Serves as the data handler for the device. Handles <a class="reference internal" href="#sub8_thrust_and_kill_board.KillMessage" title="sub8_thrust_and_kill_board.KillMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">KillMessage</span></code></a>,
+<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustPacket" title="sub8_thrust_and_kill_board.ThrustPacket"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThrustPacket</span></code></a>, and <a class="reference internal" href="#sub8_thrust_and_kill_board.HeartbeatMessage" title="sub8_thrust_and_kill_board.HeartbeatMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeartbeatMessage</span></code></a> types.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -880,140 +1295,6 @@ as so:</p>
 </dd></dl>
 
 </section>
-<section id="heartbeatpacket">
-<h3>HeartbeatPacket<a class="headerlink" href="#heartbeatpacket" title="Permalink to this heading">¶</a></h3>
-<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.HeartbeatPacket"></div><dl class="py class">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.HeartbeatPacket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">HeartbeatPacket</span></span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#HeartbeatPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.HeartbeatPacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>Packet indicating a heartbeat. Sent both ways.</p>
-</dd></dl>
-
-</section>
-<section id="thrustsetpacket">
-<h3>ThrustSetPacket<a class="headerlink" href="#thrustsetpacket" title="Permalink to this heading">¶</a></h3>
-<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.ThrustSetPacket"><div class="attribute-table-column">
-<span>
-Attributes</span><ul>
-<li class="attribute-table-entry">
-<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustSetPacket.speed">speed</a></li><li class="attribute-table-entry">
-<a class="reference internal" href="#sub8_thrust_and_kill_board.ThrustSetPacket.thruster_id">thruster_id</a></li></ul>
-</div></div><dl class="py class">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustSetPacket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">ThrustSetPacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thruster_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#ThrustSetPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustSetPacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>Packet to set the speed of a specific thruster.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustSetPacket.thruster_id">
-<span class="sig-name descname"><span class="pre">thruster_id</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustSetPacket.thruster_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The ID of the thruster to set the speed of. The ID of
-the thruster corresponds to a specific thruster:</p>
-<div class="table-wrapper"><table class="docutils align-default">
-<colgroup>
-<col style="width: 57%" />
-<col style="width: 43%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>name</p></th>
-<th class="head"><p>id</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>FLH</p></td>
-<td><p>0</p></td>
-</tr>
-<tr class="row-odd"><td><p>FRH</p></td>
-<td><p>1</p></td>
-</tr>
-<tr class="row-even"><td><p>FLV</p></td>
-<td><p>2</p></td>
-</tr>
-<tr class="row-odd"><td><p>FRV</p></td>
-<td><p>3</p></td>
-</tr>
-<tr class="row-even"><td><p>BLH</p></td>
-<td><p>4</p></td>
-</tr>
-<tr class="row-odd"><td><p>BRH</p></td>
-<td><p>5</p></td>
-</tr>
-<tr class="row-even"><td><p>BLV</p></td>
-<td><p>6</p></td>
-</tr>
-<tr class="row-odd"><td><p>BRV</p></td>
-<td><p>7</p></td>
-</tr>
-</tbody>
-</table>
-</div><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.ThrustSetPacket.speed">
-<span class="sig-name descname"><span class="pre">speed</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.ThrustSetPacket.speed" title="Permalink to this definition">¶</a></dt>
-<dd><p>The speed to set the thruster to.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)">float</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="killsetpacket">
-<h3>KillSetPacket<a class="headerlink" href="#killsetpacket" title="Permalink to this heading">¶</a></h3>
-<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.KillSetPacket"><div class="attribute-table-column">
-<span>
-Attributes</span><ul>
-<li class="attribute-table-entry">
-<a class="reference internal" href="#sub8_thrust_and_kill_board.KillSetPacket.set">set</a></li></ul>
-</div></div><dl class="py class">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillSetPacket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">KillSetPacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#KillSetPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.KillSetPacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>Packet sent by the motherboard to set/unset the kill.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillSetPacket.set">
-<span class="sig-name descname"><span class="pre">set</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillSetPacket.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether the kill is set or unset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="killreceivepacket">
-<h3>KillReceivePacket<a class="headerlink" href="#killreceivepacket" title="Permalink to this heading">¶</a></h3>
-<div class="attribute-table" data-move-to-id="sub8_thrust_and_kill_board.KillReceivePacket"><div class="attribute-table-column">
-<span>
-Attributes</span><ul>
-<li class="attribute-table-entry">
-<a class="reference internal" href="#sub8_thrust_and_kill_board.KillReceivePacket.set">set</a></li></ul>
-</div></div><dl class="py class">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillReceivePacket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub8_thrust_and_kill_board.</span></span><span class="sig-name descname"><span class="pre">KillReceivePacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub8_thrust_and_kill_board/packets.html#KillReceivePacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub8_thrust_and_kill_board.KillReceivePacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>Packet sent by the motherboard to set/unset the kill.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sub8_thrust_and_kill_board.KillReceivePacket.set">
-<span class="sig-name descname"><span class="pre">set</span></span><a class="headerlink" href="#sub8_thrust_and_kill_board.KillReceivePacket.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Whether the kill is set or unset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)">bool</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 </section>
 <section id="sub9-thrust-and-kill-board">
 <h2>Sub9 Thrust and Kill Board<a class="headerlink" href="#sub9-thrust-and-kill-board" title="Permalink to this heading">¶</a></h2>
@@ -1035,8 +1316,8 @@ Attributes</span><ul>
 </dd></dl>
 
 </section>
-<section id="id1">
-<h3>ThrustSetPacket<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<section id="thrustsetpacket">
+<h3>ThrustSetPacket<a class="headerlink" href="#thrustsetpacket" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="sub9_thrust_and_kill_board.ThrustSetPacket"><div class="attribute-table-column">
 <span>
 Attributes</span><ul>
@@ -1158,8 +1439,8 @@ Attributes</span><ul>
 </dd></dl>
 
 </section>
-<section id="id2">
-<h3>KillSetPacket<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<section id="killsetpacket">
+<h3>KillSetPacket<a class="headerlink" href="#killsetpacket" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="sub9_thrust_and_kill_board.KillSetPacket"><div class="attribute-table-column">
 <span>
 Attributes</span><ul>
@@ -1195,8 +1476,8 @@ Attributes</span><ul>
 </dd></dl>
 
 </section>
-<section id="id3">
-<h3>KillReceivePacket<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<section id="killreceivepacket">
+<h3>KillReceivePacket<a class="headerlink" href="#killreceivepacket" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="sub9_thrust_and_kill_board.KillReceivePacket"><div class="attribute-table-column">
 <span>
 Attributes</span><ul>
@@ -2697,15 +2978,27 @@ def</span><a class="reference internal" href="#subjugator_missions.PoseEditor.ya
 def</span><a class="reference internal" href="#subjugator_missions.PoseEditor.zero_roll">zero_roll</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="subjugator_missions.PoseEditor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subjugator_missions.</span></span><span class="sig-name descname"><span class="pre">PoseEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subjugator_missions/pose_editor.html#PoseEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subjugator_missions.PoseEditor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper class used to create poses for the movement of SubjuGatorMission.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subjugator_missions.</span></span><span class="sig-name descname"><span class="pre">PoseEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.MutableSequence" title="(in Python v3.8)"><span class="pre">MutableSequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.MutableSequence" title="(in Python v3.8)"><span class="pre">MutableSequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/subjugator_missions/pose_editor.html#PoseEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subjugator_missions.PoseEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper class used to create poses for the movement of SubjuGator.</p>
 <p>Frequently the methods from this class can be tied together in order to
 orchestrate multiple movements.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExampleMission</span><span class="p">(</span><span class="n">SubjuGatorMission</span><span class="p">):</span>
+    <span class="n">pose</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">()</span> <span class="c1"># new pose editor</span>
+    <span class="n">down</span> <span class="o">=</span> <span class="n">pose</span><span class="o">.</span><span class="n">down</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># down 3m, left 2m</span>
+    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">go</span><span class="p">(</span><span class="n">down</span><span class="p">,</span> <span class="n">speed</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span> <span class="c1"># go to that location at 0.7m/s</span>
+</pre></div>
+</div>
 <div class="operations docutils container">
 <dl class="describe">
 <dt class="sig sig-object">
 <span class="sig-name descname"><span class="pre">str(x)</span></span></dt>
-<dd><p>Pretty prints the position and orientation associated with the sub.</p>
+<dd><p>Pretty prints the position and orientation associated with the pose editor.</p>
+</dd></dl>
+
+<dl class="describe">
+<dt class="sig sig-object">
+<span class="sig-name descname"><span class="pre">repr(x)</span></span></dt>
+<dd><p>Pretty prints the position and orientation associated with the pose editor.</p>
 </dd></dl>
 
 </div>
@@ -3006,7 +3299,7 @@ pose editor.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subjugator_missions.PoseEditor.set_position">
-<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.Sequence" title="(in Python v3.8)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#subjugator_missions.PoseEditor" title="subjugator_missions.pose_editor.PoseEditor"><span class="pre">PoseEditor</span></a></span></span><a class="reference internal" href="../_modules/subjugator_missions/pose_editor.html#PoseEditor.set_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subjugator_missions.PoseEditor.set_position" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.MutableSequence" title="(in Python v3.8)"><span class="pre">MutableSequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#subjugator_missions.PoseEditor" title="subjugator_missions.pose_editor.PoseEditor"><span class="pre">PoseEditor</span></a></span></span><a class="reference internal" href="../_modules/subjugator_missions/pose_editor.html#PoseEditor.set_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#subjugator_missions.PoseEditor.set_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new pose editor with the same orientation, but a new position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -306,10 +306,7 @@
         <span class="c1"># get a pose estimate in camera frame</span>
         <span class="k">if</span> <span class="n">cam</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">intrinsics</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">intrinsicMatrix</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">rectified</span><span class="p">:</span>
-                <span class="n">dist_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">dist_coeffs</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">distortionCoeffs</span><span class="p">()</span>
+            <span class="n">dist_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="n">rectified</span> <span class="k">else</span> <span class="n">cam</span><span class="o">.</span><span class="n">distortionCoeffs</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">intrinsics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="k">assert</span> <span class="n">dist_coeffs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">solvePnP</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_3D</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">intrinsics</span><span class="p">,</span> <span class="n">dist_coeffs</span><span class="p">)</span>
@@ -337,7 +334,9 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RectFinder.draw_model"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.RectFinder.draw_model">[docs]</a>    <span class="k">def</span> <span class="nf">draw_model</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="n">border</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+        <span class="n">border</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a 1 channel image displaying the internal model of the rectangle.</span>

@@ -78,31 +78,263 @@
             <main class="grid-item" role="main">
                 
   <h1>Source code for sub8_thrust_and_kill_board.packets</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span></span><span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 
-<span class="kn">from</span> <span class="nn">mil_usb_to_can</span> <span class="kn">import</span> <span class="n">Packet</span>
+<span class="kn">from</span> <span class="nn">mil_usb_to_can.sub8</span> <span class="kn">import</span> <span class="n">ApplicationPacket</span>
+
+<span class="c1"># CAN channel to send thrust messages to</span>
+<span class="n">THRUST_SEND_ID</span> <span class="o">=</span> <span class="mh">0x21</span>
+<span class="c1"># CAN channel to send kill messages to</span>
+<span class="n">KILL_SEND_ID</span> <span class="o">=</span> <span class="mh">0x11</span>
 
 
-<div class="viewcode-block" id="HeartbeatPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.HeartbeatPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">HeartbeatPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x01</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x00</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="KillMessage"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.KillMessage">[docs]</a><span class="k">class</span> <span class="nc">KillMessage</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Packet indicating a heartbeat. Sent both ways.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Represents a packet sent to kill/thrust board which contains</span>
+<span class="sd">    a command or response related to kill status.</span>
 
-    <span class="k">pass</span></div>
+<span class="sd">    Inherits from :class:`~mil_usb_to_can.ApplicationPacket`.</span>
 
+<span class="sd">    .. container:: operations</span>
 
-<div class="viewcode-block" id="ThrustSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrustSetPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ThrustSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x01</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x01</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;Bf&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Packet to set the speed of a specific thruster.</span>
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty-prints the class name and each of the three packet attributes.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        thruster_id (int): The ID of the thruster to set the speed of. The ID of</span>
-<span class="sd">            the thruster corresponds to a specific thruster:</span>
+<span class="sd">        IDENTIFIER (int): The packet&#39;s identifier. Set equal to the ordinal value</span>
+<span class="sd">            of &quot;K&quot;, or 75.</span>
+<span class="sd">        COMMAND (int): Identifier representing the packet as a command packet.</span>
+<span class="sd">            Equal to 67. This identifier should only be found in the first byte</span>
+<span class="sd">            of the payload.</span>
+<span class="sd">        RESPONSE (int): Identifier representing the packet as a response packet.</span>
+<span class="sd">            Equal to 82. This identifier should only be found in the first byte of</span>
+<span class="sd">            the payload.</span>
+<span class="sd">        HARD (int): Identifier representing the type of kill as a hard kill. Equal</span>
+<span class="sd">            to 72. This identifier is designed to be used in the second byte of the</span>
+<span class="sd">            payload.</span>
+<span class="sd">        SOFT (int): Identifier representing the type of kill as a soft kill. Equal</span>
+<span class="sd">            to 83. This identifier is designed to be used in the second byte of the</span>
+<span class="sd">            payload.</span>
+<span class="sd">        ASSERTED (int): Identifier equal to 65. This identifier is meant to be used</span>
+<span class="sd">            in the third byte of the payload.</span>
+<span class="sd">        UNASSERTED (int): Identifier equal to 85. This identifier is meant to be used</span>
+<span class="sd">            in the third byte of the payload.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">)</span>
+    <span class="n">COMMAND</span> <span class="o">=</span> <span class="mh">0x43</span>
+    <span class="n">RESPONSE</span> <span class="o">=</span> <span class="mh">0x52</span>
+    <span class="n">HARD</span> <span class="o">=</span> <span class="mh">0x48</span>
+    <span class="n">SOFT</span> <span class="o">=</span> <span class="mh">0x53</span>
+    <span class="n">ASSERTED</span> <span class="o">=</span> <span class="mh">0x41</span>
+    <span class="n">UNASSERTED</span> <span class="o">=</span> <span class="mh">0x55</span>
+    <span class="n">PADDING</span> <span class="o">=</span> <span class="mh">0x00</span>
+
+<div class="viewcode-block" id="KillMessage.create_kill_message"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.KillMessage.create_kill_message">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_kill_message</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">hard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">asserted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a kill message containing three bytes of information, specified</span>
+<span class="sd">        as parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            command (bool): Whether to make the kill message a command. If ``False``,</span>
+<span class="sd">                then the packet will represent a response.</span>
+<span class="sd">            hard (bool): Whether to make the packet kill type hard. If ``False``,</span>
+<span class="sd">                then the packet will represent a soft kill.</span>
+<span class="sd">            asserted (bool): Whether to make the packet asserted. If ``False``, then</span>
+<span class="sd">                an unasserted packet is generated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command_byte</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">COMMAND</span> <span class="k">if</span> <span class="n">command</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">RESPONSE</span>
+        <span class="n">hard_soft_byte</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">HARD</span> <span class="k">if</span> <span class="n">hard</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">SOFT</span>
+        <span class="n">assert_unassert_byte</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">ASSERTED</span> <span class="k">if</span> <span class="n">asserted</span> <span class="k">else</span> <span class="bp">cls</span><span class="o">.</span><span class="n">UNASSERTED</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+            <span class="s2">&quot;BBBB&quot;</span><span class="p">,</span>
+            <span class="n">command_byte</span><span class="p">,</span>
+            <span class="n">hard_soft_byte</span><span class="p">,</span>
+            <span class="n">assert_unassert_byte</span><span class="p">,</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">IDENTIFIER</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_command</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents a command.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s command/response type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">COMMAND</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_response</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents a response.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s command/response type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESPONSE</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_hard</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents a hard kill.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s hard/soft kill type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">HARD</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_soft</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents a soft kill.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s hard/soft kill type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SOFT</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_asserted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents an asserted packet.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s asserteed/unasserted type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ASSERTED</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_unasserted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the packet represents an unasserted packet.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The status of the packet&#39;s asserteed/unasserted type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNASSERTED</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;KillMessage(command=</span><span class="si">{}</span><span class="s2">, hard=</span><span class="si">{}</span><span class="s2">, asserted=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_command</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_hard</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_asserted</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<span class="n">KillStatus</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;KillStatus&quot;</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;heartbeat_lost&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mobo_soft_kill&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;switch_soft_kill&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;soft_killed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hard_killed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;thrusters_initializing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;go_switch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;soft_kill_switch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hard_kill_switch&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">StatusMessage</span><span class="p">(</span><span class="n">KillStatus</span><span class="p">):</span>
+    <span class="n">BIT_MASK</span> <span class="o">=</span> <span class="n">KillStatus</span><span class="p">(</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">13</span><span class="p">,</span>
+        <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">STRUCT_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;=h&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a new namedtuple to derive the class from. This can&#39;t be done</span>
+<span class="sd">        in __init__ because namedtuples are immutable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">unpacked</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">STRUCT_FORMAT</span><span class="p">,</span> <span class="n">data</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">KillStatus</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">unpacked</span> <span class="o">&amp;</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">BIT_MASK</span><span class="p">,</span> <span class="n">field</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">KillStatus</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">=</span> <span class="n">out</span> <span class="o">|</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BIT_MASK</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">STRUCT_FORMAT</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HeartbeatMessage"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.HeartbeatMessage">[docs]</a><span class="k">class</span> <span class="nc">HeartbeatMessage</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the special heartbeat packet send to kill and thruster board.</span>
+
+<span class="sd">    Inherits from :class:`~mil_usb_to_can.ApplicationPacket`.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty-prints the class name.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        IDENTIFIER (int): The packet identifier. Set equal to the ordinal value of</span>
+<span class="sd">            &quot;H,&quot; or 72.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HeartbeatMessage.create"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.HeartbeatMessage.create">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new heartbeat message to be sent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">IDENTIFIER</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;BB&quot;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;HeartbeatMessage()&quot;</span></div>
+
+
+<div class="viewcode-block" id="ThrustPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrustPacket">[docs]</a><span class="k">class</span> <span class="nc">ThrustPacket</span><span class="p">(</span><span class="n">ApplicationPacket</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a command send to the thrust/kill board to set the PWM of a thruster.</span>
+
+<span class="sd">    Inherits from :class:`~mil_usb_to_can.ApplicationPacket`.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Pretty-prints the class name and each of the two packet attributes,</span>
+<span class="sd">            the thruster ID and the command.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        IDENTIFIER (int): The packet identifier, equal to the ordinal value of &quot;T,&quot;</span>
+<span class="sd">            or 84.</span>
+<span class="sd">        ID_MAPPING (Dict[str, int]): A dictionary mapping 3-letter thruster codes</span>
+<span class="sd">            to their respective IDs:</span>
 
 <span class="sd">            +--------+------+</span>
-<span class="sd">            |  name  |  id  |</span>
+<span class="sd">            |  Name  |  ID  |</span>
 <span class="sd">            +========+======+</span>
 <span class="sd">            |  FLH   |  0   |</span>
 <span class="sd">            +--------+------+</span>
@@ -120,35 +352,57 @@
 <span class="sd">            +--------+------+</span>
 <span class="sd">            |  BRV   |  7   |</span>
 <span class="sd">            +--------+------+</span>
-<span class="sd">        speed (float): The speed to set the thruster to.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">thruster_id</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="nb">float</span></div>
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+    <span class="n">ID_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;FLH&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;FRH&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;FLV&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;FRV&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;BLH&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;BRH&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;BLV&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s2">&quot;BRV&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="p">}</span>
 
+<div class="viewcode-block" id="ThrustPacket.create_thrust_packet"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrustPacket.create_thrust_packet">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_thrust_packet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">thruster_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a thruster packet given an ID and command.</span>
 
-<div class="viewcode-block" id="KillSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.KillSetPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">KillSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x01</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Packet sent by the motherboard to set/unset the kill.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            thruster_id (int): The ID of the thruster to create a packet for.</span>
+<span class="sd">            command (float): The command to associate with the packet.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=Bf&quot;</span><span class="p">,</span> <span class="n">thruster_id</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">IDENTIFIER</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span></div>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">        set (bool): Whether the kill is set or unset.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">thruster_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The thruster ID associated with the packet.</span>
 
-    <span class="nb">set</span><span class="p">:</span> <span class="nb">bool</span></div>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The command associated with the packet.</span>
 
-<div class="viewcode-block" id="KillReceivePacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.KillReceivePacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">KillReceivePacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x01</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x03</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Packet sent by the motherboard to set/unset the kill.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The associated command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">        set (bool): Whether the kill is set or unset.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="nb">set</span><span class="p">:</span> <span class="nb">bool</span></div>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ThrustPacket(thruster_id=</span><span class="si">{}</span><span class="s2">, command=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">thruster_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span>
+        <span class="p">)</span></div>
 </pre></div>
 
             </main>

@@ -134,7 +134,7 @@
 <span class="sd">        bridge (CvBridge): The ROS bridge to OpenCV.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># https://github.com/ros-perception/image_pipeline/blob/indigo/image_proc/include/image_proc/processor.h # noqa</span>
+    <span class="c1"># https://github.com/ros-perception/image_pipeline/blob/indigo/image_proc/include/image_proc/processor.h</span>
 
     <span class="c1"># Flags to select which images should be outputted</span>
     <span class="n">RAW</span> <span class="o">=</span> <span class="mi">0</span>
@@ -148,7 +148,10 @@
 
 <div class="viewcode-block" id="ImageProc.process"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ImageProc.process">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">process</span><span class="p">(</span>
-        <span class="n">raw_msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PinholeCameraModel</span><span class="p">],</span> <span class="n">out</span><span class="p">:</span> <span class="n">ImageSet</span><span class="p">,</span> <span class="n">flags</span><span class="p">:</span> <span class="nb">int</span>
+        <span class="n">raw_msg</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PinholeCameraModel</span><span class="p">],</span>
+        <span class="n">out</span><span class="p">:</span> <span class="n">ImageSet</span><span class="p">,</span>
+        <span class="n">flags</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Given an original image message (sensor_msgs/Image), fill in the out ImageSet</span>

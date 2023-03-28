@@ -141,7 +141,7 @@
 
 <span class="sd">        For example, an example overload might return ``[&#39;red_mean&#39;, &#39;blue_mean&#39;, &#39;green_mean&#39;]``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
 <div class="viewcode-block" id="ContourClassifier.get_features"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ContourClassifier.get_features">[docs]</a>    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -328,11 +328,13 @@
         <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
         <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">classes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">classes</span><span class="p">,</span> <span class="n">features</span><span class="p">))</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FEATURES</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">FEATURES</span><span class="p">])</span>
         <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">training_file</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ContourClassifier.extract_labels"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ContourClassifier.extract_labels">[docs]</a>    <span class="k">def</span> <span class="nf">extract_labels</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">labelfile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">image_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">labelfile</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">image_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extract features and labeled classes from a project labeled on labelbox.io.</span>
@@ -355,16 +357,17 @@
         <span class="n">label_classes</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">def</span> <span class="nf">labeled_img_cb</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;Label&quot;</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">single_label</span> <span class="ow">in</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;Label&quot;</span><span class="p">][</span><span class="n">l</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">lab</span> <span class="ow">in</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;Label&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">lab</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">single_label</span> <span class="ow">in</span> <span class="n">label</span><span class="p">[</span><span class="s2">&quot;Label&quot;</span><span class="p">][</span><span class="n">lab</span><span class="p">]:</span>
                         <span class="n">points</span> <span class="o">=</span> <span class="n">LabelBoxParser</span><span class="o">.</span><span class="n">label_to_contour</span><span class="p">(</span>
-                            <span class="n">single_label</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">single_label</span><span class="p">,</span>
+                            <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                         <span class="p">)</span>
                         <span class="n">mask</span> <span class="o">=</span> <span class="n">contour_mask</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
                         <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
                         <span class="n">label_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-                        <span class="n">label_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+                        <span class="n">label_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">lab</span><span class="p">))</span>
 
         <span class="n">labler</span><span class="o">.</span><span class="n">get_labeled_images</span><span class="p">(</span><span class="n">labeled_img_cb</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_features</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -401,13 +404,15 @@
             <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to directory containing images for datasets labeled by label file&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">score</span> <span class="o">=</span> <span class="n">subparser</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
-            <span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Print a accuracy score based on saved training file&quot;</span>
+            <span class="s2">&quot;score&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Print a accuracy score based on saved training file&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">score</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;extract&quot;</span><span class="p">:</span>
             <span class="n">features</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extract_labels</span><span class="p">(</span>
-                <span class="n">labelfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">label_file</span><span class="p">,</span> <span class="n">image_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">image_dir</span>
+                <span class="n">labelfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">label_file</span><span class="p">,</span>
+                <span class="n">image_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">image_dir</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_csv</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">training_file</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">training_file</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cmd</span> <span class="o">==</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span>

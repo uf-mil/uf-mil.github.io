@@ -131,7 +131,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="c1"># Attributes about our general frequency range (all pinger live here)</span>
         <span class="c1">#  Frequency range garunteed to be relatively quiet except for the pingers (in Hz)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">general_lower</span> <span class="o">=</span> <span class="mi">15000</span>  <span class="c1"># lowest frequency pinger - 10 kHz</span>
@@ -153,10 +152,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">Ping</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hydrophones_cb</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="s2">&quot;HydrophoneSamplesStamped&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-                <span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">HydrophoneSamplesStamped</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">hydrophones_cb</span>
+                <span class="s2">&quot;samples&quot;</span><span class="p">,</span>
+                <span class="n">numpy_msg</span><span class="p">(</span><span class="n">HydrophoneSamplesStamped</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hydrophones_cb</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">ROS_FATAL</span><span class="p">(</span><span class="s2">&quot;sample_msg_type not supported&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logfatal</span><span class="p">(</span><span class="s2">&quot;sample_msg_type not supported&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s2">&quot;pings&quot;</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">Triggered</span><span class="p">),</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~filter_debug_trigger&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_response</span><span class="p">)</span>
@@ -186,7 +187,10 @@
         <span class="n">filt_order</span> <span class="o">=</span> <span class="mi">6000</span>
         <span class="c1"># reset bandpass filter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bandpass_filter</span> <span class="o">=</span> <span class="n">StreamedBandpass</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">-</span> <span class="n">tolerance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="n">tolerance</span><span class="p">,</span> <span class="n">trans_width</span><span class="p">,</span> <span class="n">filt_order</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">-</span> <span class="n">tolerance</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">+</span> <span class="n">tolerance</span><span class="p">,</span>
+            <span class="n">trans_width</span><span class="p">,</span>
+            <span class="n">filt_order</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Physical Properties</span>
@@ -251,7 +255,10 @@
             <span class="n">res</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">return</span> <span class="n">res</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">find_freq_response</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">bandpass_filter</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">general_lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">general_upper</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bandpass_filter</span><span class="o">.</span><span class="n">h</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">general_lower</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">general_upper</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">plots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
         <span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;frequency (Hz)  vs Gain (dB)&quot;</span><span class="p">]</span>
@@ -271,13 +278,11 @@
         <span class="c1"># Record start time of cb to make sure we are running in real time</span>
         <span class="n">start_cb</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_rostime</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">Ping</span><span class="p">)):</span>
-            <span class="n">msg_header</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span>
             <span class="n">msg_channels</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">channels</span>
             <span class="n">msg_samples</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">samples</span>
             <span class="n">msg_sample_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">sample_rate</span>
             <span class="n">msg_data</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">numpy_msg</span><span class="p">(</span><span class="n">HydrophoneSamplesStamped</span><span class="p">)):</span>
-            <span class="n">msg_header</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span>
             <span class="n">msg_channels</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">channels</span>
             <span class="n">msg_samples</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">samples</span>
             <span class="n">msg_sample_rate</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">hydrophone_samples</span><span class="o">.</span><span class="n">sample_rate</span>
@@ -306,13 +311,17 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">prev_data</span><span class="p">,</span> <span class="n">new_data</span><span class="p">))</span>
         <span class="c1"># Time according to the passive sonar interface (assuming no missed messages)</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
         <span class="p">)</span>
 
         <span class="c1"># only use hydrophone 0 to trigger, more efficient</span>
         <span class="c1"># do a max convolution on the data</span>
         <span class="n">max_convolves</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">maximum_filter1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">maximum_filter1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">max_convolve</span> <span class="o">=</span> <span class="n">max_convolves</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="c1">#  NOTE: No need to crop because zero padding is used and we are doing a max convolution</span>
@@ -321,14 +330,12 @@
         <span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">max_convolves</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">gradients</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
-
             <span class="n">triggered_at_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">gradients</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">triggered_at_idx</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trigger_offset</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
             <span class="n">trigger_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">[</span><span class="n">triggered_at_idx</span><span class="p">]</span>
 
             <span class="c1"># if we have triggered very recently, do not trigger (echo protection)</span>
             <span class="k">if</span> <span class="n">trigger_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_trigger_time</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_time_between_pings</span><span class="p">:</span>
-
                 <span class="bp">self</span><span class="o">.</span><span class="n">prev_trigger_time</span> <span class="o">=</span> <span class="n">trigger_time</span>
 
                 <span class="n">start</span> <span class="o">=</span> <span class="n">triggered_at_idx</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_past</span><span class="p">)</span>
@@ -337,10 +344,10 @@
                 <span class="n">ping_data</span> <span class="o">=</span> <span class="n">gradients</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
                 <span class="n">triggered_at_sample</span> <span class="o">=</span> <span class="n">triggered_at_idx</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
                 <span class="n">start_sample</span> <span class="o">=</span> <span class="n">triggered_at_sample</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span>
-                    <span class="mi">50</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_past</span>
+                    <span class="mi">50</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_past</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">end_sample</span> <span class="o">=</span> <span class="n">triggered_at_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span>
-                    <span class="mi">50</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_future</span>
+                    <span class="mi">50</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_window_future</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">ping_samples</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
 
@@ -404,7 +411,7 @@
         <span class="k">if</span> <span class="n">spare_time</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                 <span class="s2">&quot;Spare Time After Callback: </span><span class="si">%f</span><span class="s2">, Running slower than real time&quot;</span>
-                <span class="o">%</span> <span class="n">spare_time</span>
+                <span class="o">%</span> <span class="n">spare_time</span><span class="p">,</span>
             <span class="p">)</span></div></div>
 
 

@@ -211,13 +211,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">focus_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">focus_topic</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eff_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">effort_topic</span><span class="p">,</span> <span class="n">WrenchStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sampspace_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
-            <span class="n">sampspace_topic</span><span class="p">,</span> <span class="n">PolygonStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span>
+            <span class="n">sampspace_topic</span><span class="p">,</span>
+            <span class="n">PolygonStamped</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">guide_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">guide_topic</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
         <span class="c1"># Actions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">move_server</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionServer</span><span class="p">(</span>
-            <span class="n">move_topic</span><span class="p">,</span> <span class="n">MoveAction</span><span class="p">,</span> <span class="n">execute_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">move_cb</span><span class="p">,</span> <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span>
+            <span class="n">move_topic</span><span class="p">,</span>
+            <span class="n">MoveAction</span><span class="p">,</span>
+            <span class="n">execute_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">move_cb</span><span class="p">,</span>
+            <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">move_server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -357,7 +362,7 @@
             <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">focus</span><span class="o">.</span><span class="n">z</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">boat</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">focus_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">([</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">],</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">([</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">],</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">boat</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">msg</span><span class="o">.</span><span class="n">focus</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">focus</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
@@ -366,7 +371,7 @@
                 <span class="n">focus_goal</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">focus_vec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">focus_vec</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_goal</span><span class="p">(</span><span class="n">focus_goal</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">focus_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">(</span><span class="n">boat</span><span class="o">.</span><span class="n">focus</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">(</span><span class="n">boat</span><span class="o">.</span><span class="n">focus</span><span class="p">,</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
                 <span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Focused on: </span><span class="si">{</span><span class="n">boat</span><span class="o">.</span><span class="n">focus</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">==</span> <span class="n">MoveGoal</span><span class="o">.</span><span class="n">SPIRAL</span><span class="p">:</span>
@@ -381,7 +386,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">boat</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">focus_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">([</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">],</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pack_pointstamped</span><span class="p">([</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">],</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
 
         <span class="c1"># Store the initial planning time, if specified</span>
@@ -395,7 +400,7 @@
             <span class="k">pass</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">speed_factor</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;(WARNING: expected speed_factor to be a scalar or in the form [x, y, h])&quot;</span>
+                <span class="s2">&quot;(WARNING: expected speed_factor to be a scalar or in the form [x, y, h])&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">speed_factor</span><span class="p">):</span>
@@ -453,7 +458,6 @@
 
         <span class="c1"># Standard driving</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">MoveGoal</span><span class="o">.</span><span class="n">DRIVE</span><span class="p">,</span> <span class="n">MoveGoal</span><span class="o">.</span><span class="n">DRIVE_SMOOTH</span><span class="p">]:</span>
-
             <span class="c1"># Find the heading that points to the goal</span>
             <span class="n">p_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">h_goal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">p_err</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p_err</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -465,7 +469,9 @@
                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_type</span> <span class="o">!=</span> <span class="n">MoveGoal</span><span class="o">.</span><span class="n">DRIVE_SMOOTH</span>
             <span class="p">):</span>
                 <span class="n">x_seq_rot</span><span class="p">,</span> <span class="n">T_rot</span><span class="p">,</span> <span class="n">rot_success</span><span class="p">,</span> <span class="n">u_seq_rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation_move</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">h_goal</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">pointshoot_tol</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+                    <span class="n">h_goal</span><span class="p">,</span>
+                    <span class="n">params</span><span class="o">.</span><span class="n">pointshoot_tol</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rotating towards goal (duration: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">T_rot</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">rot_success</span><span class="p">:</span>
@@ -491,7 +497,9 @@
                         <span class="n">fill_value</span><span class="o">=</span><span class="n">u_seq_rot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:],</span>
                     <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
-                        <span class="n">T_rot</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">basic_duration</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">velmax_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="n">T_rot</span><span class="p">,</span>
+                        <span class="n">params</span><span class="o">.</span><span class="n">basic_duration</span><span class="p">,</span>
+                        <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">params</span><span class="o">.</span><span class="n">velmax_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
                     <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x_seq_rot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -527,8 +535,8 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Behavior: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">enroute_behavior</span><span class="o">.</span><span class="vm">__name__</span><span class="p">[</span><span class="mi">10</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="s2">&quot;Reached goal region: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">enroute_behavior</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">plan_reached_goal</span>
-                    <span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">enroute_behavior</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">plan_reached_goal</span><span class="p">,</span>
+                    <span class="p">),</span>
                 <span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Goal bias: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal_bias</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tree size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -593,7 +601,7 @@
             <span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">basic_duration</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_time</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_time</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">stuck</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">=</span> <span class="kc">None</span>
@@ -609,7 +617,7 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_till_issue</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">params</span><span class="o">.</span><span class="n">basic_duration</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">basic_duration</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_time</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">next_runtime</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update_time</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_behavior</span><span class="p">()</span>
             <span class="p">(</span>
@@ -764,10 +772,9 @@
 
         <span class="c1"># Analyze ogrid to find good bias and sample space buffer</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">blind</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="c1"># Get opencv-ready image from current ogrid (255 is occupied, 0 is clear)</span>
             <span class="n">occ_img</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ogrid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="c1"># Dilate the image</span>
@@ -778,10 +785,10 @@
             <span class="c1"># Construct the initial sample space and get bounds in pixel coordinates</span>
             <span class="n">ss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span><span class="o">.</span><span class="n">gen_ss</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">)</span>
             <span class="n">pmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intup</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span> <span class="o">*</span> <span class="p">([</span><span class="n">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span> <span class="o">*</span> <span class="p">([</span><span class="n">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="n">pmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intup</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span> <span class="o">*</span> <span class="p">([</span><span class="n">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span> <span class="o">*</span> <span class="p">([</span><span class="n">ss</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">ss</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span><span class="p">),</span>
             <span class="p">)</span>
 
             <span class="c1"># Other quantities in pixel coordinates</span>
@@ -850,7 +857,7 @@
                 <span class="n">col_max</span> <span class="o">=</span> <span class="n">ss_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span>
 
                 <span class="c1"># Classify boundary points</span>
-                <span class="k">for</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bpts</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">bpts</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="n">col_min</span><span class="p">:</span>  <span class="c1"># left</span>
                         <span class="n">push_xmin</span> <span class="o">=</span> <span class="kc">True</span>
                         <span class="k">if</span> <span class="n">row</span> <span class="o">==</span> <span class="n">row_min</span><span class="p">:</span>  <span class="c1"># top left</span>
@@ -887,8 +894,9 @@
                     <span class="n">offset_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">pmin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">push</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pmax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">push</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
                     <span class="n">ss_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span>
                         <span class="n">occ_img_dial</span><span class="p">[</span>
-                            <span class="n">offset_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">offset_y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">offset_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">offset_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                        <span class="p">]</span>
+                            <span class="n">offset_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">offset_y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                            <span class="n">offset_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">offset_x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="p">],</span>
                     <span class="p">)</span>
                     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">ss_img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
                         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Occupancy grid analysis failed... Please report this!&quot;</span><span class="p">)</span>
@@ -904,7 +912,8 @@
                     <span class="n">cv2</span><span class="o">.</span><span class="n">floodFill</span><span class="p">(</span>
                         <span class="n">test_flood</span><span class="p">,</span>
                         <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-                            <span class="p">(</span><span class="n">test_flood</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">test_flood</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span>
+                            <span class="p">(</span><span class="n">test_flood</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">test_flood</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span><span class="p">),</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
                         <span class="p">),</span>
                         <span class="n">ss_goal</span><span class="p">,</span>
                         <span class="mi">69</span><span class="p">,</span>
@@ -912,7 +921,8 @@
                     <span class="k">if</span> <span class="n">test_flood</span><span class="p">[</span><span class="n">ss_seed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ss_seed</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">69</span><span class="p">:</span>
                         <span class="n">gs</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                             <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-                                <span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">],</span> <span class="p">[</span><span class="n">last_offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">last_offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+                                <span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">],</span>
+                                <span class="p">[</span><span class="n">last_offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">last_offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
                             <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
                             <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span>
                         <span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span>
@@ -941,7 +951,9 @@
             <span class="k">if</span> <span class="n">npush</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">push</span> <span class="o">+=</span> <span class="n">params</span><span class="o">.</span><span class="n">boat_length</span>
             <span class="n">ss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span><span class="o">.</span><span class="n">gen_ss</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="n">push</span> <span class="o">+</span> <span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">ss_start</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span>
+                <span class="n">push</span> <span class="o">+</span> <span class="p">[</span><span class="n">params</span><span class="o">.</span><span class="n">ss_start</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="c1"># Select bias based on density of ogrid in sample space</span>
@@ -1078,9 +1090,9 @@
                         <span class="nb">len</span><span class="p">(</span><span class="n">x_seq</span><span class="p">),</span>
                         <span class="nb">int</span><span class="p">(</span><span class="n">iters_passed</span> <span class="o">+</span> <span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">reeval_time</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)),</span>
                         <span class="n">params</span><span class="o">.</span><span class="n">reeval_limit</span><span class="p">,</span>
-                    <span class="p">]</span>
+                    <span class="p">],</span>
                 <span class="p">)</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">p_seq</span><span class="p">):</span>
             <span class="n">p_seq</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1096,8 +1108,8 @@
                     <span class="k">else</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span>
                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Found collision on current path!</span><span class="se">\n</span><span class="s2">Time till collision: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                                <span class="n">time_till_collision</span>
-                            <span class="p">)</span>
+                                <span class="n">time_till_collision</span><span class="p">,</span>
+                            <span class="p">),</span>
                         <span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">time_till_issue</span> <span class="o">=</span> <span class="n">time_till_collision</span>
                         <span class="k">for</span> <span class="n">behavior</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">behaviors_list</span><span class="p">:</span>
@@ -1167,10 +1179,11 @@
                         <span class="mi">0</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">tracking</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">),</span>
                         <span class="p">)[:</span><span class="mi">3</span><span class="p">],</span>
                         <span class="n">time_till_next_branch</span><span class="p">,</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">enroute_behavior</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1183,10 +1196,11 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">tracking</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">),</span>
                         <span class="p">)[:</span><span class="mi">3</span><span class="p">],</span>
                         <span class="n">time_till_next_branch</span><span class="p">,</span>
-                    <span class="p">)</span>
+                    <span class="p">),</span>
                 <span class="p">)</span></div>
 
     <span class="c1"># LIL MATH DOERS</span>
@@ -1219,10 +1233,10 @@
 
         <span class="c1"># Simulate rotation move</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-
             <span class="c1"># Stop if pose is infeasible</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_feasible</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
             <span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_seq</span><span class="p">):</span>
                 <span class="n">portion</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">FPR</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_seq</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">(</span>
@@ -1247,7 +1261,12 @@
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.spiral_move"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.spiral_move">[docs]</a>    <span class="k">def</span> <span class="nf">spiral_move</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">direc</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">mpr</span><span class="p">:</span> <span class="nb">float</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">direc</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">mpr</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a movement pattern for a spiral movement.</span>
@@ -1293,7 +1312,6 @@
         <span class="c1"># Simulate spiral move</span>
         <span class="n">anglim</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
         <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ang</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">anglim</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
-
             <span class="c1"># Rotation for this instant</span>
             <span class="n">radfactor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">magic_ratio</span> <span class="o">*</span> <span class="n">rmag</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">vt</span> <span class="o">+</span> <span class="n">radfactor</span> <span class="o">*</span> <span class="n">atmax</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">radfactor</span> <span class="o">*</span> <span class="n">vtmax</span><span class="p">)</span>
@@ -1409,12 +1427,12 @@
         <span class="n">right_cands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">right_cands</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col_max</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">right_cands</span><span class="p">)))</span>
         <span class="n">top_cands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">row_min</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">top_cands</span><span class="p">),</span> <span class="n">top_cands</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span>
         <span class="n">bottom_cands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">row_max</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">bottom_cands</span><span class="p">),</span> <span class="n">bottom_cands</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">row_max</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">bottom_cands</span><span class="p">),</span> <span class="n">bottom_cands</span> <span class="o">+</span> <span class="mi">2</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">cands</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">left_cands</span><span class="p">,</span> <span class="n">right_cands</span><span class="p">,</span> <span class="n">top_cands</span><span class="p">,</span> <span class="n">bottom_cands</span><span class="p">))</span>
 
         <span class="c1"># Iterate through candidates and store the dividing boundary points</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="ow">in</span> <span class="n">cands</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cands</span><span class="p">:</span>
             <span class="n">hood</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_hood</span><span class="p">(</span><span class="n">flood_seed_thresh</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">hood</span> <span class="o">==</span> <span class="n">fc2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">hood</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
                 <span class="n">bpts</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">])</span>
@@ -1438,7 +1456,7 @@
 
         <span class="c1"># Publish goal to the goal publisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">goal_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pack_posestamped</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">),</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pack_posestamped</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">),</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.publish_ref"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.publish_ref">[docs]</a>    <span class="k">def</span> <span class="nf">publish_ref</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1462,7 +1480,7 @@
         <span class="c1"># Not really necessary, but for fun-and-profit also publish the planner&#39;s effort wrench</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_eff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eff_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">pack_wrenchstamped</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_eff</span><span class="p">(</span><span class="n">time_since</span><span class="p">),</span> <span class="n">stamp</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pack_wrenchstamped</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_eff</span><span class="p">(</span><span class="n">time_since</span><span class="p">),</span> <span class="n">stamp</span><span class="p">),</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.publish_path"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.publish_path">[docs]</a>    <span class="k">def</span> <span class="nf">publish_path</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1543,7 +1561,7 @@
         <span class="n">start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ogrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">width</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">],</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ogrid_cpm</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">msg</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">resolution</span>
 
@@ -1558,8 +1576,8 @@
         <span class="k">if</span> <span class="n">elapsed</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(WARNING: ogrid callback is taking </span><span class="si">{}</span><span class="s2"> seconds)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">elapsed</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-                <span class="p">)</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">elapsed</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                <span class="p">),</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.odom_cb"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.odom_cb">[docs]</a>    <span class="k">def</span> <span class="nf">odom_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1581,7 +1599,7 @@
         <span class="c1"># Calculate error between the goal and state and tell if tracking is successful</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">last_update_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rostime</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_update_time</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">),</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">error</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">real_tol</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">tracking</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1602,7 +1620,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">trns</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">q</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">trns</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">q</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.unpack_odom"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.unpack_odom">[docs]</a>    <span class="k">def</span> <span class="nf">unpack_odom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">Odometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
@@ -1630,7 +1648,7 @@
                 <span class="n">msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
                 <span class="n">msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">linear</span><span class="o">.</span><span class="n">y</span><span class="p">,</span>
                 <span class="n">msg</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">twist</span><span class="o">.</span><span class="n">angular</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
-            <span class="p">]</span>
+            <span class="p">],</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.pack_pose"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.pack_pose">[docs]</a>    <span class="k">def</span> <span class="nf">pack_pose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Pose</span><span class="p">:</span>
@@ -1728,7 +1746,9 @@
         <span class="k">return</span> <span class="n">msg</span></div>
 
 <div class="viewcode-block" id="LQRRT_Node.pack_wrenchstamped"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.pack_wrenchstamped">[docs]</a>    <span class="k">def</span> <span class="nf">pack_wrenchstamped</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">effort</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">stamp</span><span class="p">:</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">effort</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+        <span class="n">stamp</span><span class="p">:</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrenchStamped</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts an effort vector into a WrenchStamped message</span>

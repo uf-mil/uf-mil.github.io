@@ -80,21 +80,21 @@
   <h1>Source code for sub8_thrust_and_kill_board.handle</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python3</span>
 <span class="kn">import</span> <span class="nn">rospy</span>
-<span class="kn">from</span> <span class="nn">mil_usb_to_can</span> <span class="kn">import</span> <span class="n">CANDeviceHandle</span>
+<span class="kn">from</span> <span class="nn">mil_usb_to_can.sub8</span> <span class="kn">import</span> <span class="n">CANDeviceHandle</span>
 <span class="kn">from</span> <span class="nn">ros_alarms</span> <span class="kn">import</span> <span class="n">AlarmBroadcaster</span><span class="p">,</span> <span class="n">AlarmListener</span>
 <span class="kn">from</span> <span class="nn">ros_alarms.msg</span> <span class="kn">import</span> <span class="n">Alarm</span>
 <span class="kn">from</span> <span class="nn">rospy.timer</span> <span class="kn">import</span> <span class="n">TimerEvent</span>
 <span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span><span class="p">,</span> <span class="n">SetBoolRequest</span><span class="p">,</span> <span class="n">SetBoolResponse</span>
 <span class="kn">from</span> <span class="nn">subjugator_msgs.msg</span> <span class="kn">import</span> <span class="n">Thrust</span>
 
-<span class="c1"># from .packets import (</span>
-<span class="c1">#     KILL_SEND_ID,</span>
-<span class="c1">#     THRUST_SEND_ID,</span>
-<span class="c1">#     HeartbeatMessage,</span>
-<span class="c1">#     KillMessage,</span>
-<span class="c1">#     StatusMessage,</span>
-<span class="c1">#     ThrustPacket,</span>
-<span class="c1"># )</span>
+<span class="kn">from</span> <span class="nn">.packets</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">KILL_SEND_ID</span><span class="p">,</span>
+    <span class="n">THRUST_SEND_ID</span><span class="p">,</span>
+    <span class="n">HeartbeatMessage</span><span class="p">,</span>
+    <span class="n">KillMessage</span><span class="p">,</span>
+    <span class="n">StatusMessage</span><span class="p">,</span>
+    <span class="n">ThrustPacket</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.thruster</span> <span class="kn">import</span> <span class="n">make_thruster_dictionary</span>
 
 
@@ -107,7 +107,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># Initialize thruster mapping from params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span> <span class="o">=</span> <span class="n">make_thruster_dictionary</span><span class="p">(</span>
-            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/thruster_layout/thrusters&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;/thruster_layout/thrusters&quot;</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="c1"># Tracks last hw-kill alarm update</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_hw_kill</span> <span class="o">=</span> <span class="kc">None</span>
@@ -119,17 +119,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;go&quot;</span><span class="p">)</span>
         <span class="c1"># Listens to hw-kill updates to ensure another nodes doesn&#39;t manipulate it</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hw_kill_listener</span> <span class="o">=</span> <span class="n">AlarmListener</span><span class="p">(</span>
-            <span class="s2">&quot;hw-kill&quot;</span><span class="p">,</span> <span class="n">callback_funct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_hw_kill</span>
+            <span class="s2">&quot;hw-kill&quot;</span><span class="p">,</span>
+            <span class="n">callback_funct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_hw_kill</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># Provide service for alarm handler to set/clear the motherboard kill</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unkill_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
-            <span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span>
+            <span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span>
+            <span class="n">SetBool</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># Sends heartbeat to board</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_heartbeat_timer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">0.4</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_heartbeat</span><span class="p">)</span>
         <span class="c1"># Create a subscribe for thruster commands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
-            <span class="s2">&quot;/thrusters/thrust&quot;</span><span class="p">,</span> <span class="n">Thrust</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span>
+            <span class="s2">&quot;/thrusters/thrust&quot;</span><span class="p">,</span>
+            <span class="n">Thrust</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="ThrusterAndKillBoard.set_mobo_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.set_mobo_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobo_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetBoolRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SetBoolResponse</span><span class="p">:</span>
@@ -146,8 +152,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span>
             <span class="nb">bytes</span><span class="p">(</span>
                 <span class="n">KillMessage</span><span class="o">.</span><span class="n">create_kill_message</span><span class="p">(</span>
-                    <span class="n">command</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">asserted</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span>
-                <span class="p">)</span>
+                    <span class="n">command</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">asserted</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="p">),</span>
             <span class="p">),</span>
             <span class="n">can_id</span><span class="o">=</span><span class="n">KILL_SEND_ID</span><span class="p">,</span>
         <span class="p">)</span>
@@ -182,19 +190,20 @@
             <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span><span class="p">:</span>
                 <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
                     <span class="s2">&quot;Command received for </span><span class="si">{}</span><span class="s2">, but this is not a thruster.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">cmd</span><span class="o">.</span><span class="n">name</span>
-                    <span class="p">)</span>
+                        <span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="p">),</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
             <span class="c1"># Map commanded thrust (in newetons) to effort value (-1 to 1)</span>
             <span class="n">effort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">effort_from_thrust</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">thrust</span><span class="p">)</span>
             <span class="c1"># Send packet to command specified thruster the specified force</span>
             <span class="n">packet</span> <span class="o">=</span> <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">create_thrust_packet</span><span class="p">(</span>
-                <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">ID_MAPPING</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">],</span> <span class="n">effort</span>
+                <span class="n">ThrustPacket</span><span class="o">.</span><span class="n">ID_MAPPING</span><span class="p">[</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                <span class="n">effort</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">packet</span><span class="p">),</span> <span class="n">can_id</span><span class="o">=</span><span class="n">THRUST_SEND_ID</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ThrusterAndKillBoard.update_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.update_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">update_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s2">&quot;StatusMessage&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ThrusterAndKillBoard.update_hw_kill"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.update_hw_kill">[docs]</a>    <span class="k">def</span> <span class="nf">update_hw_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="n">StatusMessage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If needed, update the hw-kill alarm so it reflects the latest status from the board.</span>
 
@@ -228,7 +237,8 @@
         <span class="p">):</span>
             <span class="k">if</span> <span class="n">raised</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
-                    <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span> <span class="n">problem_description</span><span class="o">=</span><span class="n">message</span>
+                    <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span>
+                    <span class="n">problem_description</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_kill_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">(</span><span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">)</span></div>
@@ -306,11 +316,11 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">go</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">go</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
-                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug pulled!&quot;</span>
+                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug pulled!&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_go_alarm_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">(</span>
-                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug returned&quot;</span>
+                    <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Go plug returned&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_last_go</span> <span class="o">=</span> <span class="n">go</span></div></div>
 </pre></div>

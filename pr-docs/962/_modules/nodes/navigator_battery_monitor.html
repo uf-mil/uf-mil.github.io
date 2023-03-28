@@ -117,7 +117,6 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
         <span class="c1"># Initialize the average voltage to none for the case of no feedback</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">voltage</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -147,7 +146,9 @@
 
         <span class="p">[</span>
             <span class="n">message_filters</span><span class="o">.</span><span class="n">ApproximateTimeSynchronizer</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">feedback</span><span class="p">,</span> <span class="n">status</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span>
+                <span class="p">[</span><span class="n">feedback</span><span class="p">,</span> <span class="n">status</span><span class="p">],</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="mi">10</span><span class="p">,</span>
             <span class="p">)</span><span class="o">.</span><span class="n">registerCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_voltage</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">feedback</span><span class="p">,</span> <span class="n">status</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feedback_sub</span><span class="p">,</span> <span class="n">status_sub</span><span class="p">)</span>
         <span class="p">]</span>
