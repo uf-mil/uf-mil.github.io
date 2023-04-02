@@ -405,7 +405,7 @@ under which to execute the callback. Defaults to <code class="docutils literal n
 <dd class="field-odd"><p>The constructed service response.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="services.html#ros_alarms.srv.AlarmGetResponse" title="ros_alarms.srv.AlarmGetResponse">AlarmGetResponse</a></p>
+<dd class="field-even"><p><a class="reference internal" href="services.html#ros_alarms_msgs.srv.AlarmGetResponse" title="ros_alarms_msgs.srv.AlarmGetResponse">AlarmGetResponse</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -531,7 +531,7 @@ The alarm becomes registered within the server and a message representing
 the alarm is published to the alarm publishing topic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>alarm</strong> (<em>Union</em><em>[</em><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm"><em>ros_alarms.Alarm</em></a><em>, </em><a class="reference internal" href="messages.html#ros_alarms.msg.Alarm" title="ros_alarms.msg.Alarm"><em>ros_alarms.msg.Alarm</em></a><em>]</em>) – The alarm to
+<dd class="field-odd"><p><strong>alarm</strong> (<em>Union</em><em>[</em><a class="reference internal" href="#ros_alarms.Alarm" title="ros_alarms.Alarm"><em>ros_alarms.Alarm</em></a><em>, </em><em>ros_alarms.msg.Alarm</em><em>]</em>) – The alarm to
 set in the server.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -712,7 +712,7 @@ under which to execute the callback. Defaults to <code class="docutils literal n
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ros_alarms.AlarmListener.get_alarm">
-<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="services.html#ros_alarms.srv.AlarmGetResponse" title="ros_alarms.srv.AlarmGetResponse"><span class="pre">AlarmGetResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.get_alarm" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="services.html#ros_alarms_msgs.srv.AlarmGetResponse" title="ros_alarms_msgs.srv.AlarmGetResponse"><span class="pre">AlarmGetResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/ros_alarms/alarms.html#AlarmListener.get_alarm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ros_alarms.AlarmListener.get_alarm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the alarm message.</p>
 <dl class="simple">
 <dt>Also worth noting, the alarm this method returns has it’s <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field</dt><dd><p>converted to a dictionary.</p>
@@ -727,7 +727,7 @@ then uses the most recently cached alarm. Defaults to <code class="docutils lite
 <dd class="field-even"><p>The response message, with its updated <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="services.html#ros_alarms.srv.AlarmGetResponse" title="ros_alarms.srv.AlarmGetResponse">AlarmGetResponse</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#ros_alarms_msgs.srv.AlarmGetResponse" title="ros_alarms_msgs.srv.AlarmGetResponse">AlarmGetResponse</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -960,9 +960,9 @@ func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_
 <span class="attribute-table-badge" title="function">
 func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1a8bc9022b35cd9ee0dfecb77a76fb6139">AlarmProxy</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
-func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1a788a924c75c2d7284a6a654529bafb32">AlarmProxy</a></li><li class="attribute-table-entry">
+func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1a25cdd706d7e5c1bcbf23bd9bb04bf85e">AlarmProxy</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
-func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1abf431ea4921e4b37063fa8eeabb1f6a4">as_msg</a></li><li class="attribute-table-entry">
+func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1a29cb5b5e7a4b9f74694ac51fe252a030">as_msg</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
 func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_1a6bf06addb4f624cff3736b9bf9edf8e2">operator==</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
@@ -992,8 +992,8 @@ func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N10ros_alarms10AlarmProxy10AlarmProxyEN10ros_alarms5AlarmE">
-<span id="_CPPv3N10ros_alarms10AlarmProxy10AlarmProxyEN10ros_alarms5AlarmE"></span><span id="_CPPv2N10ros_alarms10AlarmProxy10AlarmProxyEN10ros_alarms5AlarmE"></span><span id="ros_alarms::AlarmProxy::AlarmProxy__ros_alarms::Alarm"></span><span class="target" id="structros__alarms_1_1AlarmProxy_1a788a924c75c2d7284a6a654529bafb32"></span><span class="sig-name descname"><span class="n"><span class="pre">AlarmProxy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ros_alarms</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10AlarmProxy10AlarmProxyEN10ros_alarms5AlarmE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N10ros_alarms10AlarmProxy10AlarmProxyEN15ros_alarms_msgs5AlarmE">
+<span id="_CPPv3N10ros_alarms10AlarmProxy10AlarmProxyEN15ros_alarms_msgs5AlarmE"></span><span id="_CPPv2N10ros_alarms10AlarmProxy10AlarmProxyEN15ros_alarms_msgs5AlarmE"></span><span id="ros_alarms::AlarmProxy::AlarmProxy__ros_alarms_msgs::Alarm"></span><span class="target" id="structros__alarms_1_1AlarmProxy_1a25cdd706d7e5c1bcbf23bd9bb04bf85e"></span><span class="sig-name descname"><span class="n"><span class="pre">AlarmProxy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ros_alarms_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10AlarmProxy10AlarmProxyEN15ros_alarms_msgs5AlarmE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Constructs the class from a ROS message.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1004,7 +1004,7 @@ func</span><a class="reference internal" href="#structros__alarms_1_1AlarmProxy_
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N10ros_alarms10AlarmProxy6as_msgEv">
-<span id="_CPPv3N10ros_alarms10AlarmProxy6as_msgEv"></span><span id="_CPPv2N10ros_alarms10AlarmProxy6as_msgEv"></span><span id="ros_alarms::AlarmProxy::as_msg"></span><span class="target" id="structros__alarms_1_1AlarmProxy_1abf431ea4921e4b37063fa8eeabb1f6a4"></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">as_msg</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10AlarmProxy6as_msgEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N10ros_alarms10AlarmProxy6as_msgEv"></span><span id="_CPPv2N10ros_alarms10AlarmProxy6as_msgEv"></span><span id="ros_alarms::AlarmProxy::as_msg"></span><span class="target" id="structros__alarms_1_1AlarmProxy_1a29cb5b5e7a4b9f74694ac51fe252a030"></span><span class="n"><span class="pre">ros_alarms_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">as_msg</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10AlarmProxy6as_msgEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Converts the Alarm Proxy object to an :class:<code class="docutils literal notranslate"><span class="pre">Alarm</span></code> message.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1476,7 +1476,7 @@ Attributes</span><ul>
 Functions</span><ul>
 <li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
-func</span><a class="reference internal" href="#structros__alarms_1_1ListenerCb_1a9bf19111f7f3fdc3432beb36f56f0f95">operator()</a></li><li class="attribute-table-entry">
+func</span><a class="reference internal" href="#structros__alarms_1_1ListenerCb_1a7e0d3a87663ea72f4a25fb3bc7425d08">operator()</a></li><li class="attribute-table-entry">
 <span class="attribute-table-badge" title="function">
 func</span><a class="reference internal" href="#structros__alarms_1_1ListenerCb_1a5f86f0b54c8807ef391422aa78c5700e">severity_check</a></li></ul>
 </div></div><dl class="cpp struct">
@@ -1525,8 +1525,8 @@ func</span><a class="reference internal" href="#structros__alarms_1_1ListenerCb_
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N10ros_alarms10ListenerCbclEN10ros_alarms5AlarmE">
-<span id="_CPPv3N10ros_alarms10ListenerCbclEN10ros_alarms5AlarmE"></span><span id="_CPPv2N10ros_alarms10ListenerCbclEN10ros_alarms5AlarmE"></span><span id="ros_alarms::ListenerCb::call-operator__ros_alarms::Alarm"></span><span class="target" id="structros__alarms_1_1ListenerCb_1a9bf19111f7f3fdc3432beb36f56f0f95"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ros_alarms</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10ListenerCbclEN10ros_alarms5AlarmE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N10ros_alarms10ListenerCbclEN15ros_alarms_msgs5AlarmE">
+<span id="_CPPv3N10ros_alarms10ListenerCbclEN15ros_alarms_msgs5AlarmE"></span><span id="_CPPv2N10ros_alarms10ListenerCbclEN15ros_alarms_msgs5AlarmE"></span><span id="ros_alarms::ListenerCb::call-operator__ros_alarms_msgs::Alarm"></span><span class="target" id="structros__alarms_1_1ListenerCb_1a7e0d3a87663ea72f4a25fb3bc7425d08"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ros_alarms_msgs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Alarm</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">msg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N10ros_alarms10ListenerCbclEN15ros_alarms_msgs5AlarmE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Overloads the <code class="docutils literal notranslate"><span class="pre">()</span></code> operator to execute the callback function only if the specified conditions are met. </p>
 </dd></dl>
 
