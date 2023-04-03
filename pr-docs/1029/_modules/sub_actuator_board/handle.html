@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>sub_actuator_board.handle</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for sub_actuator_board.handle</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">mil_usb_to_can.sub9</span> <span class="kn">import</span> <span class="n">AckPacket</span><span class="p">,</span> <span class="n">CANDeviceHandle</span>
+
+<span class="kn">from</span> <span class="nn">sub_actuator_board.srv</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GetValve</span><span class="p">,</span>
+    <span class="n">GetValveRequest</span><span class="p">,</span>
+    <span class="n">GetValveResponse</span><span class="p">,</span>
+    <span class="n">SetValve</span><span class="p">,</span>
+    <span class="n">SetValveRequest</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.packets</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ActuatorPollRequestPacket</span><span class="p">,</span>
+    <span class="n">ActuatorPollResponsePacket</span><span class="p">,</span>
+    <span class="n">ActuatorSetPacket</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ActuatorBoard"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorBoard">[docs]</a><span class="k">class</span> <span class="nc">ActuatorBoard</span><span class="p">(</span><span class="n">CANDeviceHandle</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Device handle for the actuator board. Because this class implements a CAN device,</span>
+<span class="sd">    it inherits from the :class:`CANDeviceHandle` class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_recent_response</span><span class="p">:</span> <span class="n">ActuatorPollResponsePacket</span> <span class="o">|</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/set_valve&quot;</span><span class="p">,</span> <span class="n">SetValve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_valve</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;/get_valve&quot;</span><span class="p">,</span> <span class="n">GetValve</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_valve</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ActuatorBoard.set_valve"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorBoard.set_valve">[docs]</a>    <span class="k">def</span> <span class="nf">set_valve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">SetValveRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when the ``/set_valve`` service is requested. Creates a message to</span>
+<span class="sd">        control the valve and sends it through the inherited device handle.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (SetValveRequest): Request to set the valve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: List of information which is casted into a SetValveResponse.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Send board command to open or close specified valve</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">ActuatorSetPacket</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">actuator</span><span class="p">,</span> <span class="nb">open</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">opened</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Set valve </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">req</span><span class="o">.</span><span class="n">actuator</span><span class="p">,</span>
+                <span class="s2">&quot;opened&quot;</span> <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">opened</span> <span class="k">else</span> <span class="s2">&quot;closed&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="c1"># Wait some time for board to process command</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+        <span class="c1"># Request the status of the valve just commanded to ensure it worked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">ActuatorPollRequestPacket</span><span class="p">())</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">req</span><span class="o">.</span><span class="n">opened</span><span class="p">:</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">req</span><span class="o">.</span><span class="n">actuator</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">req</span><span class="o">.</span><span class="n">actuator</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">success</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+    <span class="k">def</span> <span class="nf">get_valve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">GetValveRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GetValveResponse</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">ActuatorPollRequestPacket</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_data</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;No response from the board within 10 seconds.&quot;</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">GetValveResponse</span><span class="p">(</span>
+            <span class="n">opened</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">req</span><span class="o">.</span><span class="n">actuator</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+<div class="viewcode-block" id="ActuatorBoard.on_data"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorBoard.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">packet</span><span class="p">:</span> <span class="n">ActuatorPollResponsePacket</span> <span class="o">|</span> <span class="n">AckPacket</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process data received from board.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="n">ActuatorPollResponsePacket</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_recent_response</span> <span class="o">=</span> <span class="n">packet</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
