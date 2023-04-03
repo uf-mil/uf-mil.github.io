@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>remote_control_lib.remote_control_lib</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for remote_control_lib.remote_control_lib</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Remote Control Library: This object contains all of the common variables and</span>
+<span class="sd">functions that are shared by the various remote control devices on NaviGator.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">actionlib</span>
+<span class="kn">import</span> <span class="nn">genpy</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">TerminalState</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">WrenchStamped</span>
+<span class="kn">from</span> <span class="nn">mil_missions_core</span> <span class="kn">import</span> <span class="n">MissionClient</span>
+<span class="kn">from</span> <span class="nn">navigator_msgs.msg</span> <span class="kn">import</span> <span class="n">ShooterDoAction</span><span class="p">,</span> <span class="n">ShooterDoActionGoal</span>
+<span class="kn">from</span> <span class="nn">navigator_msgs.srv</span> <span class="kn">import</span> <span class="n">ShooterManual</span>
+<span class="kn">from</span> <span class="nn">ros_alarms</span> <span class="kn">import</span> <span class="n">AlarmBroadcaster</span><span class="p">,</span> <span class="n">AlarmListener</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Trigger</span><span class="p">,</span> <span class="n">TriggerRequest</span>
+<span class="kn">from</span> <span class="nn">topic_tools.srv</span> <span class="kn">import</span> <span class="n">MuxSelect</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Anthony Olive&quot;</span>
+
+
+<div class="viewcode-block" id="RemoteControl"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl">[docs]</a><span class="k">class</span> <span class="nc">RemoteControl</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class which assists in allowing the remote execution of several key</span>
+<span class="sd">    robot services.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wrench_pub</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">controller_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_choices</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;rc&quot;</span><span class="p">,</span> <span class="s2">&quot;emergency&quot;</span><span class="p">,</span> <span class="s2">&quot;keyboard&quot;</span><span class="p">,</span> <span class="s2">&quot;autonomous&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill_broadcaster</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;kill&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_hold_broadcaster</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;station-hold&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/wrench/select&quot;</span><span class="p">,</span> <span class="n">MuxSelect</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_client</span> <span class="o">=</span> <span class="n">MissionClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill_listener</span> <span class="o">=</span> <span class="n">AlarmListener</span><span class="p">(</span>
+            <span class="s2">&quot;kill&quot;</span><span class="p">,</span>
+            <span class="n">callback_funct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_kill_status</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">wrench_pub</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span> <span class="o">=</span> <span class="n">wrench_pub</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="n">wrench_pub</span><span class="p">,</span> <span class="n">WrenchStamped</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_load_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span>
+            <span class="s2">&quot;/shooter/load&quot;</span><span class="p">,</span>
+            <span class="n">ShooterDoAction</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_fire_client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span>
+            <span class="s2">&quot;/shooter/fire&quot;</span><span class="p">,</span>
+            <span class="n">ShooterDoAction</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_cancel_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/shooter/cancel&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_manual_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span>
+            <span class="s2">&quot;/shooter/manual&quot;</span><span class="p">,</span>
+            <span class="n">ShooterManual</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_reset_client</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/shooter/reset&quot;</span><span class="p">,</span> <span class="n">Trigger</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_killed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_timed_out</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_wrench</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_timeout_check</span><span class="p">(</span><span class="n">function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple decorator to check whether or not the remote control device is</span>
+<span class="sd">        timed out before running the function that was called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_timed_out</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">def</span> <span class="nf">_update_kill_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the kill status display when there is an update on the kill</span>
+<span class="sd">        alarm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_killed</span> <span class="o">=</span> <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span>
+
+<div class="viewcode-block" id="RemoteControl.kill"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.kill">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Kills the system regardless of what state it is in.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Killing&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
+            <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;System kill from user remote control&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.clear_kill"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.clear_kill">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">clear_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears the system kill regardless of what state it is in.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Reviving&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="RemoteControl.toggle_kill"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.toggle_kill">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">toggle_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Toggles the kill status when the toggle_kill_button is pressed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Toggling Kill&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Responds to the kill broadcaster and checks the status of the kill alarm</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_killed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill_broadcaster</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
+                <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;System kill from user remote control&quot;</span><span class="p">,</span>
+                <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.station_hold"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.station_hold">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">station_hold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the goal point to the current location and switches to autonomous</span>
+<span class="sd">        mode in order to stay at that point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Station Holding&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Trigger station holding at the current pose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">station_hold_broadcaster</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
+            <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Request to station hold from remote control&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;location&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">},</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.deploy_thrusters"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.deploy_thrusters">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">deploy_thrusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deploys the thrusters by creating a new task in the task client.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">terminal_state</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">terminal_state</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Thrusters Deployed!&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Error deploying thrusters: </span><span class="si">{}</span><span class="s2">, status: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">TerminalState</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">terminal_state</span><span class="p">),</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_client</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="s2">&quot;DeployThrusters&quot;</span><span class="p">,</span> <span class="n">done_cb</span><span class="o">=</span><span class="n">cb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.retract_thrusters"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.retract_thrusters">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">retract_thrusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retracts the thrusters by creating a new task in the task client.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">terminal_state</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">terminal_state</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Thrusters Retracted!&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                    <span class="s2">&quot;Error rectracting thrusters: </span><span class="si">{}</span><span class="s2">, status: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">TerminalState</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">terminal_state</span><span class="p">),</span>
+                        <span class="n">result</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_client</span><span class="o">.</span><span class="n">run_task</span><span class="p">(</span><span class="s2">&quot;RetractThrusters&quot;</span><span class="p">,</span> <span class="n">done_cb</span><span class="o">=</span><span class="n">cb</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.select_autonomous_control"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.select_autonomous_control">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">select_autonomous_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the autonomously generated trajectory as the active controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Changing Control to Autonomous&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span><span class="p">(</span><span class="s2">&quot;autonomous&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.select_rc_control"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.select_rc_control">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">select_rc_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the Xbox remote joystick as the active controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Changing Control to RC&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span><span class="p">(</span><span class="s2">&quot;rc&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.select_emergency_control"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.select_emergency_control">[docs]</a>    <span class="k">def</span> <span class="nf">select_emergency_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the emergency controller as the active controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Changing Control to Emergency Controller&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span><span class="p">(</span><span class="s2">&quot;emergency&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.select_keyboard_control"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.select_keyboard_control">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">select_keyboard_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the keyboard teleoperation service as the active controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Changing Control to Keyboard&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span><span class="p">(</span><span class="s2">&quot;keyboard&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.select_next_control"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.select_next_control">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">select_next_control</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Selects the autonomously generated trajectory as the active controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wrench_choices</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Changing Control Mode: </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrench_changer</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_shooter_load_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints the feedback that is returned by the shooter load action client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Shooter Load Status=</span><span class="si">{}</span><span class="s2"> Success=</span><span class="si">{}</span><span class="s2"> Error=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">status</span><span class="p">,</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="RemoteControl.shooter_load"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_load">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the shooter by using the action client to retract the linear actuator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_load_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span>
+            <span class="n">goal</span><span class="o">=</span><span class="n">ShooterDoActionGoal</span><span class="p">(),</span>
+            <span class="n">done_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shooter_load_feedback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Kip, do not throw away your shot.&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_shooter_fire_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints the feedback that is returned by the shooter fire action client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Shooter Fire Status=</span><span class="si">{}</span><span class="s2"> Success=</span><span class="si">{}</span><span class="s2"> Error=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">status</span><span class="p">,</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="RemoteControl.shooter_fire"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_fire">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_fire</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fires the shooter by using the action client to spin up the</span>
+<span class="sd">        acceleration discs and extend the linear actuator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_fire_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span>
+            <span class="n">goal</span><span class="o">=</span><span class="n">ShooterDoActionGoal</span><span class="p">(),</span>
+            <span class="n">done_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shooter_fire_feedback</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;One, two, three, four, five, six, seven, eight, nine. Number... TEN PACES! FIRE!&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.shooter_cancel"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_cancel">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cancels the process that the shooter action client is currently</span>
+<span class="sd">        running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Canceling shooter requests&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_cancel_client</span><span class="p">(</span><span class="n">TriggerRequest</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;I imaging death so much it feels more like a memory.&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;When&#39;s it gonna get me? While I&#39;m blocked? Seven clocks ahead of me?&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_shooter_reset_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to actually call the shooter&#39;s reset service.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Resetting the shooter service&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_reset_client</span><span class="p">(</span><span class="n">TriggerRequest</span><span class="p">())</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;In New York you can be a new man! In New York you can be a new man!&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="RemoteControl.shooter_reset"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_reset">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensures that the shooter is fully retracted by initiating a retract and</span>
+<span class="sd">        using a ~6s delay before calling the actual reset service.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_linear_retract</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shooter_reset_helper</span><span class="p">,</span> <span class="n">oneshot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.shooter_linear_extend"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_linear_extend">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_linear_extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extends the shooter&#39;s linear actuator by setting it&#39;s speed to full</span>
+<span class="sd">        forward.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Extending the shooter&#39;s linear actuator&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_manual_client</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.shooter_linear_retract"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.shooter_linear_retract">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">shooter_linear_retract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retracts the shooter&#39;s linear actuator by setting it&#39;s speed to full</span>
+<span class="sd">        reverse.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Retracting the shooter&#39;s linear actuator&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_manual_client</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.set_disc_speed"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.set_disc_speed">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">set_disc_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the shooters disc speed to the speed value passed in. The value is</span>
+<span class="sd">        a percentage from -100 to 100, which is scaled down to a number from -1</span>
+<span class="sd">        to 1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            speed (int): The speed to set the shooter disc to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting the shooter&#39;s accelerator disc speed to </span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shooter_manual_client</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span> <span class="o">/</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.publish_wrench"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.publish_wrench">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">publish_wrench</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">stamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">genpy</span><span class="o">.</span><span class="n">rostime</span><span class="o">.</span><span class="n">Time</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Publishes a wrench to the specified node based on force inputs from the</span>
+<span class="sd">        controller.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (float): The x-dimension of the wrench&#39;s force vector.</span>
+<span class="sd">            y (float): The y-dimension of the wrench&#39;s force vector.</span>
+<span class="sd">            rotation (float): The z-dimension of torque.</span>
+<span class="sd">            stamp (Optional[genpy.rostime.Time]): The time to attach to the header.</span>
+<span class="sd">                If ``None``, then use the current time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">stamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">wrench</span> <span class="o">=</span> <span class="n">WrenchStamped</span><span class="p">()</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;/base_link&quot;</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">stamp</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">force</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">force</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">rotation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">wrench</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RemoteControl.clear_wrench"><a class="viewcode-back" href="../../reference/rc.html#remote_control_lib.RemoteControl.clear_wrench">[docs]</a>    <span class="nd">@_timeout_check</span>
+    <span class="k">def</span> <span class="nf">clear_wrench</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Publishes a zeroed wrench to the specified node based on force inputs from the</span>
+<span class="sd">        controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">wrench</span> <span class="o">=</span> <span class="n">WrenchStamped</span><span class="p">()</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="s2">&quot;/base_link&quot;</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">force</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">force</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">wrench</span><span class="o">.</span><span class="n">wrench</span><span class="o">.</span><span class="n">torque</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wrench_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">wrench</span><span class="p">)</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
