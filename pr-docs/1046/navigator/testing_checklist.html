@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Testing Checklist</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Networking with Navigator" href="networking.html" />
+        <link rel="prev" title="LIDAR" href="lidar.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NaviGator</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#current-projects">Current Projects</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#procedures">Procedures</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Testing Day Checklist</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#packing">Packing</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#equipment">Equipment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#boat-and-trailers">Boat and Trailers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#mechanical">Mechanical</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#electrical">Electrical</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#software">Software</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#set-up">Set Up</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id1">Equipment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id2">Boat and Trailers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id3">Mechanical</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id4">Electrical</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#id5">Software</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="networking.html">Networking with Navigator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lessons-learned-reflections">Lessons Learned + Reflections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#past-projects">Past Projects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="testing-checklist">
+<h1>Testing Checklist<a class="headerlink" href="#testing-checklist" title="Permalink to this heading">¶</a></h1>
+<p>Below is a checklist that should be completed before we leave to test NaviGator
+at a testing site. The following list helps to ensure that we have all necessary
+equipment at the testing site.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This list should always be followed (as we’ve learned <a class="reference internal" href="../subjugator/lessons19.html"><span class="doc">time</span></a>
+and <a class="reference internal" href="../subjugator/lessons22.html"><span class="doc">time again</span></a>).</p>
+</div>
+<section id="packing">
+<h2>Packing<a class="headerlink" href="#packing" title="Permalink to this heading">¶</a></h2>
+<section id="equipment">
+<h3>Equipment<a class="headerlink" href="#equipment" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Radios</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Radio Handset Box</p></li>
+<li><p><input type="checkbox"> Radio Base Station Box</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Generators</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Gas cans</p></li>
+<li><p><input type="checkbox"> Funnel</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="boat-and-trailers">
+<h3>Boat and Trailers<a class="headerlink" href="#boat-and-trailers" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Boat prep</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Attach lidar</p></li>
+<li><p><input type="checkbox"> Attach camera covers</p></li>
+<li><p><input type="checkbox"> Stow wifi antenna, light post, rf antenna</p></li>
+<li><p><input type="checkbox"> Strap computer box closed</p></li>
+<li><p><input type="checkbox"> Stow batteries in main trailer</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Boat trailer prep</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Strap pontoons down on both sides</p></li>
+<li><p><input type="checkbox"> Check boat trailer lights</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Main trailer prep</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Check main trailer lights</p></li>
+<li><dl class="simple">
+<dt><input type="checkbox"> Food</dt><dd><ul>
+<li><p><input type="checkbox"> Water</p></li>
+<li><p><input type="checkbox"> Gatorade</p></li>
+<li><p><input type="checkbox"> Packaged snacks</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="mechanical">
+<h3>Mechanical<a class="headerlink" href="#mechanical" title="Permalink to this heading">¶</a></h3>
+<p><input type="checkbox"> Challenge elements</p>
+</section>
+<section id="electrical">
+<h3>Electrical<a class="headerlink" href="#electrical" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Batteries</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Spare battery set</p></li>
+<li><p><input type="checkbox"> Battery charger</p></li>
+<li><p><input type="checkbox"> Multimeter</p></li>
+<li><p><input type="checkbox"> Battery bolt wrench</p></li>
+</ul>
+</dd>
+</dl>
+<p><input type="checkbox"> Electrical Box</p>
+</section>
+<section id="software">
+<h3>Software<a class="headerlink" href="#software" title="Permalink to this heading">¶</a></h3>
+<p><input type="checkbox"> Ubiquity</p>
+<p><input type="checkbox"> Network Box</p>
+</section>
+</section>
+<section id="set-up">
+<h2>Set Up<a class="headerlink" href="#set-up" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>Equipment<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Radios</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Start charging handsets</p></li>
+<li><p><input type="checkbox"> Attach lanyards to handsets</p></li>
+<li><p><input type="checkbox"> Connect base station to power</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Generators</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Check fuel level</p></li>
+<li><dl class="simple">
+<dt><input type="checkbox"> Powering up</dt><dd><ul>
+<li><p><input type="checkbox"> Connect balance leads and check grounds</p></li>
+<li><p><input type="checkbox"> Start both generators</p></li>
+<li><p><input type="checkbox"> Connect to the trailer’s power lead</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Boat and Trailers<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Boat</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Remove lidar and camera covers</p></li>
+<li><p><input type="checkbox"> Deploy wifi antenna, light post, rf antenna</p></li>
+<li><p><input type="checkbox"> Remove computer box strap</p></li>
+<li><p><input type="checkbox"> Attach batteries</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Boat trailer</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Unstrap pontoons on both sides</p></li>
+<li><p><input type="checkbox"> Disconnect boat trailer lights</p></li>
+</ul>
+</dd>
+<dt><input type="checkbox"> Main trailer</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Deploy trailer chocks</p></li>
+<li><p><input type="checkbox"> Set out cooler, chairs, pop-up, snacks, ice, drinks</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id3">
+<h3>Mechanical<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p><input type="checkbox"> Assemble and deploy challenge elements</p>
+</section>
+<section id="id4">
+<h3>Electrical<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt><input type="checkbox"> Batteries</dt><dd><ul class="simple">
+<li><p><input type="checkbox"> Spare battery set</p></li>
+<li><p><input type="checkbox"> Battery charger</p></li>
+<li><p><input type="checkbox"> Multimeter</p></li>
+<li><p><input type="checkbox"> Battery bolt wrench</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id5">
+<h3>Software<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p><input type="checkbox"> Deploy the Ubiquity</p>
+<p><input type="checkbox"> Power and deploy the network box</p>
+</section>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
