@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Noetic Migration</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Installing Drivers for RTX 2080" href="rtx_2080_drivers.html" />
+        <link rel="prev" title="Python Style Guide" href="python_style.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Migrating to ROS Noetic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#migrating-python-2-to-python-3">Migrating Python 2 to Python 3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-one-running-scripts-against-the-existing-code">Step One: Running scripts against the existing code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-two-migrating-the-code">Step Two: Migrating the code</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#handling-import-six-xxx-suggestions">Handling <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">six.XXX</span></code> suggestions</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#step-three-documenting-the-code-optional">Step Three: Documenting the code (optional!)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-four-check-and-verify">Step Four: Check and verify</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-cmake-minimum-version">Updating CMake minimum version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-the-changes">Testing the changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="noetic-migration">
+<h1>Noetic Migration<a class="headerlink" href="#noetic-migration" title="Permalink to this heading">¶</a></h1>
+<p>Welcome! Thanks for helping with the migration to ROS Noetic. This guide will attempt to walk you through some of the tools we will use and some of the steps we will take to achieve ROS Noetic compatibility.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p><strong>So, what even is the problem here? What is “ROS Melodic” and “ROS Noetic”, and why do we need to migrate between them?</strong></p>
+<p>First, ROS is the Robot Operating System, which controls how our robots perform. Released in 2018, ROS Melodic is the version our code currently operates on. ROS Noetic was released in 2020 and is the next major version of ROS after ROS Melodic.</p>
+<p>Like most software, ROS Noetic fixes a lot of bugs and adds helpful features that can be used when programming our robots. Therefore, many systems are migrating over to ROS Noetic, including the VRX competition, one of the main competitions we compete in. To ensure compatibility with ROS Noetic in the future, we want to start migrating earlier rather than later so that we aren’t left behind and can use the latest-and-greatest features on our robots!</p>
+<p>So the migration between ROS Melodic is easy-peasy, right? A few setup scripts here, a touch of code editing there? Well, not exactly. There are a few major components of our systems that must be updated to work with ROS Noetic. This includes:</p>
+<ul class="simple">
+<li><p>Updating all <strong>Python 2</strong> to be compatible with <strong>Python 3</strong></p></li>
+<li><p>Updating ROS packages to use a different version of CMake</p></li>
+<li><p>Verifying dependency compatibility with ROS Noetic</p></li>
+<li><p>Updating some dependencies, such as OpenCV and PCL</p></li>
+<li><p><em><a class="reference external" href="http://wiki.ros.org/noetic/Migration">Other various changes…</a></em></p></li>
+</ul>
+<p>We will work through these changes piece by piece to make sure our systems are up to date.</p>
+<p>Let’s start with the first major step…</p>
+</section>
+<section id="migrating-python-2-to-python-3">
+<h2>Migrating Python 2 to Python 3<a class="headerlink" href="#migrating-python-2-to-python-3" title="Permalink to this heading">¶</a></h2>
+<p>Python is one of the most common languages found in our codebase. However, the code was written in Python 2, and it now needs to be converted to Python 3, which has a very different syntax style.</p>
+<p>Before you start, take a <strong>quick look</strong> over <a class="reference external" href="https://portingguide.readthedocs.io/en/latest/index.html">this porting guide</a>. Start at the <code class="docutils literal notranslate"><span class="pre">Syntax</span> <span class="pre">Changes</span></code> section and skim through the end. You don’t need to memorize this information, but skimming through the pages will give you a good idea for what changes need to be made.</p>
+<p>Then, you can choose a package to convert to Python 3. To do so, go to the GitHub repository and choose and issue with the <code class="docutils literal notranslate"><span class="pre">2to3</span></code> label. Once you’ve chosen a package to migrate, you can go through a series of steps with each package:</p>
+<section id="step-one-running-scripts-against-the-existing-code">
+<h3>Step One: Running scripts against the existing code<a class="headerlink" href="#step-one-running-scripts-against-the-existing-code" title="Permalink to this heading">¶</a></h3>
+<p>First, run some helper scripts against the code that already exists in the package. There are some great tools that can help you with this:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>: A command-line utility that is able to show what code needs to be migrated to Python 3. The utility will show what lines could cause issues if run with Python 3. Remember that a lot of Python is compatible with both versions 2 and 3, only some of it is not. Also note that not everything it flags is an issue, but more on this later.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">black</span></code>: Another command-line utility useful for making Python look pretty and sweet! It formats the code in such a way that the meaning is preserved but the code is easier to read!</p></li>
+</ul>
+<p>A good practice is to run <code class="docutils literal notranslate"><span class="pre">black</span></code> (and <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code> if you find that it helps
+you) before you begin the process of migration. Then, re-run the command(s) again
+before you commit.</p>
+</section>
+<section id="step-two-migrating-the-code">
+<h3>Step Two: Migrating the code<a class="headerlink" href="#step-two-migrating-the-code" title="Permalink to this heading">¶</a></h3>
+<p>Great, the code is now pretty! :D</p>
+<p>If you ran <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>, it will have suggested some changes to you, indcated
+by <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> signs. It may look something like this:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>RefactoringTool: Refactored old.py
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gd">-print &#39;this is an example&#39;</span>
+<span class="gi">+from __future__ import print_function</span>
+<span class="gi">+print(&#39;this is an example&#39;)</span>
+RefactoringTool: Files that need to be modified:
+</pre></div>
+</div>
+<p>This is showing that it’s suggesting the removal of the <code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">'this</span> <span class="pre">is</span> <span class="pre">an</span> <span class="pre">example'</span></code> line,
+the addition of <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">print_function</span></code>, and the addition of
+<code class="docutils literal notranslate"><span class="pre">print('this</span> <span class="pre">is</span> <span class="pre">an</span> <span class="pre">example')</span></code>.</p>
+<p>Let’s break this down:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python-modernize</span></code> frequently likes to suggest adding <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">X</span></code>.
+The good news is that most of the time, this isn’t needed at all. The only exception
+is <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">annotations</span></code>, which you may need to add if it suggests adding it.</p></li>
+<li><p>It’s suggesting the replacement of <code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">'...'</span></code> with <code class="docutils literal notranslate"><span class="pre">print('...')</span></code>, which is
+an awesome idea! You may have noticed this is a required change in the Python 2 to 3
+Porting Guide above.</p></li>
+</ol>
+<p>Great! So now we know what to fix in our file. Here’s some more tips about <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>:</p>
+<ol class="arabic simple">
+<li><p>It always starts with a long list of “fixers” telling you what it looked for
+in the file. This is okay; you need to ignore the list.</p></li>
+<li><p>Some changes ask you to use <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">six.XXX</span></code>. Never do this! This is covered more below.</p></li>
+<li><p>After migrating <code class="docutils literal notranslate"><span class="pre">print</span> <span class="pre">'...'</span></code> to <code class="docutils literal notranslate"><span class="pre">print('...')</span></code>, you may notice that <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>
+wants you to now write <code class="docutils literal notranslate"><span class="pre">print(('...'))</span></code>! Don’t do this - only one set of parentheses
+is needed.</p></li>
+<li><p>Usually, a method beginning with <code class="docutils literal notranslate"><span class="pre">iter</span></code> can have the <code class="docutils literal notranslate"><span class="pre">iter</span></code> prefix removed. For example,
+<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">k,</span> <span class="pre">v</span> <span class="pre">in</span> <span class="pre">dict.iteritems()</span></code> can be migrated to <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">k,</span> <span class="pre">v</span> <span class="pre">in</span> <span class="pre">dict.items()</span></code>.</p></li>
+</ol>
+<p>Additionally, change the <a class="reference external" href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a> of the file if that was not a suggested fix by <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code>. You likely only need to replace the <code class="docutils literal notranslate"><span class="pre">python</span></code> with <code class="docutils literal notranslate"><span class="pre">python3</span></code>!</p>
+<section id="handling-import-six-xxx-suggestions">
+<h4>Handling <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">six.XXX</span></code> suggestions<a class="headerlink" href="#handling-import-six-xxx-suggestions" title="Permalink to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">six</span></code> is a Python 2 to 3 library used to help in the transition between the two
+languages by providing some helper functions and methods that work in both languages.</p>
+<p>When the program asks you to import something from <code class="docutils literal notranslate"><span class="pre">six</span></code>, it’s asking you to prop
+up our code on these crutches. But, we are MIL, and we don’t need any crutches!
+Instead of using <code class="docutils literal notranslate"><span class="pre">six</span></code>, try fixing the root problem. For example:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>RefactoringTool: Refactored old.py
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gd">-test = range(2)</span>
+<span class="gi">+from six.moves import range</span>
+<span class="gi">+test = list(range(2))</span>
+RefactoringTool: Files that need to be modified:
+RefactoringTool: old.py
+</pre></div>
+</div>
+<p>It’s asking us to import <code class="docutils literal notranslate"><span class="pre">range</span></code> from <code class="docutils literal notranslate"><span class="pre">six.moves</span></code>. It’s telling us that our <code class="docutils literal notranslate"><span class="pre">range</span></code>
+function is messed up, and that we need to do something about it. You’ll also notice
+that it wants us to wrap the <code class="docutils literal notranslate"><span class="pre">range</span></code> in a <code class="docutils literal notranslate"><span class="pre">list</span></code>.</p>
+<p>The porting guide linked above can come in real handy here. It explains that in Python 2,
+<code class="docutils literal notranslate"><span class="pre">range</span></code> always produced a <code class="docutils literal notranslate"><span class="pre">list</span></code>, while in Python 3, it produces a <code class="docutils literal notranslate"><span class="pre">range</span></code> object.
+Because we want the same functionality as we had in Python 2, we’ll need to manually
+convert the <code class="docutils literal notranslate"><span class="pre">range</span></code> object to a <code class="docutils literal notranslate"><span class="pre">list</span></code>. Once that’s done:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>RefactoringTool: Refactored old.py
+<span class="gd">--- old.py	(original)</span>
+<span class="gi">+++ old.py	(refactored)</span>
+<span class="gu">@@ -1 +1,2 @@</span>
+<span class="gi">+from six.moves import range</span>
+<span class="w"> </span>test = list(range(2))
+RefactoringTool: Files that need to be modified:
+RefactoringTool: old.py
+</pre></div>
+</div>
+<p>Now the suggestion of wrapping <code class="docutils literal notranslate"><span class="pre">range</span></code> in a <code class="docutils literal notranslate"><span class="pre">list</span></code> is gone, but it’s still
+asking us to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">range</span></code>. We can ignore this, because we know that we fixed
+the root problem. Great job!</p>
+</section>
+</section>
+<section id="step-three-documenting-the-code-optional">
+<h3>Step Three: Documenting the code (optional!)<a class="headerlink" href="#step-three-documenting-the-code-optional" title="Permalink to this heading">¶</a></h3>
+<p>An optional step in the migration process is documenting the code as you convert it.
+Documenting the code helps future members understand the code they are reading.</p>
+<p>Documentation comes in many forms! One form is by typing the code, a feature of
+Python that Python 3 supports. To type the code, add the types that the method
+accepts as parameters and what types it returns.</p>
+<p>Another form is by adding docstrings throughout the code, which help to explain
+what methods do and how they work. These docstrings can be added through a
+multi-line comment under the method signature. The docstring should include the
+type and an explanation for each argument and what the method returns.</p>
+<p>For example, the following code block can be annotated with types and docstrings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From https://stackoverflow.com/a/11832677</span>
+<span class="k">def</span> <span class="nf">postal_valid</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">no_spaces</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_spaces</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span> <span class="k">return</span> <span class="n">false</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
+           <span class="k">if</span> <span class="ow">not</span> <span class="n">no_spaces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span><span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+           <span class="k">if</span> <span class="ow">not</span> <span class="n">no_spaces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span><span class="k">return</span> <span class="kc">False</span>
+
+     <span class="k">return</span> <span class="n">no_spaces</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c1">#True</span>
+</pre></div>
+</div>
+<p>to</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># From https://stackoverflow.com/a/11832677</span>
+<span class="k">def</span> <span class="nf">postal_valid</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns whether a postal code is valid.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        s (str): The postal code, represented as a string.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Whether the code is valid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">no_spaces</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_spaces</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span> <span class="k">return</span> <span class="n">false</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span>
+           <span class="k">if</span> <span class="ow">not</span> <span class="n">no_spaces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span><span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+           <span class="k">if</span> <span class="ow">not</span> <span class="n">no_spaces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span><span class="k">return</span> <span class="kc">False</span>
+
+     <span class="k">return</span> <span class="n">no_spaces</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c1">#True</span>
+</pre></div>
+</div>
+<p>Now that you’ve added new documentation, let’s see it built:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mil
+$<span class="w"> </span>./scripts/build_docs
+</pre></div>
+</div>
+<p>That last command should build the documentation on your computer and provide you
+with a link - clicking that link should open up an HTML page where you can see
+your beautiful new documentation! How exciting!</p>
+<p>When a new member sees the method in the first code block, how are they supposed
+to know what it does? This is what the docstring and typing annotations help with!
+Now, another member can instantly see the types of parameters the method accepts,
+what it returns, and what it is supposed to do.</p>
+<p>Again, this is totally optional. But, if you complete this step, you will have
+the opportunity to learn much more about the codebase and how each module works!</p>
+</section>
+<section id="step-four-check-and-verify">
+<h3>Step Four: Check and verify<a class="headerlink" href="#step-four-check-and-verify" title="Permalink to this heading">¶</a></h3>
+<p>Great! By now, the code should be ready to be run in Python 3. For a last step check,
+run <code class="docutils literal notranslate"><span class="pre">python-modernize</span></code> again and verify that any warnings that appear do not need
+to be fixed. Finally, run <code class="docutils literal notranslate"><span class="pre">black</span></code> again.</p>
+</section>
+</section>
+<section id="updating-cmake-minimum-version">
+<h2>Updating CMake minimum version<a class="headerlink" href="#updating-cmake-minimum-version" title="Permalink to this heading">¶</a></h2>
+<p>The CMake minimum version in each package needs to be updated to version <code class="docutils literal notranslate"><span class="pre">3.0.3</span></code>.
+This has already been completed for all packages and should not need to be completed again.</p>
+</section>
+<section id="testing-the-changes">
+<h2>Testing the changes<a class="headerlink" href="#testing-the-changes" title="Permalink to this heading">¶</a></h2>
+<p>After making some changes to a package, you may have the desire to test the changes that you’ve made. But wait! You can’t.</p>
+<p>Many of the packages in our codebase rely on each other like an interlocking Jenga tower. If one block is removed, the tower will frequently fall. Therefore, if you attempt to simulate your changes after making some changes, the simlulation may fail.</p>
+<p>Therefore, make the best changes that you can; changes that you feel confident in. Once all packages have been updated for ROS Noetic, then we can test to see how our all the packages perform. If things are still broken at this point, then we can make further commits to fix what’s broken.</p>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
