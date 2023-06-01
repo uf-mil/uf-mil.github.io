@@ -330,41 +330,9 @@
 <span class="sd">    Attributes:</span>
 <span class="sd">        IDENTIFIER (int): The packet identifier, equal to the ordinal value of &quot;T,&quot;</span>
 <span class="sd">            or 84.</span>
-<span class="sd">        ID_MAPPING (Dict[str, int]): A dictionary mapping 3-letter thruster codes</span>
-<span class="sd">            to their respective IDs:</span>
-
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  Name  |  ID  |</span>
-<span class="sd">            +========+======+</span>
-<span class="sd">            |  FLH   |  0   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  FRH   |  1   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  FLV   |  2   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  FRV   |  3   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  BLH   |  4   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  BRH   |  5   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  BLV   |  6   |</span>
-<span class="sd">            +--------+------+</span>
-<span class="sd">            |  BRV   |  7   |</span>
-<span class="sd">            +--------+------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
-    <span class="n">ID_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;FLH&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s2">&quot;FRH&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;FLV&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="s2">&quot;FRV&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-        <span class="s2">&quot;BLH&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-        <span class="s2">&quot;BRH&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="s2">&quot;BLV&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-        <span class="s2">&quot;BRV&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-    <span class="p">}</span>
 
 <div class="viewcode-block" id="ThrustPacket.create_thrust_packet"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.ThrustPacket.create_thrust_packet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_thrust_packet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">thruster_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>

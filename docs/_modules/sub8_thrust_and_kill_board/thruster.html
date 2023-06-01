@@ -78,19 +78,24 @@
             <main class="grid-item" role="main">
                 
   <h1>Source code for sub8_thrust_and_kill_board.thruster</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">clip</span><span class="p">,</span> <span class="n">polyval</span>
 
 
-<span class="k">def</span> <span class="nf">make_thruster_dictionary</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">make_thruster_dictionary</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Thruster</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Make a dictionary mapping thruster names to :class:`Thruster` objects.</span>
+<span class="sd">    Make a dictionary mapping thruster names to :class:`Thruster` objects</span>
+<span class="sd">    and a dictionary mapping thruster names to node IDs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">name_id_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">thruster</span><span class="p">,</span> <span class="n">content</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">ret</span><span class="p">[</span><span class="n">thruster</span><span class="p">]</span> <span class="o">=</span> <span class="n">Thruster</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span>
+        <span class="n">name_id_map</span><span class="p">[</span><span class="n">thruster</span><span class="p">]</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="s2">&quot;node_id&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">,</span> <span class="n">name_id_map</span>
 
 
 <div class="viewcode-block" id="Thruster"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.Thruster">[docs]</a><span class="k">class</span> <span class="nc">Thruster</span><span class="p">:</span>
@@ -107,7 +112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">backward_calibration</span> <span class="o">=</span> <span class="n">backward_calibration</span>
 
 <div class="viewcode-block" id="Thruster.from_dict"><a class="viewcode-back" href="../../subjugator/reference.html#sub8_thrust_and_kill_board.Thruster.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs the class from a dictionary. The dictionary should be formatted</span>
 <span class="sd">        as so:</span>
