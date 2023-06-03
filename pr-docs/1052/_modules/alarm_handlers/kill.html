@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>alarm_handlers.kill</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for alarm_handlers.kill</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Condition</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">SimpleActionClient</span><span class="p">,</span> <span class="n">TerminalState</span>
+<span class="kn">from</span> <span class="nn">mil_msgs.msg</span> <span class="kn">import</span> <span class="n">BagOnlineAction</span><span class="p">,</span> <span class="n">BagOnlineGoal</span>
+<span class="kn">from</span> <span class="nn">ros_alarms</span> <span class="kn">import</span> <span class="n">Alarm</span><span class="p">,</span> <span class="n">HandlerBase</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">SetBool</span>
+
+
+<div class="viewcode-block" id="Kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill">[docs]</a><span class="k">class</span> <span class="nc">Kill</span><span class="p">(</span><span class="n">HandlerBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generic kill used to represent the state of an alarm. Uses a threading condition</span>
+<span class="sd">    to manage access</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        alarm_name (str): The name of the alarm. Set to ``kill``.</span>
+<span class="sd">        condition (threading.Condition): The threading condition used to manage</span>
+<span class="sd">          the shared access to the motherboard.</span>
+<span class="sd">        HARDWARE_KILL_GRACE_PERIOD_SECONDS (int): The number of seconds to wait</span>
+<span class="sd">          for the hardware kill to be removed after asking for it to be removed.</span>
+<span class="sd">          If the kill has not been removed within this amount of time, the motherboard</span>
+<span class="sd">          kill is reinstated. Set to ``6 seconds``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">alarm_name</span> <span class="o">=</span> <span class="s2">&quot;kill&quot;</span>
+    <span class="n">HARDWARE_KILL_GRACE_PERIOD_SECONDS</span> <span class="o">=</span> <span class="mf">6.0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Alarm server will set this as the initial state of kill alarm (starts killed)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_alarm</span> <span class="o">=</span> <span class="n">Alarm</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alarm_name</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">node_name</span><span class="o">=</span><span class="s2">&quot;alarm_server&quot;</span><span class="p">,</span>
+            <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;Initial kill&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_mission_killed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">condition</span> <span class="o">=</span> <span class="n">Condition</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bag_client</span> <span class="o">=</span> <span class="n">SimpleActionClient</span><span class="p">(</span><span class="s2">&quot;/online_bagger/bag&quot;</span><span class="p">,</span> <span class="n">BagOnlineAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_mobo_kill</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/set_mobo_kill&quot;</span><span class="p">,</span> <span class="n">SetBool</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_mobo_kill</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSException</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;Could not contact kill board! Kills will only be software&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Tell HW that we started off as killed</span>
+
+<div class="viewcode-block" id="Kill.set_mobo_kill"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.set_mobo_kill">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobo_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a motherboard kill.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            rospy.ServiceException: Error in sending a motherboard kill.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_mobo_kill</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error sending motherboard kill: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Kill.raised"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.raised">[docs]</a>    <span class="k">def</span> <span class="nf">raised</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when the alarm is raised. Sets the motherboard kill and attempts to</span>
+<span class="sd">        dump the related logging info to a bag file, using the :attr:`~.condition`.</span>
+<span class="sd">        At the end of the use of the condition, the condition is notified.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            alarm (ros_alarms.Alarm): The alarm which was raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">:</span>
+            <span class="c1"># Send kill command to kill board when alarm is raised</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bagger_dump</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Kill.cleared"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.cleared">[docs]</a>    <span class="k">def</span> <span class="nf">cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alarm</span><span class="p">:</span> <span class="n">Alarm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when the alarm is cleared. Attempts to use `~.condition` to unset</span>
+<span class="sd">        the motherboard kill. If the motherboard kill can&#39;t be deactivated, then</span>
+<span class="sd">        it is reinstated and a warning is logged.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            alarm (ros_alarms.Alarm): The alarm which was cleared.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_alarm</span><span class="p">(</span><span class="s2">&quot;hw-kill&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HARDWARE_KILL_GRACE_PERIOD_SECONDS</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_alarm</span><span class="p">(</span><span class="s2">&quot;hw-kill&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;Attempted to clear kill but hw-kill is still raised&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_mobo_kill</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="k">def</span> <span class="nf">_bag_done_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;KILL BAG WRITTEN TO </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s2">&quot;KILL BAG </span><span class="si">{}</span><span class="s2">, status: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">TerminalState</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">status</span><span class="p">),</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="Kill.bagger_dump"><a class="viewcode-back" href="../../reference/alarms.html#alarm_handlers.Kill.bagger_dump">[docs]</a>    <span class="k">def</span> <span class="nf">bagger_dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bags the related log information to a list of relevant topics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="s2">&quot;BAG_ALWAYS&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">or</span> <span class="s2">&quot;bag_kill&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;BAG_ALWAYS or BAG_KILL not set. Not making kill bag.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">goal</span> <span class="o">=</span> <span class="n">BagOnlineGoal</span><span class="p">(</span><span class="n">bag_name</span><span class="o">=</span><span class="s2">&quot;kill.bag&quot;</span><span class="p">)</span>
+        <span class="n">goal</span><span class="o">.</span><span class="n">topics</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BAG_ALWAYS&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BAG_KILL&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bag_client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">,</span> <span class="n">done_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_bag_done_cb</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">meta_predicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_alarm</span><span class="p">,</span> <span class="n">sub_alarms</span><span class="p">):</span>
+        <span class="n">ignore</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;hw-kill&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">condition</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+
+        <span class="c1"># Stay killed until user clears</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># Battery too low</span>
+        <span class="k">if</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;bus-voltage&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;bus-voltage&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">ignore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bus-voltage&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;odom-kill&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;odom-kill&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">ignore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;odom-kill&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If we lose network but don&#39;t want to go autonomous</span>
+        <span class="k">if</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;network-loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span>
+            <span class="s2">&quot;/autonomous&quot;</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">ignore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;network-loss&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Severity level of 3 means too many thrusters out (3 thrusters out)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;thruster-out&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span>
+            <span class="ow">and</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;thruster-out&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="mi">3</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">ignore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;thruster-out&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If a mission wants us to kill, go ahead and kill</span>
+        <span class="k">if</span> <span class="n">sub_alarms</span><span class="p">[</span><span class="s2">&quot;mission-kill&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">raised</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_mission_killed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_mission_killed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_mission_killed</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># If we weren&#39;t killed by another source, clear the kill</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_killed</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">ignore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;mission-kill&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Raised if any alarms besides the two above are raised</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span>
+            <span class="n">alarm</span><span class="o">.</span><span class="n">raised</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">alarm</span> <span class="ow">in</span> <span class="n">sub_alarms</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ignore</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
