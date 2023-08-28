@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>ROS Alarms</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="ros_alarms - Stateful Alarm System" href="alarmspart2.html" />
+        <link rel="prev" title="remote_control_lib - Remote Control" href="rc.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="serial.html">Serial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="axros/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ROS Alarms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarmspart2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="ros-alarms">
+<h1>ROS Alarms<a class="headerlink" href="#ros-alarms" title="Permalink to this heading">¶</a></h1>
+<p>In the realm of building dependable control systems, the importance of error detection and effective error-handling mechanisms cannot be overstated. Within this context, MIL presents a robust solution in the form of a live alarm system. This alarm system operates discreetly in the background of both the robot’s mission and driver codebases, ready to be activated upon the emergence of errors. Notably, the alarm code doesn’t solely serve to identify and address errors; it can also adeptly manage changes or updates that extend beyond error scenarios.</p>
+<p><strong>ROS Alarms: A Service-Oriented Architecture</strong></p>
+<p>The architecture of ROS alarms distinguishes itself by employing a service-oriented model rather than the usual topic-based approach. In ROS, Services act as the conduits for interaction between nodes, functioning in a request-response manner. While ROS topics enable asynchronous data exchange, services facilitate nodes in seeking specific actions or information from other nodes, awaiting a subsequent response before proceeding. This method of waiting before proceeding is known as a synchronous data exchange. This proves especially valuable in tasks that require direct engagement, such as data retrieval or computations.</p>
+<p><strong>Components of a ROS Service</strong></p>
+<p>A ROS service structure is bifurcated into two components:</p>
+<ol class="arabic simple">
+<li><p><strong>Server</strong>: This node provides the service and waits for incoming requests from other nodes. In simpler terms, it carries out the operation you have specified.</p></li>
+<li><p><strong>Client</strong>: This node sends requests to the service server and waits for the response.</p></li>
+</ol>
+<p>Here is the official ROS documentation on services: https://wiki.ros.org/Services</p>
+<p>For a concrete illustration, consider the case of a service designed to query and update an array of integers:</p>
+<ol class="arabic simple">
+<li><p><strong>Define the Service Messages</strong></p></li>
+</ol>
+<p>Create two separate service message files in your ROS package’s <code class="docutils literal notranslate"><span class="pre">srv</span></code> folder:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ArrayUpdate.srv</span></code>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ArrayUpdate.srv</span>
+<span class="n">int32</span> <span class="n">index</span>
+<span class="n">int32</span> <span class="n">value</span>
+<span class="o">---</span>
+<span class="nb">bool</span> <span class="n">success</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ArrayQuery.srv</span></code>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ArrayQuery.srv</span>
+<span class="n">int32</span> <span class="n">index</span>
+<span class="o">---</span>
+<span class="n">int32</span> <span class="n">value</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Implement the Service Server</strong></p></li>
+</ol>
+<p>Create a Python script named <code class="docutils literal notranslate"><span class="pre">array_service_server.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">your_package_name.srv</span> <span class="kn">import</span> <span class="n">ArrayUpdate</span><span class="p">,</span> <span class="n">ArrayQuery</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32MultiArray</span>
+
+<span class="k">class</span> <span class="nc">ArrayServiceServer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array_data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">handle_array_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">request</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array_data</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">array_data</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">return</span> <span class="n">ArrayUpdateResponse</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ArrayUpdateResponse</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle_array_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">request</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array_data</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ArrayQueryResponse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">array_data</span><span class="p">[</span><span class="n">request</span><span class="o">.</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ArrayQueryResponse</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Invalid index</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;array_service_server&#39;</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">ArrayServiceServer</span><span class="p">()</span>
+    
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s1">&#39;array_update&#39;</span><span class="p">,</span> <span class="n">ArrayUpdate</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">handle_array_update</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s1">&#39;array_query&#39;</span><span class="p">,</span> <span class="n">ArrayQuery</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">handle_array_query</span><span class="p">)</span>
+    
+    <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">your_package_name</span></code> with the actual name of your ROS package.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Implement the Service Clients</strong></p></li>
+</ol>
+<p>Create two separate Python scripts for interacting with the service:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array_update_client.py</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">your_package_name.srv</span> <span class="kn">import</span> <span class="n">ArrayUpdate</span>
+
+<span class="k">def</span> <span class="nf">array_update_client</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;array_update&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">array_update</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;array_update&#39;</span><span class="p">,</span> <span class="n">ArrayUpdate</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">array_update</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">success</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Service call failed:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;array_update_client&#39;</span><span class="p">)</span>
+    
+    <span class="n">index_to_update</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">new_value</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">array_update_client</span><span class="p">(</span><span class="n">index_to_update</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value at index </span><span class="si">{</span><span class="n">index_to_update</span><span class="si">}</span><span class="s2"> was updated to </span><span class="si">{</span><span class="n">new_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to update value at index </span><span class="si">{</span><span class="n">index_to_update</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array_query_client.py</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">your_package_name.srv</span> <span class="kn">import</span> <span class="n">ArrayQuery</span>
+
+<span class="k">def</span> <span class="nf">array_query_client</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;array_query&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">array_query</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;array_query&#39;</span><span class="p">,</span> <span class="n">ArrayQuery</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">array_query</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Service call failed:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;array_query_client&#39;</span><span class="p">)</span>
+    
+    <span class="n">index_to_query</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">array_query_client</span><span class="p">(</span><span class="n">index_to_query</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value at index </span><span class="si">{</span><span class="n">index_to_query</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid index </span><span class="si">{</span><span class="n">index_to_query</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">your_package_name</span></code> with your actual ROS package name.</p>
+<p><strong>Alarm System Logic</strong></p>
+<p>The alarm system’s functionality is more intricate than the preceding example. In this scenario, the server is engineered to manage not numeric calculations, but the tasks of updating, querying, and processing alarm data. Similar to the model above, ROS alarms encompass two distinct types of clients: the alarm broadcaster and the alarm listener. The broadcaster initializes and triggers alarms in response to errors or changes, while the listener monitors the broadcaster’s activity and activates designated a callback function when alarms are raised. The callback function should handle the error or change appropriately.</p>
+<p>To peruse the detailed alarm system code, refer to the repository: [https://github.com/uf-mil/mil/tree/master/mil_common/ros_alarms]</p>
+<p>To successfully leverage alarms, the initialization of both the broadcaster and listener is needed. The listener should be configured to execute a predefined callback function, addressing errors or changes detected by the broadcaster. Within your codebase, error detection and alarm-raising procedures should be integrated. If orchestrated correctly, the callback function will be automatically invoked, underscoring successful error mitigation.</p>
+<p>For a practical example of this workflow, visit: [https://github.com/uf-mil/mil/blob/master/mil_common/ros_alarms/test/rospy/callback_test.py]</p>
+<p><strong>Applications and Context</strong></p>
+<p>The applications of ROS alarms span various contexts, with one notable application residing in the control of the submersible vehicle’s thrust and killboard. The thrust and killboard, responsible for the sub’s electronic operations, is integrally associated with ROS alarms. Upon the board’s activation or deactivation (hard or soft kill), alarms are invoked to apprise users of these changes. The listener’s callback function comes into play, ensuring that alarms are updated in alignment with the board’s current state. This process, triggered each time the board is deactivated, creates a system whereby users are continually informed about the board’s status changes – essentially manifesting a dynamic live alarm system.</p>
+<p>To delve into the implementation, visit: [https://github.com/uf-mil/mil/blob/master/SubjuGator/drivers/sub8_thrust_and_kill_board/sub8_thrust_and_kill_board/handle.py]</p>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
