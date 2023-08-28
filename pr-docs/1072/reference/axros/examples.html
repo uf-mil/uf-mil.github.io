@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Examples</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="next" title="API Reference" href="api.html" />
+        <link rel="prev" title="Errors and Known Issues" href="errors.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Software Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../messages.html">Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../actions.html">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exceptions.html">Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mathematics.html">Mathematics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../io.html">User Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../io.html#file-input-output">File Input/Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../io.html#sanitization">Sanitization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../images.html">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../serial.html">Serial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../msghandlers.html">Message Handlers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axros</span></code> - Independent extensions for ROS</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="resources.html">Managing Resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errors.html">Errors and Known Issues</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mission/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_missions</span></code> - Mission System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rviz.html">rviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pcodar.html"><code class="docutils literal notranslate"><span class="pre">pcodar</span></code> - Point Cloud Object Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources.html">Resource Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">remote_control_lib</span></code> - Remote Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../alarms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ros_alarms</span></code> - Stateful Alarm System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pathplanning.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lqrrt</span></code> - Path Planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../battery.html">Battery Monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../passivesonar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_passive_sonar</span></code> - Passive Sonar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../can.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_usb_to_can</span></code> - USB to CAN Communication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vision.html">Computer Vision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../poi.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_poi</span></code> - POI Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pneumatic.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mil_pneumatic_actuator</span></code> - Pneumatic Actuator Board</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sabertooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sabertooth2x12</span></code> - Sabertooth 2x12</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h1>
+<p>The following example starts a sublisher and a subscriber which listens to the messages
+sublished by the sublisher. After two seconds, it reports how many messages it was
+able to successfully receive.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">rosgraph_msgs.msg</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span> <span class="nn">axros</span> <span class="kn">import</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">sublisher</span><span class="p">,</span> <span class="n">Subscriber</span>
+<span class="kn">import</span> <span class="nn">uvloop</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">subsub</span><span class="p">(</span><span class="n">nh</span><span class="p">:</span> <span class="n">NodeHandle</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">sublisher</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">Subscriber</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="n">Clock</span><span class="p">(</span><span class="n">nh</span><span class="o">.</span><span class="n">get_time</span><span class="p">()))</span>
+            <span class="n">sub</span><span class="o">.</span><span class="n">sublish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="n">recv</span> <span class="o">=</span> <span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">recv</span> <span class="o">==</span> <span class="n">msg</span><span class="p">):</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Eventually, heard </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> messages.&quot;</span><span class="p">)</span>
+        <span class="k">pass</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">NodeHandle</span><span class="o">.</span><span class="n">from_argv</span><span class="p">(</span><span class="s2">&quot;node&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">anonymous</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">nh</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">advertise</span><span class="p">(</span><span class="s1">&#39;clock2&#39;</span><span class="p">,</span> <span class="n">Clock</span><span class="p">,</span> <span class="n">latching</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s1">&#39;clock2&#39;</span><span class="p">,</span> <span class="n">Clock</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">(),</span> <span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">())</span>
+        <span class="n">subsub_task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">subsub</span><span class="p">(</span><span class="n">nh</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">sub</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Everything is setup. Waiting two seconds.&quot;</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">subsub_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">uvloop</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The node handle can be used for general purposes, such as parameters and sleeping:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">axros</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+<span class="go">&#39;/test/special_node&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">delete_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;special_param&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">axros</span><span class="o">.</span><span class="n">ROSMasterException</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This parameter does not exist!&quot;</span><span class="p">)</span>
+<span class="go">This parameter does not exist!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">nh</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Sleeps for 2 seconds</span>
+</pre></div>
+</div>
+<p>The node handle can also be used for sublishing and subscribing to topics. Note
+that all sublishers and subscribers must be setup.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">axros</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nh</span> <span class="o">=</span> <span class="k">await</span> <span class="n">axros</span><span class="o">.</span><span class="n">NodeHandle</span><span class="p">(</span><span class="s2">&quot;/test&quot;</span><span class="p">,</span> <span class="s2">&quot;special_node&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ROS_MASTER_URI&quot;</span><span class="p">],</span> <span class="p">{})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">advertise</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span> <span class="nf">sublish</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">sub</span><span class="o">.</span><span class="n">sublish</span><span class="p">(</span><span class="n">Int32</span><span class="p">(</span><span class="n">count</span><span class="p">))</span>
+<span class="gp">... </span>            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">CancelledError</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># When task gets cancelled, stop sublishing</span>
+<span class="gp">... </span>        <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">task</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">sublish</span><span class="p">())</span> <span class="c1"># Start sublishing!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sub</span> <span class="o">=</span> <span class="n">nh</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s2">&quot;running_time&quot;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="k">await</span> <span class="n">sub</span><span class="o">.</span><span class="n">get_next_message</span><span class="p">())</span>
+<span class="go">4</span>
+<span class="go">5</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
