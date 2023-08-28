@@ -367,10 +367,7 @@
         <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;ThrustPacket(thruster_id=</span><span class="si">{}</span><span class="s2">, command=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">thruster_id</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ThrustPacket(thruster_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">thruster_id</span><span class="si">}</span><span class="s2">, command=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 </pre></div>
 
             </main>

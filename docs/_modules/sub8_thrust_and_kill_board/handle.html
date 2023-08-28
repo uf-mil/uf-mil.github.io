@@ -189,9 +189,7 @@
             <span class="c1"># If we don&#39;t have a mapping for this thruster, ignore it</span>
             <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">thrusters</span><span class="p">:</span>
                 <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
-                    <span class="s2">&quot;Command received for </span><span class="si">{}</span><span class="s2">, but this is not a thruster.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;Command received for </span><span class="si">{</span><span class="n">cmd</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, but this is not a thruster.&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
             <span class="c1"># Map commanded thrust (in newetons) to effort value (-1 to 1)</span>

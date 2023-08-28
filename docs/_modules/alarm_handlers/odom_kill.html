@@ -181,9 +181,7 @@
         <span class="k">if</span> <span class="n">jump</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_JUMP</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr</span><span class="p">(</span><span class="s2">&quot;ODOM DISCONTINUITY DETECTED&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ab</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
-                <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;ODOM DISCONTINUITY DETECTED JUMPED </span><span class="si">{}</span><span class="s2"> METERS&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">jump</span><span class="p">,</span>
-                <span class="p">),</span>
+                <span class="n">problem_description</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;ODOM DISCONTINUITY DETECTED JUMPED </span><span class="si">{</span><span class="n">jump</span><span class="si">}</span><span class="s2"> METERS&quot;</span><span class="p">,</span>
                 <span class="n">severity</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">odom_discontinuity</span> <span class="o">=</span> <span class="kc">True</span>
@@ -200,9 +198,7 @@
         <span class="k">if</span> <span class="n">odom_loss</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">logerr_throttle</span><span class="p">(</span>
                 <span class="mi">1</span><span class="p">,</span>
-                <span class="s2">&quot;LOST ODOM FOR </span><span class="si">{}</span><span class="s2"> SECONDS&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span><span class="p">)</span><span class="o">.</span><span class="n">to_sec</span><span class="p">(),</span>
-                <span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;LOST ODOM FOR </span><span class="si">{</span><span class="p">(</span><span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">last_time</span><span class="p">)</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span><span class="si">}</span><span class="s2"> SECONDS&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ab</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span>
                 <span class="n">problem_description</span><span class="o">=</span><span class="s2">&quot;LOST ODOM FOR </span><span class="si">{}</span><span class="s2"> SECONDS&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>

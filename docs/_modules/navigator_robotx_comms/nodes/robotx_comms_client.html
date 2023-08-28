@@ -69,7 +69,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../testingprocedures.html">Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../deprecated.html">Deprecated Projects</a></li>
 </ul>
 
@@ -639,10 +639,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
             <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
-                <span class="s2">&quot;Attempting Connection to TD Server at </span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">tcp_ip</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">tcp_port</span><span class="p">,</span>
-                <span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;Attempting Connection to TD Server at </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tcp_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tcp_port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
             <span class="c1"># recreate socket</span>
