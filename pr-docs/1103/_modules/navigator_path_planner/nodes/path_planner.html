@@ -1150,7 +1150,7 @@
 <div class="viewcode-block" id="LQRRT_Node.action_check"><a class="viewcode-back" href="../../../reference/pathplanning.html#navigator_path_planner.nodes.path_planner.LQRRT_Node.action_check">[docs]</a>    <span class="k">def</span> <span class="nf">action_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">rospy</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">TimerEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Manages action preempting. Serves as the callback to a Timer operating</span>
-<span class="sd">          opereating every self.revisit_period seconds.</span>
+<span class="sd">          operating every self.revisit_period seconds.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">preempted</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_server</span><span class="o">.</span><span class="n">is_active</span><span class="p">():</span>
             <span class="k">return</span>

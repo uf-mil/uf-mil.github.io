@@ -176,7 +176,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~enable_on_launch&quot;</span><span class="p">)</span>
 
         <span class="c1"># Attributes about our target frequency range</span>
-        <span class="c1">#  target Frquency in Hz</span>
+        <span class="c1">#  target Frequency in Hz</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~target_frequency&quot;</span><span class="p">)</span>
         <span class="c1">#  tolerance around that frequerncy in Hz</span>
         <span class="n">tolerance</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~frequency_tolerance&quot;</span><span class="p">)</span>
@@ -201,7 +201,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">v_sound</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;v_sound&quot;</span><span class="p">)</span>
 
         <span class="c1"># Misc attributes</span>
-        <span class="c1">#  minimum gradient of the max convolution wrt time to trigger a time of arivals calculation</span>
+        <span class="c1">#  minimum gradient of the max convolution wrt time to trigger a time of arrivals calculation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~threshold&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_offset</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~trigger_offset&quot;</span><span class="p">)</span>
         <span class="c1">#  how far after the triggering time to make upper bound of samples at triggering in sec</span>

@@ -331,7 +331,7 @@ is needed/available in your application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the identifed object.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Name of the identified object.</p></li>
 <li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Attributes to attach to message, the purpose and value
 of this attribute will vary by application. Defaults to an empty string.</p></li>
 <li><p><strong>confidence</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>]</em>) – Float between 0 and 1 describing the confidence
@@ -691,7 +691,7 @@ based on the features.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mil_vision_tools.ContourClassifier.feature_probabilities">
 <span class="sig-name descname"><span class="pre">feature_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.8/library/typing.html#typing.List" title="(in Python v3.8)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#float" title="(in Python v3.8)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/mil_vision_tools/color_classifier.html#ContourClassifier.feature_probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mil_vision_tools.ContourClassifier.feature_probabilities" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows child classes to give probabilties for each possible class given
+<dd><p>Allows child classes to give probabilities for each possible class given
 a features vector, instead of just one classification. By default,
 gives 1.0 to classified class and 0.0 to others.</p>
 <dl class="field-list simple">
@@ -1930,7 +1930,7 @@ the 4 sorted corners in the image.</p></li>
 <li><p><strong>cam</strong> (<em>Optional</em><em>[</em><em>PinholeCameraModel</em><em>]</em>) – The camera model.</p></li>
 <li><p><strong>rectified</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">cam</span></code> is set, set True if corners were found in an
 already rectified image (image_rect_color topic).</p></li>
-<li><p><strong>instrinsics</strong> (<em>np.ndarray</em>) – Camera intrinisic matrix.</p></li>
+<li><p><strong>intrinsics</strong> (<em>np.ndarray</em>) – Camera intrinisic matrix.</p></li>
 <li><p><strong>dist_coeffs</strong> (<em>np.ndarray</em>) – Camera distortion coefficients.</p></li>
 </ul>
 </dd>
