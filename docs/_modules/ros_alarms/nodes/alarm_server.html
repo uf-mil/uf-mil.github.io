@@ -258,9 +258,9 @@
                 <span class="k">if</span> <span class="n">alarm_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="p">[</span><span class="n">alarm_name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">initial_alarm</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="p">[</span>
-                        <span class="n">alarm_name</span>
-                    <span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">initial_alarm</span>  <span class="c1"># Update even if already added to server</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span><span class="p">[</span><span class="n">alarm_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">h</span><span class="o">.</span><span class="n">initial_alarm</span>
+                    <span class="p">)</span>  <span class="c1"># Update even if already added to server</span>
             <span class="k">elif</span> <span class="p">(</span>
                 <span class="n">alarm_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alarms</span>
             <span class="p">):</span>  <span class="c1"># Add default initial if not there already</span>

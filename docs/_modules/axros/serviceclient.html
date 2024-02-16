@@ -219,7 +219,7 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_handle</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">lookup_service</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-            <span class="k">except</span> <span class="p">(</span><span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">XMLRPCException</span><span class="p">,</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterError</span><span class="p">):</span>
+            <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">XMLRPCException</span><span class="p">:</span>
                 <span class="k">await</span> <span class="n">util</span><span class="o">.</span><span class="n">wall_sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># XXX bad</span>
                 <span class="k">continue</span>
             <span class="k">else</span><span class="p">:</span>
