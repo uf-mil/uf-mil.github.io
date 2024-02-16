@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_poi.server</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_poi.server</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">tf2_ros</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PointStamped</span><span class="p">,</span> <span class="n">Pose</span><span class="p">,</span> <span class="n">Quaternion</span>
+<span class="kn">from</span> <span class="nn">interactive_markers.interactive_marker_server</span> <span class="kn">import</span> <span class="n">InteractiveMarkerServer</span>
+<span class="kn">from</span> <span class="nn">mil_ros_tools.msg_helpers</span> <span class="kn">import</span> <span class="n">numpy_to_point</span>
+<span class="kn">from</span> <span class="nn">mil_tools</span> <span class="kn">import</span> <span class="n">thread_lock</span>
+<span class="kn">from</span> <span class="nn">std_srvs.srv</span> <span class="kn">import</span> <span class="n">Trigger</span><span class="p">,</span> <span class="n">TriggerRequest</span><span class="p">,</span> <span class="n">TriggerResponse</span>
+<span class="kn">from</span> <span class="nn">visualization_msgs.msg</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">InteractiveMarker</span><span class="p">,</span>
+    <span class="n">InteractiveMarkerControl</span><span class="p">,</span>
+    <span class="n">InteractiveMarkerFeedback</span><span class="p">,</span>
+    <span class="n">Marker</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">mil_poi.msg</span> <span class="kn">import</span> <span class="n">POI</span><span class="p">,</span> <span class="n">POIArray</span>
+<span class="kn">from</span> <span class="nn">mil_poi.srv</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AddPOI</span><span class="p">,</span>
+    <span class="n">AddPOIRequest</span><span class="p">,</span>
+    <span class="n">AddPOIResponse</span><span class="p">,</span>
+    <span class="n">DeletePOI</span><span class="p">,</span>
+    <span class="n">DeletePOIRequest</span><span class="p">,</span>
+    <span class="n">DeletePOIResponse</span><span class="p">,</span>
+    <span class="n">MovePOI</span><span class="p">,</span>
+    <span class="n">MovePOIRequest</span><span class="p">,</span>
+    <span class="n">MovePOIResponse</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Mutex for POIServer</span>
+<span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="POIServer"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer">[docs]</a><span class="k">class</span> <span class="nc">POIServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Node to act as a server to hold a list of points of interest which</span>
+<span class="sd">    can be modified by services or interactive markers.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        marker_scale (float): Radius of interactive markers for POIs. Defaults to ``0.5``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># TF bootstrap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">Buffer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_listener</span> <span class="o">=</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">TransformListener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="p">)</span>
+
+        <span class="c1"># Radius of interactive marker for POIs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~marker_scale&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="c1"># Create initial empty POI array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pois</span> <span class="o">=</span> <span class="n">POIArray</span><span class="p">()</span>
+
+        <span class="c1"># Get the global frame to be used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~global_frame&quot;</span><span class="p">,</span> <span class="s2">&quot;map&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span>
+
+        <span class="c1"># Create publisher to notify clients of updates and interactive marker server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span>
+            <span class="s2">&quot;points_of_interest&quot;</span><span class="p">,</span>
+            <span class="n">POIArray</span><span class="p">,</span>
+            <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">latch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span> <span class="o">=</span> <span class="n">InteractiveMarkerServer</span><span class="p">(</span><span class="s2">&quot;points_of_interest&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Load initial POIs from params</span>
+        <span class="k">if</span> <span class="n">rospy</span><span class="o">.</span><span class="n">has_param</span><span class="p">(</span><span class="s2">&quot;~initial_pois&quot;</span><span class="p">):</span>
+            <span class="n">pois</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~initial_pois&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pois</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">pois</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
+                <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
+                <span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">numpy_to_point</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pose</span><span class="p">)</span>
+
+        <span class="c1"># Update clients / markers of changes from param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># Create services to add / delete / move a POI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_poi_server</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~add&quot;</span><span class="p">,</span> <span class="n">AddPOI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_poi_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_poi_server</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~delete&quot;</span><span class="p">,</span> <span class="n">DeletePOI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete_poi_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_poi_service</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span><span class="s2">&quot;~move&quot;</span><span class="p">,</span> <span class="n">MovePOI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">move_poi_cb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_to_param</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Service</span><span class="p">(</span>
+            <span class="s2">&quot;~save_to_param&quot;</span><span class="p">,</span>
+            <span class="n">Trigger</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_to_param_cb</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="POIServer.transform_position"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.transform_position">[docs]</a>    <span class="k">def</span> <span class="nf">transform_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ps</span><span class="p">:</span> <span class="n">PointStamped</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Attempt to transform a PointStamped message into the global frame, returning</span>
+<span class="sd">        the position of the transformed point or None if transform failed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ps (PointStamped): The PointStamped message to be transformed into the</span>
+<span class="sd">                global frame.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[Point]: The point in the global frame, or ``None`` if the transform</span>
+<span class="sd">            experienced an exception.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If no frame, assume user wanted it in the global frame</span>
+        <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ps</span><span class="o">.</span><span class="n">point</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ps_tf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tf_buffer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+                <span class="n">ps</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">ps_tf</span><span class="o">.</span><span class="n">point</span>
+        <span class="k">except</span> <span class="n">tf2_ros</span><span class="o">.</span><span class="n">TransformException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span>
+                <span class="s1">&#39;Error transforming &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">ps</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span><span class="p">,</span>
+                    <span class="n">e</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="POIServer.process_feedback"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.process_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">process_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">InteractiveMarkerFeedback</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process interactive marker feedback, moving markers internally</span>
+<span class="sd">        in response to markers moved in Rviz.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            feedback (InteractiveMarkerFeedback): The feedback message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Only look at changes when mouse button is unclicked</span>
+        <span class="k">if</span> <span class="n">feedback</span><span class="o">.</span><span class="n">event_type</span> <span class="o">!=</span> <span class="n">InteractiveMarkerFeedback</span><span class="o">.</span><span class="n">MOUSE_UP</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Transform new position into global frame</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PointStamped</span><span class="p">()</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">feedback</span><span class="o">.</span><span class="n">header</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">point</span> <span class="o">=</span> <span class="n">feedback</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_position</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Update position of marker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">feedback</span><span class="o">.</span><span class="n">marker_name</span><span class="p">,</span> <span class="n">feedback</span><span class="o">.</span><span class="n">pose</span><span class="p">)</span></div>
+
+    <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">save_to_param_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">TriggerRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TriggerResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the internal parameters into the parameter server. Returns whether</span>
+<span class="sd">        the operation was successful.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (TriggerRequest): The service request. Has no notable attributes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            TriggerResponse: The response from the service; ie, whether the operation</span>
+<span class="sd">            succeeded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;~global_frame&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">poi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="p">:</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">poi</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">),</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+                <span class="nb">float</span><span class="p">(</span><span class="n">poi</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+            <span class="p">]</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s2">&quot;~initial_pois&quot;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TriggerResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="POIServer.add_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.add_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">add_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">AddPOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AddPOIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback for the AddPOI service.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (AddPOIRequest): The service request. The name and position are used</span>
+<span class="sd">                from the request.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AddPOIResponse: Whether the operation was successful, along with a message</span>
+<span class="sd">            indicating why.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">pose</span> <span class="o">=</span> <span class="n">Pose</span><span class="p">()</span>
+        <span class="c1"># If frame is empty, just initialize it to zero</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise transform position into global frame</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_position</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;tf error (bad poi)&quot;</span><span class="p">)</span>
+
+        <span class="n">orientation</span> <span class="o">=</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">pose</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">position</span><span class="p">,</span> <span class="n">orientation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pose</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;already exists (bad poi)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">AddPOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="POIServer.delete_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.delete_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">delete_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">DeletePOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeletePOIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback for DeletePOI service. Equivalent to calling :meth:`.remove_poi`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (DeletePOIRequest): The service request. The name is used to determine</span>
+<span class="sd">                which POI to remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DeletePOIResponse: Whether the operation was successful, along with a</span>
+<span class="sd">            message indicating why.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Return error if marker did not exist</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_poi</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DeletePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;does not exist (bad poi)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DeletePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="POIServer.move_poi_cb"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.move_poi_cb">[docs]</a>    <span class="k">def</span> <span class="nf">move_poi_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">MovePOIRequest</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MovePOIResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Callback for MovePOI service.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (MovePOIRequest): The service request.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MovePOIResponse: The response from the service.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">name</span>
+        <span class="c1"># Transform position into global frame</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_position</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;tf error (bad poi)&quot;</span><span class="p">)</span>
+        <span class="c1"># Return error if marker did not exist</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_position</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Pose</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">Quaternion</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))):</span>
+            <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;does not exist (bad poi)&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MovePOIResponse</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;good poi&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a POI, updating clients and Rviz when done.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the POI to add.</span>
+<span class="sd">            position (Point): The position of the new POI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: ``False`` if a POI with the same name already exists, otherwise ``True``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_poi</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remove_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a POI, updating clients and Rviz when done.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the POI to remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: ``False`` if a POI with the provided name does not exist, otherwise ``True``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_poi</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@thread_lock</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the position of a POI, updating clients and Rviz when done.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the POI to remove.</span>
+<span class="sd">            position (:class:`~geometry_msgs.msg._Point.Point`): A Point message</span>
+<span class="sd">                of the new position in global frame.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: ``False`` if a POI with name does not exist, otherwise ``True``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_position</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="POIServer.update"><a class="viewcode-back" href="../../reference/poi.html#mil_poi.POIServer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update interactive markers server and POI publish of changes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">applyChanges</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_update_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal implementation of update_position, which is NOT thread safe</span>
+<span class="sd">        and does NOT update clients of change.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find poi with specified name</span>
+        <span class="k">for</span> <span class="n">poi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">setPose</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="c1"># Set pose in message</span>
+                <span class="n">poi</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">position</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_remove_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal implementation of remove_poi, which is NOT thread safe and</span>
+<span class="sd">        does NOT update clients of change.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Return false if marker with that name not added to interactive marker server</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">erase</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Find POI with specified name and delete it from list</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">poi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_add_poi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">position</span><span class="p">:</span> <span class="n">Pose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal implementation of add_poi, which is NOT thread safe and does</span>
+<span class="sd">        NOT update clients of change.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">poi</span> <span class="o">=</span> <span class="n">POI</span><span class="p">()</span>
+        <span class="n">poi</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">poi</span><span class="o">.</span><span class="n">pose</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">pois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">poi</span><span class="p">)</span>
+
+        <span class="n">point_marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">()</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">ARROW</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mi">1</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mf">0.25</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">marker_scale</span> <span class="o">*</span> <span class="mf">0.25</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">point_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="n">text_marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">()</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">Marker</span><span class="o">.</span><span class="n">TEXT_VIEW_FACING</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.5</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">text_marker</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="n">int_marker</span> <span class="o">=</span> <span class="n">InteractiveMarker</span><span class="p">()</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_frame</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="c1"># insert a box</span>
+        <span class="n">control</span> <span class="o">=</span> <span class="n">InteractiveMarkerControl</span><span class="p">()</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">interaction_mode</span> <span class="o">=</span> <span class="n">InteractiveMarkerControl</span><span class="o">.</span><span class="n">MOVE_ROTATE</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point_marker</span><span class="p">)</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text_marker</span><span class="p">)</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">always_visible</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">int_marker</span><span class="o">.</span><span class="n">controls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">control</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">interactive_marker_server</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">int_marker</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_feedback</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
