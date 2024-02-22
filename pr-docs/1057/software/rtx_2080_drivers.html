@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Installing Drivers for RTX 2080</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Installing Ubuntu 18.04 on a Mac with an M-series processor (M1)" href="apple_mseries_ubuntu_setup.html" />
+        <link rel="prev" title="Noetic Migration" href="noetic_migration.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rqt.html">Implementing GUI Based Tools Using <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo_guide.html">Gazebo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing NVIDIA Drivers for RTX 2080</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-the-nvidia-driver">Installing the NVIDIA Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode">Verifying that the correct GPU is being used and is in Default Compute Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="installing-drivers-for-rtx-2080">
+<h1>Installing Drivers for RTX 2080<a class="headerlink" href="#installing-drivers-for-rtx-2080" title="Permalink to this heading">¶</a></h1>
+<p>Here is a quick guide for how to install the latest NVIDIA GPUs for the shuttle computer (which uses the NVIDIA GEFORCE GTX 970).</p>
+<section id="installing-the-nvidia-driver">
+<h2>Installing the NVIDIA Driver<a class="headerlink" href="#installing-the-nvidia-driver" title="Permalink to this heading">¶</a></h2>
+<p>First of all, you want to add the <code class="docutils literal notranslate"><span class="pre">ppa:graphics-drivers/ppa</span></code> repository into your computer system.</p>
+<p>Run the commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-add-repository ppa:graphics-drivers/ppa
+$ sudo apt update
+</pre></div>
+</div>
+<p>Update the packages that you downloaded with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get upgrade
+</pre></div>
+</div>
+<p>Next, verify that your system recognizes the correct graphic card model and recommended driver by running the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ubuntu-drivers devices
+</pre></div>
+</div>
+<p>All of the recommended drivers for your computer should appear in the terminal like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ubuntu-drivers devices
+== /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 ==
+modalias : pci:v000010DEd000013C2sv00003842sd00002976bc03sc00i00
+vendor   : NVIDIA Corporation
+model    : GM204 [GeForce GTX 970]
+driver   : nvidia-driver-430 - third-party free
+driver   : nvidia-driver-390 - third-party free
+driver   : nvidia-driver-435 - distro non-free
+driver   : nvidia-driver-440 - third-party free recommended
+driver   : nvidia-driver-410 - third-party free
+driver   : nvidia-driver-415 - third-party free
+driver   : xserver-xorg-video-nouveau - distro free builtin`
+</pre></div>
+</div>
+<p>To install the recommended driver automatically, run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo ubuntu-drivers autoinstall
+</pre></div>
+</div>
+<p>To select a specific driver that needs to be installed, run the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt install nvidia-&lt;insert driver version here&gt;
+</pre></div>
+</div>
+<p>Once this is done installing, reboot the system with:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo reboot
+</pre></div>
+</div>
+</section>
+<section id="verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode">
+<h2>Verifying that the correct GPU is being used and is in Default Compute Mode<a class="headerlink" href="#verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode" title="Permalink to this heading">¶</a></h2>
+<p>The drivers that we install on this computer must be defaulted to Compute Mode. To verify that the correct driver is being used, run the command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ nvidia-smi
+</pre></div>
+</div>
+<p>An interface containing information about your NVIDIA driver should show up in your terminal.</p>
+<p>On the top of the table that appears should be the Driver Version. Verify that this is the correct driver you want installed. Below this, under the GPU section, there will be a ‘0’ or a ‘1’. If the GPU is defaulted to ‘0’, then the driver is already in Compute Mode. If not (or if you want further verification that the driver is in compute mode), run:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ nvidia-smi -i 0 -c 0
+</pre></div>
+</div>
+<p>If the device was already in Default Compute mode, a message will appear in the terminal.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<p>For references on how the driver was installed, visit these websites:</p>
+<p><a class="reference external" href="https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux">https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux</a></p>
+<p><a class="reference external" href="https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/">https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/</a></p>
+<p>For how to switch the GPUs into Compute Mode, visit this website:</p>
+<p><a class="reference external" href="https://stackoverflow.com/questions/31731535/switch-cuda-compute-mode-to-default-mode">https://stackoverflow.com/questions/31731535/switch-cuda-compute-mode-to-default-mode</a></p>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
