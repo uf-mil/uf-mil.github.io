@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Contributing Guide</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Documentation Syntax" href="documentation_syntax.html" />
+        <link rel="prev" title="Developer Tools" href="devtools.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sanity-with-git">Sanity with Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-pre-commit">Setting up <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-a-project">Find a project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-contributing-process">General contributing process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-new-branch">Create a new branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viewing-the-status-of-files">Viewing the status of files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-file-to-be-staged-for-a-commit">Adding file to be staged for a commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#committing-changes">Committing changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pushing-your-commit">Pushing your commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-pull-request">Creating a pull request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-and-wait-for-review">Request and wait for review</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amend-pull-request">Amend pull request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merging-in-upstream-changes">Merging in upstream changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vrx_2023.html">VRX 2023</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rqt.html">Implementing GUI Based Tools Using <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo_guide.html">Gazebo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="contributing-guide">
+<h1>Contributing Guide<a class="headerlink" href="#contributing-guide" title="Permalink to this heading">¶</a></h1>
+<p>This guide describes how to make a change in the repository, and contribute this
+change back to the lab.</p>
+<section id="sanity-with-git">
+<h2>Sanity with Git<a class="headerlink" href="#sanity-with-git" title="Permalink to this heading">¶</a></h2>
+<p>This guide will show you how to make real, actual changes with Git. For many new
+members, that can be scary, and you may feel as though you might type in a wrong
+command and break everything! The good news is that this can’t happen.</p>
+<p>Git works by giving you your own personalized copy of our source code. This copy
+can only be found on <strong>your</strong> computer! No one else has access to it. Therefore,
+you can’t really hurt anyone else’s progress. Even if you run some commands that
+mess up your copy, you can ask for a new one! How sweet is that?</p>
+<p>More so, we use branch protection, so you can’t push code onto the robot without
+approval from a leader first. Therefore, don’t feel pressured to always type the right
+command - you might screw up, and it’s all okay!</p>
+<p>Now, back to the guide…</p>
+</section>
+<section id="setting-up-pre-commit">
+<h2>Setting up <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code><a class="headerlink" href="#setting-up-pre-commit" title="Permalink to this heading">¶</a></h2>
+<p>If you have not already done so, it is highly recommended to setup <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>.
+While not required, this tool will help you debug any spelling mistakes, trailing
+whitespace, or formatting errors you have before your changes ever reach CI. If
+you don’t use <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>, the chances of your changes failing in CI is somewhat
+high, as one spelling mistake could require you to modify your work once more.</p>
+<p>For information on setting up <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code>, see the <a class="reference internal" href="devtools.html"><span class="doc std std-doc">page on developer tools</span></a>.</p>
+</section>
+<section id="find-a-project">
+<h2>Find a project<a class="headerlink" href="#find-a-project" title="Permalink to this heading">¶</a></h2>
+<p>If you don’t yet know what you want to work on, see our <a class="reference external" href="https://github.com/uf-mil/mil/issues">issues list</a>.
+We have a variety of projects to work on, and you can select a task in whatever
+project you’d like!</p>
+</section>
+<section id="general-contributing-process">
+<h2>General contributing process<a class="headerlink" href="#general-contributing-process" title="Permalink to this heading">¶</a></h2>
+<p>For those unfamiliar with git, this will the general idea.</p>
+<ol class="arabic simple">
+<li><p>Create a new branch off of the master branch (or branch off of another branch
+you want to fix).</p></li>
+<li><p>Make changes on that new branch.</p></li>
+<li><p>Add files that you will want to commit (You can think of a commit like a
+save file that you can go back to at any moment in time).</p></li>
+<li><p>Create a commit (This is actually creating the “save file”).</p></li>
+<li><p>Push the commit to the remote branch.</p></li>
+<li><p>Create a pull request on github that compares your branch to master branch.</p></li>
+</ol>
+<p>Check out <a class="reference external" href="https://rogerdudler.github.io/git-guide/">this cool link</a> if you want
+another overview of Git!</p>
+</section>
+<section id="create-a-new-branch">
+<h2>Create a new branch<a class="headerlink" href="#create-a-new-branch" title="Permalink to this heading">¶</a></h2>
+<p>Create a new branch for your changes <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;branchname&gt;</span></code>. Be sure to
+pick a descriptive name (usually 2-4 words, joined by dashes will do). The specific
+name of the branch generally does not matter.</p>
+</section>
+<section id="viewing-the-status-of-files">
+<h2>Viewing the status of files<a class="headerlink" href="#viewing-the-status-of-files" title="Permalink to this heading">¶</a></h2>
+<p>You can see all the changes that have been made with these commands:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git status # see the status of all files (what&#39;s changed, deleted, added, etc.)
+$ git diff # see the changes you&#39;ve made
+</pre></div>
+</div>
+<p>You may notice something called the “stage” and that files are either “staged” or
+“unstaged”. The stage covers everything that will be committed when you commit.
+Usually, staged files are “ready” to be shown to someone else. Staged files shouldn’t
+usually contain sensitive information, files unrelated to MIL, etc.</p>
+<p>It’s sort of like if you have a folder with homework that’s ready to turn in. You
+may finish your homework two days before it’s due and put it in this folder, “staging”
+it. It’s not officially turned in (that will happen when we commit), but it’s ready to go!</p>
+</section>
+<section id="adding-file-to-be-staged-for-a-commit">
+<h2>Adding file to be staged for a commit<a class="headerlink" href="#adding-file-to-be-staged-for-a-commit" title="Permalink to this heading">¶</a></h2>
+<p>You can add all these changes to be staged like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git add .
+</pre></div>
+</div>
+<p>Or if you have only certain files you want to add:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git add &lt;file&gt; &lt;file...&gt;
+</pre></div>
+</div>
+<p>Be sure to only change the files you intend to and don’t add any files that aren’t needed.</p>
+</section>
+<section id="committing-changes">
+<h2>Committing changes<a class="headerlink" href="#committing-changes" title="Permalink to this heading">¶</a></h2>
+<p>After a while, you’ll want to make a <strong>commit</strong>. A commit is a point in time in the repository.
+It holds the status of every file in the repository at a particular time. This is
+super helpful - let’s say you accidentally deleted an important file. You can go
+back to the previous commit, and grab the file again.</p>
+<p>You will need to provide a short description of your change when you commit it.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git commit -m &quot;Description of what changed goes here&quot;
+</pre></div>
+</div>
+</section>
+<section id="pushing-your-commit">
+<h2>Pushing your commit<a class="headerlink" href="#pushing-your-commit" title="Permalink to this heading">¶</a></h2>
+<p>Now, you have made one or more commits, but unfortunately, these changes are still
+only available on your local copy. Let’s change that, with pushing!</p>
+<p>Pushing commits allows everyone in MIL to see your work. This allows leaders to
+approve your work and other MILers to build off of what you’ve built!</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Note that pushing your changes will make them available to everyone on the Internet.
+Therefore, never commit sensitive info containing personal info about you or someone
+else.</p>
+</div>
+<p>Push your development branch to Github using:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git push origin &lt;branchname&gt;
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">push</span></code>es your changes to the <code class="docutils literal notranslate"><span class="pre">origin</span></code> (aka GitHub) relative to the branch
+<code class="docutils literal notranslate"><span class="pre">branchname</span></code> (the branch you made earlier).</p>
+<p>You may need to use the <code class="docutils literal notranslate"><span class="pre">-u</span></code> flag on your first <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>. This allows git to register
+the branch you’re pushing to as the one you always want to be pushing to.</p>
+</section>
+<section id="creating-a-pull-request">
+<h2>Creating a pull request<a class="headerlink" href="#creating-a-pull-request" title="Permalink to this heading">¶</a></h2>
+<p>Now that your changes have been committed, it’s time to submit them to be
+reviewed and then merged into the repository on Github.</p>
+<p>To create a new pull request, head over to the <code class="docutils literal notranslate"><span class="pre">Pull</span> <span class="pre">Requests</span></code> tab of our GitHub
+page and create a new pull request. Choose which branch to merge into <code class="docutils literal notranslate"><span class="pre">master</span></code> (or
+whatever other branch you’re trying to merge your code into), and a dialog should appear.
+Add a title and body explaining what is changing. If you know what project your task
+is related to, you can also connect your PR to a project on the right-hand side of
+the interface.</p>
+</section>
+<section id="request-and-wait-for-review">
+<h2>Request and wait for review<a class="headerlink" href="#request-and-wait-for-review" title="Permalink to this heading">¶</a></h2>
+<p>To ensure our code quality and robot safety, we require all code to be reviewed
+by at least one core developer before merging.</p>
+<p>When you first opened your PR, you may have noticed a spinning yellow circle on
+the page. This is our continuous integration. It’s a friendly robot running your
+code to check for any possible errors. If your code contains no errors, then a green
+checkmark will appear, helping your reviewer to know that your changes are prime to accept.
+If it doesn’t pass, you’ll see a bright red X, indicating that you need to review your
+changes and fix something. See the next section below.</p>
+<p>If you have a friend in MIL or someone with a good knowledge of the things you
+changed, you can assign them as a reviewer on GitHub. If it has been a few days
+and no one has looked at your pull request, you can also bug people in slack.
+We strive for a 24-hour turn around for the first review.</p>
+</section>
+<section id="amend-pull-request">
+<h2>Amend pull request<a class="headerlink" href="#amend-pull-request" title="Permalink to this heading">¶</a></h2>
+<p>Unless you are a true prodigy (or your reviewer is lazy), there will likely be
+some changes requested in your PR. After making the requested changes, you need
+to commit them and push them.</p>
+<ul class="simple">
+<li><p>You should merge in upstream changes before making your changes. See the section below.</p></li>
+<li><p>Look at the changes you made with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span></code>.</p></li>
+<li><p>Add the files you wish to keep to staging <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">&lt;file&gt;</span> <span class="pre">&lt;file...&gt;</span></code> (or all files with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code>).</p></li>
+<li><p>Commit the changes with a descriptive message <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;&lt;message&gt;&quot;</span></code>.</p></li>
+<li><p>Push your new commit to the same branch you submitted your PR from <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">&lt;branchname&gt;</span></code>.</p></li>
+</ul>
+<p>Now it’s time to wait for reviews again, this time hopefully you will be approved.</p>
+</section>
+<section id="merging-in-upstream-changes">
+<h2>Merging in upstream changes<a class="headerlink" href="#merging-in-upstream-changes" title="Permalink to this heading">¶</a></h2>
+<p>If changes made by other developers are merged in before your pull request, you will have to update
+you pull request to include these changes. This can sometimes be a tedious process if changes
+were made to the same files you changed.</p>
+<ul class="simple">
+<li><p>Fetch the latest changes from upstream (this caches them locally, not
+changing any of your code): <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">origin</span></code>.</p></li>
+<li><p>Backup your current branch in case anything goes wrong during the rebase with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;branchname&gt;-backup</span></code>,
+and then go back to your original branch <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;branchname&gt;</span></code>.</p></li>
+<li><p>Rebase your changes to the latest master branch <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">rebase</span> <span class="pre">-i</span> <span class="pre">origin/master</span></code></p></li>
+<li><p>This will open up your text editor with a list of the commits that will be
+added on top of master. Be sure to comment out (by adding <code class="docutils literal notranslate"><span class="pre">#</span></code> before the line)
+any commits that are not yours.</p></li>
+<li><p>Save and close the text editor. Git will now attempt to rebase your changes
+on top of the master branch. If git detects a conflict, it will prompt you
+on how to manually fix them.</p></li>
+<li><p>Once you have gone through the whole process and git says the rebase was
+successful, push your updated branch <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">-f</span> <span class="pre">&lt;branchname&gt;</span></code>. Note
+the <code class="docutils literal notranslate"><span class="pre">-f</span></code> which you need as you have re-written history</p></li>
+</ul>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
