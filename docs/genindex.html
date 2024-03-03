@@ -310,6 +310,8 @@
 </li>
       <li><a href="reference/images.html#mil_ros_tools.BagCrawler">BagCrawler (class in mil_ros_tools)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.bagger_callback">bagger_callback() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="reference/alarms.html#alarm_handlers.Kill.bagger_dump">bagger_dump() (alarm_handlers.Kill method)</a>
 </li>
       <li><a href="subjugator/reference.html#subjugator_gazebo_tools.BagManager">BagManager (class in subjugator_gazebo_tools)</a>
@@ -998,6 +1000,8 @@
 </li>
       <li><a href="reference/alarms.html#ros_alarms.HandlerBase.get_alarm">get_alarm() (ros_alarms.HandlerBase method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_bag_name">get_bag_name() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="reference/io.html#mil_tools.get_ch">get_ch() (in module mil_tools)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.Publisher.get_connections">get_connections() (axros.Publisher method)</a>
@@ -1008,12 +1012,14 @@
 </li>
       <li><a href="reference/passivesonar.html#mil_passive_sonar.TxHydrophonesClient.get_direction">get_direction() (mil_passive_sonar.TxHydrophonesClient method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/vision.html#mil_vision_tools.ContourClassifier.get_features">get_features() (mil_vision_tools.ContourClassifier method)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.GoalManager.get_feedback">get_feedback() (axros.GoalManager method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_header_time">get_header_time() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/vision.html#mil_vision_tools.ImageMux.get_image">get_image() (mil_vision_tools.ImageMux method)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.Subscriber.get_last_message">get_last_message() (axros.Subscriber method)</a>
@@ -1032,6 +1038,8 @@
 </li>
       <li><a href="reference/axros/api.html#axros.NodeHandle.get_param_names">get_param_names() (axros.NodeHandle method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_params">get_params() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="reference/vision.html#mil_vision_tools.ObjectsTracker.get_persistent_objects">get_persistent_objects() (mil_vision_tools.ObjectsTracker method)</a>
 </li>
       <li><a href="reference/pneumatic.html#mil_pneumatic_actuator.PnuematicActuatorDriver.get_port">get_port() (mil_pneumatic_actuator.PnuematicActuatorDriver method)</a>
@@ -1046,7 +1054,17 @@
 </li>
       <li><a href="reference/axros/api.html#axros.NodeHandle.get_service_client">get_service_client() (axros.NodeHandle method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_subscriber_list">get_subscriber_list() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="reference/axros/api.html#axros.NodeHandle.get_time">get_time() (axros.NodeHandle method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_time_index">get_time_index() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_topic_duration">get_topic_duration() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_topic_message_count">get_topic_message_count() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.get_total_message_count">get_total_message_count() (nodes.online_bagger.OnlineBagger method)</a>
 </li>
       <li><a href="reference/axros/api.html#axros.Goal">Goal (class in axros)</a>
 </li>
@@ -1392,6 +1410,8 @@
 </li>
       <li><a href="navigator/reference.html#navigator_msgs.srv.MessageUAVReplenishmentRequest.item_status">item_status (navigator_msgs.srv.MessageUAVReplenishmentRequest attribute)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.iteration_count">iteration_count (nodes.online_bagger.OnlineBagger attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1493,6 +1513,8 @@
       <li><a href="reference/vision.html#mil_vision_tools.ContourClassifier.main">main() (mil_vision_tools.ContourClassifier method)</a>
 </li>
       <li><a href="subjugator/reference.html#subjugator_gazebo_tools.BagManager.make_dict">make_dict() (subjugator_gazebo_tools.BagManager method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.make_dicts">make_dicts() (nodes.online_bagger.OnlineBagger method)</a>
 </li>
       <li><a href="reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.make_filter">make_filter() (mil_passive_sonar.streamed_bandpass.StreamedBandpass method)</a>
 </li>
@@ -2360,10 +2382,10 @@
 </li>
       <li><a href="subjugator/reference.html#_CPPv4N8OGridGen18clear_pcl_callbackERN8std_srvs7Trigger7RequestERN8std_srvs7Trigger8ResponseE">OGridGen::clear_pcl_callback (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="subjugator/reference.html#_CPPv4N8OGridGen7clusterEN3pcl10PointCloudIN3pcl9PointXYZIEE3PtrE">OGridGen::cluster (C++ function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="subjugator/reference.html#_CPPv4N8OGridGen12dvl_callbackERKN8mil_msgs20RangeStampedConstPtrE">OGridGen::dvl_callback (C++ function)</a>
 </li>
       <li><a href="subjugator/reference.html#_CPPv4N8OGridGen20get_objects_callbackERN8mil_msgs13ObjectDBQuery7RequestERN8mil_msgs13ObjectDBQuery8ResponseE">OGridGen::get_objects_callback (C++ function)</a>
@@ -2399,6 +2421,8 @@
       <li><a href="subjugator/reference.html#sub8_thrust_and_kill_board.ThrusterAndKillBoard.on_hw_kill">on_hw_kill() (sub8_thrust_and_kill_board.ThrusterAndKillBoard method)</a>
 </li>
       <li><a href="reference/alarms.html#ros_alarms.HandlerBase.on_set">on_set() (ros_alarms.HandlerBase method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger">OnlineBagger (class in nodes.online_bagger)</a>
 </li>
       <li><a href="subjugator/reference.html#sub_actuator_board.ActuatorSetPacket.open">open (sub_actuator_board.ActuatorSetPacket attribute)</a>
 </li>
@@ -3361,6 +3385,8 @@
 </li>
       <li><a href="reference/axros/api.html#axros.SimpleActionServer.start">start() (axros.SimpleActionServer method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.start_bagging">start_bagging() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="subjugator/reference.html#subjugator_gazebo_tools.BagManager.start_caching">start_caching() (subjugator_gazebo_tools.BagManager method)</a>
 </li>
       <li><a href="reference/messages.html#navigator_msgs.msg.PerceptionObject.START_GATE_BUOY">START_GATE_BUOY (navigator_msgs.msg.PerceptionObject attribute)</a>
@@ -3373,12 +3399,12 @@
 </li>
       <li><a href="reference/actions.html#navigator_msgs.msg.ShooterDoActionFeedback.status">status (navigator_msgs.msg.ShooterDoActionFeedback attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/actions.html#navigator_msgs.msg.ShooterDoActionResult.status">status (navigator_msgs.msg.ShooterDoActionResult attribute)</a>
 </li>
       <li><a href="reference/actions.html#navigator_path_planner.msg.MoveActionFeedback.status">status (navigator_path_planner.msg.MoveActionFeedback attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/actions.html#navigator_path_planner.msg.MoveActionResult.status">status (navigator_path_planner.msg.MoveActionResult attribute)</a>
 </li>
       <li><a href="reference/messages.html#roboteq_msgs.msg.Status.status">status (roboteq_msgs.msg.Status attribute)</a>
@@ -3432,6 +3458,8 @@
       <li><a href="reference/axros/api.html#axros.SimpleActionServer.stop">stop() (axros.SimpleActionServer method)</a>
 </li>
       <li><a href="reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass">StreamedBandpass (class in mil_passive_sonar.streamed_bandpass)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.streaming">streaming (nodes.online_bagger.OnlineBagger attribute)</a>
 </li>
       <li><a href="reference/messages.html#navigator_msgs.msg.ScanTheCode.string_pattern">string_pattern (navigator_msgs.msg.ScanTheCode attribute)</a>
 </li>
@@ -3621,7 +3649,13 @@
 </li>
       <li><a href="reference/axros/api.html#axros.NodeHandle.subscribe">subscribe() (axros.NodeHandle method)</a>
 </li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.subscribe">subscribe() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.subscribe_loop">subscribe_loop() (nodes.online_bagger.OnlineBagger method)</a>
+</li>
       <li><a href="reference/axros/api.html#axros.Subscriber">Subscriber (class in axros)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.subscriber_list">subscriber_list (nodes.online_bagger.OnlineBagger attribute)</a>
 </li>
       <li><a href="reference/services.html#ros_alarms_msgs.srv.AlarmSetResponse.succeed">succeed (ros_alarms_msgs.srv.AlarmSetResponse attribute)</a>
 </li>
@@ -3652,6 +3686,8 @@
       <li><a href="reference/services.html#std_srvs.srv.SetBoolResponse.success">success (std_srvs.srv.SetBoolResponse attribute)</a>
 </li>
       <li><a href="subjugator/reference.html#sub_actuator_board.srv.SetValveResponse.success">success (sub_actuator_board.srv.SetValveResponse attribute)</a>
+</li>
+      <li><a href="reference/bagging.html#nodes.online_bagger.OnlineBagger.successful_subscription_count">successful_subscription_count (nodes.online_bagger.OnlineBagger attribute)</a>
 </li>
       <li><a href="reference/messages.html#roboteq_msgs.msg.Feedback.supply_current">supply_current (roboteq_msgs.msg.Feedback attribute)</a>
 </li>
