@@ -114,7 +114,6 @@
 <span>
 Attributes</span><ul>
 <li class="attribute-table-entry">
-<a class="reference internal" href="#nodes.online_bagger.OnlineBagger._action_server">_action_server</a></li><li class="attribute-table-entry">
 <a class="reference internal" href="#nodes.online_bagger.OnlineBagger.iteration_count">iteration_count</a></li><li class="attribute-table-entry">
 <a class="reference internal" href="#nodes.online_bagger.OnlineBagger.streaming">streaming</a></li><li class="attribute-table-entry">
 <a class="reference internal" href="#nodes.online_bagger.OnlineBagger.subscriber_list">subscriber_list</a></li><li class="attribute-table-entry">
@@ -162,7 +161,7 @@ bagger, triggering a bag write and displaying a progress bar as it writes.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.successful_subscription_count">
 <span class="sig-name descname"><span class="pre">successful_subscription_count</span></span><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.successful_subscription_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>The number of successful subcriptions
+<dd><p>The number of successful subscriptions
 to topics.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -200,19 +199,7 @@ to topics.</p>
 OnlineBagger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)">list</a>[topic]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger._action_server">
-<span class="sig-name descname"><span class="pre">_action_server</span></span><a class="headerlink" href="#nodes.online_bagger.OnlineBagger._action_server" title="Permalink to this definition">¶</a></dt>
-<dd><p>The action server associated with the
-OnlineBagger.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="axros/api.html#axros.SimpleActionServer" title="axros.SimpleActionServer">SimpleActionServer</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#list" title="(in Python v3.8)">list</a>[<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -223,7 +210,7 @@ Stream topics up to a given stream time, dump oldest messages when limit is reac
 Set up service to bag n seconds of data default to all of available data</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.bagger_callback">
-<span class="sig-name descname"><span class="pre">bagger_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.bagger_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.bagger_callback" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">bagger_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">genpy.Message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.bagger_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.bagger_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds incoming messages to the appropriate topic and removes older messages if necessary.</p>
 <p>Streaming callback function, stops streaming during bagging process and pops off msgs
 from dequeue if stream size is greater than specified stream_time. Stream, callback
@@ -231,8 +218,8 @@ function does nothing if streaming is not active.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>msg</strong> (<em>msg</em>) – The incoming message.</p></li>
-<li><p><strong>topic</strong> (<em>topic</em>) – The topic to which the incoming message will be added.</p></li>
+<li><p><strong>msg</strong> (<em>genpy.Message</em>) – The incoming message.</p></li>
+<li><p><strong>topic</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The topic to which the incoming message will be added.</p></li>
 </ul>
 </dd>
 </dl>
@@ -240,7 +227,7 @@ function does nothing if streaming is not active.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.get_bag_name">
-<span class="sig-name descname"><span class="pre">get_bag_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_bag_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_bag_name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_bag_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_bag_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_bag_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create ros bag save directory
 If no bag name is provided, the current date/time is used as default.</p>
 <dl class="field-list simple">
@@ -250,25 +237,21 @@ is an empty string, which will result in the default filename being
 used.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>A string representing the path</dt><dd><p>of the ros bag file.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>A string representing the path of the ros bag file.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>os.path.join(bag_dir, bag_name) (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.get_header_time">
-<span class="sig-name descname"><span class="pre">get_header_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_header_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_header_time" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_header_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">genpy.Message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_header_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_header_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve header time if available</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>msg</strong> (<em>msg</em>) – The ROS message from which to extract the time.</p>
+<dd class="field-odd"><p><strong>msg</strong> (<em>genpy.Message</em>) – The ROS message from which to extract the time.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
@@ -278,7 +261,7 @@ used.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>msg.header.stamp (stamp)</p>
+<dd class="field-odd"><p>rospy.Time</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,7 +280,7 @@ Outputs each topics: time_buffer(float in seconds), subscribe_statue(bool), topi
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – The subscription status used to search for topics with a matching
-subcription status.</p>
+subscription status.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
@@ -308,7 +291,7 @@ status of the topic, and the topic name.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>sub_list (string)</p>
+<dd class="field-odd"><p>string</p>
 </dd>
 </dl>
 </dd></dl>
@@ -337,31 +320,31 @@ for the topic.</p></li>
 end of the dequeue.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>index (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.get_topic_duration">
-<span class="sig-name descname"><span class="pre">get_topic_duration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_topic_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_topic_duration" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_topic_duration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_topic_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_topic_duration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current time duration of topic</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>topic</strong> (<em>rostopic</em>) – The topic for which the duration will be calculated.</p>
+<dd class="field-odd"><p><strong>topic</strong> (<a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The topic for which the duration will be calculated.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The time duration of the topic.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>duration (Duration)</p>
+<dd class="field-odd"><p>Duration</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.get_topic_message_count">
-<span class="sig-name descname"><span class="pre">get_topic_message_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_topic_message_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_topic_message_count" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_topic_message_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/stdtypes.html#str" title="(in Python v3.8)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.get_topic_message_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.get_topic_message_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return number of messages available in a topic</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -369,14 +352,10 @@ end of the dequeue.</p>
 of messages.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The number of messages</dt><dd><p>available in the specified topic.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The number of messages available in the specified topic.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>len(self.topic_messages[topic]) (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -387,14 +366,10 @@ of messages.</p>
 <dd><p>Returns total number of messages across all topics</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><dl class="simple">
-<dt>The total number of messages available in</dt><dd><p>all topics.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p>The total number of messages available in all topics.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>total_message_count (<a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a>)</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,14 +401,14 @@ self.topic_message[‘/odom’][0][1] is the message associated with the oldest 
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.start_bagging">
-<span class="sig-name descname"><span class="pre">start_bagging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.start_bagging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.start_bagging" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">start_bagging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BagOnlineGoal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.start_bagging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.start_bagging" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes collected data to a bag file.</p>
 <p>Dump all data in dictionary to bags, temporarily stops streaming
 during the bagging process, resumes streaming when over.
 If bagging is already false because of an active call to this service.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>req</strong> (<em>msg</em>) – The bagging request information.</p>
+<dd class="field-odd"><p><strong>req</strong> (<em>BagOnlineGoal</em>) – The bagging request information.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.8/library/exceptions.html#IOError" title="(in Python v3.8)"><strong>IOError</strong></a> – A problem occurs when opening or closing the bag file.</p>
@@ -443,7 +418,7 @@ If bagging is already false because of an active call to this service.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="nodes.online_bagger.OnlineBagger.subscribe">
-<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.subscribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.subscribe" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">rospy.timer.TimerEvent</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.8/library/constants.html#None" title="(in Python v3.8)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nodes/online_bagger.html#OnlineBagger.subscribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nodes.online_bagger.OnlineBagger.subscribe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subscribe to the topics defined in the yaml configuration file</p>
 <p>Function checks subscription status True/False of each topic
 if True: topic has already been successfully subscribed to
@@ -451,14 +426,6 @@ if False: topic still needs to be subscribed to and
 subscriber will be run.</p>
 <p>Each element in self.subscriber list is a list [topic, Bool]
 where the Bool tells the current status of the subscriber (success/failure).</p>
-<p>Return number of topics that failed subscription</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>)</strong> (<em>time_info</em>) – An instance of the TimerEvent class. This method does
-not use the argument but it is required or an error will occur. The
-default value is None.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">

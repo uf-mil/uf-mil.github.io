@@ -99,7 +99,7 @@
 
 
 <div class="viewcode-block" id="ThrustSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub9_thrust_and_kill_board.ThrustSetPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ThrustSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;Bf&quot;</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ThrustSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;=Bf&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet to set the speed of a specific thruster.</span>
 
@@ -151,7 +151,7 @@
 
 
 <div class="viewcode-block" id="KillSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub9_thrust_and_kill_board.KillSetPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">KillSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x03</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;BB&quot;</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">KillSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x03</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;=BB&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet sent by the motherboard to set/unset the kill.</span>
 
@@ -165,7 +165,7 @@
 
 
 <div class="viewcode-block" id="KillReceivePacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub9_thrust_and_kill_board.KillReceivePacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">KillReceivePacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;BB&quot;</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">KillReceivePacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x02</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;=BB&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet sent by the motherboard to set/unset the kill.</span>
 

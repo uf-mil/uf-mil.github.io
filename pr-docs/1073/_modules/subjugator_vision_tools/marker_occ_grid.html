@@ -254,7 +254,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">poly_generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">polygon_generator</span><span class="p">()</span>
             <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">srv</span><span class="o">.</span><span class="n">intial_position</span><span class="p">]</span>
 
-        <span class="c1"># We search at 1.5 * r so that there is some overlay in the search feilds.</span>
+        <span class="c1"># We search at 1.5 * r so that there is some overlay in the search fields.</span>
         <span class="n">np_pose</span> <span class="o">=</span> <span class="n">msg_helpers</span><span class="o">.</span><span class="n">pose_to_numpy</span><span class="p">(</span><span class="n">srv</span><span class="o">.</span><span class="n">intial_position</span><span class="p">)</span>
         <span class="n">rot_mat</span> <span class="o">=</span> <span class="n">make_2D_rotation</span><span class="p">(</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">transformations</span><span class="o">.</span><span class="n">euler_from_quaternion</span><span class="p">(</span><span class="n">np_pose</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">2</span><span class="p">],</span>
@@ -329,7 +329,6 @@
 
 
 <span class="k">class</span> <span class="nc">MarkerOccGrid</span><span class="p">(</span><span class="n">OccGridUtils</span><span class="p">):</span>
-
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles updating occupancy grid when new data comes in.</span>
 <span class="sd">    TODO: Upon call can return some path to go to in order to find them.</span>

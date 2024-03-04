@@ -1013,7 +1013,24 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_setting_up</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotSetup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">getParamNames</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">getParamNames</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="NodeHandle.lookup_node"><a class="viewcode-back" href="../../reference/axros/api.html#axros.NodeHandle.lookup_node">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">lookup_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Looks up the URI of a node based on its name. If it does not exist,</span>
+<span class="sd">        `None` is returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the node to lookup.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[str]: The URI of the node, if it exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">master_proxy</span><span class="o">.</span><span class="n">lookupNode</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rosxmlrpc</span><span class="o">.</span><span class="n">ROSMasterError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
             </main>

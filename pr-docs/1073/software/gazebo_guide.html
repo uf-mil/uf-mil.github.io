@@ -26,8 +26,8 @@
         <link rel="shortcut icon" href="../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../genindex.html" />
         <link rel="search" title="Search" href="../search.html" />
-        <link rel="next" title="SubjuGator" href="../subjugator/index.html" />
-        <link rel="prev" title="Scripts" href="scripts.html" />
+        <link rel="next" title="Noetic Migration" href="noetic_migration.html" />
+        <link rel="prev" title="Python Style Guide" href="python_style.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -67,19 +67,12 @@
 <li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rqt.html">Implementing GUI Based Tools Using <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="alarms.html">Alarms in ROS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
-<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
-<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Gazebo Guide</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#brief-introduction">Brief Introduction</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#running-gazebo">Running Gazebo</a></li>
@@ -121,6 +114,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#more-info">More Info</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
@@ -179,7 +181,7 @@ subjugator. This also starts a Gazebo Sever.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>–screen forces all ROS node output to the screen. It is used for debugging.</p>
+<p><code class="docutils literal notranslate"><span class="pre">--screen</span></code> forces all ROS node output to the screen. It is used for debugging.</p>
 </div>
 </li>
 <li><p>Then in another terminal window run this command to start the Gazebo
@@ -245,11 +247,11 @@ if no layers are defined.</p>
 object’s visuals to a layer you will need to add a <code class="docutils literal notranslate"><span class="pre">&lt;meta&gt;</span></code> tag for information
 and then a <code class="docutils literal notranslate"><span class="pre">&lt;layer&gt;</span></code> tag with the layer number under each <code class="docutils literal notranslate"><span class="pre">&lt;visual&gt;</span></code> tag. Below
 is an example:</p>
-<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;visual</span><span class="w"> </span><span class="na">name =</span><span class="w"> </span><span class="s">&#39;visual_0&#39;</span><span class="nt">&gt;</span>
-<span class="w">	</span><span class="nt">&lt;meta&gt;</span>
-<span class="w">		</span><span class="nt">&lt;layer&gt;</span>0<span class="nt">&lt;/layer&gt;</span>
-<span class="w">	</span><span class="nt">&lt;/meta&gt;</span>
-<span class="w">	</span>...
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;visual</span><span class="w"> </span><span class="na">name=</span><span class="s">&#39;visual_0&#39;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;meta&gt;</span>
+<span class="w">    </span><span class="nt">&lt;layer&gt;</span>0<span class="nt">&lt;/layer&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/meta&gt;</span>
+<span class="w">  </span>...
 <span class="nt">&lt;/visual&gt;</span>
 </pre></div>
 </div>
@@ -398,8 +400,7 @@ and the child with each other.</p></li>
 <h4>Adding a Plugin<a class="headerlink" href="#adding-a-plugin" title="Permalink to this heading">¶</a></h4>
 <p>To control your model, you need to create a plugin. You can do this in the
 Model Tab by specifying the necessary details for the plugin.</p>
-<p>You can find more information on how to create your own custom plugins here
-https://classic.gazebosim.org/tutorials?tut=ros_gzplugins</p>
+<p>You can find more information on how to create your own custom plugins <a class="reference external" href="https://classic.gazebosim.org/tutorials?tut=ros_gzplugins">here</a>.</p>
 </section>
 <section id="model-creation-workflow-example">
 <h4>Model Creation Workflow Example<a class="headerlink" href="#model-creation-workflow-example" title="Permalink to this heading">¶</a></h4>
@@ -426,7 +427,7 @@ are, their properties, and important global properties.</p>
 <p class="admonition-title">Note</p>
 <p>When using roslaunch to start Gazebo, it is crucial to update the World file
 if you make any changes to the simulation environment. At MIL, there is a
-dedicated “worlds” folder where Gazebo World files are saved. When you update
+dedicated <code class="docutils literal notranslate"><span class="pre">worlds</span></code> folder where Gazebo World files are saved. When you update
 a World file, ensure that you replace the old file in this folder. Failing
 to do so will result in the continued use of the old World file when
 launching Gazebo using roslaunch.</p>
@@ -436,10 +437,10 @@ launching Gazebo using roslaunch.</p>
 <section id="more-info">
 <h2>More Info<a class="headerlink" href="#more-info" title="Permalink to this heading">¶</a></h2>
 <p>If you ever need more information on how any aspect of Gazebo works or how to
-use ROS with Gazebo you can check out the official Gazebo Documentation here:
-https://classic.gazebosim.org/tutorials. Some of the images used in this guide
-are sourced from here and we are grateful to the creators for their exceptional
-work, which has been instrumental in writing this guide.</p>
+use ROS with Gazebo you can check out the official Gazebo Documentation <a class="reference external" href="https://classic.gazebosim.org/tutorials">here</a>.
+Some of the images used in this guide are sourced from here and we are grateful
+to the creators for their exceptional work, which has been instrumental in
+writing this guide.</p>
 </section>
 </section>
 

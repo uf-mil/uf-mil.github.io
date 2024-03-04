@@ -174,7 +174,7 @@
 
 <div class="viewcode-block" id="ContourClassifier.feature_probabilities"><a class="viewcode-back" href="../../reference/vision.html#mil_vision_tools.ContourClassifier.feature_probabilities">[docs]</a>    <span class="k">def</span> <span class="nf">feature_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Allows child classes to give probabilties for each possible class given</span>
+<span class="sd">        Allows child classes to give probabilities for each possible class given</span>
 <span class="sd">        a features vector, instead of just one classification. By default,</span>
 <span class="sd">        gives 1.0 to classified class and 0.0 to others.</span>
 
@@ -290,6 +290,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            training_file (Optional[str]): The name of the training file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">training_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cannot read without any training file.&quot;</span><span class="p">)</span>
         <span class="n">training_file</span> <span class="o">=</span> <span class="n">_get_param</span><span class="p">(</span><span class="n">training_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_file</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">training_file</span><span class="p">)</span>
         <span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
