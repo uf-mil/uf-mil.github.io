@@ -79,8 +79,22 @@
                 
   <h1>Source code for sub_actuator_board.packets</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
 
 <span class="kn">from</span> <span class="nn">mil_usb_to_can.sub9</span> <span class="kn">import</span> <span class="n">Packet</span>
+
+
+<div class="viewcode-block" id="ActuatorPacketId"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorPacketId">[docs]</a><span class="k">class</span> <span class="nc">ActuatorPacketId</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumerator representing each controllable actuator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: The dropper actuator.</span>
+    <span class="n">DROPPER</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">#: The torpedo launcher actuator.</span>
+    <span class="n">TORPEDO_LAUNCHER</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#: The ball drop actuator. Only one actuator is used for both balls.</span>
+    <span class="n">BALL_DROP</span> <span class="o">=</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="ActuatorSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorSetPacket">[docs]</a><span class="nd">@dataclass</span>
@@ -89,12 +103,12 @@
 <span class="sd">    Packet used by the actuator board to set a specific valve.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        address (int): The actuator ID to set.</span>
+<span class="sd">        address (ActuatorPacketId): The actuator ID to set.</span>
 <span class="sd">        open (bool): Whether to open the specified actuator. ``True`` requests opening,</span>
 <span class="sd">            ``False`` requests closing.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">address</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">address</span><span class="p">:</span> <span class="n">ActuatorPacketId</span>
     <span class="nb">open</span><span class="p">:</span> <span class="nb">bool</span></div>
 
 
@@ -107,9 +121,7 @@
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet used by the actuator board to request the status of all valves.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="ActuatorPollResponsePacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorPollResponsePacket">[docs]</a><span class="nd">@dataclass</span>

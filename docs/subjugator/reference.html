@@ -75,6 +75,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#actuator-board">Actuator Board</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#actuatorboard">ActuatorBoard</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#actuatorboardsimulation">ActuatorBoardSimulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actuatorpacketid">ActuatorPacketId</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#actuatorsetpacket">ActuatorSetPacket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#actuatorpollrequestpacket">ActuatorPollRequestPacket</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#actuatorpollresponsepacket">ActuatorPollResponsePacket</a></li>
@@ -379,6 +380,33 @@ a feedback message is constructed and sent back.</p>
 </dd></dl>
 
 </section>
+<section id="actuatorpacketid">
+<h3>ActuatorPacketId<a class="headerlink" href="#actuatorpacketid" title="Permalink to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="sub_actuator_board.ActuatorPacketId">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub_actuator_board.</span></span><span class="sig-name descname"><span class="pre">ActuatorPacketId</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub_actuator_board/packets.html#ActuatorPacketId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub_actuator_board.ActuatorPacketId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumerator representing each controllable actuator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub_actuator_board.ActuatorPacketId.BALL_DROP">
+<span class="sig-name descname"><span class="pre">BALL_DROP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#sub_actuator_board.ActuatorPacketId.BALL_DROP" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ball drop actuator. Only one actuator is used for both balls.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub_actuator_board.ActuatorPacketId.DROPPER">
+<span class="sig-name descname"><span class="pre">DROPPER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#sub_actuator_board.ActuatorPacketId.DROPPER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dropper actuator.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sub_actuator_board.ActuatorPacketId.TORPEDO_LAUNCHER">
+<span class="sig-name descname"><span class="pre">TORPEDO_LAUNCHER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#sub_actuator_board.ActuatorPacketId.TORPEDO_LAUNCHER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The torpedo launcher actuator.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="actuatorsetpacket">
 <h3>ActuatorSetPacket<a class="headerlink" href="#actuatorsetpacket" title="Permalink to this heading">¶</a></h3>
 <div class="attribute-table" data-move-to-id="sub_actuator_board.ActuatorSetPacket"><div class="attribute-table-column">
@@ -389,7 +417,7 @@ Attributes</span><ul>
 <a class="reference internal" href="#sub_actuator_board.ActuatorSetPacket.open">open</a></li></ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="sub_actuator_board.ActuatorSetPacket">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub_actuator_board.</span></span><span class="sig-name descname"><span class="pre">ActuatorSetPacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">open</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub_actuator_board/packets.html#ActuatorSetPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub_actuator_board.ActuatorSetPacket" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sub_actuator_board.</span></span><span class="sig-name descname"><span class="pre">ActuatorSetPacket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sub_actuator_board.ActuatorPacketId" title="sub_actuator_board.packets.ActuatorPacketId"><span class="pre">ActuatorPacketId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">open</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#bool" title="(in Python v3.8)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sub_actuator_board/packets.html#ActuatorSetPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sub_actuator_board.ActuatorSetPacket" title="Permalink to this definition">¶</a></dt>
 <dd><p>Packet used by the actuator board to set a specific valve.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sub_actuator_board.ActuatorSetPacket.address">
@@ -397,7 +425,7 @@ Attributes</span><ul>
 <dd><p>The actuator ID to set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.8/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#sub_actuator_board.ActuatorPacketId" title="sub_actuator_board.ActuatorPacketId">ActuatorPacketId</a></p>
 </dd>
 </dl>
 </dd></dl>
