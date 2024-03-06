@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Alarms in ROS</title>
+        <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../searchindex.js" defer></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/custom.js"></script>
+        <script src="../_static/sidebar.js"></script>
+        <script src="../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+        <link rel="next" title="Bash Style Guide (In Progress)" href="bash_style.html" />
+        <link rel="prev" title="Writing Unit Tests with rostest" href="rostest.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Software</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devtools.html">Developer Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_syntax.html">Documentation Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_documentation.html">Updating Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="help.html">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zobelisk.html">Accessing Zobelisk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">An Introduction to Asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rqt.html">Implementing GUI Based Tools Using <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Alarms in ROS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ros-alarms-a-service-oriented-architecture">ROS Alarms: A Service-Oriented Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#alarm-system-logic">Alarm System Logic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#applications-and-context">Applications and Context</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gazebo_guide.html">Gazebo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrating_cams.html">Calibrating Cameras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="submodule.html">Developing with Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extension_support.html">Optional Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html">Helpful Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="alarms-in-ros">
+<h1>Alarms in ROS<a class="headerlink" href="#alarms-in-ros" title="Permalink to this heading">¶</a></h1>
+<p>In the realm of building dependable control systems, the importance of error detection
+and effective error-handling mechanisms cannot be overstated. Within this context,
+MIL presents a robust solution in the form of a live alarm system. This alarm system
+operates discreetly in the background of both the robot’s mission and driver codebases,
+ready to be activated upon the emergence of errors. Notably, the alarm code doesn’t
+solely serve to identify and address errors; it can also adeptly manage changes
+or updates that extend beyond error scenarios.</p>
+<section id="ros-alarms-a-service-oriented-architecture">
+<h2>ROS Alarms: A Service-Oriented Architecture<a class="headerlink" href="#ros-alarms-a-service-oriented-architecture" title="Permalink to this heading">¶</a></h2>
+<p>The architecture of ROS alarms distinguishes itself by employing a service-oriented
+model rather than the usual topic-based approach. In ROS, Services act as the
+conduits for interaction between nodes, functioning in a request-response manner.
+While ROS topics enable asynchronous data exchange, services facilitate nodes in
+seeking specific actions or information from other nodes, awaiting a subsequent
+response before proceeding. This method of waiting before proceeding is known as a
+synchronous data exchange. This proves especially valuable in tasks that require
+direct engagement, such as data retrieval or computations.</p>
+</section>
+<section id="alarm-system-logic">
+<h2>Alarm System Logic<a class="headerlink" href="#alarm-system-logic" title="Permalink to this heading">¶</a></h2>
+<p>The alarm system’s functionality is more intricate than that of a typical ROS
+service, which usually manages operations of base types (ints, strings, etc.).
+In this scenario, the alarm’s service server is engineered to manage the tasks
+of updating, querying, and processing an alarm object. ROS alarms encompass two
+distinct types of clients: the alarm broadcaster and the alarm listener. The
+broadcaster initializes and triggers alarms in response to errors or changes,
+while the listener monitors the broadcaster’s activity and activates designated
+a callback function when alarms are raised. The callback function should handle
+the error or change appropriately.</p>
+<p>To successfully leverage alarms, the initialization of both the broadcaster and
+listener is needed. The listener should be configured to execute a predefined
+callback function, addressing errors or changes detected by the broadcaster.
+Within your codebase, error detection and alarm-raising procedures should be
+integrated. If orchestrated correctly, the callback function will be automatically
+invoked, underscoring successful error mitigation.</p>
+<p>Note that there are several special properties that can be attached to your alarm.
+Here are a couple of examples:</p>
+<ul class="simple">
+<li><p>When you raise an alarm you can assign a severity level to the alarm [0, 5].</p></li>
+<li><p>You can attach multiple callback functions to the alarm.</p>
+<ul>
+<li><p><strong>This is where severity comes into play!</strong> By specifying the required
+severity level that is needed to execute the callback when initializing the
+function, you can choose which callbacks are executed when the alarm is raised.</p></li>
+<li><p>You can also specify a range of severity levels that the alarm would need to
+execute a given callback.</p></li>
+</ul>
+</li>
+</ul>
+<p>Here is a line-by-line breakdown of an example alarm implementation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ab</span> <span class="o">=</span> <span class="n">AlarmBroadcaster</span><span class="p">(</span><span class="s2">&quot;test_alarm&quot;</span><span class="p">)</span>
+<span class="n">al</span> <span class="o">=</span> <span class="n">AlarmListener</span><span class="p">(</span><span class="s2">&quot;test_alarm&quot;</span><span class="p">)</span>
+<span class="n">ab</span><span class="o">.</span><span class="n">clear_alarm</span><span class="p">()</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is how you would initialize the alarm broadcaster and listener. Here
+make sure to clear any previous alarm data in the broadcaster.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">al</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">cb1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Make sure to establish the callback function that should be executed once
+the alarm is activated.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ab</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">()</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">al</span><span class="o">.</span><span class="n">is_raised</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">cb1_ran</span>
+</pre></div>
+</div>
+<p>When the alarm is sounded via the <code class="docutils literal notranslate"><span class="pre">raise_alarm()</span></code> function, the callback will be
+executed automatically.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">al</span><span class="o">.</span><span class="n">clear_callbacks</span><span class="p">()</span>
+
+<span class="n">al</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">cb1</span><span class="p">,</span> <span class="n">severity_required</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">al</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">cb2</span><span class="p">,</span> <span class="n">call_when_raised</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Severity Range Test 1&quot;</span><span class="p">)</span>
+<span class="n">ab</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span><span class="n">severity</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">cb1_ran</span>
+<span class="k">assert</span> <span class="n">cb2_ran</span>
+<span class="n">cb2_ran</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Severity Range Test 2&quot;</span><span class="p">)</span>
+<span class="n">ab</span><span class="o">.</span><span class="n">raise_alarm</span><span class="p">(</span><span class="n">severity</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">cb1_ran</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">cb2_ran</span>
+<span class="n">cb1_ran</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>Note that you can also attach some special properties to your alarm. For instance,
+you can attach multiple callback functions to the alarm. You can also configure
+whether the callback function should be automatically executed when the alarm is
+raised or whether it should be executed manually. Finally, you can assign a
+severity level to the alarm which can tell the alarm code which callback functions
+should be run.</p>
+</section>
+<section id="applications-and-context">
+<h2>Applications and Context<a class="headerlink" href="#applications-and-context" title="Permalink to this heading">¶</a></h2>
+<p>The applications of ROS alarms span various contexts, with one notable application
+residing in the control of the submersible vehicle’s thrust and killboard. The
+thrust and killboard, responsible for the sub’s electronic operations, is
+integrally associated with ROS alarms. Upon the board’s activation or deactivation
+(hard or soft kill), alarms are invoked to apprise users of these changes. The
+listener’s callback function comes into play, ensuring that alarms are updated
+in alignment with the board’s current state. This process triggered each time
+the board is deactivated, creates a system whereby users are continually informed
+about the board’s status changes – essentially manifesting a dynamic live alarm system.</p>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
