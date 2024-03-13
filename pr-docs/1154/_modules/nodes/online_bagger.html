@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>nodes.online_bagger</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for nodes.online_bagger</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">import</span> <span class="nn">rosbag</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">rostopic</span>
+<span class="kn">from</span> <span class="nn">actionlib</span> <span class="kn">import</span> <span class="n">SimpleActionClient</span><span class="p">,</span> <span class="n">SimpleActionServer</span><span class="p">,</span> <span class="n">TerminalState</span>
+<span class="kn">from</span> <span class="nn">mil_msgs.msg</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BagOnlineAction</span><span class="p">,</span>
+    <span class="n">BagOnlineFeedback</span><span class="p">,</span>
+    <span class="n">BagOnlineGoal</span><span class="p">,</span>
+    <span class="n">BagOnlineResult</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">genpy</span>
+
+
+<div class="viewcode-block" id="OnlineBagger"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger">[docs]</a><span class="k">class</span> <span class="nc">OnlineBagger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Node that maintains a list of bagged information relating to the specified</span>
+<span class="sd">    topics.</span>
+
+<span class="sd">    Subscribes to a list of ROS topics, and maintains a buffer of the most recent</span>
+<span class="sd">    n seconds. Parts or all of these buffered topics can be written to a bag</span>
+<span class="sd">    file by sending a new goal to the /online_bagger/bag action server. When</span>
+<span class="sd">    run with the -c flag, instead runs an action client which connects to online</span>
+<span class="sd">    bagger, triggering a bag write and displaying a progress bar as it writes.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        successful_subscription_count (int): The number of successful subscriptions</span>
+<span class="sd">            to topics.</span>
+<span class="sd">        iteration_count (int): The number of iterations.</span>
+<span class="sd">        streaming (bool): Indicates whether the bagger is streaming.</span>
+<span class="sd">        subscriber_list (list[str]): The list of topics subscribed to the</span>
+<span class="sd">            OnlineBagger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BAG_TOPIC</span> <span class="o">=</span> <span class="s2">&quot;/online_bagger/bag&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make dictionary of dequeues.</span>
+<span class="sd">        Subscribe to set of topics defined by the yaml file in directory</span>
+<span class="sd">        Stream topics up to a given stream time, dump oldest messages when limit is reached</span>
+<span class="sd">        Set up service to bag n seconds of data default to all of available data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">successful_subscription_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># successful subscriptions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iteration_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># number of iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logwarn</span><span class="p">(</span><span class="s2">&quot;No topics selected to subscribe to. Closing.&quot;</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">signal_shutdown</span><span class="p">(</span><span class="s2">&quot;No topics to subscribe to&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_dicts</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span> <span class="o">=</span> <span class="n">SimpleActionServer</span><span class="p">(</span>
+            <span class="n">OnlineBagger</span><span class="o">.</span><span class="n">BAG_TOPIC</span><span class="p">,</span>
+            <span class="n">BagOnlineAction</span><span class="p">,</span>
+            <span class="n">execute_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">start_bagging</span><span class="p">,</span>
+            <span class="n">auto_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_loop</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining Failed Topics: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_subscriber_list</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<div class="viewcode-block" id="OnlineBagger.get_subscriber_list"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_subscriber_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_subscriber_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get string of all topics, if their subscribe status matches the input (True / False)</span>
+<span class="sd">        Outputs each topics: time_buffer(float in seconds), subscribe_statue(bool), topic(string)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            status (bool): The subscription status used to search for topics with a matching</span>
+<span class="sd">                subscription status.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string: The list of topics that match the desired subscribe status. Each</span>
+<span class="sd">                line in the list contains the buffer time (in seconds) of the topic, the subscrition</span>
+<span class="sd">                status of the topic, and the topic name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sub_list</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">status</span><span class="p">:</span>
+                <span class="n">sub_list</span> <span class="o">=</span> <span class="n">sub_list</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span><span class="si">:</span><span class="s2">13</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">sub_list</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_params"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve parameters from param server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~bag_package_path&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># Handle bag directory for MIL bag script</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;BAG_DIR&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BAG_DIR&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~stream_time&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># seconds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resubscribe_period</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span>
+            <span class="s2">&quot;~resubscribe_period&quot;</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+        <span class="p">)</span>  <span class="c1"># seconds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dated_folder</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~dated_folder&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># bool</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">topics_param</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;~topics&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="p">[])</span>
+
+        <span class="c1"># Add topics from rosparam to subscribe list</span>
+        <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">topics_param</span><span class="p">:</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">topic</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">add_unique_topic</span><span class="p">(</span><span class="n">topic</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Adds a topic to the subscriber list if the topic is not already in the</span>
+<span class="sd">            list.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                topic (str): The name of the topic to add to the subscriber list.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">topic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_time</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">add_env_var</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Adds topic(s) to the subscriber list.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                var (str): The topic(s) to add to the subscriber list.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+                <span class="n">add_unique_topic</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
+
+        <span class="c1"># Add topics from MIL bag script environment variables</span>
+        <span class="k">if</span> <span class="s2">&quot;BAG_ALWAYS&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">add_env_var</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BAG_ALWAYS&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;bag_&quot;</span><span class="p">:</span>
+                <span class="n">add_env_var</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Default stream_time: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stream_time</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bag Directory: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.make_dicts"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.make_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">make_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make dictionary with sliceable dequeues() that will be filled with messages and time stamps.</span>
+
+<span class="sd">        Subscriber list contains all of the topics, their stream time and their subscription status:</span>
+<span class="sd">        A True status for a given topic corresponds to a successful subscription</span>
+<span class="sd">        A False status indicates a failed subscription.</span>
+
+<span class="sd">        Stream time for an individual topic is specified in seconds.</span>
+
+<span class="sd">        For Example:</span>
+<span class="sd">        self.subscriber_list[0:1] = [[&#39;/odom&#39;, 300 ,False], [&#39;/absodom&#39;, 300, True]]</span>
+
+<span class="sd">        Indicates that &#39;/odom&#39; has not been subscribed to, but &#39;/absodom&#39; has been subscribed to</span>
+
+<span class="sd">        self.topic_messages is a dictionary of dequeues containing a list of tuples.</span>
+<span class="sd">        Dictionary Keys contain topic names</span>
+<span class="sd">        Each value for each topic contains a deque</span>
+<span class="sd">        Each deque contains a list of tuples</span>
+<span class="sd">        Each tuple contains a message and its associated time stamp</span>
+
+<span class="sd">        For example:</span>
+<span class="sd">        &#39;/odom&#39; is  a potential topic name</span>
+<span class="sd">        self.topic_message[&#39;/odom&#39;]  is a deque</span>
+<span class="sd">        self.topic_message[&#39;/odom&#39;][0]  is the oldest message available in the deque</span>
+<span class="sd">        and its time stamp if available. It is a tuple with each element: (time_stamp, msg)</span>
+<span class="sd">        self.topic_message[&#39;/odom&#39;][0][0] is the time stamp for the oldest message</span>
+<span class="sd">        self.topic_message[&#39;/odom&#39;][0][1] is the message associated with the oldest topic</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">class</span> <span class="nc">SliceableDeque</span><span class="p">(</span><span class="n">deque</span><span class="p">):</span>
+            <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
+                        <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">step</span><span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="n">deque</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span> <span class="o">=</span> <span class="n">SliceableDeque</span><span class="p">(</span><span class="n">deque</span><span class="p">())</span>
+
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial subscriber_list: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_subscriber_list</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.subscribe_loop"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.subscribe_loop">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Continue to subscribe until at least one topic is successful,</span>
+<span class="sd">        then break out of loop and be called in the callback function to prevent the function</span>
+<span class="sd">        from locking up.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resubscriber</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># if self.successful_subscription_count == 0 and not</span>
+        <span class="c1"># rospy.is_shutdown():</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">successful_subscription_count</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subscribe</span><span class="p">()</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span><span class="s2">&quot;still subscribing!&quot;</span><span class="p">)</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span>
+            <span class="s2">&quot;Subscribed to </span><span class="si">{}</span><span class="s2"> of </span><span class="si">{}</span><span class="s2"> topics, will try again every </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">successful_subscription_count</span><span class="p">,</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resubscribe_period</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resubscriber</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resubscribe_period</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subscribe</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.subscribe"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.subscribe">[docs]</a>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">rospy</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">TimerEvent</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subscribe to the topics defined in the yaml configuration file</span>
+
+<span class="sd">        Function checks subscription status True/False of each topic</span>
+<span class="sd">        if True: topic has already been successfully subscribed to</span>
+<span class="sd">        if False: topic still needs to be subscribed to and</span>
+<span class="sd">        subscriber will be run.</span>
+
+<span class="sd">        Each element in self.subscriber list is a list [topic, Bool]</span>
+<span class="sd">        where the Bool tells the current status of the subscriber (success/failure).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">successful_subscription_count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">))</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resubscriber</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resubscriber</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;All topics subscribed too! Shutting down resubscriber&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">topic</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">subscribed</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">subscribed</span><span class="p">:</span>
+                <span class="n">msg_class</span> <span class="o">=</span> <span class="n">rostopic</span><span class="o">.</span><span class="n">get_topic_class</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">msg_class</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">successful_subscription_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span>
+                        <span class="n">topic</span><span class="p">,</span>
+                        <span class="n">msg_class</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="k">lambda</span> <span class="n">msg</span><span class="p">,</span> <span class="n">_topic</span><span class="o">=</span><span class="n">topic</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bagger_callback</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">_topic</span><span class="p">),</span>
+                    <span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_topic_duration"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_topic_duration">[docs]</a>    <span class="k">def</span> <span class="nf">get_topic_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current time duration of topic</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topic (str): The topic for which the duration will be calculated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Duration: The time duration of the topic.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_header_time"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_header_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_header_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve header time if available</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (genpy.Message): The ROS message from which to extract the time.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            rospy.Time: The timestamp of the topic&#39;s header if the topic</span>
+<span class="sd">                has a header. Otherwise, the current time is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">msg</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_rostime</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_time_index"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_time_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_time_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">,</span> <span class="n">requested_seconds</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the index for the time index for a topic at &#39;n&#39; seconds from the end of the dequeue.</span>
+
+<span class="sd">        For example, to bag the last 10 seconds of data, the index for 10 seconds back from the most</span>
+<span class="sd">        recent message can be obtained with this function.</span>
+<span class="sd">        The number of requested seconds should be the number of seoncds desired from</span>
+<span class="sd">        the end of deque. (ie. requested_seconds = 10 )</span>
+<span class="sd">        If the desired time length of the bag is greater than the available messages it will output a</span>
+<span class="sd">        message and return how ever many seconds of data are available at the moment.</span>
+<span class="sd">        Seconds is of a number type (not a rospy.Time type) (ie. int, float)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topic (str): The name of the topic for which to get the time index.</span>
+<span class="sd">            requested_seconds (int/float): The number of seconds from the end of the dequeue to search</span>
+<span class="sd">                for the topic.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The index for the time index of the topic at requested_seconds seconds from the</span>
+<span class="sd">            end of the dequeue.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">topic_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_topic_duration</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">topic_duration</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">requested_seconds</span> <span class="o">/</span> <span class="n">topic_duration</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_topic_message_count</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.bagger_callback"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.bagger_callback">[docs]</a>    <span class="k">def</span> <span class="nf">bagger_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">genpy</span><span class="o">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds incoming messages to the appropriate topic and removes older messages if necessary.</span>
+
+<span class="sd">        Streaming callback function, stops streaming during bagging process and pops off msgs</span>
+<span class="sd">        from dequeue if stream size is greater than specified stream_time. Stream, callback</span>
+<span class="sd">        function does nothing if streaming is not active.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg (genpy.Message): The incoming message.</span>
+<span class="sd">            topic (str): The topic to which the incoming message will be added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">iteration_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteration_count</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_header_time</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">time</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+        <span class="n">time_diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_topic_duration</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
+
+        <span class="c1"># verify streaming is popping off and recording topics</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iteration_count</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">logdebug</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> has </span><span class="si">{}</span><span class="s2"> messages spanning </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">topic</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_topic_message_count</span><span class="p">(</span><span class="n">topic</span><span class="p">),</span>
+                    <span class="nb">round</span><span class="p">(</span><span class="n">time_diff</span><span class="o">.</span><span class="n">to_sec</span><span class="p">(),</span> <span class="mi">2</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">while</span> <span class="p">(</span>
+            <span class="n">time_diff</span> <span class="o">&gt;</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">()</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="n">time_diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_topic_duration</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_topic_message_count"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_topic_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_topic_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return number of messages available in a topic</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topic (str): The name of the topic for which to calculate the number</span>
+<span class="sd">                of messages.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of messages available in the specified topic.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.get_total_message_count"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_total_message_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_total_message_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns total number of messages across all topics</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The total number of messages available in all topics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_message_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">:</span>
+            <span class="n">total_message_count</span> <span class="o">=</span> <span class="n">total_message_count</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_topic_message_count</span><span class="p">(</span>
+                <span class="n">topic</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">total_message_count</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_default_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Uses the current date and time to create a default bag name.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The default bag name constructed using format date-time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">())[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="OnlineBagger.get_bag_name"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.get_bag_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_bag_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create ros bag save directory</span>
+<span class="sd">        If no bag name is provided, the current date/time is used as default.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The save directory for the ros bag. The default value</span>
+<span class="sd">                is an empty string, which will result in the default filename being</span>
+<span class="sd">                used.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string representing the path of the ros bag file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If directory param is not set, default to $HOME/bags/&lt;date&gt;</span>
+        <span class="n">default_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span>
+        <span class="k">if</span> <span class="n">default_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">default_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;HOME&quot;</span><span class="p">],</span> <span class="s2">&quot;bags&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if dated folder param is set to True, append current date to</span>
+        <span class="c1"># directory</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dated_folder</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">default_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">default_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()))</span>
+        <span class="c1"># Split filename from directory</span>
+        <span class="n">bag_dir</span><span class="p">,</span> <span class="n">bag_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">bag_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">default_dir</span><span class="p">,</span> <span class="n">bag_dir</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">bag_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">bag_dir</span><span class="p">)</span>
+
+        <span class="c1"># Create default filename if only directory specified</span>
+        <span class="k">if</span> <span class="n">bag_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">bag_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_filename</span><span class="p">()</span>
+        <span class="c1"># Make sure filename ends in .bag, add otherwise</span>
+        <span class="k">if</span> <span class="n">bag_name</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s2">&quot;.bag&quot;</span><span class="p">:</span>
+            <span class="n">bag_name</span> <span class="o">=</span> <span class="n">bag_name</span> <span class="o">+</span> <span class="s2">&quot;.bag&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bag_dir</span><span class="p">,</span> <span class="n">bag_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OnlineBagger.start_bagging"><a class="viewcode-back" href="../../reference/bagging.html#nodes.online_bagger.OnlineBagger.start_bagging">[docs]</a>    <span class="k">def</span> <span class="nf">start_bagging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">BagOnlineGoal</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes collected data to a bag file.</span>
+
+<span class="sd">        Dump all data in dictionary to bags, temporarily stops streaming</span>
+<span class="sd">        during the bagging process, resumes streaming when over.</span>
+<span class="sd">        If bagging is already false because of an active call to this service.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            req (BagOnlineGoal): The bagging request information.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            IOError: A problem occurs when opening or closing the bag file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">BagOnlineResult</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Bag Request came in while bagging, priority given to prior request&quot;</span>
+            <span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">bag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bag_name</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">bag_name</span><span class="p">)</span>
+            <span class="n">bag</span> <span class="o">=</span> <span class="n">rosbag</span><span class="o">.</span><span class="n">Bag</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+            <span class="n">requested_seconds</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">bag_time</span>
+
+            <span class="n">selected_topics</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">topics</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+            <span class="n">feedback</span> <span class="o">=</span> <span class="n">BagOnlineFeedback</span><span class="p">()</span>
+            <span class="n">total_messages</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">bag_topics</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">topic</span><span class="p">,</span> <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">subscribed</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subscriber_list</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">subscribed</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="c1"># Exclude topics that aren&#39;t in topics service argument</span>
+                <span class="c1"># If topics argument is empty string, include all topics</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected_topics</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">topic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">selected_topics</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">bag_time</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_index</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">requested_seconds</span><span class="p">)</span>
+                <span class="n">total_messages</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="n">index</span><span class="p">:])</span>
+                <span class="n">bag_topics</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="k">if</span> <span class="n">total_messages</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;no messages&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">bag</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+            <span class="n">msg_inc</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">topic</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">bag_topics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">msgs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">][</span><span class="n">index</span><span class="p">:]:</span>
+                    <span class="n">bag</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">msgs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="o">=</span><span class="n">msgs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">msg_inc</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># send feedback every 50 messages</span>
+                        <span class="n">feedback</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">msg_inc</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_messages</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+                    <span class="n">msg_inc</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="c1"># empty deque when done writing to bag</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">topic_messages</span><span class="p">[</span><span class="n">topic</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">feedback</span><span class="o">.</span><span class="n">progress</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">publish_feedback</span><span class="p">(</span><span class="n">feedback</span><span class="p">)</span>
+            <span class="n">bag</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Exception while writing bag: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">set_aborted</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">bag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">bag</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bag written to </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action_server</span><span class="o">.</span><span class="n">set_succeeded</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streaming</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">OnlineBaggerClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper to run an action client connecting to online bagger</span>
+<span class="sd">    and triggering a write with the specified topics, time, and</span>
+<span class="sd">    filename. Uses tqdm to display a progress bar as the write</span>
+<span class="sd">    occurs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">topics</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">SimpleActionClient</span><span class="p">(</span><span class="n">OnlineBagger</span><span class="o">.</span><span class="n">BAG_TOPIC</span><span class="p">,</span> <span class="n">BagOnlineAction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="n">BagOnlineGoal</span><span class="p">(</span><span class="n">bag_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">topics</span><span class="o">=</span><span class="n">topics</span><span class="p">,</span> <span class="n">bag_time</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_it</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">_done_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_feedback_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feedback</span><span class="p">):</span>
+        <span class="n">percentage</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">*</span> <span class="n">feedback</span><span class="o">.</span><span class="n">progress</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">percentage</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_it</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">percentage</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_it</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_it</span> <span class="o">=</span> <span class="n">percentage</span>
+
+    <span class="k">def</span> <span class="nf">bag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_it</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Writing bag&quot;</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot; percent&quot;</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">bar_format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{desc}</span><span class="s2"> </span><span class="si">{bar}</span><span class="s2"> </span><span class="si">{percentage:3.0f}</span><span class="s2">%&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goal</span><span class="p">,</span>
+            <span class="n">done_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_done_cb</span><span class="p">,</span>
+            <span class="n">feedback_cb</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_feedback_cb</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bag successful&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bag </span><span class="si">{</span><span class="n">TerminalState</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">argv</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">myargv</span><span class="p">()</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;ROS node to maintain buffers to create bags of the past</span><span class="se">\</span>
+<span class="s2">                                                  and client to call this node.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--client&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;client&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run as an online bagger client instead of server&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--duration&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Time in seconds to bag when running as client&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-t&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--topics&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;topics&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;List of topics to include in bag when running in client, bag all topics if not set&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-n&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--name&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;name of bag to create when running as client&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>  <span class="c1"># Run as actionclient</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;online_bagger_client&quot;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">topics</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">topics</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">topics</span><span class="p">)</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">OnlineBaggerClient</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">topics</span><span class="o">=</span><span class="n">topics</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">bag</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Run as OnlineBagger server</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;online_bagger&quot;</span><span class="p">)</span>
+        <span class="n">bagger</span> <span class="o">=</span> <span class="n">OnlineBagger</span><span class="p">()</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
