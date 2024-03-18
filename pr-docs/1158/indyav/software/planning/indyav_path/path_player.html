@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Path Player</title>
+        <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../searchindex.js" defer></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/clipboard.min.js"></script>
+        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/custom.js"></script>
+        <script src="../../../../_static/sidebar.js"></script>
+        <script src="../../../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../../../genindex.html" />
+        <link rel="search" title="Search" href="../../../../search.html" />
+        <link rel="next" title="Simulation" href="../../simulation/simulation.html" />
+        <link rel="prev" title="Path Recorder" href="path_recorder.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../branding.html">Branding</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="path-player">
+<h1>Path Player<a class="headerlink" href="#path-player" title="Permalink to this heading">¶</a></h1>
+<p>This is a utility that we use to play back a path that we recorded from earlier, so that we can test systems not related to path planning.</p>
+<p>Path Player is just an instance of <code class="docutils literal notranslate"><span class="pre">mil_tools</span> <span class="pre">TopicRecorder</span></code>. Its current behavior is that it will publish all messages in a bag file(our recorded path) in sequential order with correct timing between them. This utility is designed to be inherited from and the <code class="docutils literal notranslate"><span class="pre">Play</span></code> function overridden.</p>
+<section id="basic-usage-example">
+<h2>Basic Usage Example<a class="headerlink" href="#basic-usage-example" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Complete the <a class="reference external" href="path_recorder.html">Path Recorder Basic Usage Example First</a>.</p></li>
+<li><p>Launch <a class="reference external" href="../../../../subjugator/index.html">SubjuGator</a> in gazebo and clear the kill.</p></li>
+<li><p>In a new panel, play the previously recorded bag file.
+<code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">indyav_launch</span> <span class="pre">path_player.launch</span></code></p></li>
+<li><p>Visualize in Rviz by adding <code class="docutils literal notranslate"><span class="pre">/path</span></code>.</p></li>
+<li><p>Witness the new red arrow trace the path of SubjuGator from earlier.</p></li>
+</ul>
+</section>
+<section id="source-files">
+<h2>Source Files<a class="headerlink" href="#source-files" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt>indyav_path PathPlayer:</dt><dd><dl class="simple">
+<dt>source:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">indyav_path</span> <span class="pre">path_player.cpp</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt>mil_tools TopicPlayer:</dt><dd><dl class="simple">
+<dt>header:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">mil_tools</span> <span class="pre">topic_player.hpp</span></code></p>
+</dd>
+<dt>source:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">mil_tools</span> <span class="pre">topic_player.cpp</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt>launch file:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">rosed</span> <span class="pre">indyav_launch</span> <span class="pre">path_player.launch</span></code></p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>
