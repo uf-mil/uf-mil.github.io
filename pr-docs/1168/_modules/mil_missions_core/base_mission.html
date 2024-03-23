@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_missions_core.base_mission</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_missions_core.base_mission</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<div class="viewcode-block" id="BaseMission"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission">[docs]</a><span class="k">class</span> <span class="nc">BaseMission</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base for all missions used in mil_missions. Lots of this class</span>
+<span class="sd">    is just documentation for the various functions that real missions</span>
+<span class="sd">    can overload. Individual ROS robotics platforms should extend this</span>
+<span class="sd">    base class to provide interfaces to the particular systems on the robot.</span>
+
+<span class="sd">    .. container:: operations</span>
+
+<span class="sd">        .. describe:: str(x)</span>
+
+<span class="sd">            Prints the name of the mission.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">nh</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">mission_runner</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+
+<div class="viewcode-block" id="BaseMission.name"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.name">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override for real missions to return a string for how the mission</span>
+<span class="sd">        with be referenced in the GUI/CLI. For example, a mission implemented</span>
+<span class="sd">        in class ``MyCoolMission`` might implement.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            class MyCoolMission:</span>
+<span class="sd">                @classmethod</span>
+<span class="sd">                def name(cls):</span>
+<span class="sd">                    return &#39;My cool mission&#39;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the mission. By default, simply returns the class&#39;</span>
+<span class="sd">            ``__name__`` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span></div>
+
+<div class="viewcode-block" id="BaseMission.setup"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.setup">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to setup individual child missions. This is called after the base</span>
+<span class="sd">        mission is setup using :meth:`~.setup_base`.</span>
+
+<span class="sd">        This method should be overridden for all child missions who wish to have a</span>
+<span class="sd">        resource ready for when the mission begins.</span>
+
+<span class="sd">        Any resource setup in this method should be shutdown using the :meth:`~.shutdown`</span>
+<span class="sd">        method.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            class MovementMission(MyFancyRobotMission):</span>
+<span class="sd">                @classmethod</span>
+<span class="sd">                async def setup(cls):</span>
+<span class="sd">                    self.my_sub = await self.nh.subscribe(&quot;/my_topic&quot;, MyMessage)</span>
+
+<span class="sd">                @classmethod</span>
+<span class="sd">                async def shutdown(cls):</span>
+<span class="sd">                    await self.my_sub.shutdown()</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="BaseMission.setup_base"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.setup_base">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">setup_base</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mission_runner</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up a base mission, used to generate individual child missions that perform</span>
+<span class="sd">        individual actions. This method should set up resources needed by all child</span>
+<span class="sd">        missions, so that they will be available when the child mission begins.</span>
+
+<span class="sd">        This method should only be used for base missions, and there should be just</span>
+<span class="sd">        one base mission per individual robotic system.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            class MyFancyRobotMission:</span>
+<span class="sd">                @classmethod</span>
+<span class="sd">                async def setup_base(cls, mission_runner):</span>
+<span class="sd">                    await super(cls).setup_base(mission_runner)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mission_runner (:class:`MissionRunner`): The mission runner that will</span>
+<span class="sd">                run the missions. Used to allow the individual missions to send</span>
+<span class="sd">                feedback to the mission runner.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">mission_runner</span> <span class="o">=</span> <span class="n">mission_runner</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">nh</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">mission_runner</span><span class="o">.</span><span class="n">nh</span></div>
+
+<div class="viewcode-block" id="BaseMission.shutdown"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.shutdown">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shuts down a child mission. This is called when the mission server is shutting</span>
+<span class="sd">        down all individual child missions.</span>
+
+<span class="sd">        Any resources that were setup using :meth:`~.setup` should be considered for</span>
+<span class="sd">        shutdown using this method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseMission.shutdown_base"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.shutdown_base">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">shutdown_base</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shuts down a base mission. This is called when the mission server is shutting</span>
+<span class="sd">        down, and can be used to ensure that resources are properly closed. This</span>
+<span class="sd">        is called before each individual child mission is shutdown using :meth:`~.shutdown`.</span>
+
+<span class="sd">        Any resources that were setup using :meth:`~.setup_base` should be considered for</span>
+<span class="sd">        shutdown using this method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="BaseMission.send_feedback"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.send_feedback">[docs]</a>    <span class="k">def</span> <span class="nf">send_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send a string as feedback to any clients monitoring this mission. If the</span>
+<span class="sd">        mission is a child mission, it will call the send_feedback_child of its</span>
+<span class="sd">        parent, allowing missions to choose how to use the feedback from its children.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">send_feedback_child</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mission_runner</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseMission.send_feedback_child"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.send_feedback_child">[docs]</a>    <span class="k">def</span> <span class="nf">send_feedback_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">BaseMission</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by child missions when sending feedback. By default sends this feedback prefixed</span>
+<span class="sd">        with the name of the child mission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send_feedback</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">child</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseMission.has_mission"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.has_mission">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">has_mission</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if the mission runner has a mission with specified name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">mission_runner</span><span class="o">.</span><span class="n">has_mission</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseMission.get_mission"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.get_mission">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_mission</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the mission with the specified name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">mission_runner</span><span class="o">.</span><span class="n">get_mission</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseMission.run_submission"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.run_submission">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">run_submission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs another mission available to the mission server, returning the string</span>
+<span class="sd">        result of the missions execution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the submission to spawn as a string. If this</span>
+<span class="sd">                mission is unknown, raise an exception.</span>
+<span class="sd">            parameters (str): Parameters to pass to the run function of the submission. Note,</span>
+<span class="sd">                this function does not call decode_parameters, so parent</span>
+<span class="sd">                missions need to do this or otherwise ensure the parameters are in</span>
+<span class="sd">                the format expected by the child. Defaults to an empty string.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: The submission name is unrecognized - therefore, no submission</span>
+<span class="sd">                can be run.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Optional[str]: The result of the mission with the given name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_mission</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot run_submission, &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; unrecognized&quot;</span><span class="p">)</span>
+        <span class="n">mission</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mission_runner</span><span class="o">.</span><span class="n">missions</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">mission</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseMission.decode_parameters"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.decode_parameters">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">decode_parameters</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process parameters string from new mission goal or submission. Should return the</span>
+<span class="sd">        processes parameters which will be passed to the run function. By default</span>
+<span class="sd">        returns the json decoded object in the string or, if this fails, just</span>
+<span class="sd">        the original string.</span>
+
+<span class="sd">        If this function throws an exception (such as a ParametersException), the</span>
+<span class="sd">        mission will be aborted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parameters</span></div>
+
+<div class="viewcode-block" id="BaseMission.run"><a class="viewcode-back" href="../../reference/mission/core.html#mil_missions_core.BaseMission.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The actual body of the mission. Should attempt to execute whatever is expected</span>
+<span class="sd">        of the mission, using the interfaces set up in :meth:`~.setup` or :meth:`~.setup_base` to</span>
+<span class="sd">        command actuator movements, read perception output, etc. Should use :meth:`~.send_feedback`</span>
+<span class="sd">        to update clients about what the mission is doing at the moment.</span>
+
+<span class="sd">        If something goes wrong, raise an exception describing what went wrong</span>
+<span class="sd">        and the mission will be aborted.</span>
+
+<span class="sd">        If it executes successfully, return with a string to send a final result</span>
+<span class="sd">        to the connected clients. Missions can also spawn other missions in the</span>
+<span class="sd">        run function using :meth:`.run_submission`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters: Arguments to modify the behavior of the mission. By default</span>
+<span class="sd">                will be a json decoded object from the string passed in the goal,</span>
+<span class="sd">                but can be changed by overriding decode_parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__qualname__</span></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>

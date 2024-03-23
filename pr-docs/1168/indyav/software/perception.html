@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>Perception</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+        <link rel="next" title="Planning" href="planning/planning.html" />
+        <link rel="prev" title="Localization" href="localization.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <section id="perception">
+<h1>Perception<a class="headerlink" href="#perception" title="Permalink to this heading">¶</a></h1>
+<section id="perception-packages">
+<h2>Perception Packages<a class="headerlink" href="#perception-packages" title="Permalink to this heading">¶</a></h2>
+<p>No software developed yet.</p>
+</section>
+<section id="discussion">
+<h2>Discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">¶</a></h2>
+<p>If the assumption is that the vehicle will be able to localize relative to a preconstructed map, then what is left to perceive is only other racers on the track.</p>
+<p>Potential sensors</p>
+<section id="lidar">
+<h3>LIDAR<a class="headerlink" href="#lidar" title="Permalink to this heading">¶</a></h3>
+<section id="pros">
+<h4>Pros<a class="headerlink" href="#pros" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Provides accurate geometric data.</p></li>
+</ul>
+</section>
+<section id="cons">
+<h4>Cons<a class="headerlink" href="#cons" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Not as feature rich as images</p></li>
+<li><p>Max data rate of ~20Hz</p></li>
+</ul>
+</section>
+</section>
+<section id="camera">
+<h3>Camera<a class="headerlink" href="#camera" title="Permalink to this heading">¶</a></h3>
+<section id="id1">
+<h4>Pros<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Feature rich data</p></li>
+<li><p>A lot of research and development for this sensor</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>Cons<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
+</section>
+</section>
+<section id="radar">
+<h3>Radar<a class="headerlink" href="#radar" title="Permalink to this heading">¶</a></h3>
+<p>No previous experience with this sensor</p>
+<section id="id3">
+<h4>Pros<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
+</section>
+<section id="id4">
+<h4>Cons<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+
+            </main>
+        </div>
+    </body>
+</html>

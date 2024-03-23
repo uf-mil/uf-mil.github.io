@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!-- Some pieces of this template were used from https://github.com/Rapptz/discord.py/blob/master/docs/_templates/layout.html -->
+<html>
+    <head>
+        <!-- HTML meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale: 1.0">
+        <title>mil_passive_sonar.streamed_bandpass</title>
+        <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/codeblocks.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
+        <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../searchindex.js" defer></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/clipboard.min.js"></script>
+        <script src="../../_static/copybutton.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/sidebar.js"></script>
+        <script src="../../_static/lightdarkmode.js"></script>
+        <link rel="shortcut icon" href="../../_static/mil_white.svg"/>
+        <link rel="index" title="Index" href="../../genindex.html" />
+        <link rel="search" title="Search" href="../../search.html" />
+    </head>
+    <body>
+        <div class="main-grid">
+            <header class="grid-item">
+                <nav>
+                    <a class="main-heading" href="../../index.html">Machine Intelligence Lab</a>
+                    <div id="mil-light-dark-icon" onClick="rotateLightDark();">
+                        <span class="material-icons" title=""></span>
+                    </div>
+                    <a href="https://github.com/uf-mil/mil" target="_blank"><img class="mil-svg" src="../../_static/github.svg" /></a>
+                    <a href="https://mil.ufl.edu" target="_blank"><img class="mil-svg" src="../../_static/mil.svg" /></a>
+                </nav>
+            </header>
+            <aside class="grid-item">
+                <span id="hamburger-toggle">
+                    <span class="material-icons">menu</span>
+                </span>
+                <div id="sidebar"><form id="search-form" role="search" class="search" action="../../search.html" method="get">
+    <div class="search-wrapper">
+        <input type="search" name="q" placeholder="Search documentation" />
+        <button type="submit" onmousedown="searchBarClick(event, document.getElementById('search-form'));">
+            <span class="material-icons">search</span>
+        </button>
+    </div>
+</form>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../welcome.html">Welcome to MIL!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mechanical/index.html">Mechanical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../electrical/index.html">Electrical</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../software/index.html">Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/index.html">SubjuGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/index.html">NaviGator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../subjugator/reference.html">Subjugator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../navigator/reference.html">Navigator Software Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../design/design.html">Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../infrastructure/index.html">Infrastructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../culture.html">Culture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../branding.html">Branding</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testingprocedures.html">SubjuGator Testing Procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../deprecated.html">Deprecated Projects</a></li>
+</ul>
+
+                </div>
+            </aside>
+            <main class="grid-item" role="main">
+                
+  <h1>Source code for mil_passive_sonar.streamed_bandpass</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">fftconvolve</span>
+
+
+<div class="viewcode-block" id="StreamedBandpass"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass">[docs]</a><span class="k">class</span> <span class="nc">StreamedBandpass</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for bandpass filtering sequential batches of data. Takes care of the</span>
+<span class="sd">        overlap-adding that needs to be done when filtering sequential batches</span>
+<span class="sd">        of data individually.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        lower (float): The lower bound of the desired frequency.</span>
+<span class="sd">        upper (float): The upper bound of the desired frequency.</span>
+<span class="sd">        trans_width (float): A magical special filter property!</span>
+<span class="sd">        order (float): Filter order for the bandpass filter. Higher is better, but</span>
+<span class="sd">            slower to compute.</span>
+<span class="sd">        rate (Optional[float]): The rate at which data is sent.</span>
+<span class="sd">        h (Optional[np.ndarray]): The Remez exchange algorithm, if defined. Constructed</span>
+<span class="sd">            when the filter is made.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">lower</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">upper</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">trans_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">order</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the class using the variables provided. Checks if the class is</span>
+<span class="sd">        ready to make a filter, and if so, the filter is constructed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lower (float): The lower bound of the desired frequency.</span>
+<span class="sd">            upper (float): The upper bound of the desired frequency.</span>
+<span class="sd">            trans_width (float): A magical special filter property!</span>
+<span class="sd">            order (float): Filter order for the bandpass filter. Higher is better, but</span>
+<span class="sd">                slower to compute.</span>
+<span class="sd">            rate (Optional[float]): The rate at which data is sent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_prev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">order</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">=</span> <span class="n">lower</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper</span> <span class="o">=</span> <span class="n">upper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trans_width</span> <span class="o">=</span> <span class="n">trans_width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ready_to_make_filter</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_filter</span><span class="p">()</span>
+
+<div class="viewcode-block" id="StreamedBandpass.is_ready_to_make_filter"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.is_ready_to_make_filter">[docs]</a>    <span class="k">def</span> <span class="nf">is_ready_to_make_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks whether the filter is ready to be made. Checks that the :attr:`.lower`</span>
+<span class="sd">        variable is not ``None``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether or not the filter can be made.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_width</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamedBandpass.make_filter"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.make_filter">[docs]</a>    <span class="k">def</span> <span class="nf">make_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes the data filter.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            Exception: Some necessary parameters of the class are ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_ready_to_make_filter</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Some parameters have not been filled in yet: &quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">remez</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_width</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">upper</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_width</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rate</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">Hz</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamedBandpass.convolve"><a class="viewcode-back" href="../../reference/passivesonar.html#mil_passive_sonar.streamed_bandpass.StreamedBandpass.convolve">[docs]</a>    <span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the filtering.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (np.ndarray): Numpy array of shape ``(samples, channels)``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: The resulting filtered data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">fftconvolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">),</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_data</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_prev</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_prev</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:]</span>
+
+        <span class="k">return</span> <span class="n">filtered_data</span><span class="p">[:</span> <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span></div></div>
+</pre></div>
+
+            </main>
+        </div>
+    </body>
+</html>
