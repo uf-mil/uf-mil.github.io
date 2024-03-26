@@ -86,8 +86,8 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">get_type_hints</span>
 
-<span class="n">SYNC_CHAR_1</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">)</span>
-<span class="n">SYNC_CHAR_2</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">)</span>
+<span class="n">SYNC_CHAR_1</span> <span class="o">=</span> <span class="mh">0x37</span>
+<span class="n">SYNC_CHAR_2</span> <span class="o">=</span> <span class="mh">0x01</span>
 
 <span class="n">_packet_registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">Packet</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -197,7 +197,7 @@
     <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload_format</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;=BBBBH</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;&lt;BBBBH</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span>
             <span class="n">SYNC_CHAR_1</span><span class="p">,</span>
             <span class="n">SYNC_CHAR_2</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">msg_id</span><span class="p">,</span>
@@ -206,7 +206,7 @@
             <span class="n">payload</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">checksum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_checksum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
-        <span class="k">return</span> <span class="n">data</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=BB&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">checksum</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span> <span class="o">+</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&lt;BB&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">checksum</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Packet.from_bytes"><a class="viewcode-back" href="../../../reference/can.html#mil_usb_to_can.sub9.Packet.from_bytes">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">packed</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Packet</span><span class="p">:</span>
@@ -221,12 +221,12 @@
         <span class="k">if</span> <span class="n">msg_id</span> <span class="ow">in</span> <span class="n">_packet_registry</span> <span class="ow">and</span> <span class="n">subclass_id</span> <span class="ow">in</span> <span class="n">_packet_registry</span><span class="p">[</span><span class="n">msg_id</span><span class="p">]:</span>
             <span class="n">subclass</span> <span class="o">=</span> <span class="n">_packet_registry</span><span class="p">[</span><span class="n">msg_id</span><span class="p">][</span><span class="n">subclass_id</span><span class="p">]</span>
             <span class="n">payload</span> <span class="o">=</span> <span class="n">packed</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=BB&quot;</span><span class="p">,</span> <span class="n">packed</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="o">!=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_calculate_checksum</span><span class="p">(</span>
+            <span class="k">if</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;BB&quot;</span><span class="p">,</span> <span class="n">packed</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span> <span class="o">!=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_calculate_checksum</span><span class="p">(</span>
                 <span class="n">packed</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span>
             <span class="p">):</span>
                 <span class="k">raise</span> <span class="n">ChecksumException</span><span class="p">(</span>
                     <span class="n">subclass</span><span class="p">,</span>
-                    <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;=BB&quot;</span><span class="p">,</span> <span class="n">packed</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
+                    <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;BB&quot;</span><span class="p">,</span> <span class="n">packed</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]),</span>
                     <span class="bp">cls</span><span class="o">.</span><span class="n">_calculate_checksum</span><span class="p">(</span><span class="n">packed</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span>
                 <span class="p">)</span>
             <span class="n">unpacked</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">subclass</span><span class="o">.</span><span class="n">payload_format</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>

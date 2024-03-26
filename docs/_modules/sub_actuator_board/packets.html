@@ -89,8 +89,8 @@
 <span class="sd">    Enumerator representing each controllable actuator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: The dropper actuator.</span>
-    <span class="n">DROPPER</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1">#: The gripper actuator.</span>
+    <span class="n">GRIPPER</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="c1">#: The torpedo launcher actuator.</span>
     <span class="n">TORPEDO_LAUNCHER</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="c1">#: The ball drop actuator. Only one actuator is used for both balls.</span>
@@ -98,7 +98,7 @@
 
 
 <div class="viewcode-block" id="ActuatorSetPacket"><a class="viewcode-back" href="../../subjugator/reference.html#sub_actuator_board.ActuatorSetPacket">[docs]</a><span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">ActuatorSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x03</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x00</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;BB&quot;</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ActuatorSetPacket</span><span class="p">(</span><span class="n">Packet</span><span class="p">,</span> <span class="n">msg_id</span><span class="o">=</span><span class="mh">0x03</span><span class="p">,</span> <span class="n">subclass_id</span><span class="o">=</span><span class="mh">0x00</span><span class="p">,</span> <span class="n">payload_format</span><span class="o">=</span><span class="s2">&quot;&lt;BB&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Packet used by the actuator board to set a specific valve.</span>
 
@@ -139,7 +139,28 @@
 <span class="sd">            status of actuators 0-3.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">values</span><span class="p">:</span> <span class="nb">int</span></div>
+    <span class="n">values</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">gripper_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the gripper is opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mb">0b0001</span> <span class="o">&lt;&lt;</span> <span class="n">ActuatorPacketId</span><span class="o">.</span><span class="n">GRIPPER</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">torpedo_launcher_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the torpedo launcher is opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mb">0b0001</span> <span class="o">&lt;&lt;</span> <span class="n">ActuatorPacketId</span><span class="o">.</span><span class="n">TORPEDO_LAUNCHER</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ball_drop_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whether the ball drop is opened.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mb">0b0001</span> <span class="o">&lt;&lt;</span> <span class="n">ActuatorPacketId</span><span class="o">.</span><span class="n">BALL_DROP</span><span class="p">))</span></div>
 </pre></div>
 
             </main>
