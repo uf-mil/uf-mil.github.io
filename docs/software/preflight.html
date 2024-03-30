@@ -5,7 +5,7 @@
         <!-- HTML meta -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale: 1.0">
-        <title>Installing Drivers for RTX 2080</title>
+        <title>Preflight- Autonomous Robot Verification</title>
         <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
         <link rel="stylesheet" href="../_static/codeblocks.css" type="text/css" />
         <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
@@ -26,8 +26,8 @@
         <link rel="shortcut icon" href="../_static/mil_white.svg"/>
         <link rel="index" title="Index" href="../genindex.html" />
         <link rel="search" title="Search" href="../search.html" />
-        <link rel="next" title="Installing Ubuntu 18.04 on a Mac with an M-series processor (M1)" href="apple_mseries_ubuntu_setup.html" />
-        <link rel="prev" title="Noetic Migration" href="noetic_migration.html" />
+        <link rel="next" title="Bash Style Guide (In Progress)" href="bash_style.html" />
+        <link rel="prev" title="Alarms in ROS" href="alarms.html" />
     </head>
     <body>
         <div class="main-grid">
@@ -70,18 +70,26 @@
 <li class="toctree-l2"><a class="reference internal" href="rqt.html">Implementing GUI Based Tools Using <code class="docutils literal notranslate"><span class="pre">rqt</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="rostest.html">Writing Unit Tests with <code class="docutils literal notranslate"><span class="pre">rostest</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="alarms.html">Alarms in ROS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preflight.html">Preflight- Autonomous Robot Verification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Preflight- Autonomous Robot Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-use">How to Use</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#there-are-three-types-of-automated-software-tests">There are three types of automated software tests</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#actuators">Actuators</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#nodes">Nodes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#topics">Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-tests">Setup Tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="bash_style.html">Bash Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cpp_style.html">C++ Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python_style.html">Python Style Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gazebo_guide.html">Gazebo Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="noetic_migration.html">Migrating to ROS Noetic</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing NVIDIA Drivers for RTX 2080</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#installing-the-nvidia-driver">Installing the NVIDIA Driver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode">Verifying that the correct GPU is being used and is in Default Compute Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#references">References</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="rtx_2080_drivers.html">Installing NVIDIA Drivers for RTX 2080</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apple_mseries_ubuntu_setup.html">Installing Ubuntu 18.04 on an M-series Apple computer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resetubuntupass.html">Resetting Ubuntu Administrative Password</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../infrastructure/network.html">Network with Vehicles and Simulation Servers</a></li>
@@ -111,74 +119,38 @@
             </aside>
             <main class="grid-item" role="main">
                 
-  <section id="installing-drivers-for-rtx-2080">
-<h1>Installing Drivers for RTX 2080<a class="headerlink" href="#installing-drivers-for-rtx-2080" title="Permalink to this heading">¶</a></h1>
-<p>Here is a quick guide for how to install the latest NVIDIA GPUs for the shuttle computer (which uses the NVIDIA GEFORCE GTX 970).</p>
-<section id="installing-the-nvidia-driver">
-<h2>Installing the NVIDIA Driver<a class="headerlink" href="#installing-the-nvidia-driver" title="Permalink to this heading">¶</a></h2>
-<p>First of all, you want to add the <code class="docutils literal notranslate"><span class="pre">ppa:graphics-drivers/ppa</span></code> repository into your computer system.</p>
-<p>Run the commands:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-add-repository ppa:graphics-drivers/ppa
-$ sudo apt update
-</pre></div>
-</div>
-<p>Update the packages that you downloaded with:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update
-$ sudo apt-get upgrade
-</pre></div>
-</div>
-<p>Next, verify that your system recognizes the correct graphic card model and recommended driver by running the command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ubuntu-drivers devices
-</pre></div>
-</div>
-<p>All of the recommended drivers for your computer should appear in the terminal like this:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ubuntu-drivers devices
-== /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0 ==
-modalias : pci:v000010DEd000013C2sv00003842sd00002976bc03sc00i00
-vendor   : NVIDIA Corporation
-model    : GM204 [GeForce GTX 970]
-driver   : nvidia-driver-430 - third-party free
-driver   : nvidia-driver-390 - third-party free
-driver   : nvidia-driver-435 - distro non-free
-driver   : nvidia-driver-440 - third-party free recommended
-driver   : nvidia-driver-410 - third-party free
-driver   : nvidia-driver-415 - third-party free
-driver   : xserver-xorg-video-nouveau - distro free builtin`
-</pre></div>
-</div>
-<p>To install the recommended driver automatically, run:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo ubuntu-drivers autoinstall
-</pre></div>
-</div>
-<p>To select a specific driver that needs to be installed, run the command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt install nvidia-&lt;insert driver version here&gt;
-</pre></div>
-</div>
-<p>Once this is done installing, reboot the system with:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo reboot
-</pre></div>
-</div>
+  <section id="preflight-autonomous-robot-verification">
+<h1>Preflight- Autonomous Robot Verification<a class="headerlink" href="#preflight-autonomous-robot-verification" title="Permalink to this heading">¶</a></h1>
+<section id="how-to-use">
+<h2>How to Use<a class="headerlink" href="#how-to-use" title="Permalink to this heading">¶</a></h2>
+<p>Simply type “preflight” anywhere in the MIL directory. Make sure that a robot is connected and running or gazebo is running. To edit the hardware tests list and the automated software tests, edit the tests.py file in mil/mil_common/utils/mil_tools/scripts/mil-preflight/tests.py</p>
 </section>
-<section id="verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode">
-<h2>Verifying that the correct GPU is being used and is in Default Compute Mode<a class="headerlink" href="#verifying-that-the-correct-gpu-is-being-used-and-is-in-default-compute-mode" title="Permalink to this heading">¶</a></h2>
-<p>The drivers that we install on this computer must be defaulted to Compute Mode. To verify that the correct driver is being used, run the command:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ nvidia-smi
-</pre></div>
-</div>
-<p>An interface containing information about your NVIDIA driver should show up in your terminal.</p>
-<p>On the top of the table that appears should be the Driver Version. Verify that this is the correct driver you want installed. Below this, under the GPU section, there will be a ‘0’ or a ‘1’. If the GPU is defaulted to ‘0’, then the driver is already in Compute Mode. If not (or if you want further verification that the driver is in compute mode), run:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ nvidia-smi -i 0 -c 0
-</pre></div>
-</div>
-<p>If the device was already in Default Compute mode, a message will appear in the terminal.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
+<p>Preflight is an automated testing tool that should be run after turning on and connecting to the robot to run a prelaunch hardware checklist and automated software checklist.</p>
+<section id="there-are-three-types-of-automated-software-tests">
+<h3>There are three types of automated software tests<a class="headerlink" href="#there-are-three-types-of-automated-software-tests" title="Permalink to this heading">¶</a></h3>
+<section id="actuators">
+<h4>Actuators<a class="headerlink" href="#actuators" title="Permalink to this heading">¶</a></h4>
+<p>This test will prompt the user to enable physical moving actuators on the robot. Make sure that the area is cleared and the robot won’t damage itself or others nearby. The user will have to watch and validate that they move as expected personally.</p>
+<p>To add an actuator test, add a topic with a list of commands and import the module it comes from. See the thrusters example for reference in tests.py</p>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
-<p>For references on how the driver was installed, visit these websites:</p>
-<p><a class="reference external" href="https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux">https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-18-04-bionic-beaver-linux</a></p>
-<p><a class="reference external" href="https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/">https://www.cyberciti.biz/faq/ubuntu-linux-install-nvidia-driver-latest-proprietary-driver/</a></p>
-<p>For how to switch the GPUs into Compute Mode, visit this website:</p>
-<p><a class="reference external" href="https://stackoverflow.com/questions/31731535/switch-cuda-compute-mode-to-default-mode">https://stackoverflow.com/questions/31731535/switch-cuda-compute-mode-to-default-mode</a></p>
+<section id="nodes">
+<h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this heading">¶</a></h4>
+<p>A ROS Node is a live process currently running and performing a task. They communicate with each other through topics, services, and messages, etc. This test will ensure all listed ROS Nodes are running and alive as expected.</p>
+<p>To add a Node test, add a node to the list in tests.py</p>
+</section>
+<section id="topics">
+<h4>Topics<a class="headerlink" href="#topics" title="Permalink to this heading">¶</a></h4>
+<p>ROS Topics act as a channel for ROS Nodes to communicate by publishing and subscribing to messages. These tests check to verify that data is being published to these topics, ensuring that sensors under the listed topics are properly reading publishing data.</p>
+<p>To add a Topic test, add a topic to the list in tests.py</p>
+</section>
+</section>
+<section id="setup-tests">
+<h3>Setup Tests<a class="headerlink" href="#setup-tests" title="Permalink to this heading">¶</a></h3>
+<p>There are also setup tests. These are used to verify certain features on the robot that cannot be automated. For example ensuring that the O-rings are greased.</p>
+<p>To add a Setup test, add a what need to be tested to the list in tests.py</p>
+</section>
 </section>
 </section>
 
